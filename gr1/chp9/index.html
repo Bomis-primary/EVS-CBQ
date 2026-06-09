@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Traffic Signal and Safety Rules</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
+  overflow-x:hidden;
+}
+
+body{
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#fff8e1,#e3f2fd,#ffebee);
+  color:#263238;
+}
+
+.bg span{
+  position:fixed;
+  top:-30px;
+  font-size:22px;
+  opacity:.22;
+  animation:float 14s linear infinite;
+  z-index:0;
+}
+
+.bg span:nth-child(1){left:8%;animation-delay:0s}
+.bg span:nth-child(2){left:28%;animation-delay:3s}
+.bg span:nth-child(3){left:52%;animation-delay:6s}
+.bg span:nth-child(4){left:76%;animation-delay:2s}
+.bg span:nth-child(5){left:92%;animation-delay:5s}
+
+@keyframes float{
+  from{transform:translateY(-40px) rotate(0deg)}
+  to{transform:translateY(110vh) rotate(180deg)}
+}
+
+.screen{
+  display:none;
+  min-height:100vh;
+  padding:16px;
+  position:relative;
+  z-index:1;
+}
+
+.active{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.card{
+  width:92vw;
+  max-width:760px;
+  background:rgba(255,255,255,.96);
+  border-radius:26px;
+  padding:22px;
+  box-shadow:0 10px 26px rgba(0,0,0,.13);
+  text-align:center;
+}
+
+.logo{
+  width:180px;
+  max-width:70%;
+  height:auto;
+  margin-bottom:18px;
+}
+
+h1{
+  color:#c62828;
+  margin:10px 0;
+  font-size:36px;
+  line-height:1.15;
+}
+
+h2{
+  color:#1565c0;
+  margin:8px 0;
+  font-size:24px;
+}
+
+p{
+  font-size:18px;
+  line-height:1.45;
+}
+
+button{
+  border:0;
+  border-radius:18px;
+  padding:15px 24px;
+  margin:8px;
+  font-size:18px;
+  font-weight:bold;
+  background:#ffca28;
+  color:#263238;
+  cursor:pointer;
+  box-shadow:0 5px 0 #f9a825;
+  min-height:54px;
+}
+
+button:active{
+  transform:translateY(3px);
+  box-shadow:0 2px 0 #f9a825;
+}
+
+.topbar{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-bottom:14px;
+  font-weight:bold;
+}
+
+.badge{
+  background:#e3f2fd;
+  border-radius:16px;
+  padding:10px 8px;
+  text-align:center;
+  font-size:16px;
+}
+
+.timer{
+  background:#fff3e0;
+}
+
+.progress-wrap{
+  width:100%;
+  height:12px;
+  background:#e0e0e0;
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:16px;
+}
+
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:#66bb6a;
+  transition:.3s;
+}
+
+.question{
+  font-size:24px;
+  line-height:1.4;
+  font-weight:bold;
+  margin:22px 0;
+}
+
+.options{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+}
+
+.option{
+  background:#f1f8e9;
+  border:2px solid #c5e1a5;
+  border-radius:18px;
+  padding:18px;
+  font-size:20px;
+  min-height:70px;
+  display:flex;
+  align-items:center;
+  cursor:pointer;
+  text-align:left;
+  line-height:1.3;
+}
+
+.option:hover{
+  background:#e8f5e9;
+}
+
+.correct{
+  background:#c8f7c5!important;
+  border-color:#2e7d32!important;
+  transform:scale(1.01);
+}
+
+.wrong{
+  background:#ffcdd2!important;
+  border-color:#c62828!important;
+}
+
+.feedback{
+  min-height:62px;
+  margin-top:16px;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.explain{
+  font-size:16px;
+  font-weight:normal;
+  margin-top:6px;
+  line-height:1.4;
+}
+
+.hidden{
+  display:none;
+}
+
+.confetti{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:3;
+}
+
+.star{
+  position:absolute;
+  font-size:24px;
+  animation:pop 900ms ease-out forwards;
+}
+
+@keyframes pop{
+  0%{transform:scale(.3) translateY(0);opacity:1}
+  100%{transform:scale(1.4) translateY(-120px);opacity:0}
+}
+
+.cross{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:88px;
+  color:#e53935;
+  opacity:0;
+  z-index:4;
+  animation:crossfade 700ms ease-out;
+}
+
+@keyframes crossfade{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}
+  40%{opacity:.85}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
+}
+
+.finalbox{
+  background:#fff8e1;
+  border:2px dashed #ffb300;
+  border-radius:20px;
+  padding:16px;
+  margin-top:16px;
+}
+
+.small{
+  font-size:15px;
+  color:#546e7a;
+}
+
+@media(max-width:520px){
+  .screen{
+    padding:10px;
+  }
+
+  .card{
+    width:94vw;
+    padding:16px;
+    border-radius:22px;
+  }
+
+  h1{
+    font-size:28px;
+  }
+
+  h2{
+    font-size:20px;
+  }
+
+  p{
+    font-size:16px;
+  }
+
+  .topbar{
+    grid-template-columns:1fr;
+    gap:6px;
+  }
+
+  .badge{
+    font-size:15px;
+    padding:9px 8px;
+  }
+
+  .question{
+    font-size:20px;
+    margin:18px 0;
+  }
+
+  .option{
+    font-size:18px;
+    padding:16px;
+    min-height:64px;
+  }
+
+  button{
+    width:100%;
+    font-size:18px;
+    padding:15px 18px;
+  }
+
+  .feedback{
+    font-size:17px;
+  }
+
+  .explain{
+    font-size:15px;
+  }
+}
+
+@media(max-height:520px){
+  .active{
+    align-items:flex-start;
+  }
+
+  .screen{
+    padding-top:10px;
+  }
+
+  .card{
+    margin:8px 0;
+  }
+
+  .question{
+    margin:14px 0;
+  }
+
+  .option{
+    min-height:54px;
+    padding:13px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .bg span,
+  .star,
+  .cross{
+    animation:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+  <span>⭐</span>
+  <span>🚦</span>
+  <span>⭐</span>
+  <span>🛑</span>
+  <span>⭐</span>
+</div>
+
+<div id="splash" class="screen active">
+  <div class="card">
+    <img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo" loading="eager" decoding="async">
+    <h2>Loading your game...</h2>
+  </div>
+</div>
+
+<div id="intro" class="screen">
+  <div class="card">
+    <h1>Traffic Signal and Safety Rules</h1>
+    <h2>Grade 1 EVS</h2>
+    <p>Choose the best answer. You get one retry after a wrong answer.</p>
+    <p>Each question has a 60-second timer.</p>
+    <button onclick="startGame()">Start Game</button>
+  </div>
+</div>
+
+<div id="quiz" class="screen">
+  <div class="card">
+    <div class="topbar">
+      <div class="badge" id="qCount">Question 1/20</div>
+      <div class="badge">Score: <span id="score">0</span></div>
+      <div class="badge timer">Time: <span id="time">60</span>s</div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
+  </div>
+</div>
+
+<div id="finalChallenge" class="screen">
+  <div class="card">
+    <h1>Final Challenge</h1>
+    <div class="finalbox">
+      <p><b>Think and say:</b></p>
+      <p>Name one road safety rule and one safe place to play.</p>
+    </div>
+    <p class="small">Tap finish to see your score.</p>
+    <button onclick="showResult()">Finish</button>
+  </div>
+</div>
+
+<div id="result" class="screen">
+  <div class="card">
+    <h1>Great Work!</h1>
+    <h2>Your Score: <span id="finalScore"></span>/20</h2>
+    <p id="resultMsg"></p>
+    <button onclick="location.reload()">Play Again</button>
+  </div>
+</div>
+
+<div class="confetti" id="confetti"></div>
+
+<audio id="correctSound" src="assets/correct.mp3" preload="auto"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3" preload="auto"></audio>
+<audio id="clapSound" src="assets/clapping.mp3" preload="auto"></audio>
+
+<script>
+const questions=[
+{q:"Riya sees the traffic light turn red while crossing the road. What should she do?",o:["Walk fast","Stop","Run","Jump"],a:1,e:"Red light means stop."},
+{q:"The signal turns green. What does this allow vehicles to do?",o:["Stop","Wait","Move forward","Turn back"],a:2,e:"Green light means vehicles can move forward."},
+{q:"The light turns yellow. What should people understand?",o:["Start running","Get ready to stop","Go fast","Ignore"],a:1,e:"Yellow light means get ready to stop."},
+{q:"There is a zebra crossing nearby. What is its purpose?",o:["For vehicles","For safe crossing","For parking","For playing"],a:1,e:"A zebra crossing helps people cross the road safely."},
+{q:"A child crosses the road without looking both sides. What can happen?",o:["Safe crossing","Accident risk","Faster crossing","Nothing"],a:1,e:"Crossing without looking can cause an accident."},
+{q:"Which one is NOT a safe rule?",o:["Walk on footpath","Look both sides","Run on road","Hold an adult's hand"],a:2,e:"Running on the road is unsafe."},
+{q:"People walk on the footpath beside the road. Why?",o:["To run fast","To stay safe from vehicles","To play","To sit"],a:1,e:"A footpath keeps people safe from vehicles."},
+{q:"You are about to cross the road. What is the safest action first?",o:["Run quickly","Look both sides","Close eyes","Shout"],a:1,e:"We should look both sides before crossing the road."},
+{q:"People follow traffic rules. What is the result?",o:["More accidents","Fewer accidents","More noise","More traffic"],a:1,e:"Following traffic rules helps reduce accidents."},
+{q:"A small child is crossing a busy road. What helps most?",o:["Walking alone","Holding an adult's hand","Running fast","Jumping"],a:1,e:"A small child should hold an adult's hand while crossing a busy road."},
+{q:"You are sitting in a car. What keeps you safe?",o:["Window open","Seat belt","Standing","Leaning out"],a:1,e:"A seat belt helps keep us safe in a car."},
+{q:"You are inside a moving bus. What is the safe behaviour?",o:["Stand and move","Sit properly","Shout loudly","Jump"],a:1,e:"We should sit properly in a moving bus."},
+{q:"The vehicle has not stopped fully. What should you avoid?",o:["Sitting","Getting down","Holding seat","Looking outside"],a:1,e:"We should get down only after the vehicle has stopped fully."},
+{q:"A person rides a bike without a helmet. What is the risk?",o:["Stay safe","Get hurt easily","Ride faster","Feel cool"],a:1,e:"A helmet protects the head while riding."},
+{q:"A child puts his hand outside a moving bus. What is the problem?",o:["Safe action","Dangerous action","Funny action","Fast action"],a:1,e:"Putting hands outside a moving bus is dangerous."},
+{q:"Before getting down from a vehicle, what should you do?",o:["Jump quickly","Check surroundings","Close eyes","Run"],a:1,e:"We should check around before getting down from a vehicle."},
+{q:"Children are playing football on the road. What is wrong here?",o:["Good play","Unsafe place","Clean place","Empty place"],a:1,e:"The road is not a safe place to play."},
+{q:"Which place is best for playing?",o:["Road","Park","Traffic signal","Footpath"],a:1,e:"A park or playground is a safe place to play."},
+{q:"A child falls while playing. What should you do?",o:["Ignore","Help and inform an adult","Laugh","Walk away"],a:1,e:"We should help and inform an adult when someone gets hurt."},
+{q:"People follow safety rules in daily life. What does this help?",o:["More danger","Stay safe","More noise","More speed"],a:1,e:"Safety rules help us stay safe."}
+];
+
+let current=0;
+let score=0;
+let attempts=0;
+let timer;
+let timeLeft=60;
+let locked=false;
+
+const correctSound=document.getElementById("correctSound");
+const wrongSound=document.getElementById("wrongSound");
+const clapSound=document.getElementById("clapSound");
+
+setTimeout(function(){
+  showScreen("intro");
+},5000);
+
+function showScreen(id){
+  const screens=document.querySelectorAll(".screen");
+  for(let i=0;i<screens.length;i++){
+    screens[i].classList.remove("active");
+  }
+  document.getElementById(id).classList.add("active");
+}
+
+function startGame(){
+  score=0;
+  current=0;
+  showScreen("quiz");
+  loadQuestion();
+}
+
+function loadQuestion(){
+  locked=false;
+  attempts=0;
+  clearInterval(timer);
+  timeLeft=60;
+
+  document.getElementById("time").textContent=timeLeft;
+  document.getElementById("score").textContent=score;
+  document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
+  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("feedback").innerHTML="";
+  document.getElementById("nextBtn").classList.add("hidden");
+
+  const progress=((current)/questions.length)*100;
+  document.getElementById("progressBar").style.width=progress+"%";
+
+  const box=document.getElementById("options");
+  box.innerHTML="";
+
+  for(let i=0;i<questions[current].o.length;i++){
+    const div=document.createElement("div");
+    div.className="option";
+    div.textContent=questions[current].o[i];
+    div.onclick=function(){
+      checkAnswer(i,div);
+    };
+    box.appendChild(div);
+  }
+
+  startTimer();
+}
+
+function startTimer(){
+  timer=setInterval(function(){
+    timeLeft--;
+    document.getElementById("time").textContent=timeLeft;
+
+    if(timeLeft<=0){
+      clearInterval(timer);
+      showAnswer("Time is up!");
+    }
+  },1000);
+}
+
+function checkAnswer(i,el){
+  if(locked){
+    return;
+  }
+
+  const q=questions[current];
+
+  if(i===q.a){
+    locked=true;
+    clearInterval(timer);
+    score++;
+    document.getElementById("score").textContent=score;
+    el.classList.add("correct");
+    document.getElementById("feedback").innerHTML="Correct!<div class='explain'>"+q.e+"</div>";
+
+    playSound(correctSound);
+    setTimeout(function(){
+      playSound(clapSound);
+    },250);
+
+    makeConfetti();
+    document.getElementById("nextBtn").classList.remove("hidden");
+  }else{
+    attempts++;
+    el.classList.add("wrong");
+    showCross();
+    playSound(wrongSound);
+
+    if(attempts===1){
+      document.getElementById("feedback").innerHTML="Try once more.";
+      el.onclick=null;
+    }else{
+      showAnswer("Not quite.");
+    }
+  }
+}
+
+function showAnswer(msg){
+  locked=true;
+  clearInterval(timer);
+
+  const q=questions[current];
+  const options=document.querySelectorAll(".option");
+
+  for(let i=0;i<options.length;i++){
+    options[i].onclick=null;
+    if(i===q.a){
+      options[i].classList.add("correct");
+    }
+  }
+
+  document.getElementById("feedback").innerHTML=
+    msg+"<div class='explain'>Correct answer: <b>"+q.o[q.a]+"</b><br>"+q.e+"</div>";
+
+  document.getElementById("nextBtn").classList.remove("hidden");
+}
+
+function nextQuestion(){
+  current++;
+
+  if(current<questions.length){
+    loadQuestion();
+  }else{
+    document.getElementById("progressBar").style.width="100%";
+    showScreen("finalChallenge");
+  }
+}
+
+function showResult(){
+  showScreen("result");
+  document.getElementById("finalScore").textContent=score;
+
+  let msg="Good effort! Keep practising traffic and safety rules.";
+
+  if(score>=18){
+    msg="Excellent! You know traffic signals and safety rules very well.";
+  }else if(score>=14){
+    msg="Well done! A little more practice will make it even better.";
+  }
+
+  document.getElementById("resultMsg").textContent=msg;
+}
+
+function makeConfetti(){
+  const box=document.getElementById("confetti");
+
+  for(let i=0;i<18;i++){
+    const s=document.createElement("div");
+    s.className="star";
+    s.textContent="⭐";
+    s.style.left=Math.random()*100+"vw";
+    s.style.top=(55+Math.random()*25)+"vh";
+    box.appendChild(s);
+
+    setTimeout(function(){
+      s.remove();
+    },900);
+  }
+}
+
+function showCross(){
+  const x=document.createElement("div");
+  x.className="cross";
+  x.textContent="✕";
+  document.body.appendChild(x);
+
+  setTimeout(function(){
+    x.remove();
+  },700);
+}
+
+function playSound(sound){
+  if(!sound){
+    return;
+  }
+
+  try{
+    sound.currentTime=0;
+    const playPromise=sound.play();
+
+    if(playPromise!==undefined){
+      playPromise.catch(function(){});
+    }
+  }catch(error){}
+}
+</script>
+
+</body>
+</html>
