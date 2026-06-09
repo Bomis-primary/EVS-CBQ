@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food, Clothing and Health</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#fff7d6,#e8f5e9,#e3f2fd);min-height:100vh;color:#263238;overflow-x:hidden}
+.bg span{position:fixed;top:-30px;font-size:22px;opacity:.25;animation:float 12s linear infinite;z-index:0}
+.bg span:nth-child(1){left:8%;animation-delay:0s}.bg span:nth-child(2){left:28%;animation-delay:3s}.bg span:nth-child(3){left:52%;animation-delay:6s}.bg span:nth-child(4){left:76%;animation-delay:2s}.bg span:nth-child(5){left:92%;animation-delay:5s}
+@keyframes float{from{transform:translateY(-40px) rotate(0)}to{transform:translateY(110vh) rotate(180deg)}}
+.screen{display:none;min-height:100vh;padding:20px;position:relative;z-index:1}
+.active{display:flex;align-items:center;justify-content:center}
+.card{width:min(92vw,760px);background:rgba(255,255,255,.95);border-radius:28px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.14);text-align:center}
+.logo{max-width:190px;margin-bottom:18px}
+h1{color:#2e7d32;margin:10px 0;font-size:clamp(28px,7vw,44px)}
+h2{color:#1565c0;margin:8px 0}
+p{font-size:18px;line-height:1.4}
+button{border:0;border-radius:18px;padding:14px 22px;margin:8px;font-size:18px;font-weight:bold;background:#ffca28;color:#263238;cursor:pointer;box-shadow:0 5px 0 #f9a825}
+button:active{transform:translateY(3px);box-shadow:0 2px 0 #f9a825}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-weight:bold;margin-bottom:15px}
+.badge{background:#e3f2fd;border-radius:18px;padding:10px 14px}
+.timer{background:#fff3e0}
+.question{font-size:22px;font-weight:bold;margin:20px 0}
+.options{display:grid;grid-template-columns:1fr;gap:12px}
+.option{background:#f1f8e9;border:2px solid #c5e1a5;border-radius:18px;padding:14px;font-size:18px;cursor:pointer;text-align:left}
+.option:hover{background:#e8f5e9}
+.correct{background:#dcedc8!important;border-color:#7cb342}
+.wrong{background:#ffebee!important;border-color:#ef5350}
+.feedback{min-height:60px;margin-top:16px;font-size:18px;font-weight:bold}
+.explain{font-size:16px;font-weight:normal;margin-top:6px}
+.hidden{display:none}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:3}
+.star{position:absolute;font-size:24px;animation:pop 900ms ease-out forwards}
+@keyframes pop{0%{transform:scale(.3) translateY(0);opacity:1}100%{transform:scale(1.4) translateY(-120px);opacity:0}}
+.cross{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:90px;color:#e53935;opacity:0;z-index:4;animation:crossfade 700ms ease-out}
+@keyframes crossfade{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}40%{opacity:.85}100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}}
+.finalbox{background:#fff8e1;border:2px dashed #ffb300;border-radius:20px;padding:16px;margin-top:16px}
+.small{font-size:15px;color:#546e7a}
+</style>
+</head>
+<body>
+
+<div class="bg"><span>⭐</span><span>🍎</span><span>⭐</span><span>☂️</span><span>⭐</span></div>
+
+<div id="splash" class="screen active">
+  <div class="card">
+    <img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo">
+    <h2>Loading your game...</h2>
+  </div>
+</div>
+
+<div id="intro" class="screen">
+  <div class="card">
+    <h1>Food, Clothing and Health</h1>
+    <h2>Grade 1 EVS</h2>
+    <p>Choose the best answer. You get one retry after a wrong answer.</p>
+    <p>Each question has a 60-second timer.</p>
+    <button onclick="startGame()">Start Game</button>
+  </div>
+</div>
+
+<div id="quiz" class="screen">
+  <div class="card">
+    <div class="topbar">
+      <div class="badge" id="qCount">Question 1/20</div>
+      <div class="badge">Score: <span id="score">0</span></div>
+      <div class="badge timer">Time: <span id="time">60</span>s</div>
+    </div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
+  </div>
+</div>
+
+<div id="finalChallenge" class="screen">
+  <div class="card">
+    <h1>Final Challenge</h1>
+    <div class="finalbox">
+      <p><b>Think and say:</b></p>
+      <p>Name one healthy food, one clean habit, and one thing you wear in the rain.</p>
+    </div>
+    <p class="small">Tap finish to see your score.</p>
+    <button onclick="showResult()">Finish</button>
+  </div>
+</div>
+
+<div id="result" class="screen">
+  <div class="card">
+    <h1>Great Work!</h1>
+    <h2>Your Score: <span id="finalScore"></span>/20</h2>
+    <p id="resultMsg"></p>
+    <button onclick="location.reload()">Play Again</button>
+  </div>
+</div>
+
+<div class="confetti" id="confetti"></div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/clapping.mp3"></audio>
+
+<script>
+const questions=[
+{q:"Riya feels tired while playing. What is a good choice for her?",o:["Eat healthy food","Stop playing forever","Wear a sweater","Sleep in class"],a:0,e:"Healthy food gives us energy."},
+{q:"Aman is eating a banana. Where did it come from?",o:["Animals","Plants","Water","Air"],a:1,e:"Bananas come from plants."},
+{q:"Meena drinks milk every day. Where does milk come from?",o:["Plants","Animals","Soil","Leaves"],a:1,e:"Milk comes from animals like cows and buffaloes."},
+{q:"Rohit eats only chips every day. What may happen?",o:["He becomes stronger","He stays healthy","He may fall sick","He grows taller"],a:2,e:"Eating only junk food is not healthy."},
+{q:"Riya wants to stay healthy. What should she eat?",o:["Chips","Fruits","Candy","Soft drinks"],a:1,e:"Fruits are healthy food."},
+{q:"Tina skips her lunch at school. How may she feel later?",o:["Energetic","Tired","Strong","Excited"],a:1,e:"Skipping meals can make us feel tired."},
+{q:"It is morning and you feel hungry before school. What should you eat?",o:["Dinner","Breakfast","Only snacks","Nothing"],a:1,e:"Breakfast is the morning meal."},
+{q:"Neha eats food without washing her hands. What may happen?",o:["She becomes stronger","She may fall sick","Food tastes better","Nothing happens"],a:1,e:"Dirty hands can carry germs."},
+{q:"You are going to eat food. What should you do first?",o:["Jump around","Wash your hands","Sleep","Run outside"],a:1,e:"We should wash our hands before eating."},
+{q:"Ravi eats uncovered food from a roadside stall. What is the better choice?",o:["Eat it","Avoid it","Share it","Store it"],a:1,e:"Uncovered food may have dust and germs."},
+{q:"It is hot and dusty outside. Why do we wear clothes?",o:["To fly","To cover and protect our body","To play games","To eat food"],a:1,e:"Clothes cover and protect our body."},
+{q:"It is a very hot day. What is the best choice to wear?",o:["Woollen sweater","Light cotton clothes","Heavy jacket","Raincoat"],a:1,e:"Cotton clothes are comfortable in summer."},
+{q:"It is very cold outside. What should you wear?",o:["T-shirt","Woollen sweater","Shorts","Sandals"],a:1,e:"Woollen clothes keep us warm."},
+{q:"It is raining heavily. What will help you stay dry?",o:["Sweater","Raincoat","Cap","Scarf"],a:1,e:"A raincoat helps us stay dry in the rain."},
+{q:"Ravi wears dirty clothes every day. What may happen?",o:["He looks neat","He stays clean","He may fall sick","Nothing happens"],a:2,e:"Dirty clothes can have germs."},
+{q:"Riya brushes her teeth every day. What does this help?",o:["Keeps teeth clean","Makes noise","Helps her run fast","Makes her taller"],a:0,e:"Brushing keeps our teeth clean."},
+{q:"Aman takes a bath daily. Why is this important?",o:["To keep his body clean","To sleep more","To eat more","To grow taller"],a:0,e:"Bathing keeps our body clean."},
+{q:"Your friend shares food with you. What is the right thing to do?",o:["Say thank you","Stay quiet","Walk away","Ask for more"],a:0,e:"We should say thank you when someone shares with us."},
+{q:"You want to enter a room. What should you do?",o:["Run inside","Knock the door","Shout loudly","Jump inside"],a:1,e:"Knocking before entering is good manners."},
+{q:"Riya eats junk food every day and does not play. What may happen?",o:["She stays healthy","She becomes strong","She may fall sick","She runs faster"],a:2,e:"Healthy food and play help us stay healthy."}
+];
+
+let current=0,score=0,attempts=0,timer,timeLeft=60,locked=false;
+const correctSound=document.getElementById("correctSound");
+const wrongSound=document.getElementById("wrongSound");
+const clapSound=document.getElementById("clapSound");
+
+setTimeout(()=>showScreen("intro"),5000);
+
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+function startGame(){score=0;current=0;showScreen("quiz");loadQuestion();}
+function loadQuestion(){
+  locked=false;attempts=0;clearInterval(timer);timeLeft=60;
+  document.getElementById("time").textContent=timeLeft;
+  document.getElementById("score").textContent=score;
+  document.getElementById("qCount").textContent=`Question ${current+1}/20`;
+  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("feedback").innerHTML="";
+  document.getElementById("nextBtn").classList.add("hidden");
+  const box=document.getElementById("options");box.innerHTML="";
+  questions[current].o.forEach((opt,i)=>{
+    const div=document.createElement("div");
+    div.className="option";div.textContent=opt;
+    div.onclick=()=>checkAnswer(i,div);
+    box.appendChild(div);
+  });
+  startTimer();
+}
+function startTimer(){
+  timer=setInterval(()=>{
+    timeLeft--;document.getElementById("time").textContent=timeLeft;
+    if(timeLeft<=0){clearInterval(timer);showAnswer("Time is up!");}
+  },1000);
+}
+function checkAnswer(i,el){
+  if(locked)return;
+  const q=questions[current];
+  if(i===q.a){
+    locked=true;clearInterval(timer);score++;
+    document.getElementById("score").textContent=score;
+    el.classList.add("correct");
+    document.getElementById("feedback").innerHTML=`Correct!<div class="explain">${q.e}</div>`;
+    playSound(correctSound);setTimeout(()=>playSound(clapSound),250);
+    makeConfetti();
+    document.getElementById("nextBtn").classList.remove("hidden");
+  }else{
+    attempts++;el.classList.add("wrong");showCross();playSound(wrongSound);
+    if(attempts===1){document.getElementById("feedback").innerHTML="Try once more.";el.onclick=null;}
+    else{showAnswer("Not quite.");}
+  }
+}
+function showAnswer(msg){
+  locked=true;clearInterval(timer);
+  const q=questions[current];
+  document.querySelectorAll(".option").forEach((op,i)=>{op.onclick=null;if(i===q.a)op.classList.add("correct");});
+  document.getElementById("feedback").innerHTML=`${msg}<div class="explain">Correct answer: <b>${q.o[q.a]}</b><br>${q.e}</div>`;
+  document.getElementById("nextBtn").classList.remove("hidden");
+}
+function nextQuestion(){current++;current<questions.length?loadQuestion():showScreen("finalChallenge");}
+function showResult(){
+  showScreen("result");
+  document.getElementById("finalScore").textContent=score;
+  let msg="Good effort! Keep practising healthy habits.";
+  if(score>=18)msg="Excellent! You know food, clothing and health very well.";
+  else if(score>=14)msg="Well done! A little more practice will make it even better.";
+  document.getElementById("resultMsg").textContent=msg;
+}
+function makeConfetti(){
+  const box=document.getElementById("confetti");
+  for(let i=0;i<18;i++){
+    const s=document.createElement("div");s.className="star";s.textContent="⭐";
+    s.style.left=Math.random()*100+"vw";s.style.top=55+Math.random()*25+"vh";
+    box.appendChild(s);setTimeout(()=>s.remove(),900);
+  }
+}
+function showCross(){
+  const x=document.createElement("div");x.className="cross";x.textContent="✕";
+  document.body.appendChild(x);setTimeout(()=>x.remove(),700);
+}
+function playSound(sound){sound.currentTime=0;sound.play().catch(()=>{});}
+</script>
+</body>
+</html>
