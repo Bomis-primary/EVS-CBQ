@@ -1,63 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Chapter 1: Me and My Body</title>
+
 <style>
-*{box-sizing:border-box}
-body{
+*{
+  box-sizing:border-box;
+}
+
+html,body{
   margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
+  overflow-x:hidden;
+}
+
+body{
   font-family:Arial, sans-serif;
   background:linear-gradient(135deg,#fff7d6,#e3f7ff,#f3e8ff);
-  min-height:100vh;
-  overflow-x:hidden;
   color:#263238;
 }
+
 .bg span{
   position:fixed;
   top:-30px;
   font-size:22px;
-  opacity:.25;
-  animation:float 12s linear infinite;
+  opacity:.22;
+  animation:float 14s linear infinite;
   z-index:0;
 }
+
 .bg span:nth-child(1){left:8%;animation-delay:0s}
-.bg span:nth-child(2){left:25%;animation-delay:3s}
-.bg span:nth-child(3){left:50%;animation-delay:6s}
-.bg span:nth-child(4){left:75%;animation-delay:2s}
-.bg span:nth-child(5){left:90%;animation-delay:5s}
+.bg span:nth-child(2){left:28%;animation-delay:3s}
+.bg span:nth-child(3){left:52%;animation-delay:6s}
+.bg span:nth-child(4){left:76%;animation-delay:2s}
+.bg span:nth-child(5){left:92%;animation-delay:5s}
+
 @keyframes float{
-  from{transform:translateY(-40px) rotate(0)}
+  from{transform:translateY(-40px) rotate(0deg)}
   to{transform:translateY(110vh) rotate(180deg)}
 }
+
 .screen{
   display:none;
   min-height:100vh;
-  padding:20px;
+  padding:16px;
   position:relative;
   z-index:1;
 }
-.active{display:flex;align-items:center;justify-content:center}
+
+.active{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
 .card{
-  width:min(92vw,760px);
-  background:rgba(255,255,255,.94);
-  border-radius:28px;
-  padding:24px;
-  box-shadow:0 10px 30px rgba(0,0,0,.14);
+  width:92vw;
+  max-width:760px;
+  background:rgba(255,255,255,.96);
+  border-radius:26px;
+  padding:22px;
+  box-shadow:0 10px 26px rgba(0,0,0,.13);
   text-align:center;
 }
+
 .logo{
-  max-width:190px;
+  width:180px;
+  max-width:70%;
+  height:auto;
   margin-bottom:18px;
 }
-h1{color:#1565c0;margin:10px 0;font-size:clamp(28px,7vw,44px)}
-h2{color:#00796b;margin:8px 0}
-p{font-size:18px;line-height:1.4}
+
+h1{
+  color:#1565c0;
+  margin:10px 0;
+  font-size:36px;
+  line-height:1.15;
+}
+
+h2{
+  color:#00796b;
+  margin:8px 0;
+  font-size:24px;
+}
+
+p{
+  font-size:18px;
+  line-height:1.45;
+}
+
 button{
   border:0;
   border-radius:18px;
-  padding:14px 22px;
+  padding:15px 24px;
   margin:8px;
   font-size:18px;
   font-weight:bold;
@@ -65,88 +104,146 @@ button{
   color:#263238;
   cursor:pointer;
   box-shadow:0 5px 0 #f9a825;
+  min-height:54px;
 }
-button:active{transform:translateY(3px);box-shadow:0 2px 0 #f9a825}
+
+button:active{
+  transform:translateY(3px);
+  box-shadow:0 2px 0 #f9a825;
+}
+
 .topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-bottom:14px;
   font-weight:bold;
-  margin-bottom:15px;
 }
+
 .badge{
   background:#e3f2fd;
-  border-radius:18px;
-  padding:10px 14px;
+  border-radius:16px;
+  padding:10px 8px;
+  text-align:center;
+  font-size:16px;
 }
-.timer{background:#fff3e0}
+
+.timer{
+  background:#fff3e0;
+}
+
+.progress-wrap{
+  width:100%;
+  height:12px;
+  background:#e0e0e0;
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:16px;
+}
+
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:#66bb6a;
+  transition:.3s;
+}
+
 .question{
-  font-size:22px;
+  font-size:24px;
+  line-height:1.4;
   font-weight:bold;
-  margin:20px 0;
+  margin:22px 0;
 }
+
 .options{
   display:grid;
   grid-template-columns:1fr;
   gap:12px;
 }
+
 .option{
   background:#f1f8e9;
   border:2px solid #c5e1a5;
   border-radius:18px;
-  padding:14px;
-  font-size:18px;
+  padding:18px;
+  font-size:20px;
+  min-height:70px;
+  display:flex;
+  align-items:center;
   cursor:pointer;
   text-align:left;
+  line-height:1.3;
 }
-.option:hover{background:#e8f5e9}
-.correct{background:#dcedc8!important;border-color:#7cb342}
-.wrong{background:#ffebee!important;border-color:#ef5350}
+
+.option:hover{
+  background:#e8f5e9;
+}
+
+.correct{
+  background:#c8f7c5!important;
+  border-color:#2e7d32!important;
+  transform:scale(1.01);
+}
+
+.wrong{
+  background:#ffcdd2!important;
+  border-color:#c62828!important;
+}
+
 .feedback{
-  min-height:60px;
+  min-height:62px;
   margin-top:16px;
   font-size:18px;
   font-weight:bold;
 }
+
 .explain{
   font-size:16px;
   font-weight:normal;
   margin-top:6px;
+  line-height:1.4;
 }
-.hidden{display:none}
+
+.hidden{
+  display:none;
+}
+
 .confetti{
   position:fixed;
   inset:0;
   pointer-events:none;
   z-index:3;
 }
+
 .star{
   position:absolute;
   font-size:24px;
   animation:pop 900ms ease-out forwards;
 }
+
 @keyframes pop{
   0%{transform:scale(.3) translateY(0);opacity:1}
   100%{transform:scale(1.4) translateY(-120px);opacity:0}
 }
+
 .cross{
   position:fixed;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  font-size:90px;
+  font-size:88px;
   color:#e53935;
   opacity:0;
   z-index:4;
   animation:crossfade 700ms ease-out;
 }
+
 @keyframes crossfade{
   0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}
   40%{opacity:.85}
   100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
 }
+
 .finalbox{
   background:#fff8e1;
   border:2px dashed #ffb300;
@@ -154,18 +251,117 @@ button:active{transform:translateY(3px);box-shadow:0 2px 0 #f9a825}
   padding:16px;
   margin-top:16px;
 }
-.small{font-size:15px;color:#546e7a}
+
+.small{
+  font-size:15px;
+  color:#546e7a;
+}
+
+@media(max-width:520px){
+  .screen{
+    padding:10px;
+  }
+
+  .card{
+    width:94vw;
+    padding:16px;
+    border-radius:22px;
+  }
+
+  h1{
+    font-size:28px;
+  }
+
+  h2{
+    font-size:20px;
+  }
+
+  p{
+    font-size:16px;
+  }
+
+  .topbar{
+    grid-template-columns:1fr;
+    gap:6px;
+  }
+
+  .badge{
+    font-size:15px;
+    padding:9px 8px;
+  }
+
+  .question{
+    font-size:20px;
+    margin:18px 0;
+  }
+
+  .option{
+    font-size:18px;
+    padding:16px;
+    min-height:64px;
+  }
+
+  button{
+    width:100%;
+    font-size:18px;
+    padding:15px 18px;
+  }
+
+  .feedback{
+    font-size:17px;
+  }
+
+  .explain{
+    font-size:15px;
+  }
+}
+
+@media(max-height:520px){
+  .active{
+    align-items:flex-start;
+  }
+
+  .screen{
+    padding-top:10px;
+  }
+
+  .card{
+    margin:8px 0;
+  }
+
+  .question{
+    margin:14px 0;
+  }
+
+  .option{
+    min-height:54px;
+    padding:13px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .bg span,
+  .star,
+  .cross{
+    animation:none;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <div class="bg">
-  <span>⭐</span><span>🎈</span><span>⭐</span><span>〰️</span><span>⭐</span>
+  <span>⭐</span>
+  <span>🎈</span>
+  <span>⭐</span>
+  <span>〰️</span>
+  <span>⭐</span>
 </div>
 
 <div id="splash" class="screen active">
   <div class="card">
-    <img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo">
+    <img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo" loading="eager" decoding="async">
     <h2>Loading your game...</h2>
   </div>
 </div>
@@ -174,7 +370,7 @@ button:active{transform:translateY(3px);box-shadow:0 2px 0 #f9a825}
   <div class="card">
     <h1>Me and My Body</h1>
     <h2>Grade 1 EVS</h2>
-    <p>Answer the questions. You get one more try if your first answer is wrong.</p>
+    <p>Answer the questions. You get one retry after a wrong answer.</p>
     <p>Each question has a 60-second timer.</p>
     <button onclick="startGame()">Start Game</button>
   </div>
@@ -187,6 +383,11 @@ button:active{transform:translateY(3px);box-shadow:0 2px 0 #f9a825}
       <div class="badge">Score: <span id="score">0</span></div>
       <div class="badge timer">Time: <span id="time">60</span>s</div>
     </div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
@@ -198,10 +399,10 @@ button:active{transform:translateY(3px);box-shadow:0 2px 0 #f9a825}
   <div class="card">
     <h1>Final Challenge</h1>
     <div class="finalbox">
-      <p><b>Think fast!</b></p>
+      <p><b>Think and say:</b></p>
       <p>Name any two sense organs and what they help us do.</p>
     </div>
-    <p class="small">This is a reflection task. Tap finish to see your score.</p>
+    <p class="small">Tap finish to see your score.</p>
     <button onclick="showResult()">Finish</button>
   </div>
 </div>
@@ -217,51 +418,60 @@ button:active{transform:translateY(3px);box-shadow:0 2px 0 #f9a825}
 
 <div class="confetti" id="confetti"></div>
 
-<audio id="correctSound" src="assets/correct.mp3"></audio>
-<audio id="wrongSound" src="assets/wrong.mp3"></audio>
-<audio id="clapSound" src="assets/clapping.mp3"></audio>
+<audio id="correctSound" src="assets/correct.mp3" preload="auto"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3" preload="auto"></audio>
+<audio id="clapSound" src="assets/clapping.mp3" preload="auto"></audio>
 
 <script>
-const questions = [
- {q:"Riya hears her teacher calling her. What helps her hear?",o:["Eyes","Ears","Nose","Hands"],a:1,e:"We hear sounds with our ears."},
- {q:"Aman smells a flower. What helps him smell?",o:["Tongue","Eyes","Nose","Skin"],a:2,e:"We smell things with our nose."},
- {q:"Meena eats an apple and says it is sweet. What helps her know this?",o:["Nose","Tongue","Eyes","Ears"],a:1,e:"We taste food with our tongue."},
- {q:"Rohit touches ice and says, “It is cold!” What helps him feel this?",o:["Eyes","Skin","Nose","Ears"],a:1,e:"Our skin helps us feel hot, cold, hard, and soft things."},
- {q:"Sara is reading a book. What helps her read?",o:["Ears","Nose","Eyes","Hands"],a:2,e:"We use our eyes to see and read."},
- {q:"Ravi closes his eyes. What can he NOT do now?",o:["Smell food","Hear sounds","See things","Taste food"],a:2,e:"When eyes are closed, we cannot see things clearly."},
- {q:"You hear a school bell ringing. What helps you hear it?",o:["Eyes","Skin","Ears","Tongue"],a:2,e:"Ears help us hear sounds like a bell."},
- {q:"Neha touches a hot cup and quickly leaves it. Why?",o:["She saw it","She felt it was hot","She smelled it","She heard it"],a:1,e:"Skin helps us feel if something is hot."},
- {q:"You touch a stone and say, “It is hard.” What helps you know this?",o:["Eyes","Nose","Skin","Ears"],a:2,e:"Skin helps us feel if something is hard or soft."},
- {q:"Arjun wants to check if milk smells bad. What should he use?",o:["Eyes","Nose","Skin","Hands"],a:1,e:"The nose helps us smell good and bad smells."},
- {q:"You hear your friend calling you from behind. What helps you know this?",o:["Eyes","Ears","Nose","Tongue"],a:1,e:"Ears help us hear someone calling."},
- {q:"You close your nose. What can you NOT do properly?",o:["See","Hear","Smell","Touch"],a:2,e:"The nose helps us smell."},
- {q:"It is dark and you cannot see anything. Which part is not helping you now?",o:["Nose","Tongue","Eyes","Skin"],a:2,e:"Eyes need light to see clearly."},
- {q:"Karan eats a lemon and makes a sour face. What helps him taste it?",o:["Eyes","Nose","Tongue","Skin"],a:2,e:"The tongue helps us taste sweet, sour, salty, and bitter things."},
- {q:"Riya touches a hot pan and quickly pulls her hand away. Why?",o:["She heard it","She saw it","She felt it was hot","She smelled it"],a:2,e:"Skin helps us feel heat and keeps us safe."},
- {q:"Riya has curly hair. Sia has straight hair. What do we learn?",o:["Everyone looks the same","People can look different","Only boys look different","Only girls look different"],a:1,e:"People can look different from one another."},
- {q:"You are listening to your favourite song. How do you enjoy it?",o:["By seeing","By hearing with ears","By smelling","By touching"],a:1,e:"We enjoy songs by hearing them with our ears."},
- {q:"You touch a soft toy and say, “It is soft.” What helps you know this?",o:["Eyes","Nose","Skin","Tongue"],a:2,e:"Skin helps us feel soft things."},
- {q:"Find the wrong match.",o:["Eyes – See","Ears – Hear","Nose – Taste","Tongue – Taste"],a:2,e:"Nose helps us smell, not taste."},
- {q:"Ravi is blindfolded and asked to touch and guess objects. What is he using the most?",o:["Eyes","Nose","Skin","Ears"],a:2,e:"When blindfolded, he uses his skin to feel the objects."}
+const questions=[
+{q:"Riya hears her teacher calling her. What helps her hear?",o:["Eyes","Ears","Nose","Hands"],a:1,e:"We hear sounds with our ears."},
+{q:"Aman smells a flower. What helps him smell?",o:["Tongue","Eyes","Nose","Skin"],a:2,e:"We smell things with our nose."},
+{q:"Meena eats an apple and says it is sweet. What helps her know this?",o:["Nose","Tongue","Eyes","Ears"],a:1,e:"We taste food with our tongue."},
+{q:"Rohit touches ice and says, “It is cold!” What helps him feel this?",o:["Eyes","Skin","Nose","Ears"],a:1,e:"Our skin helps us feel hot, cold, hard, and soft things."},
+{q:"Sara is reading a book. What helps her read?",o:["Ears","Nose","Eyes","Hands"],a:2,e:"We use our eyes to see and read."},
+{q:"Ravi closes his eyes. What can he NOT do now?",o:["Smell food","Hear sounds","See things","Taste food"],a:2,e:"When eyes are closed, we cannot see things clearly."},
+{q:"You hear a school bell ringing. What helps you hear it?",o:["Eyes","Skin","Ears","Tongue"],a:2,e:"Ears help us hear sounds like a bell."},
+{q:"Neha touches a hot cup and quickly leaves it. Why?",o:["She saw it","She felt it was hot","She smelled it","She heard it"],a:1,e:"Skin helps us feel if something is hot."},
+{q:"You touch a stone and say, “It is hard.” What helps you know this?",o:["Eyes","Nose","Skin","Ears"],a:2,e:"Skin helps us feel if something is hard or soft."},
+{q:"Arjun wants to check if milk smells bad. What should he use?",o:["Eyes","Nose","Skin","Hands"],a:1,e:"The nose helps us smell good and bad smells."},
+{q:"You hear your friend calling you from behind. What helps you know this?",o:["Eyes","Ears","Nose","Tongue"],a:1,e:"Ears help us hear someone calling."},
+{q:"You close your nose. What can you NOT do properly?",o:["See","Hear","Smell","Touch"],a:2,e:"The nose helps us smell."},
+{q:"It is dark and you cannot see anything. Which part is not helping you now?",o:["Nose","Tongue","Eyes","Skin"],a:2,e:"Eyes need light to see clearly."},
+{q:"Karan eats a lemon and makes a sour face. What helps him taste it?",o:["Eyes","Nose","Tongue","Skin"],a:2,e:"The tongue helps us taste sweet, sour, salty, and bitter things."},
+{q:"Riya touches a hot pan and quickly pulls her hand away. Why?",o:["She heard it","She saw it","She felt it was hot","She smelled it"],a:2,e:"Skin helps us feel heat and keeps us safe."},
+{q:"Riya has curly hair. Sia has straight hair. What do we learn?",o:["Everyone looks the same","People can look different","Only boys look different","Only girls look different"],a:1,e:"People can look different from one another."},
+{q:"You are listening to your favourite song. How do you enjoy it?",o:["By seeing","By hearing with ears","By smelling","By touching"],a:1,e:"We enjoy songs by hearing them with our ears."},
+{q:"You touch a soft toy and say, “It is soft.” What helps you know this?",o:["Eyes","Nose","Skin","Tongue"],a:2,e:"Skin helps us feel soft things."},
+{q:"Find the wrong match.",o:["Eyes – See","Ears – Hear","Nose – Taste","Tongue – Taste"],a:2,e:"Nose helps us smell, not taste."},
+{q:"Ravi is blindfolded and asked to touch and guess objects. What is he using the most?",o:["Eyes","Nose","Skin","Ears"],a:2,e:"When blindfolded, he uses his skin to feel the objects."}
 ];
 
-let current=0, score=0, attempts=0, timer, timeLeft=60, locked=false;
+let current=0;
+let score=0;
+let attempts=0;
+let timer;
+let timeLeft=60;
+let locked=false;
 
 const correctSound=document.getElementById("correctSound");
 const wrongSound=document.getElementById("wrongSound");
 const clapSound=document.getElementById("clapSound");
 
-setTimeout(()=>{
+setTimeout(function(){
   showScreen("intro");
 },5000);
 
 function showScreen(id){
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  const screens=document.querySelectorAll(".screen");
+  for(let i=0;i<screens.length;i++){
+    screens[i].classList.remove("active");
+  }
   document.getElementById(id).classList.add("active");
 }
 
 function startGame(){
-  score=0; current=0;
+  score=0;
+  current=0;
   showScreen("quiz");
   loadQuestion();
 }
@@ -271,28 +481,38 @@ function loadQuestion(){
   attempts=0;
   clearInterval(timer);
   timeLeft=60;
+
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
-  document.getElementById("qCount").textContent=`Question ${current+1}/20`;
+  document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
   document.getElementById("question").textContent=questions[current].q;
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
-  const optionsBox=document.getElementById("options");
-  optionsBox.innerHTML="";
-  questions[current].o.forEach((opt,i)=>{
+
+  const progress=((current)/questions.length)*100;
+  document.getElementById("progressBar").style.width=progress+"%";
+
+  const box=document.getElementById("options");
+  box.innerHTML="";
+
+  for(let i=0;i<questions[current].o.length;i++){
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=opt;
-    div.onclick=()=>checkAnswer(i,div);
-    optionsBox.appendChild(div);
-  });
+    div.textContent=questions[current].o[i];
+    div.onclick=function(){
+      checkAnswer(i,div);
+    };
+    box.appendChild(div);
+  }
+
   startTimer();
 }
 
 function startTimer(){
-  timer=setInterval(()=>{
+  timer=setInterval(function(){
     timeLeft--;
     document.getElementById("time").textContent=timeLeft;
+
     if(timeLeft<=0){
       clearInterval(timer);
       showAnswer("Time is up!");
@@ -301,17 +521,25 @@ function startTimer(){
 }
 
 function checkAnswer(i,el){
-  if(locked)return;
+  if(locked){
+    return;
+  }
+
   const q=questions[current];
+
   if(i===q.a){
     locked=true;
     clearInterval(timer);
     score++;
     document.getElementById("score").textContent=score;
     el.classList.add("correct");
-    document.getElementById("feedback").innerHTML=`Correct!<div class="explain">${q.e}</div>`;
+    document.getElementById("feedback").innerHTML="Correct!<div class='explain'>"+q.e+"</div>";
+
     playSound(correctSound);
-    setTimeout(()=>playSound(clapSound),250);
+    setTimeout(function(){
+      playSound(clapSound);
+    },250);
+
     makeConfetti();
     document.getElementById("nextBtn").classList.remove("hidden");
   }else{
@@ -319,6 +547,7 @@ function checkAnswer(i,el){
     el.classList.add("wrong");
     showCross();
     playSound(wrongSound);
+
     if(attempts===1){
       document.getElementById("feedback").innerHTML="Try once more.";
       el.onclick=null;
@@ -331,21 +560,30 @@ function checkAnswer(i,el){
 function showAnswer(msg){
   locked=true;
   clearInterval(timer);
+
   const q=questions[current];
-  document.querySelectorAll(".option").forEach((op,i)=>{
-    op.onclick=null;
-    if(i===q.a)op.classList.add("correct");
-  });
+  const options=document.querySelectorAll(".option");
+
+  for(let i=0;i<options.length;i++){
+    options[i].onclick=null;
+    if(i===q.a){
+      options[i].classList.add("correct");
+    }
+  }
+
   document.getElementById("feedback").innerHTML=
-    `${msg}<div class="explain">Correct answer: <b>${q.o[q.a]}</b><br>${q.e}</div>`;
+    msg+"<div class='explain'>Correct answer: <b>"+q.o[q.a]+"</b><br>"+q.e+"</div>";
+
   document.getElementById("nextBtn").classList.remove("hidden");
 }
 
 function nextQuestion(){
   current++;
+
   if(current<questions.length){
     loadQuestion();
   }else{
+    document.getElementById("progressBar").style.width="100%";
     showScreen("finalChallenge");
   }
 }
@@ -353,22 +591,32 @@ function nextQuestion(){
 function showResult(){
   showScreen("result");
   document.getElementById("finalScore").textContent=score;
+
   let msg="Good effort! Keep practising your sense organs.";
-  if(score>=18)msg="Excellent! You know your body parts very well.";
-  else if(score>=14)msg="Well done! A little more practice will make it even better.";
+
+  if(score>=18){
+    msg="Excellent! You know your body parts very well.";
+  }else if(score>=14){
+    msg="Well done! A little more practice will make it even better.";
+  }
+
   document.getElementById("resultMsg").textContent=msg;
 }
 
 function makeConfetti(){
   const box=document.getElementById("confetti");
+
   for(let i=0;i<18;i++){
     const s=document.createElement("div");
     s.className="star";
     s.textContent="⭐";
     s.style.left=Math.random()*100+"vw";
-    s.style.top=55+Math.random()*25+"vh";
+    s.style.top=(55+Math.random()*25)+"vh";
     box.appendChild(s);
-    setTimeout(()=>s.remove(),900);
+
+    setTimeout(function(){
+      s.remove();
+    },900);
   }
 }
 
@@ -377,13 +625,27 @@ function showCross(){
   x.className="cross";
   x.textContent="✕";
   document.body.appendChild(x);
-  setTimeout(()=>x.remove(),700);
+
+  setTimeout(function(){
+    x.remove();
+  },700);
 }
 
 function playSound(sound){
-  sound.currentTime=0;
-  sound.play().catch(()=>{});
+  if(!sound){
+    return;
+  }
+
+  try{
+    sound.currentTime=0;
+    const playPromise=sound.play();
+
+    if(playPromise!==undefined){
+      playPromise.catch(function(){});
+    }
+  }catch(error){}
 }
 </script>
+
 </body>
 </html>
