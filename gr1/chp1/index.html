@@ -1,0 +1,395 @@
+Use this as `index.html` inside:
+
+`EVS-CBQ/gr1/chp1/index.html`
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chapter 1: Me and My Body</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#fff7d6,#e3f7ff,#f3e8ff);
+  min-height:100vh;
+  overflow-x:hidden;
+  color:#263238;
+}
+.bg span{
+  position:fixed;
+  top:-30px;
+  font-size:22px;
+  opacity:.25;
+  animation:float 12s linear infinite;
+  z-index:0;
+}
+.bg span:nth-child(1){left:8%;animation-delay:0s}
+.bg span:nth-child(2){left:25%;animation-delay:3s}
+.bg span:nth-child(3){left:50%;animation-delay:6s}
+.bg span:nth-child(4){left:75%;animation-delay:2s}
+.bg span:nth-child(5){left:90%;animation-delay:5s}
+@keyframes float{
+  from{transform:translateY(-40px) rotate(0)}
+  to{transform:translateY(110vh) rotate(180deg)}
+}
+.screen{
+  display:none;
+  min-height:100vh;
+  padding:20px;
+  position:relative;
+  z-index:1;
+}
+.active{display:flex;align-items:center;justify-content:center}
+.card{
+  width:min(92vw,760px);
+  background:rgba(255,255,255,.94);
+  border-radius:28px;
+  padding:24px;
+  box-shadow:0 10px 30px rgba(0,0,0,.14);
+  text-align:center;
+}
+.logo{
+  max-width:190px;
+  margin-bottom:18px;
+}
+h1{color:#1565c0;margin:10px 0;font-size:clamp(28px,7vw,44px)}
+h2{color:#00796b;margin:8px 0}
+p{font-size:18px;line-height:1.4}
+button{
+  border:0;
+  border-radius:18px;
+  padding:14px 22px;
+  margin:8px;
+  font-size:18px;
+  font-weight:bold;
+  background:#ffca28;
+  color:#263238;
+  cursor:pointer;
+  box-shadow:0 5px 0 #f9a825;
+}
+button:active{transform:translateY(3px);box-shadow:0 2px 0 #f9a825}
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+.badge{
+  background:#e3f2fd;
+  border-radius:18px;
+  padding:10px 14px;
+}
+.timer{background:#fff3e0}
+.question{
+  font-size:22px;
+  font-weight:bold;
+  margin:20px 0;
+}
+.options{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+}
+.option{
+  background:#f1f8e9;
+  border:2px solid #c5e1a5;
+  border-radius:18px;
+  padding:14px;
+  font-size:18px;
+  cursor:pointer;
+  text-align:left;
+}
+.option:hover{background:#e8f5e9}
+.correct{background:#dcedc8!important;border-color:#7cb342}
+.wrong{background:#ffebee!important;border-color:#ef5350}
+.feedback{
+  min-height:60px;
+  margin-top:16px;
+  font-size:18px;
+  font-weight:bold;
+}
+.explain{
+  font-size:16px;
+  font-weight:normal;
+  margin-top:6px;
+}
+.hidden{display:none}
+.confetti{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:3;
+}
+.star{
+  position:absolute;
+  font-size:24px;
+  animation:pop 900ms ease-out forwards;
+}
+@keyframes pop{
+  0%{transform:scale(.3) translateY(0);opacity:1}
+  100%{transform:scale(1.4) translateY(-120px);opacity:0}
+}
+.cross{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:90px;
+  color:#e53935;
+  opacity:0;
+  z-index:4;
+  animation:crossfade 700ms ease-out;
+}
+@keyframes crossfade{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}
+  40%{opacity:.85}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
+}
+.finalbox{
+  background:#fff8e1;
+  border:2px dashed #ffb300;
+  border-radius:20px;
+  padding:16px;
+  margin-top:16px;
+}
+.small{font-size:15px;color:#546e7a}
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <span>⭐</span><span>🎈</span><span>⭐</span><span>〰️</span><span>⭐</span>
+</div>
+
+<div id="splash" class="screen active">
+  <div class="card">
+    <img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo">
+    <h2>Loading your game...</h2>
+  </div>
+</div>
+
+<div id="intro" class="screen">
+  <div class="card">
+    <h1>Me and My Body</h1>
+    <h2>Grade 1 EVS</h2>
+    <p>Answer the questions. You get one more try if your first answer is wrong.</p>
+    <p>Each question has a 60-second timer.</p>
+    <button onclick="startGame()">Start Game</button>
+  </div>
+</div>
+
+<div id="quiz" class="screen">
+  <div class="card">
+    <div class="topbar">
+      <div class="badge" id="qCount">Question 1/20</div>
+      <div class="badge">Score: <span id="score">0</span></div>
+      <div class="badge timer">Time: <span id="time">60</span>s</div>
+    </div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
+  </div>
+</div>
+
+<div id="finalChallenge" class="screen">
+  <div class="card">
+    <h1>Final Challenge</h1>
+    <div class="finalbox">
+      <p><b>Think fast!</b></p>
+      <p>Name any two sense organs and what they help us do.</p>
+    </div>
+    <p class="small">This is a reflection task. Tap finish to see your score.</p>
+    <button onclick="showResult()">Finish</button>
+  </div>
+</div>
+
+<div id="result" class="screen">
+  <div class="card">
+    <h1>Great Work!</h1>
+    <h2>Your Score: <span id="finalScore"></span>/20</h2>
+    <p id="resultMsg"></p>
+    <button onclick="location.reload()">Play Again</button>
+  </div>
+</div>
+
+<div class="confetti" id="confetti"></div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/clapping.mp3"></audio>
+
+<script>
+const questions = [
+ {q:"Riya hears her teacher calling her. What helps her hear?",o:["Eyes","Ears","Nose","Hands"],a:1,e:"We hear sounds with our ears."},
+ {q:"Aman smells a flower. What helps him smell?",o:["Tongue","Eyes","Nose","Skin"],a:2,e:"We smell things with our nose."},
+ {q:"Meena eats an apple and says it is sweet. What helps her know this?",o:["Nose","Tongue","Eyes","Ears"],a:1,e:"We taste food with our tongue."},
+ {q:"Rohit touches ice and says, “It is cold!” What helps him feel this?",o:["Eyes","Skin","Nose","Ears"],a:1,e:"Our skin helps us feel hot, cold, hard, and soft things."},
+ {q:"Sara is reading a book. What helps her read?",o:["Ears","Nose","Eyes","Hands"],a:2,e:"We use our eyes to see and read."},
+ {q:"Ravi closes his eyes. What can he NOT do now?",o:["Smell food","Hear sounds","See things","Taste food"],a:2,e:"When eyes are closed, we cannot see things clearly."},
+ {q:"You hear a school bell ringing. What helps you hear it?",o:["Eyes","Skin","Ears","Tongue"],a:2,e:"Ears help us hear sounds like a bell."},
+ {q:"Neha touches a hot cup and quickly leaves it. Why?",o:["She saw it","She felt it was hot","She smelled it","She heard it"],a:1,e:"Skin helps us feel if something is hot."},
+ {q:"You touch a stone and say, “It is hard.” What helps you know this?",o:["Eyes","Nose","Skin","Ears"],a:2,e:"Skin helps us feel if something is hard or soft."},
+ {q:"Arjun wants to check if milk smells bad. What should he use?",o:["Eyes","Nose","Skin","Hands"],a:1,e:"The nose helps us smell good and bad smells."},
+ {q:"You hear your friend calling you from behind. What helps you know this?",o:["Eyes","Ears","Nose","Tongue"],a:1,e:"Ears help us hear someone calling."},
+ {q:"You close your nose. What can you NOT do properly?",o:["See","Hear","Smell","Touch"],a:2,e:"The nose helps us smell."},
+ {q:"It is dark and you cannot see anything. Which part is not helping you now?",o:["Nose","Tongue","Eyes","Skin"],a:2,e:"Eyes need light to see clearly."},
+ {q:"Karan eats a lemon and makes a sour face. What helps him taste it?",o:["Eyes","Nose","Tongue","Skin"],a:2,e:"The tongue helps us taste sweet, sour, salty, and bitter things."},
+ {q:"Riya touches a hot pan and quickly pulls her hand away. Why?",o:["She heard it","She saw it","She felt it was hot","She smelled it"],a:2,e:"Skin helps us feel heat and keeps us safe."},
+ {q:"Riya has curly hair. Sia has straight hair. What do we learn?",o:["Everyone looks the same","People can look different","Only boys look different","Only girls look different"],a:1,e:"People can look different from one another."},
+ {q:"You are listening to your favourite song. How do you enjoy it?",o:["By seeing","By hearing with ears","By smelling","By touching"],a:1,e:"We enjoy songs by hearing them with our ears."},
+ {q:"You touch a soft toy and say, “It is soft.” What helps you know this?",o:["Eyes","Nose","Skin","Tongue"],a:2,e:"Skin helps us feel soft things."},
+ {q:"Find the wrong match.",o:["Eyes – See","Ears – Hear","Nose – Taste","Tongue – Taste"],a:2,e:"Nose helps us smell, not taste."},
+ {q:"Ravi is blindfolded and asked to touch and guess objects. What is he using the most?",o:["Eyes","Nose","Skin","Ears"],a:2,e:"When blindfolded, he uses his skin to feel the objects."}
+];
+
+let current=0, score=0, attempts=0, timer, timeLeft=60, locked=false;
+
+const correctSound=document.getElementById("correctSound");
+const wrongSound=document.getElementById("wrongSound");
+const clapSound=document.getElementById("clapSound");
+
+setTimeout(()=>{
+  showScreen("intro");
+},5000);
+
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function startGame(){
+  score=0; current=0;
+  showScreen("quiz");
+  loadQuestion();
+}
+
+function loadQuestion(){
+  locked=false;
+  attempts=0;
+  clearInterval(timer);
+  timeLeft=60;
+  document.getElementById("time").textContent=timeLeft;
+  document.getElementById("score").textContent=score;
+  document.getElementById("qCount").textContent=`Question ${current+1}/20`;
+  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("feedback").innerHTML="";
+  document.getElementById("nextBtn").classList.add("hidden");
+  const optionsBox=document.getElementById("options");
+  optionsBox.innerHTML="";
+  questions[current].o.forEach((opt,i)=>{
+    const div=document.createElement("div");
+    div.className="option";
+    div.textContent=opt;
+    div.onclick=()=>checkAnswer(i,div);
+    optionsBox.appendChild(div);
+  });
+  startTimer();
+}
+
+function startTimer(){
+  timer=setInterval(()=>{
+    timeLeft--;
+    document.getElementById("time").textContent=timeLeft;
+    if(timeLeft<=0){
+      clearInterval(timer);
+      showAnswer("Time is up!");
+    }
+  },1000);
+}
+
+function checkAnswer(i,el){
+  if(locked)return;
+  const q=questions[current];
+  if(i===q.a){
+    locked=true;
+    clearInterval(timer);
+    score++;
+    document.getElementById("score").textContent=score;
+    el.classList.add("correct");
+    document.getElementById("feedback").innerHTML=`Correct!<div class="explain">${q.e}</div>`;
+    playSound(correctSound);
+    setTimeout(()=>playSound(clapSound),250);
+    makeConfetti();
+    document.getElementById("nextBtn").classList.remove("hidden");
+  }else{
+    attempts++;
+    el.classList.add("wrong");
+    showCross();
+    playSound(wrongSound);
+    if(attempts===1){
+      document.getElementById("feedback").innerHTML="Try once more.";
+      el.onclick=null;
+    }else{
+      showAnswer("Not quite.");
+    }
+  }
+}
+
+function showAnswer(msg){
+  locked=true;
+  clearInterval(timer);
+  const q=questions[current];
+  document.querySelectorAll(".option").forEach((op,i)=>{
+    op.onclick=null;
+    if(i===q.a)op.classList.add("correct");
+  });
+  document.getElementById("feedback").innerHTML=
+    `${msg}<div class="explain">Correct answer: <b>${q.o[q.a]}</b><br>${q.e}</div>`;
+  document.getElementById("nextBtn").classList.remove("hidden");
+}
+
+function nextQuestion(){
+  current++;
+  if(current<questions.length){
+    loadQuestion();
+  }else{
+    showScreen("finalChallenge");
+  }
+}
+
+function showResult(){
+  showScreen("result");
+  document.getElementById("finalScore").textContent=score;
+  let msg="Good effort! Keep practising your sense organs.";
+  if(score>=18)msg="Excellent! You know your body parts very well.";
+  else if(score>=14)msg="Well done! A little more practice will make it even better.";
+  document.getElementById("resultMsg").textContent=msg;
+}
+
+function makeConfetti(){
+  const box=document.getElementById("confetti");
+  for(let i=0;i<18;i++){
+    const s=document.createElement("div");
+    s.className="star";
+    s.textContent="⭐";
+    s.style.left=Math.random()*100+"vw";
+    s.style.top=55+Math.random()*25+"vh";
+    box.appendChild(s);
+    setTimeout(()=>s.remove(),900);
+  }
+}
+
+function showCross(){
+  const x=document.createElement("div");
+  x.className="cross";
+  x.textContent="✕";
+  document.body.appendChild(x);
+  setTimeout(()=>x.remove(),700);
+}
+
+function playSound(sound){
+  sound.currentTime=0;
+  sound.play().catch(()=>{});
+}
+</script>
+</body>
+</html>
+```
