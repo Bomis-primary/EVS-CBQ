@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Our Body</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
+  overflow-x:hidden;
+}
+
+body{
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#fff8e1,#e3f2fd,#f3e5f5);
+  color:#263238;
+}
+
+.bg span{
+  position:fixed;
+  top:-30px;
+  font-size:22px;
+  opacity:.22;
+  animation:float 14s linear infinite;
+  z-index:0;
+}
+
+.bg span:nth-child(1){left:8%;animation-delay:0s}
+.bg span:nth-child(2){left:28%;animation-delay:3s}
+.bg span:nth-child(3){left:52%;animation-delay:6s}
+.bg span:nth-child(4){left:76%;animation-delay:2s}
+.bg span:nth-child(5){left:92%;animation-delay:5s}
+
+@keyframes float{
+  from{transform:translateY(-40px) rotate(0deg)}
+  to{transform:translateY(110vh) rotate(180deg)}
+}
+
+.screen{
+  display:none;
+  min-height:100vh;
+  padding:16px;
+  position:relative;
+  z-index:1;
+}
+
+.active{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.card{
+  width:92vw;
+  max-width:760px;
+  background:rgba(255,255,255,.96);
+  border-radius:26px;
+  padding:22px;
+  box-shadow:0 10px 26px rgba(0,0,0,.13);
+  text-align:center;
+}
+
+.logo{
+  width:180px;
+  max-width:70%;
+  height:auto;
+  margin-bottom:18px;
+}
+
+h1{
+  color:#1565c0;
+  margin:10px 0;
+  font-size:36px;
+  line-height:1.15;
+}
+
+h2{
+  color:#6a1b9a;
+  margin:8px 0;
+  font-size:24px;
+}
+
+p{
+  font-size:18px;
+  line-height:1.45;
+}
+
+button{
+  border:0;
+  border-radius:18px;
+  padding:15px 24px;
+  margin:8px;
+  font-size:18px;
+  font-weight:bold;
+  background:#ffca28;
+  color:#263238;
+  cursor:pointer;
+  box-shadow:0 5px 0 #f9a825;
+  min-height:54px;
+}
+
+button:active{
+  transform:translateY(3px);
+  box-shadow:0 2px 0 #f9a825;
+}
+
+.topbar{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-bottom:14px;
+  font-weight:bold;
+}
+
+.badge{
+  background:#e3f2fd;
+  border-radius:16px;
+  padding:10px 8px;
+  text-align:center;
+  font-size:16px;
+}
+
+.timer{
+  background:#fff3e0;
+}
+
+.progress-wrap{
+  width:100%;
+  height:12px;
+  background:#e0e0e0;
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:16px;
+}
+
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:#66bb6a;
+  transition:.3s;
+}
+
+.question{
+  font-size:24px;
+  line-height:1.4;
+  font-weight:bold;
+  margin:22px 0;
+}
+
+.options{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+}
+
+.option{
+  background:#f1f8e9;
+  border:2px solid #c5e1a5;
+  border-radius:18px;
+  padding:18px;
+  font-size:20px;
+  min-height:70px;
+  display:flex;
+  align-items:center;
+  cursor:pointer;
+  text-align:left;
+  line-height:1.3;
+}
+
+.option:hover{
+  background:#e8f5e9;
+}
+
+.correct{
+  background:#c8f7c5!important;
+  border-color:#2e7d32!important;
+  transform:scale(1.01);
+}
+
+.wrong{
+  background:#ffcdd2!important;
+  border-color:#c62828!important;
+}
+
+.feedback{
+  min-height:62px;
+  margin-top:16px;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.explain{
+  font-size:16px;
+  font-weight:normal;
+  margin-top:6px;
+  line-height:1.4;
+}
+
+.hidden{
+  display:none;
+}
+
+.confetti{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:3;
+}
+
+.star{
+  position:absolute;
+  font-size:24px;
+  animation:pop 900ms ease-out forwards;
+}
+
+@keyframes pop{
+  0%{transform:scale(.3) translateY(0);opacity:1}
+  100%{transform:scale(1.4) translateY(-120px);opacity:0}
+}
+
+.cross{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:88px;
+  color:#e53935;
+  opacity:0;
+  z-index:4;
+  animation:crossfade 700ms ease-out;
+}
+
+@keyframes crossfade{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}
+  40%{opacity:.85}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
+}
+
+.finalbox{
+  background:#fff8e1;
+  border:2px dashed #ffb300;
+  border-radius:20px;
+  padding:16px;
+  margin-top:16px;
+}
+
+.small{
+  font-size:15px;
+  color:#546e7a;
+}
+
+@media(max-width:520px){
+  .screen{
+    padding:10px;
+  }
+
+  .card{
+    width:94vw;
+    padding:16px;
+    border-radius:22px;
+  }
+
+  h1{
+    font-size:28px;
+  }
+
+  h2{
+    font-size:20px;
+  }
+
+  p{
+    font-size:16px;
+  }
+
+  .topbar{
+    grid-template-columns:1fr;
+    gap:6px;
+  }
+
+  .badge{
+    font-size:15px;
+    padding:9px 8px;
+  }
+
+  .question{
+    font-size:20px;
+    margin:18px 0;
+  }
+
+  .option{
+    font-size:18px;
+    padding:16px;
+    min-height:64px;
+  }
+
+  button{
+    width:100%;
+    font-size:18px;
+    padding:15px 18px;
+  }
+
+  .feedback{
+    font-size:17px;
+  }
+
+  .explain{
+    font-size:15px;
+  }
+}
+
+@media(max-height:520px){
+  .active{
+    align-items:flex-start;
+  }
+
+  .screen{
+    padding-top:10px;
+  }
+
+  .card{
+    margin:8px 0;
+  }
+
+  .question{
+    margin:14px 0;
+  }
+
+  .option{
+    min-height:54px;
+    padding:13px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .bg span,
+  .star,
+  .cross{
+    animation:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+  <span>⭐</span>
+  <span>🧍</span>
+  <span>⭐</span>
+  <span>💪</span>
+  <span>⭐</span>
+</div>
+
+<div id="splash" class="screen active">
+  <div class="card">
+    <img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo" loading="eager" decoding="async">
+    <h2>Loading your game...</h2>
+  </div>
+</div>
+
+<div id="intro" class="screen">
+  <div class="card">
+    <h1>Our Body</h1>
+    <h2>Grade 2 EVS</h2>
+    <p>Choose the best answer. You get one retry after a wrong answer.</p>
+    <p>Each question has a 60-second timer.</p>
+    <button onclick="startGame()">Start Game</button>
+  </div>
+</div>
+
+<div id="quiz" class="screen">
+  <div class="card">
+    <div class="topbar">
+      <div class="badge" id="qCount">Question 1/20</div>
+      <div class="badge">Score: <span id="score">0</span></div>
+      <div class="badge timer">Time: <span id="time">60</span>s</div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
+  </div>
+</div>
+
+<div id="finalChallenge" class="screen">
+  <div class="card">
+    <h1>Final Challenge</h1>
+    <div class="finalbox">
+      <p><b>Think and say:</b></p>
+      <p>Name one internal organ, one external organ, and one healthy habit for the body.</p>
+    </div>
+    <p class="small">Tap finish to see your score.</p>
+    <button onclick="showResult()">Finish</button>
+  </div>
+</div>
+
+<div id="result" class="screen">
+  <div class="card">
+    <h1>Great Work!</h1>
+    <h2>Your Score: <span id="finalScore"></span>/20</h2>
+    <p id="resultMsg"></p>
+    <button onclick="location.reload()">Play Again</button>
+  </div>
+</div>
+
+<div class="confetti" id="confetti"></div>
+
+<audio id="correctSound" src="assets/correct.mp3" preload="auto"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3" preload="auto"></audio>
+<audio id="clapSound" src="assets/clapping.mp3" preload="auto"></audio>
+
+<script>
+const questions=[
+{q:"Eyes, ears, hands, and legs can be seen from outside. These parts are called:",o:["Internal organs","External organs","Hidden organs","Food organs"],a:1,e:"Parts that can be seen from outside are called external organs."},
+{q:"The heart keeps beating inside our body, but we cannot see it from outside. This tells us that the heart is an:",o:["External organ","Internal organ","Sense organ","Joint"],a:1,e:"The heart is inside the body, so it is an internal organ."},
+{q:"While crossing the road, Niya sees the red traffic light and stops. Which sense organ helped her first?",o:["Ear","Eye","Nose","Tongue"],a:1,e:"Eyes help us see things around us."},
+{q:"The school bell rings. Riya hears it even though she cannot see the bell. Which sense organ helped her?",o:["Eyes","Ears","Hands","Legs"],a:1,e:"Ears help us hear sounds."},
+{q:"Rhea smells smoke coming from the kitchen and calls her mother. Which sense organ helped her notice it?",o:["Nose","Eye","Ear","Skin"],a:0,e:"The nose helps us smell things such as smoke."},
+{q:"Choose the correct pair.",o:["Tongue – Taste","Ear – Smell","Nose – Hearing","Eye – Touch"],a:0,e:"The tongue helps us taste."},
+{q:"Find the one that does not belong to the human body.",o:["Heart","Lungs","Stomach","Pencil"],a:3,e:"A pencil is not a part of the human body."},
+{q:"A child can stand straight, walk, and run easily. Which part gives shape and support to the body?",o:["Bones","Hair","Teeth","Nails"],a:0,e:"Bones give shape and support to our body."},
+{q:"If our body had no skeleton, what would happen?",o:["The body would become shapeless","The body would become taller","The body would stop breathing","The body would become heavier"],a:0,e:"The skeleton gives shape to the body."},
+{q:"Look at your elbow while bending your arm. Why can your arm bend there?",o:["Because of joints","Because of muscles only","Because of skin","Because of nails"],a:0,e:"Joints help body parts bend and move."},
+{q:"A swimmer moves arms and legs quickly in water. Which part helps the body move like this?",o:["Muscles","Hair","Nails","Teeth"],a:0,e:"Muscles help body parts move."},
+{q:"Choose the correct pair.",o:["Bones – Give support","Muscles – Help smell","Joints – Help taste","Skin – Helps hear"],a:0,e:"Bones support the body."},
+{q:"Amit goes cycling and skipping every evening after school. This habit helps him:",o:["Stay healthy and fit","Feel sleepy in class","Avoid homework","Grow shorter"],a:0,e:"Exercise helps us stay healthy and fit."},
+{q:"Which daily habit is best for strong bones and muscles?",o:["Playing outdoor games","Watching TV for hours","Sitting all day","Sleeping after school only"],a:0,e:"Outdoor games and exercise help make bones and muscles strong."},
+{q:"Teachers ask children to sit straight while reading and writing. Why is this a good habit?",o:["It keeps the body healthy","It makes books lighter","It helps the chair move","It changes handwriting"],a:0,e:"Sitting straight helps maintain good posture and keeps the body healthy."},
+{q:"Two children are studying. One is sitting straight and the other is bending too much. Which child has the correct posture?",o:["The child sitting straight","The child bending too much","Both are correct","Neither is correct"],a:0,e:"Sitting straight is the correct posture while studying."},
+{q:"Find the wrong habit.",o:["Exercise regularly","Sit and walk properly","Bend too much while walking","Play outdoor games"],a:2,e:"Bending too much while walking is not a good posture habit."},
+{q:"Shreya carries a heavy bag and keeps bending while walking every day. What problem may happen later?",o:["Back pain","Faster running","Better handwriting","Stronger legs"],a:0,e:"A heavy bag and poor posture may cause back pain."},
+{q:"You have one free hour after school. Which choice helps your body the most?",o:["Cycling in the park","Watching TV for the whole hour","Eating chips and resting","Sleeping on the sofa"],a:0,e:"Cycling keeps the body active and healthy."},
+{q:"A child wants to walk, run, and pick up a school bag. Which group must work together?",o:["Bones, muscles and joints","Hair, nails and teeth","Eyes, nose and ears","Tongue, skin and hair"],a:0,e:"Bones, muscles, and joints work together to help us move."}
+];
+
+let current=0;
+let score=0;
+let attempts=0;
+let timer;
+let timeLeft=60;
+let locked=false;
+
+const correctSound=document.getElementById("correctSound");
+const wrongSound=document.getElementById("wrongSound");
+const clapSound=document.getElementById("clapSound");
+
+setTimeout(function(){
+  showScreen("intro");
+},5000);
+
+function showScreen(id){
+  const screens=document.querySelectorAll(".screen");
+  for(let i=0;i<screens.length;i++){
+    screens[i].classList.remove("active");
+  }
+  document.getElementById(id).classList.add("active");
+}
+
+function startGame(){
+  score=0;
+  current=0;
+  showScreen("quiz");
+  loadQuestion();
+}
+
+function loadQuestion(){
+  locked=false;
+  attempts=0;
+  clearInterval(timer);
+  timeLeft=60;
+
+  document.getElementById("time").textContent=timeLeft;
+  document.getElementById("score").textContent=score;
+  document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
+  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("feedback").innerHTML="";
+  document.getElementById("nextBtn").classList.add("hidden");
+
+  const progress=((current)/questions.length)*100;
+  document.getElementById("progressBar").style.width=progress+"%";
+
+  const box=document.getElementById("options");
+  box.innerHTML="";
+
+  for(let i=0;i<questions[current].o.length;i++){
+    const div=document.createElement("div");
+    div.className="option";
+    div.textContent=questions[current].o[i];
+    div.onclick=function(){
+      checkAnswer(i,div);
+    };
+    box.appendChild(div);
+  }
+
+  startTimer();
+}
+
+function startTimer(){
+  timer=setInterval(function(){
+    timeLeft--;
+    document.getElementById("time").textContent=timeLeft;
+
+    if(timeLeft<=0){
+      clearInterval(timer);
+      showAnswer("Time is up!");
+    }
+  },1000);
+}
+
+function checkAnswer(i,el){
+  if(locked){
+    return;
+  }
+
+  const q=questions[current];
+
+  if(i===q.a){
+    locked=true;
+    clearInterval(timer);
+    score++;
+    document.getElementById("score").textContent=score;
+    el.classList.add("correct");
+    document.getElementById("feedback").innerHTML="Correct!<div class='explain'>"+q.e+"</div>";
+
+    playSound(correctSound);
+    setTimeout(function(){
+      playSound(clapSound);
+    },250);
+
+    makeConfetti();
+    document.getElementById("nextBtn").classList.remove("hidden");
+  }else{
+    attempts++;
+    el.classList.add("wrong");
+    showCross();
+    playSound(wrongSound);
+
+    if(attempts===1){
+      document.getElementById("feedback").innerHTML="Try once more.";
+      el.onclick=null;
+    }else{
+      showAnswer("Not quite.");
+    }
+  }
+}
+
+function showAnswer(msg){
+  locked=true;
+  clearInterval(timer);
+
+  const q=questions[current];
+  const options=document.querySelectorAll(".option");
+
+  for(let i=0;i<options.length;i++){
+    options[i].onclick=null;
+    if(i===q.a){
+      options[i].classList.add("correct");
+    }
+  }
+
+  document.getElementById("feedback").innerHTML=
+    msg+"<div class='explain'>Correct answer: <b>"+q.o[q.a]+"</b><br>"+q.e+"</div>";
+
+  document.getElementById("nextBtn").classList.remove("hidden");
+}
+
+function nextQuestion(){
+  current++;
+
+  if(current<questions.length){
+    loadQuestion();
+  }else{
+    document.getElementById("progressBar").style.width="100%";
+    showScreen("finalChallenge");
+  }
+}
+
+function showResult(){
+  showScreen("result");
+  document.getElementById("finalScore").textContent=score;
+
+  let msg="Good effort! Keep practising body parts and healthy habits.";
+
+  if(score>=18){
+    msg="Excellent! You understand body parts, organs, bones, muscles, and posture very well.";
+  }else if(score>=14){
+    msg="Well done! A little more practice will make it even better.";
+  }
+
+  document.getElementById("resultMsg").textContent=msg;
+}
+
+function makeConfetti(){
+  const box=document.getElementById("confetti");
+
+  for(let i=0;i<18;i++){
+    const s=document.createElement("div");
+    s.className="star";
+    s.textContent="⭐";
+    s.style.left=Math.random()*100+"vw";
+    s.style.top=(55+Math.random()*25)+"vh";
+    box.appendChild(s);
+
+    setTimeout(function(){
+      s.remove();
+    },900);
+  }
+}
+
+function showCross(){
+  const x=document.createElement("div");
+  x.className="cross";
+  x.textContent="✕";
+  document.body.appendChild(x);
+
+  setTimeout(function(){
+    x.remove();
+  },700);
+}
+
+function playSound(sound){
+  if(!sound){
+    return;
+  }
+
+  try{
+    sound.currentTime=0;
+    const playPromise=sound.play();
+
+    if(playPromise!==undefined){
+      playPromise.catch(function(){});
+    }
+  }catch(error){}
+}
+</script>
+
+</body>
+</html>
