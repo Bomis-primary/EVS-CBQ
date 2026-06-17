@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Air is Everywhere</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;width:100%;min-height:100%;overflow-x:hidden}
+body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#e3f2fd,#fff8e1,#e8f5e9);color:#263238}
+.bg span{position:fixed;top:-30px;font-size:22px;opacity:.22;animation:float 14s linear infinite;z-index:0}
+.bg span:nth-child(1){left:8%;animation-delay:0s}.bg span:nth-child(2){left:28%;animation-delay:3s}.bg span:nth-child(3){left:52%;animation-delay:6s}.bg span:nth-child(4){left:76%;animation-delay:2s}.bg span:nth-child(5){left:92%;animation-delay:5s}
+@keyframes float{from{transform:translateY(-40px) rotate(0deg)}to{transform:translateY(110vh) rotate(180deg)}}
+.screen{display:none;min-height:100vh;padding:16px;position:relative;z-index:1}
+.active{display:flex;align-items:center;justify-content:center}
+.card{width:92vw;max-width:760px;background:rgba(255,255,255,.96);border-radius:26px;padding:22px;box-shadow:0 10px 26px rgba(0,0,0,.13);text-align:center}
+.logo{width:180px;max-width:70%;height:auto;margin-bottom:18px}
+h1{color:#0277bd;margin:10px 0;font-size:36px;line-height:1.15}
+h2{color:#2e7d32;margin:8px 0;font-size:24px}
+p{font-size:18px;line-height:1.45}
+button{border:0;border-radius:18px;padding:15px 24px;margin:8px;font-size:18px;font-weight:bold;background:#ffca28;color:#263238;cursor:pointer;box-shadow:0 5px 0 #f9a825;min-height:54px}
+button:active{transform:translateY(3px);box-shadow:0 2px 0 #f9a825}
+.topbar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;font-weight:bold}
+.badge{background:#e3f2fd;border-radius:16px;padding:10px 8px;text-align:center;font-size:16px}
+.timer{background:#fff3e0}
+.progress-wrap{width:100%;height:12px;background:#e0e0e0;border-radius:20px;overflow:hidden;margin-bottom:16px}
+.progress-bar{height:100%;width:0%;background:#66bb6a;transition:.3s}
+.question{font-size:24px;line-height:1.4;font-weight:bold;margin:22px 0}
+.options{display:grid;grid-template-columns:1fr;gap:12px}
+.option{background:#f1f8e9;border:2px solid #c5e1a5;border-radius:18px;padding:18px;font-size:20px;min-height:70px;display:flex;align-items:center;cursor:pointer;text-align:left;line-height:1.3}
+.option:hover{background:#e8f5e9}
+.correct{background:#c8f7c5!important;border-color:#2e7d32!important;transform:scale(1.01)}
+.wrong{background:#ffcdd2!important;border-color:#c62828!important}
+.feedback{min-height:62px;margin-top:16px;font-size:18px;font-weight:bold}
+.explain{font-size:16px;font-weight:normal;margin-top:6px;line-height:1.4}
+.hidden{display:none}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:3}
+.star{position:absolute;font-size:24px;animation:pop 900ms ease-out forwards}
+@keyframes pop{0%{transform:scale(.3) translateY(0);opacity:1}100%{transform:scale(1.4) translateY(-120px);opacity:0}}
+.cross{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:88px;color:#e53935;opacity:0;z-index:4;animation:crossfade 700ms ease-out}
+@keyframes crossfade{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}40%{opacity:.85}100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}}
+.finalbox{background:#fff8e1;border:2px dashed #ffb300;border-radius:20px;padding:16px;margin-top:16px}
+.small{font-size:15px;color:#546e7a}
+@media(max-width:520px){
+.screen{padding:10px}.card{width:94vw;padding:16px;border-radius:22px}
+h1{font-size:28px}h2{font-size:20px}p{font-size:16px}
+.topbar{grid-template-columns:1fr;gap:6px}.badge{font-size:15px;padding:9px 8px}
+.question{font-size:20px;margin:18px 0}.option{font-size:18px;padding:16px;min-height:64px}
+button{width:100%;font-size:18px;padding:15px 18px}.feedback{font-size:17px}.explain{font-size:15px}
+}
+@media(max-height:520px){.active{align-items:flex-start}.screen{padding-top:10px}.card{margin:8px 0}.question{margin:14px 0}.option{min-height:54px;padding:13px}}
+@media(prefers-reduced-motion:reduce){.bg span,.star,.cross{animation:none}}
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+<span>⭐</span><span>🌬️</span><span>⭐</span><span>🪁</span><span>⭐</span>
+</div>
+
+<div id="splash" class="screen active">
+<div class="card">
+<img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo">
+<h2>Loading your game...</h2>
+</div>
+</div>
+
+<div id="intro" class="screen">
+<div class="card">
+<h1>Air is Everywhere</h1>
+<h2>Grade 2 EVS</h2>
+<p>Choose the best answer. You get one retry after a wrong answer.</p>
+<p>Each question has a 60-second timer.</p>
+<button onclick="startGame()">Start Game</button>
+</div>
+</div>
+
+<div id="quiz" class="screen">
+<div class="card">
+<div class="topbar">
+<div class="badge" id="qCount">Question 1/20</div>
+<div class="badge">Score: <span id="score">0</span></div>
+<div class="badge timer">Time: <span id="time">60</span>s</div>
+</div>
+<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+<div class="question" id="question"></div>
+<div class="options" id="options"></div>
+<div class="feedback" id="feedback"></div>
+<button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
+</div>
+</div>
+
+<div id="finalChallenge" class="screen">
+<div class="card">
+<h1>Final Challenge</h1>
+<div class="finalbox">
+<p><b>Think and say:</b></p>
+<p>Name one use of air and one way to keep air clean.</p>
+</div>
+<p class="small">Tap finish to see your score.</p>
+<button onclick="showResult()">Finish</button>
+</div>
+</div>
+
+<div id="result" class="screen">
+<div class="card">
+<h1>Great Work!</h1>
+<h2>Your Score: <span id="finalScore"></span>/20</h2>
+<p id="resultMsg"></p>
+<button onclick="location.reload()">Play Again</button>
+</div>
+</div>
+
+<div class="confetti" id="confetti"></div>
+
+<audio id="correctSound" src="assets/correct.mp3" preload="auto"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3" preload="auto"></audio>
+<audio id="clapSound" src="assets/clapping.mp3" preload="auto"></audio>
+
+<script>
+const questions=[
+{q:"A kite is flying in the sky. The kite moves because of:",o:["Soil","Air","Stones","Fire"],a:1,e:"Air helps kites move and fly."},
+{q:"Why do all living things need air?",o:["To breathe and stay alive","To make toys","To change colour","To sleep more"],a:0,e:"Living things need air to breathe and stay alive."},
+{q:"A fan is switched on in a room. What happens?",o:["Air starts moving and we feel cooler","Water starts moving","Soil starts flying","Books start growing"],a:0,e:"A fan moves air and moving air makes us feel cooler."},
+{q:"Which set helps to keep air clean?",o:["Plant trees and keep windows open","Burn waste and close windows","Keep smoke inside rooms","Cut trees and throw garbage"],a:0,e:"Planting trees and letting fresh air in help keep air clean."},
+{q:"Sunlight enters a room and tiny particles can be seen floating. These are:",o:["Stones","Dust particles","Toys","Leaves"],a:1,e:"Tiny dust particles can float in the air."},
+{q:"Why do clothes dry faster on a windy day?",o:["Moving air helps water dry faster","Clothes become heavier","Wind adds water to clothes","Air becomes wet"],a:0,e:"Moving air helps wet clothes dry faster."},
+{q:"If you cover your nose and mouth for a long time, you may:",o:["Breathe easily","Feel difficulty in breathing","Run faster","Sleep quickly"],a:1,e:"We need air to breathe properly."},
+{q:"Find the one that is different.",o:["Flying kites","Breathing","Drying clothes","Eating food"],a:3,e:"Flying kites, breathing, and drying clothes need air. Eating food is different."},
+{q:"Smoke from factories makes the air dirty. This may cause:",o:["Fresh smell","Breathing problems","More flowers","Clean roads"],a:1,e:"Dirty air can cause breathing problems."},
+{q:"A slowly moving fan gives us:",o:["Breeze","Storm","Dust","Smoke"],a:0,e:"Slowly moving air is called a breeze."},
+{q:"Very strong winds can cause storms. What may happen during a storm?",o:["Trees may fall","Flowers will bloom","Water becomes sweet","Roads disappear"],a:0,e:"Strong winds during storms can make trees fall."},
+{q:"Which is an example of a gentle breeze?",o:["Cool, slowly moving air","Strong storm wind","Thick smoke","Dust cloud"],a:0,e:"A gentle breeze is cool, slowly moving air."},
+{q:"Water from wet clothes changes into vapour and mixes with air. This is called:",o:["Water vapour","Dust","Smoke","Mud"],a:0,e:"Water vapour is water in gas form that mixes with air."},
+{q:"Why should we open doors and windows every day?",o:["To let fresh air enter","To make noise","To catch dust","To stop sunlight"],a:0,e:"Opening doors and windows lets fresh air come in."},
+{q:"Your classroom feels hot and stuffy. What should you do first?",o:["Close all windows","Open windows for fresh air","Switch off all fans","Cover your nose"],a:1,e:"Opening windows lets fresh air enter the room."},
+{q:"What should you do while sneezing?",o:["Cover your mouth and nose","Sneeze openly","Turn towards others","Remove your mask"],a:0,e:"Covering the mouth and nose while sneezing helps stop germs from spreading."},
+{q:"Children plant more trees near their school. This helps to:",o:["Make air cleaner","Increase smoke","Create more dust","Make storms stronger"],a:0,e:"Trees help clean the air."},
+{q:"Find the wrong habit.",o:["Growing plants","Keeping surroundings clean","Burning plastic waste openly","Opening windows for fresh air"],a:2,e:"Burning plastic waste makes the air dirty."},
+{q:"Why should we stay indoors when strong winds blow?",o:["Strong winds can be dangerous","Birds like windy weather","It is time for games","Trees start dancing"],a:0,e:"Strong winds can cause damage, so it is safer to stay indoors."},
+{q:"Clean air helps us stay:",o:["Healthy and active","Weak and tired","Dirty and sick","Sleepy always"],a:0,e:"Clean air helps us breathe well and stay healthy."}
+];
+
+let current=0,score=0,attempts=0,timer,timeLeft=60,locked=false;
+const correctSound=document.getElementById("correctSound");
+const wrongSound=document.getElementById("wrongSound");
+const clapSound=document.getElementById("clapSound");
+
+setTimeout(function(){showScreen("intro")},5000);
+
+function showScreen(id){
+const screens=document.querySelectorAll(".screen");
+for(let i=0;i<screens.length;i++){screens[i].classList.remove("active")}
+document.getElementById(id).classList.add("active");
+}
+
+function startGame(){score=0;current=0;showScreen("quiz");loadQuestion()}
+
+function loadQuestion(){
+locked=false;attempts=0;clearInterval(timer);timeLeft=60;
+document.getElementById("time").textContent=timeLeft;
+document.getElementById("score").textContent=score;
+document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
+document.getElementById("question").textContent=questions[current].q;
+document.getElementById("feedback").innerHTML="";
+document.getElementById("nextBtn").classList.add("hidden");
+document.getElementById("progressBar").style.width=((current)/questions.length)*100+"%";
+const box=document.getElementById("options");
+box.innerHTML="";
+for(let i=0;i<questions[current].o.length;i++){
+const div=document.createElement("div");
+div.className="option";
+div.textContent=questions[current].o[i];
+div.onclick=function(){checkAnswer(i,div)};
+box.appendChild(div);
+}
+startTimer();
+}
+
+function startTimer(){
+timer=setInterval(function(){
+timeLeft--;
+document.getElementById("time").textContent=timeLeft;
+if(timeLeft<=0){clearInterval(timer);showAnswer("Time is up!")}
+},1000);
+}
+
+function checkAnswer(i,el){
+if(locked){return}
+const q=questions[current];
+if(i===q.a){
+locked=true;clearInterval(timer);score++;
+document.getElementById("score").textContent=score;
+el.classList.add("correct");
+document.getElementById("feedback").innerHTML="Correct!<div class='explain'>"+q.e+"</div>";
+playSound(correctSound);
+setTimeout(function(){playSound(clapSound)},250);
+makeConfetti();
+document.getElementById("nextBtn").classList.remove("hidden");
+}else{
+attempts++;
+el.classList.add("wrong");
+showCross();
+playSound(wrongSound);
+if(attempts===1){
+document.getElementById("feedback").innerHTML="Try once more.";
+el.onclick=null;
+}else{
+showAnswer("Not quite.");
+}
+}
+}
+
+function showAnswer(msg){
+locked=true;clearInterval(timer);
+const q=questions[current];
+const options=document.querySelectorAll(".option");
+for(let i=0;i<options.length;i++){
+options[i].onclick=null;
+if(i===q.a){options[i].classList.add("correct")}
+}
+document.getElementById("feedback").innerHTML=msg+"<div class='explain'>Correct answer: <b>"+q.o[q.a]+"</b><br>"+q.e+"</div>";
+document.getElementById("nextBtn").classList.remove("hidden");
+}
+
+function nextQuestion(){
+current++;
+if(current<questions.length){loadQuestion()}
+else{document.getElementById("progressBar").style.width="100%";showScreen("finalChallenge")}
+}
+
+function showResult(){
+showScreen("result");
+document.getElementById("finalScore").textContent=score;
+playSound(clapSound);
+let msg="Good effort! Keep practising air, moving air, and clean air habits.";
+if(score>=18){msg="Excellent! You understand air, breeze, storms, and clean air very well."}
+else if(score>=14){msg="Well done! A little more practice will make it even better."}
+document.getElementById("resultMsg").textContent=msg;
+}
+
+function makeConfetti(){
+const box=document.getElementById("confetti");
+for(let i=0;i<18;i++){
+const s=document.createElement("div");
+s.className="star";
+s.textContent="⭐";
+s.style.left=Math.random()*100+"vw";
+s.style.top=(55+Math.random()*25)+"vh";
+box.appendChild(s);
+setTimeout(function(){s.remove()},900);
+}
+}
+
+function showCross(){
+const x=document.createElement("div");
+x.className="cross";
+x.textContent="✕";
+document.body.appendChild(x);
+setTimeout(function(){x.remove()},700);
+}
+
+function playSound(sound){
+if(!sound){return}
+try{
+sound.currentTime=0;
+const p=sound.play();
+if(p!==undefined){p.catch(function(){})}
+}catch(error){}
+}
+</script>
+
+</body>
+</html>
