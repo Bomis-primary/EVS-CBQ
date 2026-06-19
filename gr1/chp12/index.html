@@ -148,6 +148,22 @@ button:active{
   transition:.3s;
 }
 
+.question-image-container{
+  text-align:center;
+  margin:10px auto 14px;
+  min-height:0;
+}
+
+.question-image-container img{
+  display:block;
+  width:100%;
+  max-width:280px;
+  max-height:180px;
+  object-fit:contain;
+  margin:0 auto;
+  border-radius:18px;
+}
+
 .question{
   font-size:24px;
   line-height:1.4;
@@ -244,14 +260,6 @@ button:active{
   100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
 }
 
-.finalbox{
-  background:#fff8e1;
-  border:2px dashed #ffb300;
-  border-radius:20px;
-  padding:16px;
-  margin-top:16px;
-}
-
 .small{
   font-size:15px;
   color:#546e7a;
@@ -293,6 +301,11 @@ button:active{
   .question{
     font-size:20px;
     margin:18px 0;
+  }
+
+  .question-image-container img{
+    max-width:260px;
+    max-height:170px;
   }
 
   .option{
@@ -388,22 +401,11 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <div id="questionImageContainer" class="question-image-container"></div>
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
     <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
-  </div>
-</div>
-
-<div id="finalChallenge" class="screen">
-  <div class="card">
-    <h1>Final Challenge</h1>
-    <div class="finalbox">
-      <p><b>Think and say:</b></p>
-      <p>Name one way to keep the environment clean and one way to save nature.</p>
-    </div>
-    <p class="small">Tap finish to see your score.</p>
-    <button onclick="showResult()">Finish</button>
   </div>
 </div>
 
@@ -425,20 +427,20 @@ button:active{
 <script>
 const questions=[
 {q:"Riya says, “I can see trees, birds, air, and water all around me!” What is she talking about?",o:["Toy box","Environment","Classroom","Bag"],a:1,e:"The environment means everything around us, such as trees, air, water, birds, and people."},
-{q:"The Earth says, “Keep me clean so you can stay healthy!” What is the Earth telling us?",o:["Make more mess","Keep the environment clean","Cut trees","Ignore dirt"],a:1,e:"Keeping the environment clean helps us stay healthy."},
-{q:"A wrapper is flying on the road after someone dropped it. What happened?",o:["Clean place","Dirty surroundings","Happy place","Quiet place"],a:1,e:"Dropping wrappers makes the surroundings dirty."},
-{q:"You just finished a chocolate. Your hand has a wrapper. What will a smart child do?",o:["Drop it","Put it in the dustbin","Throw it far","Hide it"],a:1,e:"Wrappers should be thrown in the dustbin."},
+{q:"The Earth says, “Keep me clean so that everyone can stay healthy!” What is the Earth telling us?",o:["Make more mess","Keep the environment clean","Cut trees","Ignore dirt"],a:1,e:"Keeping the environment clean helps us stay healthy."},
+{q:"A wrapper is lying on the road because someone dropped it. What happened?",o:["Clean place","Dirty surroundings","Happy place","Quiet place"],a:1,e:"Dropping wrappers makes the surroundings dirty."},
+{q:"You just finished a chocolate. Your hand has a wrapper. What will a smart child do?",image:"assets/ch12_q4.png",o:["Drop it","Put it in the dustbin","Throw it far","Hide it"],a:1,e:"Wrappers should be thrown in the dustbin."},
 {q:"Garbage is thrown everywhere. What will the place become?",o:["Fresh","Dirty","Colourful","Quiet"],a:1,e:"Garbage thrown everywhere makes a place dirty."},
 {q:"Find the one that does NOT help the Earth.",o:["Plant trees","Use dustbin","Throw garbage anywhere","Keep clean"],a:2,e:"Throwing garbage anywhere harms the environment."},
 {q:"Someone spits on the road. What does this make the place?",o:["Clean","Dirty","Bright","Cool"],a:1,e:"Spitting on the road makes the place dirty and unhealthy."},
-{q:"You go shopping with your family. Which choice helps the Earth smile?",o:["Plastic bags","Cloth or jute bags","No bag","Tear bag"],a:1,e:"Cloth and jute bags are better choices than plastic bags."},
+{q:"You go shopping with your family. Which choice is better for the environment?",image:"assets/ch12_q8.png",o:["Plastic bags","Cloth or jute bags","No bag","Tear bag"],a:1,e:"Cloth and jute bags are better choices than plastic bags."},
 {q:"You are going to a nearby park. Which choice is better for the environment?",o:["Car","Bicycle","Stay home","Run fast"],a:1,e:"Riding a bicycle creates less pollution."},
-{q:"A child switches off the fan before leaving the room. What kind of action is this?",o:["Wasting","Saving energy","Playing","Forgetting"],a:1,e:"Switching off fans and lights saves energy."},
+{q:"A child switches off the fan before leaving the room. What kind of action is this?",image:"assets/ch12_q10.png",o:["Wasting","Saving energy","Playing","Forgetting"],a:1,e:"Switching off fans and lights saves energy."},
 {q:"More trees are planted in a place. What will happen?",o:["More dirt","Cleaner air","Less air","More heat"],a:1,e:"Trees help make the air cleaner."},
 {q:"Many trees are cut down. What problem may come?",o:["Fresh air","Less clean air","More shade","More birds"],a:1,e:"Cutting trees can reduce clean air and shade."},
 {q:"Garbage is kept inside a closed dustbin. Why is this good?",o:["To hide toys","To keep the place clean","To store food","To play"],a:1,e:"A closed dustbin helps keep the place clean."},
 {q:"Garbage is burned. What happens to the air?",o:["Fresh air","Dirty air","Cool air","No air"],a:1,e:"Burning garbage makes the air dirty."},
-{q:"You see garbage near your house. What will you do?",o:["Ignore it","Clean it or tell an adult","Add more","Play there"],a:1,e:"We should help keep our surroundings clean or tell an adult."},
+{q:"You see garbage near your home. What will you do?",o:["Ignore it","Clean it or tell an adult","Add more","Play there"],a:1,e:"We should help keep our surroundings clean or tell an adult."},
 {q:"A child waters plants every day and smiles. What does this show?",o:["Care for nature","Waste time","Playing","Noise"],a:0,e:"Watering plants shows care for nature."},
 {q:"Which action makes you a Pollution Fighter?",o:["Use plastic","Ride a bicycle","Throw waste","Burn trash"],a:1,e:"Riding a bicycle helps reduce pollution."},
 {q:"Two friends see trash. One picks it up. One walks away. Who helped the Earth?",o:["Both","The one who picked it up","The one who walked away","None"],a:1,e:"Picking up trash and putting it in the dustbin helps the Earth."},
@@ -469,9 +471,17 @@ function showScreen(id){
   document.getElementById(id).classList.add("active");
 }
 
+function shuffleQuestions(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
 function startGame(){
   score=0;
   current=0;
+  shuffleQuestions(questions);
   showScreen("quiz");
   loadQuestion();
 }
@@ -482,12 +492,26 @@ function loadQuestion(){
   clearInterval(timer);
   timeLeft=60;
 
+  const q=questions[current];
+
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("question").textContent=q.q;
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
+
+  const imageContainer=document.getElementById("questionImageContainer");
+  imageContainer.innerHTML="";
+
+  if(q.image){
+    const img=document.createElement("img");
+    img.src=q.image;
+    img.alt="Question image";
+    img.loading="eager";
+    img.decoding="async";
+    imageContainer.appendChild(img);
+  }
 
   const progress=((current)/questions.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
@@ -495,10 +519,10 @@ function loadQuestion(){
   const box=document.getElementById("options");
   box.innerHTML="";
 
-  for(let i=0;i<questions[current].o.length;i++){
+  for(let i=0;i<q.o.length;i++){
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=questions[current].o[i];
+    div.textContent=q.o[i];
     div.onclick=function(){
       checkAnswer(i,div);
     };
@@ -584,7 +608,7 @@ function nextQuestion(){
     loadQuestion();
   }else{
     document.getElementById("progressBar").style.width="100%";
-    showScreen("finalChallenge");
+    showResult();
   }
 }
 
