@@ -260,14 +260,6 @@ button:active{
   100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
 }
 
-.finalbox{
-  background:#fff8e1;
-  border:2px dashed #ffb300;
-  border-radius:20px;
-  padding:16px;
-  margin-top:16px;
-}
-
 .small{
   font-size:15px;
   color:#546e7a;
@@ -417,18 +409,6 @@ button:active{
   </div>
 </div>
 
-<div id="finalChallenge" class="screen">
-  <div class="card">
-    <h1>Final Challenge</h1>
-    <div class="finalbox">
-      <p><b>Think and say:</b></p>
-      <p>Name one part of a plant and one way plants help us.</p>
-    </div>
-    <p class="small">Tap finish to see your score.</p>
-    <button onclick="showResult()">Finish</button>
-  </div>
-</div>
-
 <div id="result" class="screen">
   <div class="card">
     <h1>Great Work!</h1>
@@ -447,25 +427,25 @@ button:active{
 <script>
 const questions=[
 {q:"Riya sees a tree and a chair. Which one can grow?",o:["Chair","Tree","Both","None"],a:1,e:"A tree is a living thing. It can grow."},
-{q:"A plant needs water and grows. What does this show?",o:["Living thing","Non-living thing","Broken thing","Old thing"],a:0,e:"Living things need water and can grow."},
+{q:"A plant needs water and grows. What does this tell us about the plant?",o:["It is a living thing","It is a non-living thing","It is a broken thing","It is an old thing"],a:0,e:"Living things need water and can grow."},
 {q:"Which one is different?",o:["Tree","Plant","Chair","Herb"],a:2,e:"A chair is non-living. The others are plants."},
 {q:"A plant is very tall with a thick stem. What is it?",image:"assets/ch4_q4.png",o:["Herb","Tree","Creeper","Shrub"],a:1,e:"A tree is tall and has a thick stem."},
 {q:"A plant is small and bushy with many branches. What is it?",image:"assets/ch4_q5.png",o:["Tree","Shrub","Herb","Creeper"],a:1,e:"A shrub is small and bushy with many branches."},
 {q:"Mint grows in a small pot with a soft stem. What is it?",o:["Tree","Shrub","Herb","Climber"],a:2,e:"A herb is a small plant with a soft stem."},
 {q:"A plant grows by taking support on a wall. What is it?",image:"assets/ch4_q7.png",o:["Tree","Creeper","Climber","Shrub"],a:2,e:"A climber needs support to grow upward."},
-{q:"Find the wrong match.",o:["Creeper – grows on ground","Climber – needs support","Tree – very small plant","Herb – soft stem"],a:2,e:"A tree is usually tall with a thick stem, not a very small plant."},
+{q:"Which pair is matched incorrectly?",o:["Creeper – grows on ground","Climber – needs support","Tree – very small plant","Herb – soft stem"],a:2,e:"A tree is usually tall with a thick stem, not a very small plant."},
 {q:"A plant does not fall even in wind. Which part helps it stay fixed?",o:["Leaf","Root","Flower","Fruit"],a:1,e:"Roots hold the plant firmly in the soil."},
 {q:"A plant is kept in sunlight to make food. Which part helps most?",o:["Root","Leaf","Stem","Flower"],a:1,e:"Leaves help plants make food using sunlight."},
 {q:"A flower grows on a plant. After some time, it becomes a fruit. Which part changed?",o:["Root","Stem","Flower","Leaf"],a:2,e:"A flower can change into a fruit."},
 {q:"Wood and paper come from plants. What does this show?",o:["Plants are useful","Plants are weak","Plants are dirty","Plants are small"],a:0,e:"Plants give us many useful things such as wood and paper."},
-{q:"A place has many trees. How is the air there?",o:["Dirty","Clean","No air","Hot"],a:1,e:"Trees help keep the air clean."},
+{q:"A place has many trees. What is the air likely to be like there?",o:["Dirty","Clean","No air","Hot"],a:1,e:"Trees help keep the air clean."},
 {q:"Carrot grows under the ground. Which part do we eat?",o:["Leaf","Root","Stem","Flower"],a:1,e:"Carrot is a root that we eat."},
 {q:"Which one is eaten as a leaf?",o:["Potato","Spinach","Carrot","Rice"],a:1,e:"Spinach is a leaf that we eat."},
 {q:"Rice and wheat are used to make food. What are they?",o:["Roots","Leaves","Seeds","Flowers"],a:2,e:"Rice and wheat are seeds."},
-{q:"You want to eat healthy food. What should you choose?",o:["Chips","Fruits","Candy","Soft drink"],a:1,e:"Fruits are healthy food from plants."},
+{q:"You want a healthy snack from a plant. What should you choose?",o:["Chips","Fruits","Candy","Soft drink"],a:1,e:"Fruits are healthy food from plants."},
 {q:"Some plants help us when we are sick. What are they called?",o:["Big plants","Medicinal plants","Dry plants","Old plants"],a:1,e:"Medicinal plants are useful when we are sick."},
-{q:"Plants are important. Why?",o:["Give us food and air","Make noise","Break things","Stop growth"],a:0,e:"Plants give us food and help keep the air clean."},
-{q:"People are cutting many trees. What is the right thing to do?",o:["Help them","Save trees","Ignore","Watch"],a:1,e:"We should save trees because they are important for life."}
+{q:"Plants are important. Why?",o:["They give us food and air","They make noise","They break things","They stop growth"],a:0,e:"Plants give us food and help keep the air clean."},
+{q:"People are cutting many trees. What is the right thing to do?",o:["Help them","Save trees","Ignore them","Watch them"],a:1,e:"We should save trees because they are important for life."}
 ];
 
 let current=0;
@@ -630,7 +610,7 @@ function nextQuestion(){
     loadQuestion();
   }else{
     document.getElementById("progressBar").style.width="100%";
-    showScreen("finalChallenge");
+    showResult();
   }
 }
 
