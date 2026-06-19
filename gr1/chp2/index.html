@@ -148,6 +148,22 @@ button:active{
   transition:.3s;
 }
 
+.question-image-container{
+  text-align:center;
+  margin:10px auto 14px;
+  min-height:0;
+}
+
+.question-image-container img{
+  display:block;
+  width:100%;
+  max-width:280px;
+  max-height:180px;
+  object-fit:contain;
+  margin:0 auto;
+  border-radius:18px;
+}
+
 .question{
   font-size:24px;
   line-height:1.4;
@@ -295,6 +311,11 @@ button:active{
     margin:18px 0;
   }
 
+  .question-image-container img{
+    max-width:260px;
+    max-height:170px;
+  }
+
   .option{
     font-size:18px;
     padding:16px;
@@ -388,6 +409,7 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <div id="questionImageContainer" class="question-image-container"></div>
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
@@ -435,9 +457,9 @@ const questions=[
 {q:"You are going to eat food. What should you do first?",o:["Jump around","Wash your hands","Sleep","Run outside"],a:1,e:"We should wash our hands before eating."},
 {q:"Ravi eats uncovered food from a roadside stall. What is the better choice?",o:["Eat it","Avoid it","Share it","Store it"],a:1,e:"Uncovered food may have dust and germs."},
 {q:"It is hot and dusty outside. Why do we wear clothes?",o:["To fly","To cover and protect our body","To play games","To eat food"],a:1,e:"Clothes cover and protect our body."},
-{q:"It is a very hot day. What is the best choice to wear?",o:["Woollen sweater","Light cotton clothes","Heavy jacket","Raincoat"],a:1,e:"Cotton clothes are comfortable in summer."},
+{q:"It is a very hot day. What is the best choice to wear?",image:"assets/ch2_q12.png",o:["Woollen sweater","Light cotton clothes","Heavy jacket","Raincoat"],a:1,e:"Cotton clothes are comfortable in summer."},
 {q:"It is very cold outside. What should you wear?",o:["T-shirt","Woollen sweater","Shorts","Sandals"],a:1,e:"Woollen clothes keep us warm."},
-{q:"It is raining heavily. What will help you stay dry?",o:["Sweater","Raincoat","Cap","Scarf"],a:1,e:"A raincoat helps us stay dry in the rain."},
+{q:"It is raining heavily. What will help you stay dry?",image:"assets/ch2_q14.png",o:["Sweater","Raincoat","Cap","Scarf"],a:1,e:"A raincoat helps us stay dry in the rain."},
 {q:"Ravi wears dirty clothes every day. What may happen?",o:["He looks neat","He stays clean","He may fall sick","Nothing happens"],a:2,e:"Dirty clothes can have germs."},
 {q:"Riya brushes her teeth every day. What does this help?",o:["Keeps teeth clean","Makes noise","Helps her run fast","Makes her taller"],a:0,e:"Brushing keeps our teeth clean."},
 {q:"Aman takes a bath daily. Why is this important?",o:["To keep his body clean","To sleep more","To eat more","To grow taller"],a:0,e:"Bathing keeps our body clean."},
@@ -469,9 +491,19 @@ function showScreen(id){
   document.getElementById(id).classList.add("active");
 }
 
+function shuffleQuestions(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
 function startGame(){
   score=0;
   current=0;
+
+  shuffleQuestions(questions);
+
   showScreen("quiz");
   loadQuestion();
 }
@@ -482,12 +514,26 @@ function loadQuestion(){
   clearInterval(timer);
   timeLeft=60;
 
+  const q=questions[current];
+
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("question").innerHTML=q.q;
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
+
+  const imageContainer=document.getElementById("questionImageContainer");
+  imageContainer.innerHTML="";
+
+  if(q.image){
+    const img=document.createElement("img");
+    img.src=q.image;
+    img.alt="Question image";
+    img.loading="eager";
+    img.decoding="async";
+    imageContainer.appendChild(img);
+  }
 
   const progress=((current)/questions.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
@@ -495,10 +541,10 @@ function loadQuestion(){
   const box=document.getElementById("options");
   box.innerHTML="";
 
-  for(let i=0;i<questions[current].o.length;i++){
+  for(let i=0;i<q.o.length;i++){
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=questions[current].o[i];
+    div.textContent=q.o[i];
     div.onclick=function(){
       checkAnswer(i,div);
     };
