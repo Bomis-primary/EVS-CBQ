@@ -148,6 +148,22 @@ button:active{
   transition:.3s;
 }
 
+.question-image-container{
+  text-align:center;
+  margin:10px auto 14px;
+  min-height:0;
+}
+
+.question-image-container img{
+  display:block;
+  width:100%;
+  max-width:280px;
+  max-height:180px;
+  object-fit:contain;
+  margin:0 auto;
+  border-radius:18px;
+}
+
 .question{
   font-size:24px;
   line-height:1.4;
@@ -295,6 +311,11 @@ button:active{
     margin:18px 0;
   }
 
+  .question-image-container img{
+    max-width:260px;
+    max-height:170px;
+  }
+
   .option{
     font-size:18px;
     padding:16px;
@@ -388,22 +409,10 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <div class="question" id="question"></div>
+    <div id="questionImageContainer" class="question-image-container"></div><div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
     <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
-  </div>
-</div>
-
-<div id="finalChallenge" class="screen">
-  <div class="card">
-    <h1>Final Challenge</h1>
-    <div class="finalbox">
-      <p><b>Think and say:</b></p>
-      <p>Name one kind of weather and one thing you see in the sky.</p>
-    </div>
-    <p class="small">Tap finish to see your score.</p>
-    <button onclick="showResult()">Finish</button>
   </div>
 </div>
 
@@ -424,11 +433,11 @@ button:active{
 
 <script>
 const questions=[
-{q:"Riya sees dark clouds and carries an umbrella before going out. Why?",o:["Sunny day","It may rain","It is night","It is windy"],a:1,e:"Dark clouds often show that it may rain."},
+{q:"Riya sees dark clouds and carries an umbrella before going out. Why?",image:"assets/ch8_q1.png",o:["Sunny day","It may rain","It is night","It is windy"],a:1,e:"Dark clouds often show that it may rain."},
 {q:"It is very hot outside. What is the better choice to stay comfortable?",o:["Woollen clothes","Light clothes","Raincoat","Sweater"],a:1,e:"Light clothes help us stay comfortable on a hot day."},
 {q:"You go out on a very cold day without warm clothes. What may happen?",o:["Feel warm","Feel cold","Feel sleepy","Feel full"],a:1,e:"Warm clothes protect us in cold weather."},
 {q:"You forgot your umbrella and get wet outside. What was the weather like?",o:["Sunny","Rainy","Cold","Windy"],a:1,e:"We get wet outside when it is rainy."},
-{q:"Strong wind is blowing. What change will you notice?",o:["Trees still","Trees moving","Water stopping","Sun hiding"],a:1,e:"Strong wind can make trees move."},
+{q:"Strong wind is blowing. What change will you notice?",image:"assets/ch8_q5.png",o:["Trees still","Trees moving","Water stopping","Sun hiding"],a:1,e:"Strong wind can make trees move."},
 {q:"Which one does NOT belong to weather?",o:["Sunny","Rainy","Windy","Bedroom"],a:3,e:"Bedroom is a room, not a type of weather."},
 {q:"It is a bright sunny day. What are people more likely to do?",o:["Use umbrella","Wear light clothes","Wear raincoat","Stay inside"],a:1,e:"People often wear light clothes on sunny days."},
 {q:"Doors and windows are kept closed on a windy day. Why?",o:["To stop wind entering","To stop sunlight","To stop noise","To stop rain"],a:0,e:"Closing doors and windows can stop strong wind from entering."},
@@ -469,9 +478,17 @@ function showScreen(id){
   document.getElementById(id).classList.add("active");
 }
 
+function shuffleQuestions(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
 function startGame(){
   score=0;
   current=0;
+  shuffleQuestions(questions);
   showScreen("quiz");
   loadQuestion();
 }
@@ -482,12 +499,24 @@ function loadQuestion(){
   clearInterval(timer);
   timeLeft=60;
 
+  const q=questions[current];
+
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("question").textContent=q.q;
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
+
+  const imageContainer=document.getElementById("questionImageContainer");
+  imageContainer.innerHTML="";
+
+  if(q.image){
+    const img=document.createElement("img");
+    img.src=q.image;
+    img.alt="Question image";
+    imageContainer.appendChild(img);
+  }
 
   const progress=((current)/questions.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
@@ -495,10 +524,10 @@ function loadQuestion(){
   const box=document.getElementById("options");
   box.innerHTML="";
 
-  for(let i=0;i<questions[current].o.length;i++){
+  for(let i=0;i<q.o.length;i++){
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=questions[current].o[i];
+    div.textContent=q.o[i];
     div.onclick=function(){
       checkAnswer(i,div);
     };
@@ -584,7 +613,7 @@ function nextQuestion(){
     loadQuestion();
   }else{
     document.getElementById("progressBar").style.width="100%";
-    showScreen("finalChallenge");
+    showResult();
   }
 }
 
