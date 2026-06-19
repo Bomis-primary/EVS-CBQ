@@ -148,6 +148,22 @@ button:active{
   transition:.3s;
 }
 
+.question-image-container{
+  text-align:center;
+  margin:10px auto 14px;
+  min-height:0;
+}
+
+.question-image-container img{
+  display:block;
+  width:100%;
+  max-width:280px;
+  max-height:180px;
+  object-fit:contain;
+  margin:0 auto;
+  border-radius:18px;
+}
+
 .question{
   font-size:24px;
   line-height:1.4;
@@ -295,6 +311,11 @@ button:active{
     margin:18px 0;
   }
 
+  .question-image-container img{
+    max-width:260px;
+    max-height:170px;
+  }
+
   .option{
     font-size:18px;
     padding:16px;
@@ -388,6 +409,7 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <div id="questionImageContainer" class="question-image-container"></div>
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
@@ -426,8 +448,8 @@ button:active{
 const questions=[
 {q:"It is raining heavily. You stay dry and safe inside. Where are you?",o:["Road","Home","Park","Shop"],a:1,e:"A home protects us from rain and keeps us safe."},
 {q:"A house protects us from rain and heat. What does this show?",o:["Houses are toys","Houses keep us safe","Houses are food","Houses are games"],a:1,e:"A house gives us shelter and protects us."},
-{q:"Riya lies on a bed and sleeps at night. Which place is she using?",o:["Kitchen","Bedroom","Bathroom","Garden"],a:1,e:"We sleep and rest in the bedroom."},
-{q:"A place has a stove and cooking vessels. What is this place?",o:["Bedroom","Kitchen","Hall","Bathroom"],a:1,e:"Food is cooked in the kitchen."},
+{q:"Riya lies on a bed and sleeps at night. Which place is she using?",image:"assets/ch7_q3.png",o:["Kitchen","Bedroom","Bathroom","Garden"],a:1,e:"We sleep and rest in the bedroom."},
+{q:"A place has a stove and cooking vessels. What is this place?",image:"assets/ch7_q4.png",o:["Bedroom","Kitchen","Hall","Bathroom"],a:1,e:"Food is cooked in the kitchen."},
 {q:"Water, soap, and a sink are used to clean hands. Which place is this?",o:["Kitchen","Bathroom","Bedroom","Balcony"],a:1,e:"We wash and clean ourselves in the bathroom."},
 {q:"Guests come home and sit together and talk. Which room is used?",o:["Bathroom","Living room","Kitchen","Store"],a:1,e:"Guests usually sit and talk in the living room."},
 {q:"Which one does NOT belong inside a house?",o:["Bedroom","Kitchen","Bathroom","Playground"],a:3,e:"A playground is outside the house."},
@@ -438,7 +460,7 @@ const questions=[
 {q:"After eating, the plate is left on the table. What is missing here?",o:["Cleaning habit","Playing habit","Sleeping habit","Running habit"],a:0,e:"Keeping plates away after eating shows a good cleaning habit."},
 {q:"Air comes inside when windows are open. Why is this helpful?",o:["For noise","For fresh air","For dust","For heat"],a:1,e:"Open windows let fresh air come inside."},
 {q:"A house has no sunlight. What may happen?",o:["Bright rooms","Dark rooms","More air","More space"],a:1,e:"Without sunlight, rooms may look dark."},
-{q:"Water is spilled on the floor. What problem can this cause?",o:["Clean floor","Someone may slip","More light","More space"],a:1,e:"Spilled water can make the floor slippery."},
+{q:"Water is spilled on the floor. What problem can this cause?",image:"assets/ch7_q15.png",o:["Clean floor","Someone may slip","More light","More space"],a:1,e:"Spilled water can make the floor slippery."},
 {q:"Wet hands and switches are a bad mix. What is the safe action?",o:["Touch quickly","Dry hands first","Ignore","Run"],a:1,e:"We should dry our hands before touching switches."},
 {q:"Books are kept properly after use. What does this show?",o:["Care and order","Mess","Waste","Dirt"],a:0,e:"Keeping books properly shows care and order."},
 {q:"A child helps in cleaning and arranging things. What does this show?",o:["Laziness","Responsibility","Anger","Fear"],a:1,e:"Helping at home shows responsibility."},
@@ -469,9 +491,19 @@ function showScreen(id){
   document.getElementById(id).classList.add("active");
 }
 
+function shuffleQuestions(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
 function startGame(){
   score=0;
   current=0;
+
+  shuffleQuestions(questions);
+
   showScreen("quiz");
   loadQuestion();
 }
@@ -482,12 +514,26 @@ function loadQuestion(){
   clearInterval(timer);
   timeLeft=60;
 
+  const q=questions[current];
+
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("question").innerHTML=q.q;
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
+
+  const imageContainer=document.getElementById("questionImageContainer");
+  imageContainer.innerHTML="";
+
+  if(q.image){
+    const img=document.createElement("img");
+    img.src=q.image;
+    img.alt="Question image";
+    img.loading="eager";
+    img.decoding="async";
+    imageContainer.appendChild(img);
+  }
 
   const progress=((current)/questions.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
@@ -495,10 +541,10 @@ function loadQuestion(){
   const box=document.getElementById("options");
   box.innerHTML="";
 
-  for(let i=0;i<questions[current].o.length;i++){
+  for(let i=0;i<q.o.length;i++){
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=questions[current].o[i];
+    div.textContent=q.o[i];
     div.onclick=function(){
       checkAnswer(i,div);
     };
