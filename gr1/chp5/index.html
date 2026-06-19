@@ -417,18 +417,6 @@ button:active{
   </div>
 </div>
 
-<div id="finalChallenge" class="screen">
-  <div class="card">
-    <h1>Final Challenge</h1>
-    <div class="finalbox">
-      <p><b>Think and say:</b></p>
-      <p>Name one animal that lives on land and one animal that lives in water.</p>
-    </div>
-    <p class="small">Tap finish to see your score.</p>
-    <button onclick="showResult()">Finish</button>
-  </div>
-</div>
-
 <div id="result" class="screen">
   <div class="card">
     <h1>Great Work!</h1>
@@ -449,20 +437,20 @@ const questions=[
 {q:"Riya sees a tiger in a forest. Where does this animal belong?",image:"assets/ch5_q1.png",o:["Home","Forest","Farm","School"],a:1,e:"A tiger is a wild animal that lives in forests."},
 {q:"A cow lives with people and gives milk. Which group does it belong to?",o:["Wild animals","Animals that live with humans","Animals in water","Animals in air"],a:1,e:"A cow lives with humans and is useful to us."},
 {q:"You want an animal that can live and play at home. Which is a good choice?",image:"assets/ch5_q3.png",o:["Tiger","Dog","Lion","Elephant"],a:1,e:"A dog can live at home as a pet."},
-{q:"A farmer keeps hens for eggs. Why are hens kept?",o:["For fun","For eggs","For running","For flying"],a:1,e:"Hens are kept because they give us eggs."},
+{q:"A farmer keeps hens on his farm. Why are hens useful?",o:["For fun","For eggs","For running","For flying"],a:1,e:"Hens are useful because they give us eggs."},
 {q:"Which one does NOT belong?",o:["Cow","Goat","Tiger","Sheep"],a:2,e:"Cow, goat, and sheep live with humans. A tiger is a wild animal."},
 {q:"An elephant walks and lives on land. Where will you NOT find it?",o:["Forest","Zoo","Water only","Grassland"],a:2,e:"An elephant lives on land, not only in water."},
 {q:"A fish is taken out of water. What may happen?",o:["It runs","It cannot live properly","It flies","It jumps"],a:1,e:"A fish needs water to live."},
 {q:"A lion hunts other animals. What is the reason?",o:["To sleep","To eat","To play","To jump"],a:1,e:"A lion hunts other animals for food."},
 {q:"Which one can fly in the sky?",image:"assets/ch5_q9.png",o:["Dog","Sparrow","Fish","Cow"],a:1,e:"A sparrow is a bird. Birds can fly."},
-{q:"Find the wrong one.",o:["Fish – swims","Bird – flies","Cow – flies","Dog – runs"],a:2,e:"A cow does not fly. It walks and runs on land."},
+{q:"Which pair is incorrect?",o:["Fish – swims","Bird – flies","Cow – flies","Dog – runs"],a:2,e:"A cow does not fly. It walks and runs on land."},
 {q:"Which one is very small and has six legs?",o:["Dog","Butterfly","Cow","Lion"],a:1,e:"A butterfly is an insect. Insects have six legs."},
-{q:"Which pair is correct?",o:["Dog – calf","Cow – cub","Dog – puppy","Cat – lamb"],a:2,e:"A baby dog is called a puppy."},
-{q:"A baby cow is called a calf. Which animal has a cub?",o:["Lion","Goat","Duck","Cow"],a:0,e:"A baby lion is called a cub."},
+{q:"Which animal and baby animal are matched correctly?",o:["Dog – calf","Cow – cub","Dog – puppy","Cat – lamb"],a:2,e:"A baby dog is called a puppy."},
+{q:"A baby cow is called a calf. Which animal's baby is called a cub?",o:["Lion","Goat","Duck","Cow"],a:0,e:"A baby lion is called a cub."},
 {q:"A cow eats grass every day. Which food does it choose?",o:["Plants","Meat","Both","None"],a:0,e:"A cow eats grass, which comes from plants."},
 {q:"Which animal eats other animals?",o:["Cow","Lion","Goat","Deer"],a:1,e:"A lion eats other animals."},
 {q:"A bear eats fruits and also small animals. What does it eat?",o:["Only plants","Only meat","Both","Nothing"],a:2,e:"A bear can eat both plants and animals."},
-{q:"A dog rests safely inside its home. What is this place called?",o:["Toy","Shelter","Food","Game"],a:1,e:"A shelter is a safe place where an animal lives or rests."},
+{q:"A dog rests safely in its home. What is this place called?",o:["Toy","Shelter","Food","Game"],a:1,e:"A shelter is a safe place where an animal lives or rests."},
 {q:"Which animal lives in a burrow?",image:"assets/ch5_q18.png",o:["Lion","Rabbit","Dog","Horse"],a:1,e:"A rabbit lives in a burrow."},
 {q:"We get eggs from hens. What does this show?",o:["Animals help us","Animals fly","Animals sleep","Animals run"],a:0,e:"Animals help us in many ways. Hens give us eggs."},
 {q:"A dog needs food, water, and a place to stay. What does this show?",o:["Animals need care","Animals live alone","Animals do not need food","Animals do not need water"],a:0,e:"Animals need food, water, shelter, and care."}
@@ -630,7 +618,7 @@ function nextQuestion(){
     loadQuestion();
   }else{
     document.getElementById("progressBar").style.width="100%";
-    showScreen("finalChallenge");
+    showResult();
   }
 }
 
