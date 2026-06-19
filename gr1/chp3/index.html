@@ -260,13 +260,6 @@ button:active{
   100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
 }
 
-.finalbox{
-  background:#fff8e1;
-  border:2px dashed #ffb300;
-  border-radius:20px;
-  padding:16px;
-  margin-top:16px;
-}
 
 .small{
   font-size:15px;
@@ -434,26 +427,26 @@ button:active{
 
 <script>
 const questions=[
-{q:"Riya is sad. Her mother hugs her and talks to her. What does this show?",o:["Care for family","Fighting","Ignoring","Sleeping"],a:0,e:"Family members care for and help one another."},
-{q:"Aman lives with his parents and his sister. Who are the members of his family?",o:["Parents and children","Big family","Friends","Teachers"],a:0,e:"A family can have parents and children living together."},
-{q:"Meena lives with grandparents, parents, and brother. What does this show?",image:"assets/ch3_q3.png",o:["Small family","Big family","Friends","School group"],a:1,e:"A family with many members like grandparents, parents, and cousins is a big family."},
-{q:"Ravi cleans his room to help his mother. What is he doing?",o:["Playing","Helping family","Studying","Sleeping"],a:1,e:"Helping at home is a good family habit."},
-{q:"Your father is washing the car. What is a good thing you can do?",o:["Help him","Watch","Go play","Sit"],a:0,e:"We should help our family members when we can."},
-{q:"Grandparents tell stories to children. What does this help show?",o:["Love","Noise","Tiredness","Stopping learning"],a:0,e:"Grandparents show love and care in many ways."},
+{q:"Aryan is sad after a difficult day. His mother hugs him and talks to him. What does this show?",o:["Care for family","Fighting","Ignoring","Sleeping"],a:0,e:"Family members care for and help one another."},
+{q:"Aryan lives with his parents and his sister. Who are the members of his family?",o:["Parents and children","Big family","Friends","Teachers"],a:0,e:"A family can have parents and children living together."},
+{q:"Aryan lives with his grandparents, parents, and brother. What type of family does he have?",image:"assets/ch3_q3.png",o:["Small family","Big family","Friends","School group"],a:1,e:"A family with many members like grandparents, parents, and cousins is a big family."},
+{q:"Aryan helps his mother by cleaning his room. What is he doing?",o:["Playing","Helping family","Studying","Sleeping"],a:1,e:"Helping at home is a good family habit."},
+{q:"Your father is washing the car. What would be a helpful thing for you to do?",o:["Help him","Watch","Go play","Sit"],a:0,e:"We should help our family members when we can."},
+{q:"Aryan listens to stories told by his grandparents. What does this show?",o:["Love","Noise","Tiredness","Stopping learning"],a:0,e:"Grandparents show love and care in many ways."},
 {q:"Your family is free in the evening. What is a good way to spend time together?",o:["Sit alone","Play together","Fight","Ignore"],a:1,e:"Playing together is a good way for families to spend time."},
-{q:"It is your birthday. What do families usually do?",o:["Ignore it","Celebrate","Stay quiet","Go to school"],a:1,e:"Families often celebrate special days together."},
+{q:"It is Aryan’s birthday. What do families usually do on such a special day?",o:["Ignore it","Celebrate","Stay quiet","Go to school"],a:1,e:"Families often celebrate special days together."},
 {q:"Your family is eating dinner together. What should you do?",o:["Watch TV","Eat together","Run out","Sleep"],a:1,e:"Eating together is a good family habit."},
 {q:"You learn reading, writing, and new things every day. Where are you?",o:["Home","School","Playground","Market"],a:1,e:"We go to school to learn new things."},
 {q:"Your teacher helps you when you do not understand something. What does this show?",o:["Helps learning","Only play","Not useful","For sleep"],a:0,e:"Teachers help us learn and understand better."},
 {q:"You want to read many books. Where should you go?",o:["Playground","Library","Bus","Corridor"],a:1,e:"A library has many books for reading."},
-{q:"A child feels sick in school. Where should they go?",image:"assets/ch3_q13.png",o:["Class","Playground","Medical room","Library"],a:2,e:"The medical room is the right place to go when someone feels sick at school."},
-{q:"You want to play games with your friends. Where should you go?",image:"assets/ch3_q14.png",o:["Library","Playground","Staff room","Office"],a:1,e:"The playground is the right place to play games."},
-{q:"Ravi is running in the corridor. What may happen?",o:["He may run fast","He may get hurt","He may learn more","Nothing will happen"],a:1,e:"Running in the corridor is unsafe and can cause injury."},
-{q:"You are walking on the stairs in school. What should you do?",o:["Run","Walk slowly","Jump","Push"],a:1,e:"We should walk slowly and carefully on stairs."},
-{q:"A stranger offers you chocolate outside school. What should you do?",o:["Take it","Talk to them","Say no","Go with them"],a:2,e:"We should not take things from strangers."},
-{q:"You are in a school bus. What is the safe thing to do?",o:["Put your hand out","Sit properly","Stand","Move around"],a:1,e:"Sitting properly in the bus keeps us safe."},
-{q:"You meet your teacher in school. What should you do?",o:["Ignore","Greet","Run","Shout"],a:1,e:"Greeting teachers is a good manner."},
-{q:"You are sitting in class. What is the right way to sit?",o:["Bend","Sit straight","Lie down","Turn around"],a:1,e:"Sitting straight helps us listen and learn better."}
+{q:"Aryan feels unwell during school. Where should he go for help?",image:"assets/ch3_q13.png",o:["Class","Playground","Medical room","Library"],a:2,e:"The medical room is the right place to go when someone feels sick at school."},
+{q:"Aryan wants to play football with his friends. Where should he go?",image:"assets/ch3_q14.png",o:["Library","Playground","Staff room","Office"],a:1,e:"The playground is the right place to play games."},
+{q:"Aryan is running in the school corridor. What may happen?",o:["He may run fast","He may get hurt","He may learn more","Nothing will happen"],a:1,e:"Running in the corridor is unsafe and can cause injury."},
+{q:"While using the stairs at school, what should you do to stay safe?",o:["Run","Walk slowly","Jump","Push"],a:1,e:"We should walk slowly and carefully on stairs."},
+{q:"A stranger offers Aryan a chocolate outside school. What should he do?",o:["Take it","Talk to them","Say no","Go with them"],a:2,e:"We should not take things from strangers."},
+{q:"Aryan is travelling in a school bus. What is the safest thing for him to do?",o:["Put your hand out","Sit properly","Stand","Move around"],a:1,e:"Sitting properly in the bus keeps us safe."},
+{q:"Aryan meets his teacher in the school corridor. What should he do?",o:["Ignore","Greet","Run","Shout"],a:1,e:"Greeting teachers is a good manner."},
+{q:"Aryan is sitting in class and listening to the teacher. How should he sit?",o:["Bend","Sit straight","Lie down","Turn around"],a:1,e:"Sitting straight helps us listen and learn better."}
 ];
 
 let current=0;
