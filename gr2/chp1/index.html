@@ -153,8 +153,8 @@ button:active{
 .question-image-container img{
   display:block;
   width:100%;
-  max-width:360px;
-  max-height:260px;
+  max-width:280px;
+  max-height:180px;
   object-fit:contain;
   margin:0 auto;
   border-radius:18px;
@@ -288,8 +288,8 @@ button:active{
     margin:16px 0;
   }
   .question-image-container img{
-    max-width:300px;
-    max-height:220px;
+    max-width:260px;
+    max-height:170px;
   }
   .option{
     font-size:18px;
@@ -553,9 +553,20 @@ function showScreen(id){
   document.getElementById(id).classList.add("active");
 }
 
+
+function shuffleQuestions(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
 function startGame(){
   score=0;
   current=0;
+
+  shuffleQuestions(questions);
+
   showScreen("quiz");
   loadQuestion();
 }
