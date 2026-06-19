@@ -260,14 +260,6 @@ button:active{
   100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
 }
 
-.finalbox{
-  background:#fff8e1;
-  border:2px dashed #ffb300;
-  border-radius:20px;
-  padding:16px;
-  margin-top:16px;
-}
-
 .small{
   font-size:15px;
   color:#546e7a;
@@ -409,7 +401,8 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <div id="questionImageContainer" class="question-image-container"></div><div class="question" id="question"></div>
+    <div id="questionImageContainer" class="question-image-container"></div>
+    <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
     <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
@@ -440,18 +433,18 @@ const questions=[
 {q:"Strong wind is blowing. What change will you notice?",image:"assets/ch8_q5.png",o:["Trees still","Trees moving","Water stopping","Sun hiding"],a:1,e:"Strong wind can make trees move."},
 {q:"Which one does NOT belong to weather?",o:["Sunny","Rainy","Windy","Bedroom"],a:3,e:"Bedroom is a room, not a type of weather."},
 {q:"It is a bright sunny day. What are people more likely to do?",o:["Use umbrella","Wear light clothes","Wear raincoat","Stay inside"],a:1,e:"People often wear light clothes on sunny days."},
-{q:"Doors and windows are kept closed on a windy day. Why?",o:["To stop wind entering","To stop sunlight","To stop noise","To stop rain"],a:0,e:"Closing doors and windows can stop strong wind from entering."},
+{q:"People close doors and windows on a windy day. Why?",o:["To stop wind entering","To stop sunlight","To stop noise","To stop rain"],a:0,e:"Closing doors and windows can stop strong wind from entering."},
 {q:"You wake up and see the sun just rising. What part of the day is starting?",o:["Night","Morning","Evening","Late night"],a:1,e:"The sun rises in the morning."},
 {q:"Children are having lunch at school. What time is it likely?",o:["Morning","Afternoon","Evening","Night"],a:1,e:"Lunch is usually eaten in the afternoon."},
 {q:"The sun is going down and the sky looks orange. What time is this?",o:["Morning","Afternoon","Evening","Night"],a:2,e:"The sun goes down in the evening."},
 {q:"You look up and see stars clearly in the sky. What does this tell you?",o:["It is daytime","It is night","It is raining","It is morning"],a:1,e:"Stars are usually seen clearly at night."},
 {q:"On a clear day, the sky looks blue. What does this show?",o:["No clouds blocking it","Heavy rain","Strong wind","No sunlight"],a:0,e:"A clear blue sky means there are no dark clouds blocking it."},
 {q:"Dark clouds gather in the sky. What may happen next?",o:["Snow","Rain","Wind stops","Sun shines"],a:1,e:"Dark clouds can bring rain."},
-{q:"After rain, sunlight comes and you see colours in the sky. When does this happen?",o:["Only at night","After rain with sunlight","During wind","During heat"],a:1,e:"A rainbow can appear after rain when sunlight is present."},
+{q:"After rain, you see many colours in the sky. What is this called?",o:["Rainbow","Cloud","Moon","Star"],a:0,e:"A rainbow can appear after rain when sunlight is present."},
 {q:"Plants grow well in sunlight. What does this show?",o:["Sun gives energy","Sun gives water","Sun gives wind","Sun gives soil"],a:0,e:"Sunlight gives energy that helps plants grow."},
 {q:"The sun is very strong. What is a safe action?",o:["Look at sun","Stay protected","Stand in heat","Run fast"],a:1,e:"We should protect ourselves from strong sunlight."},
 {q:"You see the moon shining in the sky. What does this tell you?",o:["It is day","It is night","It is noon","It is morning"],a:1,e:"The moon is usually seen at night."},
-{q:"Find the wrong one.",o:["Sun – day","Moon – night","Stars – day sky","Clouds – sky"],a:2,e:"Stars are usually seen in the night sky, not the day sky."},
+{q:"Which pair is incorrect?",o:["Sun – day","Moon – night","Stars – day sky","Clouds – sky"],a:2,e:"Stars are usually seen in the night sky, not the day sky."},
 {q:"Weather changes every day. What does this affect?",o:["Only sky","Daily activities","Only animals","Only plants"],a:1,e:"Weather affects what we wear and what we do every day."}
 ];
 
@@ -515,6 +508,8 @@ function loadQuestion(){
     const img=document.createElement("img");
     img.src=q.image;
     img.alt="Question image";
+    img.loading="eager";
+    img.decoding="async";
     imageContainer.appendChild(img);
   }
 
