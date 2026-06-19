@@ -260,14 +260,6 @@ button:active{
   100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
 }
 
-.finalbox{
-  background:#fff8e1;
-  border:2px dashed #ffb300;
-  border-radius:20px;
-  padding:16px;
-  margin-top:16px;
-}
-
 .small{
   font-size:15px;
   color:#546e7a;
@@ -417,18 +409,6 @@ button:active{
   </div>
 </div>
 
-<div id="finalChallenge" class="screen">
-  <div class="card">
-    <h1>Final Challenge</h1>
-    <div class="finalbox">
-      <p><b>Think and say:</b></p>
-      <p>Name one healthy food, one clean habit, and one thing you wear in the rain.</p>
-    </div>
-    <p class="small">Tap finish to see your score.</p>
-    <button onclick="showResult()">Finish</button>
-  </div>
-</div>
-
 <div id="result" class="screen">
   <div class="card">
     <h1>Great Work!</h1>
@@ -446,26 +426,26 @@ button:active{
 
 <script>
 const questions=[
-{q:"Riya feels tired while playing. What is a good choice for her?",o:["Eat healthy food","Stop playing forever","Wear a sweater","Sleep in class"],a:0,e:"Healthy food gives us energy."},
-{q:"Aman is eating a banana. Where did it come from?",o:["Animals","Plants","Water","Air"],a:1,e:"Bananas come from plants."},
-{q:"Meena drinks milk every day. Where does milk come from?",o:["Plants","Animals","Soil","Leaves"],a:1,e:"Milk comes from animals like cows and buffaloes."},
-{q:"Rohit eats only chips every day. What may happen?",o:["He becomes stronger","He stays healthy","He may fall sick","He grows taller"],a:2,e:"Eating only junk food is not healthy."},
-{q:"Riya wants to stay healthy. What should she eat?",o:["Chips","Fruits","Candy","Soft drinks"],a:1,e:"Fruits are healthy food."},
-{q:"Tina skips her lunch at school. How may she feel later?",o:["Energetic","Tired","Strong","Excited"],a:1,e:"Skipping meals can make us feel tired."},
-{q:"It is morning and you feel hungry before school. What should you eat?",o:["Dinner","Breakfast","Only snacks","Nothing"],a:1,e:"Breakfast is the morning meal."},
-{q:"Neha eats food without washing her hands. What may happen?",o:["She becomes stronger","She may fall sick","Food tastes better","Nothing happens"],a:1,e:"Dirty hands can carry germs."},
-{q:"You are going to eat food. What should you do first?",o:["Jump around","Wash your hands","Sleep","Run outside"],a:1,e:"We should wash our hands before eating."},
-{q:"Ravi eats uncovered food from a roadside stall. What is the better choice?",o:["Eat it","Avoid it","Share it","Store it"],a:1,e:"Uncovered food may have dust and germs."},
+{q:"Riya feels tired while playing. What should she choose to get energy?",o:["Eat healthy food","Stop playing forever","Wear a sweater","Sleep in class"],a:0,e:"Healthy food gives us energy."},
+{q:"Aman is eating a banana. Where does it come from?",o:["Animals","Plants","Water","Air"],a:1,e:"Bananas come from plants."},
+{q:"Meena drinks milk every day. Where does milk come from?",o:["Plants","Animals","Soil","Leaves"],a:1,e:"Milk comes from animals such as cows and buffaloes."},
+{q:"Rohit eats only chips every day. What may happen to him?",o:["He may become stronger","He may stay healthy","He may fall sick","He may grow taller quickly"],a:2,e:"Eating only junk food is not healthy."},
+{q:"Riya wants a healthy snack. What should she choose?",o:["Chips","Fruits","Candy","Soft drinks"],a:1,e:"Fruits are healthy snacks."},
+{q:"Tina skips lunch at school. How may she feel later?",o:["Energetic","Tired","Strong","Excited"],a:1,e:"Skipping meals can make us feel tired."},
+{q:"It is morning, and you feel hungry before school. Which meal should you eat?",o:["Dinner","Breakfast","Only snacks","Nothing"],a:1,e:"Breakfast is the morning meal."},
+{q:"Neha eats food without washing her hands. What may happen to her?",o:["She may become stronger","She may fall sick","The food may taste better","Nothing will happen"],a:1,e:"Dirty hands can carry germs."},
+{q:"After using the toilet, what should you do?",o:["Jump around","Wash your hands","Sleep","Run outside"],a:1,e:"We should wash our hands after using the toilet."},
+{q:"Ravi sees uncovered food at a roadside stall. What is the better choice?",o:["Eat it","Avoid it","Share it","Store it"],a:1,e:"Uncovered food may have dust and germs."},
 {q:"It is hot and dusty outside. Why do we wear clothes?",o:["To fly","To cover and protect our body","To play games","To eat food"],a:1,e:"Clothes cover and protect our body."},
-{q:"It is a very hot day. What is the best choice to wear?",image:"assets/ch2_q12.png",o:["Woollen sweater","Light cotton clothes","Heavy jacket","Raincoat"],a:1,e:"Cotton clothes are comfortable in summer."},
+{q:"It is a very hot day. What is the best thing to wear?",image:"assets/ch2_q12.png",o:["Woollen sweater","Light cotton clothes","Heavy jacket","Raincoat"],a:1,e:"Cotton clothes are comfortable in summer."},
 {q:"It is very cold outside. What should you wear?",o:["T-shirt","Woollen sweater","Shorts","Sandals"],a:1,e:"Woollen clothes keep us warm."},
 {q:"It is raining heavily. What will help you stay dry?",image:"assets/ch2_q14.png",o:["Sweater","Raincoat","Cap","Scarf"],a:1,e:"A raincoat helps us stay dry in the rain."},
-{q:"Ravi wears dirty clothes every day. What may happen?",o:["He looks neat","He stays clean","He may fall sick","Nothing happens"],a:2,e:"Dirty clothes can have germs."},
-{q:"Riya brushes her teeth every day. What does this help?",o:["Keeps teeth clean","Makes noise","Helps her run fast","Makes her taller"],a:0,e:"Brushing keeps our teeth clean."},
-{q:"Aman takes a bath daily. Why is this important?",o:["To keep his body clean","To sleep more","To eat more","To grow taller"],a:0,e:"Bathing keeps our body clean."},
+{q:"Ravi wears dirty clothes every day. What may happen to him?",o:["He may look neat","He may stay clean","He may fall sick","Nothing will happen"],a:2,e:"Dirty clothes can have germs."},
+{q:"Riya brushes her teeth every day. What does this help do?",o:["Keep her teeth clean","Make noise","Help her run fast","Make her taller"],a:0,e:"Brushing keeps our teeth clean."},
+{q:"Aman takes a bath every day. Why is this important?",o:["To keep his body clean","To sleep more","To eat more","To grow taller"],a:0,e:"Bathing keeps our body clean."},
 {q:"Your friend shares food with you. What is the right thing to do?",o:["Say thank you","Stay quiet","Walk away","Ask for more"],a:0,e:"We should say thank you when someone shares with us."},
-{q:"You want to enter a room. What should you do?",o:["Run inside","Knock on the door","Shout loudly","Jump inside"],a:1,e:"Knocking on the door before entering is good manners."},
-{q:"Riya eats junk food every day and does not play. What may happen?",o:["She stays healthy","She becomes strong","She may fall sick","She runs faster"],a:2,e:"Healthy food and play help us stay healthy."}
+{q:"You want to enter a room. What should you do first?",o:["Run inside","Knock on the door","Shout loudly","Jump inside"],a:1,e:"Knocking on the door before entering shows good manners."},
+{q:"Riya eats healthy food, plays outside, and keeps herself clean. What may happen?",o:["She may stay healthy","She may become weak","She may fall sick often","She may feel tired every day"],a:0,e:"Healthy food, play, and cleanliness help us stay healthy."}
 ];
 
 let current=0;
@@ -630,7 +610,7 @@ function nextQuestion(){
     loadQuestion();
   }else{
     document.getElementById("progressBar").style.width="100%";
-    showScreen("finalChallenge");
+    showResult();
   }
 }
 
