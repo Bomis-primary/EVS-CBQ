@@ -417,18 +417,6 @@ button:active{
   </div>
 </div>
 
-<div id="finalChallenge" class="screen">
-  <div class="card">
-    <h1>Final Challenge</h1>
-    <div class="finalbox">
-      <p><b>Think and say:</b></p>
-      <p>Name one way you can help at home and one rule you should follow in school.</p>
-    </div>
-    <p class="small">Tap finish to see your score.</p>
-    <button onclick="showResult()">Finish</button>
-  </div>
-</div>
-
 <div id="result" class="screen">
   <div class="card">
     <h1>Great Work!</h1>
@@ -447,7 +435,7 @@ button:active{
 <script>
 const questions=[
 {q:"Riya is sad. Her mother hugs her and talks to her. What does this show?",o:["Care for family","Fighting","Ignoring","Sleeping"],a:0,e:"Family members care for and help one another."},
-{q:"Aman lives with his parents and one sister. Who lives in his house?",o:["Parents and children","Big family","Friends","Teachers"],a:0,e:"A family can have parents and children living together."},
+{q:"Aman lives with his parents and his sister. Who are the members of his family?",o:["Parents and children","Big family","Friends","Teachers"],a:0,e:"A family can have parents and children living together."},
 {q:"Meena lives with grandparents, parents, and cousins. What does this show?",image:"assets/ch3_q3.png",o:["Small family","Big family","Friends","School group"],a:1,e:"A family with many members like grandparents, parents, and cousins is a big family."},
 {q:"Ravi cleans his room to help his mother. What is he doing?",o:["Playing","Helping family","Studying","Sleeping"],a:1,e:"Helping at home is a good family habit."},
 {q:"Your father is washing the car. What is a good thing you can do?",o:["Help him","Watch","Go play","Sit"],a:0,e:"We should help our family members when we can."},
@@ -456,7 +444,7 @@ const questions=[
 {q:"It is your birthday. What do families usually do?",o:["Ignore it","Celebrate","Stay quiet","Go to school"],a:1,e:"Families often celebrate special days together."},
 {q:"Your family is eating dinner together. What should you do?",o:["Watch TV","Eat together","Run out","Sleep"],a:1,e:"Eating together is a good family habit."},
 {q:"You learn reading, writing, and new things every day. Where are you?",o:["Home","School","Playground","Market"],a:1,e:"We go to school to learn new things."},
-{q:"Your teacher helps you when you do not understand. What does this show?",o:["Helps learning","Only play","Not useful","For sleep"],a:0,e:"Teachers help us learn and understand better."},
+{q:"Your teacher helps you when you do not understand something. What does this show?",o:["Helps learning","Only play","Not useful","For sleep"],a:0,e:"Teachers help us learn and understand better."},
 {q:"You want to read many books. Where should you go?",o:["Playground","Library","Bus","Corridor"],a:1,e:"A library has many books for reading."},
 {q:"A child feels sick in school. Where should they go?",image:"assets/ch3_q13.png",o:["Class","Playground","Medical room","Library"],a:2,e:"The medical room is the right place to go when someone feels sick at school."},
 {q:"You want to play games with your friends. Where should you go?",image:"assets/ch3_q14.png",o:["Library","Playground","Staff room","Office"],a:1,e:"The playground is the right place to play games."},
@@ -630,7 +618,7 @@ function nextQuestion(){
     loadQuestion();
   }else{
     document.getElementById("progressBar").style.width="100%";
-    showScreen("finalChallenge");
+    showResult();
   }
 }
 
