@@ -152,8 +152,22 @@ button:active{
   font-size:24px;
   line-height:1.4;
   font-weight:bold;
-  margin:22px 0;
+  margin:22px 0 12px;
 }
+.question-image-wrap{
+  margin:10px auto 14px;
+  text-align:center;
+}
+
+.question-image{
+  max-width:100%;
+  width:260px;
+  max-height:220px;
+  object-fit:contain;
+  border-radius:18px;
+  background:#ffffff;
+}
+
 
 .options{
   display:grid;
@@ -292,7 +306,12 @@ button:active{
 
   .question{
     font-size:20px;
-    margin:18px 0;
+    margin:18px 0 10px;
+  }
+
+  .question-image{
+    width:220px;
+    max-height:180px;
   }
 
   .option{
@@ -389,6 +408,9 @@ button:active{
     </div>
 
     <div class="question" id="question"></div>
+    <div class="question-image-wrap hidden" id="questionImageWrap">
+      <img id="questionImage" class="question-image" alt="Question picture" loading="eager" decoding="async">
+    </div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
     <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
@@ -423,28 +445,35 @@ button:active{
 <audio id="clapSound" src="assets/clapping.mp3" preload="auto"></audio>
 
 <script>
-const questions=[
-{q:"Riya hears her teacher calling her. What helps her hear?",o:["Eyes","Ears","Nose","Hands"],a:1,e:"We hear sounds with our ears."},
-{q:"Aman smells a flower. What helps him smell?",o:["Tongue","Eyes","Nose","Skin"],a:2,e:"We smell things with our nose."},
-{q:"Meena eats an apple and says it is sweet. What helps her know this?",o:["Nose","Tongue","Eyes","Ears"],a:1,e:"We taste food with our tongue."},
-{q:"Rohit touches ice and says, “It is cold!” What helps him feel this?",o:["Eyes","Skin","Nose","Ears"],a:1,e:"Our skin helps us feel hot, cold, hard, and soft things."},
-{q:"Sara is reading a book. What helps her read?",o:["Ears","Nose","Eyes","Hands"],a:2,e:"We use our eyes to see and read."},
-{q:"Ravi closes his eyes. What can he NOT do now?",o:["Smell food","Hear sounds","See things","Taste food"],a:2,e:"When eyes are closed, we cannot see things clearly."},
-{q:"You hear a school bell ringing. What helps you hear it?",o:["Eyes","Skin","Ears","Tongue"],a:2,e:"Ears help us hear sounds like a bell."},
-{q:"Neha touches a hot cup and quickly leaves it. Why?",o:["She saw it","She felt it was hot","She smelled it","She heard it"],a:1,e:"Skin helps us feel if something is hot."},
-{q:"You touch a stone and say, “It is hard.” What helps you know this?",o:["Eyes","Nose","Skin","Ears"],a:2,e:"Skin helps us feel if something is hard or soft."},
-{q:"Arjun wants to check if milk smells bad. What should he use?",o:["Eyes","Nose","Skin","Hands"],a:1,e:"The nose helps us smell good and bad smells."},
-{q:"You hear your friend calling you from behind. What helps you know this?",o:["Eyes","Ears","Nose","Tongue"],a:1,e:"Ears help us hear someone calling."},
-{q:"You close your nose. What can you NOT do properly?",o:["See","Hear","Smell","Touch"],a:2,e:"The nose helps us smell."},
-{q:"It is dark and you cannot see anything. Which part is not helping you now?",o:["Nose","Tongue","Eyes","Skin"],a:2,e:"Eyes need light to see clearly."},
-{q:"Karan eats a lemon and makes a sour face. What helps him taste it?",o:["Eyes","Nose","Tongue","Skin"],a:2,e:"The tongue helps us taste sweet, sour, salty, and bitter things."},
-{q:"Riya touches a hot pan and quickly pulls her hand away. Why?",o:["She heard it","She saw it","She felt it was hot","She smelled it"],a:2,e:"Skin helps us feel heat and keeps us safe."},
-{q:"Riya has curly hair. Sia has straight hair. What do we learn?",o:["Everyone looks the same","People can look different","Only boys look different","Only girls look different"],a:1,e:"People can look different from one another."},
-{q:"You are listening to your favourite song. How do you enjoy it?",o:["By seeing","By hearing with ears","By smelling","By touching"],a:1,e:"We enjoy songs by hearing them with our ears."},
-{q:"You touch a soft toy and say, “It is soft.” What helps you know this?",o:["Eyes","Nose","Skin","Tongue"],a:2,e:"Skin helps us feel soft things."},
-{q:"Find the wrong match.",o:["Eyes – See","Ears – Hear","Nose – Taste","Tongue – Taste"],a:2,e:"Nose helps us smell, not taste."},
-{q:"Ravi is blindfolded and asked to touch and guess objects. What is he using the most?",o:["Eyes","Nose","Skin","Ears"],a:2,e:"When blindfolded, he uses his skin to feel the objects."}
+let questions=[
+{num:1,q:"Riya hears her teacher calling her. What helps her hear?",o:["Eyes","Ears","Nose","Hands"],a:1,e:"We hear sounds with our ears."},
+{num:2,q:"Aman smells a flower. What helps him smell?",o:["Tongue","Eyes","Nose","Skin"],a:2,e:"We smell things with our nose."},
+{num:3,q:"Meena eats an apple and says it is sweet. What helps her know this?",o:["Nose","Tongue","Eyes","Ears"],a:1,e:"We taste food with our tongue."},
+{num:4,q:"Rohit touches ice and says, “It is cold!” What helps him feel this?",o:["Eyes","Skin","Nose","Ears"],a:1,e:"Our skin helps us feel hot, cold, hard, and soft things."},
+{num:5,q:"Sara is reading a book. What helps her read?",o:["Ears","Nose","Eyes","Hands"],a:2,e:"We use our eyes to see and read."},
+{num:6,q:"Ravi closes his eyes. What can he NOT do now?",o:["Smell food","Hear sounds","See things","Taste food"],a:2,e:"When eyes are closed, we cannot see things clearly."},
+{num:7,q:"You hear a school bell ringing. What helps you hear it?",o:["Eyes","Skin","Ears","Tongue"],a:2,e:"Ears help us hear sounds like a bell."},
+{num:8,q:"Neha touches a hot cup and quickly leaves it. Why?",o:["She saw it","She felt it was hot","She smelled it","She heard it"],a:1,e:"Skin helps us feel if something is hot."},
+{num:9,q:"You touch a stone and say, “It is hard.” What helps you know this?",o:["Eyes","Nose","Skin","Ears"],a:2,e:"Skin helps us feel if something is hard or soft."},
+{num:10,q:"Arjun wants to check if milk smells bad. What should he use?",o:["Eyes","Nose","Skin","Hands"],a:1,e:"The nose helps us smell good and bad smells."},
+{num:11,q:"You hear your friend calling you from behind. What helps you know this?",o:["Eyes","Ears","Nose","Tongue"],a:1,e:"Ears help us hear someone calling."},
+{num:12,q:"You close your nose. What can you NOT do properly?",o:["See","Hear","Smell","Touch"],a:2,e:"The nose helps us smell."},
+{num:13,q:"It is dark and you cannot see anything. Which part is not helping you now?",o:["Nose","Tongue","Eyes","Skin"],a:2,e:"Eyes need light to see clearly."},
+{num:14,q:"Karan eats a lemon and makes a sour face. What helps him taste it?",o:["Eyes","Nose","Tongue","Skin"],a:2,e:"The tongue helps us taste sweet, sour, salty, and bitter things."},
+{num:15,q:"Riya touches a hot pan and quickly pulls her hand away. Why?",o:["She heard it","She saw it","She felt it was hot","She smelled it"],a:2,e:"Skin helps us feel heat and keeps us safe."},
+{num:16,q:"Riya has curly hair. Sia has straight hair. What do we learn?",o:["Everyone looks the same","People can look different","Only boys look different","Only girls look different"],a:1,e:"People can look different from one another."},
+{num:17,q:"You are listening to your favourite song. How do you enjoy it?",o:["By seeing","By hearing with ears","By smelling","By touching"],a:1,e:"We enjoy songs by hearing them with our ears."},
+{num:18,q:"You touch a soft toy and say, “It is soft.” What helps you know this?",o:["Eyes","Nose","Skin","Tongue"],a:2,e:"Skin helps us feel soft things."},
+{num:19,q:"Find the wrong match.",o:["Eyes – See","Ears – Hear","Nose – Taste","Tongue – Taste"],a:2,e:"Nose helps us smell, not taste."},
+{num:20,q:"Ravi is blindfolded and asked to touch and guess objects. What is he using the most?",o:["Eyes","Nose","Skin","Ears"],a:2,e:"When blindfolded, he uses his skin to feel the objects."}
 ];
+
+const imageMap={
+  2:"assets/ch1_q2.png",
+  5:"assets/ch1_q5.png",
+  14:"assets/ch1_q14.png",
+  20:"assets/ch1_q20.png"
+};
 
 let current=0;
 let score=0;
@@ -470,6 +499,7 @@ function showScreen(id){
 }
 
 function startGame(){
+  questions=shuffleQuestions(questions);
   score=0;
   current=0;
   showScreen("quiz");
@@ -486,6 +516,21 @@ function loadQuestion(){
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
   document.getElementById("question").textContent=questions[current].q;
+
+  const imageWrap=document.getElementById("questionImageWrap");
+  const image=document.getElementById("questionImage");
+  const imagePath=imageMap[questions[current].num];
+
+  if(imagePath){
+    image.src=imagePath;
+    image.alt="Picture for question "+questions[current].num;
+    imageWrap.classList.remove("hidden");
+  }else{
+    image.removeAttribute("src");
+    image.alt="";
+    imageWrap.classList.add("hidden");
+  }
+
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
 
@@ -629,6 +674,19 @@ function showCross(){
   setTimeout(function(){
     x.remove();
   },700);
+}
+
+function shuffleQuestions(arr){
+  const shuffled=arr.slice();
+
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    const temp=shuffled[i];
+    shuffled[i]=shuffled[j];
+    shuffled[j]=temp;
+  }
+
+  return shuffled;
 }
 
 function playSound(sound){
