@@ -148,6 +148,22 @@ button:active{
   transition:.3s;
 }
 
+.question-image-container{
+  text-align:center;
+  margin:10px auto 14px;
+  min-height:0;
+}
+
+.question-image-container img{
+  display:block;
+  width:100%;
+  max-width:280px;
+  max-height:180px;
+  object-fit:contain;
+  margin:0 auto;
+  border-radius:18px;
+}
+
 .question{
   font-size:24px;
   line-height:1.4;
@@ -295,6 +311,11 @@ button:active{
     margin:18px 0;
   }
 
+  .question-image-container img{
+    max-width:260px;
+    max-height:170px;
+  }
+
   .option{
     font-size:18px;
     padding:16px;
@@ -388,6 +409,7 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <div id="questionImageContainer" class="question-image-container"></div>
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
@@ -424,15 +446,15 @@ button:active{
 
 <script>
 const questions=[
-{q:"Riya sees a tiger in a forest. Where does this animal belong?",o:["Home","Forest","Farm","School"],a:1,e:"A tiger is a wild animal that lives in forests."},
+{q:"Riya sees a tiger in a forest. Where does this animal belong?",image:"assets/ch5_q1.png",o:["Home","Forest","Farm","School"],a:1,e:"A tiger is a wild animal that lives in forests."},
 {q:"A cow lives with people and gives milk. Which group does it belong to?",o:["Wild animals","Animals that live with humans","Animals in water","Animals in air"],a:1,e:"A cow lives with humans and is useful to us."},
-{q:"You want an animal that can live and play at home. Which is a good choice?",o:["Tiger","Dog","Lion","Elephant"],a:1,e:"A dog can live at home as a pet."},
+{q:"You want an animal that can live and play at home. Which is a good choice?",image:"assets/ch5_q3.png",o:["Tiger","Dog","Lion","Elephant"],a:1,e:"A dog can live at home as a pet."},
 {q:"A farmer keeps hens for eggs. Why are hens kept?",o:["For fun","For eggs","For running","For flying"],a:1,e:"Hens are kept because they give us eggs."},
 {q:"Which one does NOT belong?",o:["Cow","Goat","Tiger","Sheep"],a:2,e:"Cow, goat, and sheep live with humans. A tiger is a wild animal."},
 {q:"An elephant walks and lives on land. Where will you NOT find it?",o:["Forest","Zoo","Water only","Grassland"],a:2,e:"An elephant lives on land, not only in water."},
 {q:"A fish is taken out of water. What may happen?",o:["It runs","It cannot live properly","It flies","It jumps"],a:1,e:"A fish needs water to live."},
 {q:"A lion hunts other animals. What is the reason?",o:["To sleep","To eat","To play","To jump"],a:1,e:"A lion hunts other animals for food."},
-{q:"Which one can fly in the sky?",o:["Dog","Sparrow","Fish","Cow"],a:1,e:"A sparrow is a bird. Birds can fly."},
+{q:"Which one can fly in the sky?",image:"assets/ch5_q9.png",o:["Dog","Sparrow","Fish","Cow"],a:1,e:"A sparrow is a bird. Birds can fly."},
 {q:"Find the wrong one.",o:["Fish – swims","Bird – flies","Cow – flies","Dog – runs"],a:2,e:"A cow does not fly. It walks and runs on land."},
 {q:"Which one is very small and has six legs?",o:["Dog","Butterfly","Cow","Lion"],a:1,e:"A butterfly is an insect. Insects have six legs."},
 {q:"Which pair is correct?",o:["Dog – calf","Cow – cub","Dog – puppy","Cat – lamb"],a:2,e:"A baby dog is called a puppy."},
@@ -441,7 +463,7 @@ const questions=[
 {q:"Which animal eats other animals?",o:["Cow","Lion","Goat","Deer"],a:1,e:"A lion eats other animals."},
 {q:"A bear eats fruits and also small animals. What does it eat?",o:["Only plants","Only meat","Both","Nothing"],a:2,e:"A bear can eat both plants and animals."},
 {q:"A dog rests safely inside its home. What is this place called?",o:["Toy","Shelter","Food","Game"],a:1,e:"A shelter is a safe place where an animal lives or rests."},
-{q:"Which animal lives in a burrow?",o:["Lion","Rabbit","Dog","Horse"],a:1,e:"A rabbit lives in a burrow."},
+{q:"Which animal lives in a burrow?",image:"assets/ch5_q18.png",o:["Lion","Rabbit","Dog","Horse"],a:1,e:"A rabbit lives in a burrow."},
 {q:"We get eggs from hens. What does this show?",o:["Animals help us","Animals fly","Animals sleep","Animals run"],a:0,e:"Animals help us in many ways. Hens give us eggs."},
 {q:"A dog needs food, water, and a place to stay. What does this show?",o:["Animals need care","Animals live alone","Animals do not need food","Animals do not need water"],a:0,e:"Animals need food, water, shelter, and care."}
 ];
@@ -469,9 +491,19 @@ function showScreen(id){
   document.getElementById(id).classList.add("active");
 }
 
+function shuffleQuestions(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
 function startGame(){
   score=0;
   current=0;
+
+  shuffleQuestions(questions);
+
   showScreen("quiz");
   loadQuestion();
 }
@@ -482,12 +514,26 @@ function loadQuestion(){
   clearInterval(timer);
   timeLeft=60;
 
+  const q=questions[current];
+
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("question").innerHTML=q.q;
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
+
+  const imageContainer=document.getElementById("questionImageContainer");
+  imageContainer.innerHTML="";
+
+  if(q.image){
+    const img=document.createElement("img");
+    img.src=q.image;
+    img.alt="Question image";
+    img.loading="eager";
+    img.decoding="async";
+    imageContainer.appendChild(img);
+  }
 
   const progress=((current)/questions.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
@@ -495,10 +541,10 @@ function loadQuestion(){
   const box=document.getElementById("options");
   box.innerHTML="";
 
-  for(let i=0;i<questions[current].o.length;i++){
+  for(let i=0;i<q.o.length;i++){
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=questions[current].o[i];
+    div.textContent=q.o[i];
     div.onclick=function(){
       checkAnswer(i,div);
     };
