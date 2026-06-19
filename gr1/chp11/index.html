@@ -148,6 +148,22 @@ button:active{
   transition:.3s;
 }
 
+.question-image-container{
+  text-align:center;
+  margin:10px auto 14px;
+  min-height:0;
+}
+
+.question-image-container img{
+  display:block;
+  width:100%;
+  max-width:280px;
+  max-height:180px;
+  object-fit:contain;
+  margin:0 auto;
+  border-radius:18px;
+}
+
 .question{
   font-size:24px;
   line-height:1.4;
@@ -244,14 +260,6 @@ button:active{
   100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
 }
 
-.finalbox{
-  background:#fff8e1;
-  border:2px dashed #ffb300;
-  border-radius:20px;
-  padding:16px;
-  margin-top:16px;
-}
-
 .small{
   font-size:15px;
   color:#546e7a;
@@ -293,6 +301,11 @@ button:active{
   .question{
     font-size:20px;
     margin:18px 0;
+  }
+
+  .question-image-container img{
+    max-width:260px;
+    max-height:170px;
   }
 
   .option{
@@ -388,22 +401,11 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <div id="questionImageContainer" class="question-image-container"></div>
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
     <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
-  </div>
-</div>
-
-<div id="finalChallenge" class="screen">
-  <div class="card">
-    <h1>Final Challenge</h1>
-    <div class="finalbox">
-      <p><b>Think and say:</b></p>
-      <p>Name one festival and one good behaviour to follow during festivals.</p>
-    </div>
-    <p class="small">Tap finish to see your score.</p>
-    <button onclick="showResult()">Finish</button>
   </div>
 </div>
 
@@ -424,26 +426,26 @@ button:active{
 
 <script>
 const questions=[
-{q:"Riya meets her friends, eats sweets, and plays happily with family. What is she celebrating?",o:["School day","Festival time","Study time","Sleep time"],a:1,e:"Festivals are special times when people celebrate with family and friends."},
+{q:"Riya meets her friends, eats sweets, and plays happily with her family. What is she celebrating?",o:["School day","Festival time","Study time","Sleep time"],a:1,e:"Festivals are special times when people celebrate with family and friends."},
 {q:"People celebrate festivals together. What does this help?",o:["Fighting","Bringing people together","Making noise only","Staying alone"],a:1,e:"Festivals bring people together."},
-{q:"Children are playing with colours and water. Which festival does this show?",o:["Diwali","Holi","Christmas","Eid"],a:1,e:"Holi is celebrated with colours."},
+{q:"Children are playing with colours and water. Which festival does this show?",image:"assets/ch11_q3.png",o:["Diwali","Holi","Christmas","Eid"],a:1,e:"Holi is celebrated with colours."},
 {q:"A child throws colours at someone who does not want to play. What is the better choice?",o:["Continue","Stop and respect them","Run away","Laugh"],a:1,e:"We should respect others during celebrations."},
-{q:"Houses are decorated with lights and diyas. What is being celebrated?",o:["Eid","Christmas","Diwali","Holi"],a:2,e:"Diwali is celebrated with lights and diyas."},
+{q:"Houses are decorated with lights and diyas. What is being celebrated?",image:"assets/ch11_5.png",o:["Eid","Christmas","Diwali","Holi"],a:2,e:"Diwali is celebrated with lights and diyas."},
 {q:"Firecrackers are being used. What is the safe action?",o:["Play alone","Stay careful with elders","Run near fire","Touch fire"],a:1,e:"We should be careful and stay with elders near firecrackers."},
 {q:"Children decorate a tree and exchange gifts. Which festival is this?",o:["Holi","Eid","Christmas","Diwali"],a:2,e:"Christmas is celebrated by decorating a tree and sharing gifts."},
 {q:"You get gifts on a festival. What is a kind thing to do?",o:["Hide them","Share with others","Throw them","Ignore"],a:1,e:"Sharing with others is a kind festival behaviour."},
 {q:"People hug each other and share a sweet dish. Which festival is this?",o:["Diwali","Holi","Eid","Christmas"],a:2,e:"Eid is celebrated with greetings, hugs, and sharing food."},
-{q:"People say “Eid Mubarak” and greet each other. What does this show?",o:["Anger","Happiness and sharing","Fear","Sadness"],a:1,e:"Greeting each other shows happiness and sharing."},
+{q:"People say “Eid Mubarak” and greet one another. What does this show?",o:["Anger","Happiness and sharing","Fear","Sadness"],a:1,e:"Greeting one another shows happiness and sharing."},
 {q:"People go to a place of worship and share food with everyone. What is this showing?",o:["Playing","Helping and sharing","Fighting","Sleeping"],a:1,e:"Sharing food with everyone shows care and kindness."},
 {q:"Food is shared with many people during a festival. What does this teach?",o:["Keep food alone","Sharing with others","Wasting food","Hiding food"],a:1,e:"Festivals teach us to share with others."},
-{q:"Children are saluting the national flag and singing together. What are they celebrating?",o:["Festival of colours","Independence Day","Christmas","Eid"],a:1,e:"Independence Day is celebrated by respecting the national flag and remembering freedom."},
+{q:"Children are saluting the National Flag and singing together. What are they celebrating?",o:["Festival of colours","Independence Day","Christmas","Eid"],a:1,e:"Independence Day is celebrated by respecting the National Flag and remembering freedom."},
 {q:"Why do people celebrate Independence Day?",o:["To play games","To remember freedom","To eat sweets only","To sleep"],a:1,e:"Independence Day helps us remember our country's freedom."},
-{q:"Which one is different?",o:["Playing with colours","Lighting diyas","Decorating tree","Doing homework"],a:3,e:"Doing homework is not a festival activity."},
+{q:"Which one is different from the others?",image:"assets/ch11_q15.png",o:["Playing with colours","Lighting diyas","Decorating tree","Doing homework"],a:3,e:"Doing homework is not a festival activity."},
 {q:"A family sits together, eats sweets, and celebrates. What is most important here?",o:["Food only","Togetherness","Noise","Lights"],a:1,e:"Being together is an important part of festivals."},
 {q:"During festivals, what is the best behaviour?",o:["Fight","Be kind and polite","Ignore others","Shout"],a:1,e:"We should be kind and polite during festivals."},
 {q:"People celebrate festivals with joy. What happens?",o:["People feel sad","People feel happy","People fight","People sleep"],a:1,e:"Festivals make people feel happy."},
 {q:"Find the wrong action.",o:["Sharing sweets","Greeting others","Fighting with friends","Celebrating together"],a:2,e:"Fighting with friends is not good festival behaviour."},
-{q:"Festivals bring people together. What does this build?",o:["Fear","Friendship and bonding","Anger","Silence"],a:1,e:"Festivals help build friendship and bonding."}
+{q:"Festivals bring people together. What does this help build?",o:["Fear","Friendship and bonding","Anger","Silence"],a:1,e:"Festivals help build friendship and bonding."}
 ];
 
 let current=0;
@@ -469,9 +471,17 @@ function showScreen(id){
   document.getElementById(id).classList.add("active");
 }
 
+function shuffleQuestions(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
 function startGame(){
   score=0;
   current=0;
+  shuffleQuestions(questions);
   showScreen("quiz");
   loadQuestion();
 }
@@ -482,12 +492,26 @@ function loadQuestion(){
   clearInterval(timer);
   timeLeft=60;
 
+  const q=questions[current];
+
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("question").textContent=q.q;
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
+
+  const imageContainer=document.getElementById("questionImageContainer");
+  imageContainer.innerHTML="";
+
+  if(q.image){
+    const img=document.createElement("img");
+    img.src=q.image;
+    img.alt="Question image";
+    img.loading="eager";
+    img.decoding="async";
+    imageContainer.appendChild(img);
+  }
 
   const progress=((current)/questions.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
@@ -495,10 +519,10 @@ function loadQuestion(){
   const box=document.getElementById("options");
   box.innerHTML="";
 
-  for(let i=0;i<questions[current].o.length;i++){
+  for(let i=0;i<q.o.length;i++){
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=questions[current].o[i];
+    div.textContent=q.o[i];
     div.onclick=function(){
       checkAnswer(i,div);
     };
@@ -584,7 +608,7 @@ function nextQuestion(){
     loadQuestion();
   }else{
     document.getElementById("progressBar").style.width="100%";
-    showScreen("finalChallenge");
+    showResult();
   }
 }
 
