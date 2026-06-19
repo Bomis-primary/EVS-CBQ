@@ -417,18 +417,6 @@ button:active{
   </div>
 </div>
 
-<div id="finalChallenge" class="screen">
-  <div class="card">
-    <h1>Final Challenge</h1>
-    <div class="finalbox">
-      <p><b>Think and say:</b></p>
-      <p>Name one room in your home and one way to keep your home clean.</p>
-    </div>
-    <p class="small">Tap finish to see your score.</p>
-    <button onclick="showResult()">Finish</button>
-  </div>
-</div>
-
 <div id="result" class="screen">
   <div class="card">
     <h1>Great Work!</h1>
@@ -451,20 +439,20 @@ const questions=[
 {q:"Riya lies on a bed and sleeps at night. Which place is she using?",image:"assets/ch7_q3.png",o:["Kitchen","Bedroom","Bathroom","Garden"],a:1,e:"We sleep and rest in the bedroom."},
 {q:"A place has a stove and cooking vessels. What is this place?",image:"assets/ch7_q4.png",o:["Bedroom","Kitchen","Hall","Bathroom"],a:1,e:"Food is cooked in the kitchen."},
 {q:"Water, soap, and a sink are used to clean hands. Which place is this?",o:["Kitchen","Bathroom","Bedroom","Balcony"],a:1,e:"We wash and clean ourselves in the bathroom."},
-{q:"Guests come home and sit together and talk. Which room is used?",o:["Bathroom","Living room","Kitchen","Store"],a:1,e:"Guests usually sit and talk in the living room."},
+{q:"Guests come home and sit together to talk. Which room is usually used?",o:["Bathroom","Living room","Kitchen","Store"],a:1,e:"Guests usually sit and talk in the living room."},
 {q:"Which one does NOT belong inside a house?",o:["Bedroom","Kitchen","Bathroom","Playground"],a:3,e:"A playground is outside the house."},
-{q:"Toys are scattered all over the floor. What does this show?",o:["Clean home","Messy home","Empty home","New home"],a:1,e:"Things scattered on the floor make a home messy."},
+{q:"Toys are scattered all over the floor. What does this tell us?",o:["Clean home","Messy home","Empty home","New home"],a:1,e:"Things scattered on the floor make a home messy."},
 {q:"A house is cleaned every day. What is the result?",o:["More dirt","Healthy home","Broken things","More noise"],a:1,e:"A clean house helps us stay healthy."},
 {q:"Dust is seen on a table. Which action keeps the home neat?",o:["Leave it","Wipe it","Sleep","Play"],a:1,e:"Wiping dust helps keep the home neat and clean."},
 {q:"Garbage is thrown in open places. What happens?",o:["Clean place","Dirty surroundings","Fresh air","Happy place"],a:1,e:"Throwing garbage in open places makes the surroundings dirty."},
-{q:"After eating, the plate is left on the table. What is missing here?",o:["Cleaning habit","Playing habit","Sleeping habit","Running habit"],a:0,e:"Keeping plates away after eating shows a good cleaning habit."},
+{q:"After eating, the plate is left on the table. Which good habit is missing?",o:["Cleaning habit","Playing habit","Sleeping habit","Running habit"],a:0,e:"Keeping plates away after eating shows a good cleaning habit."},
 {q:"Air comes inside when windows are open. Why is this helpful?",o:["For noise","For fresh air","For dust","For heat"],a:1,e:"Open windows let fresh air come inside."},
-{q:"A house has no sunlight. What may happen?",o:["Bright rooms","Dark rooms","More air","More space"],a:1,e:"Without sunlight, rooms may look dark."},
+{q:"A house gets no sunlight. What may happen?",o:["Bright rooms","Dark rooms","More air","More space"],a:1,e:"Without sunlight, rooms may look dark."},
 {q:"Water is spilled on the floor. What problem can this cause?",image:"assets/ch7_q15.png",o:["Clean floor","Someone may slip","More light","More space"],a:1,e:"Spilled water can make the floor slippery."},
 {q:"Wet hands and switches are a bad mix. What is the safe action?",o:["Touch quickly","Dry hands first","Ignore","Run"],a:1,e:"We should dry our hands before touching switches."},
 {q:"Books are kept properly after use. What does this show?",o:["Care and order","Mess","Waste","Dirt"],a:0,e:"Keeping books properly shows care and order."},
 {q:"A child helps in cleaning and arranging things. What does this show?",o:["Laziness","Responsibility","Anger","Fear"],a:1,e:"Helping at home shows responsibility."},
-{q:"Find the wrong habit.",o:["Keep things in place","Clean daily","Throw waste anywhere","Help at home"],a:2,e:"Throwing waste anywhere is a bad habit."},
+{q:"Which is a bad habit?",o:["Keep things in place","Clean daily","Throw waste anywhere","Help at home"],a:2,e:"Throwing waste anywhere is a bad habit."},
 {q:"Without a home, what would be difficult?",o:["Feeling safe","Running","Playing","Jumping"],a:0,e:"A home helps us feel safe and protected."}
 ];
 
@@ -630,7 +618,7 @@ function nextQuestion(){
     loadQuestion();
   }else{
     document.getElementById("progressBar").style.width="100%";
-    showScreen("finalChallenge");
+    showResult();
   }
 }
 
