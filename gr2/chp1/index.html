@@ -6,9 +6,7 @@
 <title>Our Body</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 html,body{
   margin:0;
@@ -128,9 +126,7 @@ button:active{
   font-size:16px;
 }
 
-.timer{
-  background:#fff3e0;
-}
+.timer{background:#fff3e0}
 
 .progress-wrap{
   width:100%;
@@ -148,11 +144,27 @@ button:active{
   transition:.3s;
 }
 
+.question-image-container{
+  text-align:center;
+  margin:10px auto 14px;
+  min-height:0;
+}
+
+.question-image-container img{
+  display:block;
+  width:100%;
+  max-width:360px;
+  max-height:260px;
+  object-fit:contain;
+  margin:0 auto;
+  border-radius:18px;
+}
+
 .question{
   font-size:24px;
   line-height:1.4;
   font-weight:bold;
-  margin:22px 0;
+  margin:18px 0;
 }
 
 .options{
@@ -175,9 +187,7 @@ button:active{
   line-height:1.3;
 }
 
-.option:hover{
-  background:#e8f5e9;
-}
+.option:hover{background:#e8f5e9}
 
 .correct{
   background:#c8f7c5!important;
@@ -204,9 +214,7 @@ button:active{
   line-height:1.4;
 }
 
-.hidden{
-  display:none;
-}
+.hidden{display:none}
 
 .confetti{
   position:fixed;
@@ -258,84 +266,56 @@ button:active{
 }
 
 @media(max-width:520px){
-  .screen{
-    padding:10px;
-  }
-
+  .screen{padding:10px}
   .card{
     width:94vw;
     padding:16px;
     border-radius:22px;
   }
-
-  h1{
-    font-size:28px;
-  }
-
-  h2{
-    font-size:20px;
-  }
-
-  p{
-    font-size:16px;
-  }
-
+  h1{font-size:28px}
+  h2{font-size:20px}
+  p{font-size:16px}
   .topbar{
     grid-template-columns:1fr;
     gap:6px;
   }
-
   .badge{
     font-size:15px;
     padding:9px 8px;
   }
-
   .question{
     font-size:20px;
-    margin:18px 0;
+    margin:16px 0;
   }
-
+  .question-image-container img{
+    max-width:300px;
+    max-height:220px;
+  }
   .option{
     font-size:18px;
     padding:16px;
     min-height:64px;
   }
-
   button{
     width:100%;
     font-size:18px;
     padding:15px 18px;
   }
-
-  .feedback{
-    font-size:17px;
-  }
-
-  .explain{
-    font-size:15px;
-  }
+  .feedback{font-size:17px}
+  .explain{font-size:15px}
 }
 
 @media(max-height:520px){
-  .active{
-    align-items:flex-start;
-  }
-
-  .screen{
-    padding-top:10px;
-  }
-
-  .card{
-    margin:8px 0;
-  }
-
-  .question{
-    margin:14px 0;
-  }
-
+  .active{align-items:flex-start}
+  .screen{padding-top:10px}
+  .card{margin:8px 0}
+  .question{margin:14px 0}
   .option{
     min-height:54px;
     padding:13px;
+  }
+  .question-image-container img{
+    max-height:160px;
   }
 }
 
@@ -388,6 +368,7 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <div id="questionImageContainer" class="question-image-container"></div>
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
@@ -424,26 +405,129 @@ button:active{
 
 <script>
 const questions=[
-{q:"Eyes, ears, hands, and legs can be seen from outside. These parts are called:",o:["Internal organs","External organs","Hidden organs","Food organs"],a:1,e:"Parts that can be seen from outside are called external organs."},
-{q:"The heart keeps beating inside our body, but we cannot see it from outside. This tells us that the heart is an:",o:["External organ","Internal organ","Sense organ","Joint"],a:1,e:"The heart is inside the body, so it is an internal organ."},
-{q:"While crossing the road, Niya sees the red traffic light and stops. Which sense organ helped her first?",o:["Ear","Eye","Nose","Tongue"],a:1,e:"Eyes help us see things around us."},
-{q:"The school bell rings. Riya hears it even though she cannot see the bell. Which sense organ helped her?",o:["Eyes","Ears","Hands","Legs"],a:1,e:"Ears help us hear sounds."},
-{q:"Rhea smells smoke coming from the kitchen and calls her mother. Which sense organ helped her notice it?",o:["Nose","Eye","Ear","Skin"],a:0,e:"The nose helps us smell things such as smoke."},
-{q:"Choose the correct pair.",o:["Tongue – Taste","Ear – Smell","Nose – Hearing","Eye – Touch"],a:0,e:"The tongue helps us taste."},
-{q:"Find the one that does not belong to the human body.",o:["Heart","Lungs","Stomach","Pencil"],a:3,e:"A pencil is not a part of the human body."},
-{q:"A child can stand straight, walk, and run easily. Which part gives shape and support to the body?",o:["Bones","Hair","Teeth","Nails"],a:0,e:"Bones give shape and support to our body."},
-{q:"If our body had no skeleton, what would happen?",o:["The body would become shapeless","The body would become taller","The body would stop breathing","The body would become heavier"],a:0,e:"The skeleton gives shape to the body."},
-{q:"Look at your elbow while bending your arm. Why can your arm bend there?",o:["Because of joints","Because of muscles only","Because of skin","Because of nails"],a:0,e:"Joints help body parts bend and move."},
-{q:"A swimmer moves arms and legs quickly in water. Which part helps the body move like this?",o:["Muscles","Hair","Nails","Teeth"],a:0,e:"Muscles help body parts move."},
-{q:"Choose the correct pair.",o:["Bones – Give support","Muscles – Help smell","Joints – Help taste","Skin – Helps hear"],a:0,e:"Bones support the body."},
-{q:"Amit goes cycling and skipping every evening after school. This habit helps him:",o:["Stay healthy and fit","Feel sleepy in class","Avoid homework","Grow shorter"],a:0,e:"Exercise helps us stay healthy and fit."},
-{q:"Which daily habit is best for strong bones and muscles?",o:["Playing outdoor games","Watching TV for hours","Sitting all day","Sleeping after school only"],a:0,e:"Outdoor games and exercise help make bones and muscles strong."},
-{q:"Teachers ask children to sit straight while reading and writing. Why is this a good habit?",o:["It keeps the body healthy","It makes books lighter","It helps the chair move","It changes handwriting"],a:0,e:"Sitting straight helps maintain good posture and keeps the body healthy."},
-{q:"Two children are studying. One is sitting straight and the other is bending too much. Which child has the correct posture?",o:["The child sitting straight","The child bending too much","Both are correct","Neither is correct"],a:0,e:"Sitting straight is the correct posture while studying."},
-{q:"Find the wrong habit.",o:["Exercise regularly","Sit and walk properly","Bend too much while walking","Play outdoor games"],a:2,e:"Bending too much while walking is not a good posture habit."},
-{q:"Shreya carries a heavy bag and keeps bending while walking every day. What problem may happen later?",o:["Back pain","Faster running","Better handwriting","Stronger legs"],a:0,e:"A heavy bag and poor posture may cause back pain."},
-{q:"You have one free hour after school. Which choice helps your body the most?",o:["Cycling in the park","Watching TV for the whole hour","Eating chips and resting","Sleeping on the sofa"],a:0,e:"Cycling keeps the body active and healthy."},
-{q:"A child wants to walk, run, and pick up a school bag. Which group must work together?",o:["Bones, muscles and joints","Hair, nails and teeth","Eyes, nose and ears","Tongue, skin and hair"],a:0,e:"Bones, muscles, and joints work together to help us move."}
+{
+  q:"Which body parts in the picture can be seen from outside?",
+  image:"assets/q1_image.png",
+  o:["Internal organs","External organs","Hidden organs","Food organs"],
+  a:1,
+  e:"Parts that can be seen from outside are called external organs."
+},
+{
+  q:"The heart keeps beating inside our body, but we cannot see it from outside. This tells us that the heart is an:",
+  o:["External organ","Internal organ","Sense organ","Joint"],
+  a:1,
+  e:"The heart is inside the body, so it is an internal organ."
+},
+{
+  q:"While crossing the road, Niya sees the red traffic light and stops. Which sense organ helped her first?",
+  o:["Ear","Eye","Nose","Tongue"],
+  a:1,
+  e:"Eyes help us see things around us."
+},
+{
+  q:"The school bell rings. Riya hears it even though she cannot see the bell. Which sense organ helped her?",
+  o:["Eyes","Ears","Hands","Legs"],
+  a:1,
+  e:"Ears help us hear sounds."
+},
+{
+  q:"Rhea smells smoke coming from the kitchen and calls her mother. Which sense organ helped her notice it?",
+  o:["Nose","Eye","Ear","Skin"],
+  a:0,
+  e:"The nose helps us smell things such as smoke."
+},
+{
+  q:"Choose the correct pair.",
+  o:["Tongue – Taste","Ear – Smell","Nose – Hearing","Eye – Touch"],
+  a:0,
+  e:"The tongue helps us taste."
+},
+{
+  q:"A science table has these items:<br>Heart, Lungs, Stomach, Pencil<br><br>Which item should be removed because it is not part of the human body?",
+  o:["Heart","Lungs","Stomach","Pencil"],
+  a:3,
+  e:"A pencil is not a part of the human body."
+},
+{
+  q:"A child can stand straight, walk, and run easily. Which part gives shape and support to the body?",
+  o:["Bones","Hair","Teeth","Nails"],
+  a:0,
+  e:"Bones give shape and support to our body."
+},
+{
+  q:"If our body had no skeleton, what would happen?",
+  o:["The body would become shapeless","The body would become taller","The body would stop breathing","The body would become heavier"],
+  a:0,
+  e:"The skeleton gives shape to the body."
+},
+{
+  q:"Which body part helps the arm bend at the elbow?",
+  image:"assets/q10_image.png",
+  o:["Joint","Nail","Hair","Tooth"],
+  a:0,
+  e:"Joints help body parts bend and move."
+},
+{
+  q:"A swimmer moves arms and legs quickly in water. Which part helps the body move like this?",
+  o:["Muscles","Hair","Nails","Teeth"],
+  a:0,
+  e:"Muscles help body parts move."
+},
+{
+  q:"Choose the correct pair.",
+  o:["Bones – Give support","Muscles – Help smell","Joints – Help taste","Skin – Helps hear"],
+  a:0,
+  e:"Bones support the body."
+},
+{
+  q:"Amit goes cycling and skipping every evening after school. This habit helps him:",
+  o:["Stay healthy and fit","Feel sleepy in class","Avoid homework","Grow shorter"],
+  a:0,
+  e:"Exercise helps us stay healthy and fit."
+},
+{
+  q:"Which daily habit is best for strong bones and muscles?",
+  o:["Playing outdoor games","Watching TV for hours","Sitting all day","Sleeping after school only"],
+  a:0,
+  e:"Outdoor games and exercise help make bones and muscles strong."
+},
+{
+  q:"Teachers ask children to sit straight while reading and writing. Why is this a good habit?",
+  o:["It keeps the body healthy","It makes books lighter","It helps the chair move","It changes handwriting"],
+  a:0,
+  e:"Sitting straight helps maintain good posture and keeps the body healthy."
+},
+{
+  q:"Which child is following the correct posture while studying?",
+  image:"assets/q16_image.png",
+  o:["Child A","Child B","Both are correct","Neither is correct"],
+  a:0,
+  e:"Sitting straight is the correct posture while studying."
+},
+{
+  q:"Which action may harm our posture over time?",
+  o:["Exercising regularly","Sitting and walking properly","Bending too much while walking","Playing outdoor games"],
+  a:2,
+  e:"Bending too much while walking is not a good posture habit."
+},
+{
+  q:"Shreya carries a heavy bag and keeps bending while walking every day. What problem may happen later?",
+  o:["Back pain","Faster running","Better handwriting","Stronger legs"],
+  a:0,
+  e:"A heavy bag and poor posture may cause back pain."
+},
+{
+  q:"You have one free hour after school. Which choice helps your body the most?",
+  o:["Cycling in the park","Watching TV for the whole hour","Eating chips and resting","Sleeping on the sofa"],
+  a:0,
+  e:"Cycling keeps the body active and healthy."
+},
+{
+  q:"A child wants to walk, run, and pick up a school bag. Which group must work together?",
+  o:["Bones, muscles and joints","Hair, nails and teeth","Eyes, nose and ears","Tongue, skin and hair"],
+  a:0,
+  e:"Bones, muscles, and joints work together to help us move."
+}
 ];
 
 let current=0;
@@ -482,23 +566,37 @@ function loadQuestion(){
   clearInterval(timer);
   timeLeft=60;
 
+  const q=questions[current];
+
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("question").innerHTML=q.q;
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
 
-  const progress=((current)/questions.length)*100;
+  const imageContainer=document.getElementById("questionImageContainer");
+  imageContainer.innerHTML="";
+
+  if(q.image){
+    const img=document.createElement("img");
+    img.src=q.image;
+    img.alt="Question image";
+    img.loading="eager";
+    img.decoding="async";
+    imageContainer.appendChild(img);
+  }
+
+  const progress=(current/questions.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
 
   const box=document.getElementById("options");
   box.innerHTML="";
 
-  for(let i=0;i<questions[current].o.length;i++){
+  for(let i=0;i<q.o.length;i++){
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=questions[current].o[i];
+    div.textContent=q.o[i];
     div.onclick=function(){
       checkAnswer(i,div);
     };
@@ -521,9 +619,7 @@ function startTimer(){
 }
 
 function checkAnswer(i,el){
-  if(locked){
-    return;
-  }
+  if(locked){return}
 
   const q=questions[current];
 
@@ -536,10 +632,6 @@ function checkAnswer(i,el){
     document.getElementById("feedback").innerHTML="Correct!<div class='explain'>"+q.e+"</div>";
 
     playSound(correctSound);
-    setTimeout(function(){
-      playSound(clapSound);
-    },250);
-
     makeConfetti();
     document.getElementById("nextBtn").classList.remove("hidden");
   }else{
@@ -589,6 +681,7 @@ function nextQuestion(){
 }
 
 function showResult(){
+  playSound(clapSound);
   showScreen("result");
   document.getElementById("finalScore").textContent=score;
 
@@ -632,9 +725,7 @@ function showCross(){
 }
 
 function playSound(sound){
-  if(!sound){
-    return;
-  }
+  if(!sound){return}
 
   try{
     sound.currentTime=0;
