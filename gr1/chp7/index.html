@@ -260,13 +260,6 @@ button:active{
   100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
 }
 
-.finalbox{
-  background:#fff8e1;
-  border:2px dashed #ffb300;
-  border-radius:20px;
-  padding:16px;
-  margin-top:16px;
-}
 
 .small{
   font-size:15px;
@@ -434,26 +427,26 @@ button:active{
 
 <script>
 const questions=[
-{q:"It is raining heavily. You stay dry and safe inside. Where are you?",o:["Road","Home","Park","Shop"],a:1,e:"A home protects us from rain and keeps us safe."},
-{q:"A house protects us from rain and heat. What does this show?",o:["Houses are toys","Houses keep us safe","Houses are food","Houses are games"],a:1,e:"A house gives us shelter and protects us."},
-{q:"Riya lies on a bed and sleeps at night. Which place is she using?",image:"assets/ch7_q3.png",o:["Kitchen","Bedroom","Bathroom","Garden"],a:1,e:"We sleep and rest in the bedroom."},
-{q:"A place has a stove and cooking vessels. What is this place?",image:"assets/ch7_q4.png",o:["Bedroom","Kitchen","Hall","Bathroom"],a:1,e:"Food is cooked in the kitchen."},
-{q:"Water, soap, and a sink are used to clean hands. Which place is this?",o:["Kitchen","Bathroom","Bedroom","Balcony"],a:1,e:"We wash and clean ourselves in the bathroom."},
-{q:"Guests come home and sit together to talk. Which room is usually used?",o:["Bathroom","Living room","Kitchen","Store"],a:1,e:"Guests usually sit and talk in the living room."},
-{q:"Which one does NOT belong inside a house?",o:["Bedroom","Kitchen","Bathroom","Playground"],a:3,e:"A playground is outside the house."},
-{q:"Toys are scattered all over the floor. What does this tell us?",o:["Clean home","Messy home","Empty home","New home"],a:1,e:"Things scattered on the floor make a home messy."},
-{q:"A house is cleaned every day. What is the result?",o:["More dirt","Healthy home","Broken things","More noise"],a:1,e:"A clean house helps us stay healthy."},
-{q:"Dust is seen on a table. Which action keeps the home neat?",o:["Leave it","Wipe it","Sleep","Play"],a:1,e:"Wiping dust helps keep the home neat and clean."},
-{q:"Garbage is thrown in open places. What happens?",o:["Clean place","Dirty surroundings","Fresh air","Happy place"],a:1,e:"Throwing garbage in open places makes the surroundings dirty."},
-{q:"After eating, the plate is left on the table. Which good habit is missing?",o:["Cleaning habit","Playing habit","Sleeping habit","Running habit"],a:0,e:"Keeping plates away after eating shows a good cleaning habit."},
-{q:"Air comes inside when windows are open. Why is this helpful?",o:["For noise","For fresh air","For dust","For heat"],a:1,e:"Open windows let fresh air come inside."},
-{q:"A house gets no sunlight. What may happen?",o:["Bright rooms","Dark rooms","More air","More space"],a:1,e:"Without sunlight, rooms may look dark."},
-{q:"Water is spilled on the floor. What problem can this cause?",image:"assets/ch7_q15.png",o:["Clean floor","Someone may slip","More light","More space"],a:1,e:"Spilled water can make the floor slippery."},
-{q:"Wet hands and switches are a bad mix. What is the safe action?",o:["Touch quickly","Dry hands first","Ignore","Run"],a:1,e:"We should dry our hands before touching switches."},
-{q:"Books are kept properly after use. What does this show?",o:["Care and order","Mess","Waste","Dirt"],a:0,e:"Keeping books properly shows care and order."},
-{q:"A child helps in cleaning and arranging things. What does this show?",o:["Laziness","Responsibility","Anger","Fear"],a:1,e:"Helping at home shows responsibility."},
-{q:"Which is a bad habit?",o:["Keep things in place","Clean daily","Throw waste anywhere","Help at home"],a:2,e:"Throwing waste anywhere is a bad habit."},
-{q:"Without a home, what would be difficult?",o:["Feeling safe","Running","Playing","Jumping"],a:0,e:"A home helps us feel safe and protected."}
+{q:"It is raining heavily outside. Where is the safest place for you to stay dry?",o:["Road","Home","Park","Shop"],a:1,e:"A home protects us from rain and keeps us safe."},
+{q:"During heavy rain and strong sunlight, how does a house help us?",o:["Houses are toys","Houses keep us safe","Houses are food","Houses are games"],a:1,e:"A house gives us shelter and protects us."},
+{q:"Rahul lies on a bed and sleeps at night. Which room is he using?",image:"assets/ch7_q3.png",o:["Kitchen","Bedroom","Bathroom","Garden"],a:1,e:"We sleep and rest in the bedroom."},
+{q:"A room has a stove, cooking pots, and utensils. Which room is it?",image:"assets/ch7_q4.png",o:["Bedroom","Kitchen","Hall","Bathroom"],a:1,e:"Food is cooked in the kitchen."},
+{q:"Meera wants to wash her hands with soap and water. Which room should she use?",o:["Kitchen","Bathroom","Bedroom","Balcony"],a:1,e:"We wash and clean ourselves in the bathroom."},
+{q:"Guests have come to your home. Which room would they usually sit in and talk?",o:["Bathroom","Living room","Kitchen","Store"],a:1,e:"Guests usually sit and talk in the living room."},
+{q:"Three of these are usually found inside a house. Which one is different?",o:["Bedroom","Kitchen","Bathroom","Playground"],a:3,e:"A playground is outside the house."},
+{q:"Toys are scattered all over the floor after playtime. What does this tell you?",o:["Clean home","Messy home","Empty home","New home"],a:1,e:"Things scattered on the floor make a home messy."},
+{q:"A family cleans their home every day. What is likely to happen?",o:["More dirt","Healthy home","Broken things","More noise"],a:1,e:"A clean house helps us stay healthy."},
+{q:"You notice dust on a table. What should you do to keep the home neat?",o:["Leave it","Wipe it","Sleep","Play"],a:1,e:"Wiping dust helps keep the home neat and clean."},
+{q:"People throw garbage in open places near homes. What may happen?",o:["Clean place","Dirty surroundings","Fresh air","Happy place"],a:1,e:"Throwing garbage in open places makes the surroundings dirty."},
+{q:"After eating, Kabir leaves his plate on the table. Which good habit is missing?",o:["Cleaning habit","Playing habit","Sleeping habit","Running habit"],a:0,e:"Keeping plates away after eating shows a good cleaning habit."},
+{q:"The windows are opened every morning. Why is this helpful?",o:["For noise","For fresh air","For dust","For heat"],a:1,e:"Open windows let fresh air come inside."},
+{q:"A room does not get any sunlight during the day. What may happen?",o:["Bright rooms","Dark rooms","More air","More space"],a:1,e:"Without sunlight, rooms may look dark."},
+{q:"Water is spilled on the floor and not cleaned up. What problem can this cause?",image:"assets/ch7_q15.png",o:["Clean floor","Someone may slip","More light","More space"],a:1,e:"Spilled water can make the floor slippery."},
+{q:"Neha has wet hands and wants to switch on a light. What is the safe thing to do?",o:["Touch quickly","Dry hands first","Ignore","Run"],a:1,e:"We should dry our hands before touching switches."},
+{q:"Aman keeps his books properly after using them. What does this show?",o:["Care and order","Mess","Waste","Dirt"],a:0,e:"Keeping books properly shows care and order."},
+{q:"A child helps to clean and arrange things at home. What does this show?",o:["Laziness","Responsibility","Anger","Fear"],a:1,e:"Helping at home shows responsibility."},
+{q:"Which of these is a bad habit at home?",o:["Keep things in place","Clean daily","Throw waste anywhere","Help at home"],a:2,e:"Throwing waste anywhere is a bad habit."},
+{q:"Without a home, which important thing would be difficult to have?",o:["Feeling safe","Running","Playing","Jumping"],a:0,e:"A home helps us feel safe and protected."}
 ];
 
 let current=0;
