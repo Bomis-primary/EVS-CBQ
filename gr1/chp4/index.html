@@ -148,6 +148,22 @@ button:active{
   transition:.3s;
 }
 
+.question-image-container{
+  text-align:center;
+  margin:10px auto 14px;
+  min-height:0;
+}
+
+.question-image-container img{
+  display:block;
+  width:100%;
+  max-width:280px;
+  max-height:180px;
+  object-fit:contain;
+  margin:0 auto;
+  border-radius:18px;
+}
+
 .question{
   font-size:24px;
   line-height:1.4;
@@ -295,6 +311,11 @@ button:active{
     margin:18px 0;
   }
 
+  .question-image-container img{
+    max-width:260px;
+    max-height:170px;
+  }
+
   .option{
     font-size:18px;
     padding:16px;
@@ -388,6 +409,7 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <div id="questionImageContainer" class="question-image-container"></div>
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
@@ -427,10 +449,10 @@ const questions=[
 {q:"Riya sees a tree and a chair. Which one can grow?",o:["Chair","Tree","Both","None"],a:1,e:"A tree is a living thing. It can grow."},
 {q:"A plant needs water and grows. What does this show?",o:["Living thing","Non-living thing","Broken thing","Old thing"],a:0,e:"Living things need water and can grow."},
 {q:"Which one is different?",o:["Tree","Plant","Chair","Herb"],a:2,e:"A chair is non-living. The others are plants."},
-{q:"A plant is very tall with a thick stem. What is it?",o:["Herb","Tree","Creeper","Shrub"],a:1,e:"A tree is tall and has a thick stem."},
-{q:"A plant is small and bushy with many branches. What is it?",o:["Tree","Shrub","Herb","Creeper"],a:1,e:"A shrub is small and bushy with many branches."},
+{q:"A plant is very tall with a thick stem. What is it?",image:"assets/ch4_q4.png",o:["Herb","Tree","Creeper","Shrub"],a:1,e:"A tree is tall and has a thick stem."},
+{q:"A plant is small and bushy with many branches. What is it?",image:"assets/ch4_q5.png",o:["Tree","Shrub","Herb","Creeper"],a:1,e:"A shrub is small and bushy with many branches."},
 {q:"Mint grows in a small pot with a soft stem. What is it?",o:["Tree","Shrub","Herb","Climber"],a:2,e:"A herb is a small plant with a soft stem."},
-{q:"A plant grows by taking support on a wall. What is it?",o:["Tree","Creeper","Climber","Shrub"],a:2,e:"A climber needs support to grow upward."},
+{q:"A plant grows by taking support on a wall. What is it?",image:"assets/ch4_q7.png",o:["Tree","Creeper","Climber","Shrub"],a:2,e:"A climber needs support to grow upward."},
 {q:"Find the wrong match.",o:["Creeper – grows on ground","Climber – needs support","Tree – very small plant","Herb – soft stem"],a:2,e:"A tree is usually tall with a thick stem, not a very small plant."},
 {q:"A plant does not fall even in wind. Which part helps it stay fixed?",o:["Leaf","Root","Flower","Fruit"],a:1,e:"Roots hold the plant firmly in the soil."},
 {q:"A plant is kept in sunlight to make food. Which part helps most?",o:["Root","Leaf","Stem","Flower"],a:1,e:"Leaves help plants make food using sunlight."},
@@ -469,9 +491,19 @@ function showScreen(id){
   document.getElementById(id).classList.add("active");
 }
 
+function shuffleQuestions(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
 function startGame(){
   score=0;
   current=0;
+
+  shuffleQuestions(questions);
+
   showScreen("quiz");
   loadQuestion();
 }
@@ -482,12 +514,26 @@ function loadQuestion(){
   clearInterval(timer);
   timeLeft=60;
 
+  const q=questions[current];
+
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("question").innerHTML=q.q;
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
+
+  const imageContainer=document.getElementById("questionImageContainer");
+  imageContainer.innerHTML="";
+
+  if(q.image){
+    const img=document.createElement("img");
+    img.src=q.image;
+    img.alt="Question image";
+    img.loading="eager";
+    img.decoding="async";
+    imageContainer.appendChild(img);
+  }
 
   const progress=((current)/questions.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
@@ -495,10 +541,10 @@ function loadQuestion(){
   const box=document.getElementById("options");
   box.innerHTML="";
 
-  for(let i=0;i<questions[current].o.length;i++){
+  for(let i=0;i<q.o.length;i++){
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=questions[current].o[i];
+    div.textContent=q.o[i];
     div.onclick=function(){
       checkAnswer(i,div);
     };
