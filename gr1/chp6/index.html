@@ -148,6 +148,22 @@ button:active{
   transition:.3s;
 }
 
+.question-image-container{
+  text-align:center;
+  margin:10px auto 14px;
+  min-height:0;
+}
+
+.question-image-container img{
+  display:block;
+  width:100%;
+  max-width:280px;
+  max-height:180px;
+  object-fit:contain;
+  margin:0 auto;
+  border-radius:18px;
+}
+
 .question{
   font-size:24px;
   line-height:1.4;
@@ -295,6 +311,11 @@ button:active{
     margin:18px 0;
   }
 
+  .question-image-container img{
+    max-width:260px;
+    max-height:170px;
+  }
+
   .option{
     font-size:18px;
     padding:16px;
@@ -388,6 +409,7 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <div id="questionImageContainer" class="question-image-container"></div>
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
@@ -424,7 +446,7 @@ button:active{
 
 <script>
 const questions=[
-{q:"A kite is not moving in the sky. What is missing?",o:["Water","Air","Soil","Fire"],a:1,e:"A kite moves when air pushes it."},
+{q:"A kite is not moving in the sky. What is missing?",image:"assets/ch6_q1.png",o:["Water","Air","Soil","Fire"],a:1,e:"A kite moves when air pushes it."},
 {q:"You cover your nose and mouth for long. What will happen?",o:["You feel happy","You cannot breathe well","You run fast","Nothing happens"],a:1,e:"We need air to breathe."},
 {q:"Clothes are kept outside but do not dry. What is missing?",o:["Moving air","Water","Soil","Food"],a:0,e:"Moving air helps wet clothes dry."},
 {q:"You sit near a fan and feel cool. What is happening?",o:["Water is moving","Air is moving","Fire is burning","Soil is blowing"],a:1,e:"A fan moves air, and moving air can make us feel cool."},
@@ -434,13 +456,13 @@ const questions=[
 {q:"After playing, you feel very thirsty. What does your body need?",o:["Air","Water","Soil","Light"],a:1,e:"We need water when we feel thirsty."},
 {q:"Your hands are dirty and there is no water. What will happen?",o:["Hands become clean","You cannot clean them properly","Hands become dry","Hands glow"],a:1,e:"Water helps us clean our hands properly."},
 {q:"After heavy rain, a pond fills with water. What caused this?",o:["Wind","Rain","Soil","Fire"],a:1,e:"Rain fills ponds, lakes, and other water bodies."},
-{q:"You take water from the ground using a bucket. Where is it coming from?",o:["River","Well","Cloud","Sea"],a:1,e:"A well gives us water from under the ground."},
+{q:"You take water from the ground using a bucket. Where is it coming from?",image:"assets/ch6_q11.png",o:["River","Well","Cloud","Sea"],a:1,e:"A well gives us water from under the ground."},
 {q:"Food cannot be cooked without adding something. What is needed?",o:["Air","Water","Sand","Paper"],a:1,e:"Water is used for cooking many foods."},
 {q:"You are brushing your teeth. What happens if there is no water?",o:["Brushing is easy","You cannot clean properly","Brushing is faster","It is more fun"],a:1,e:"Water helps us clean our teeth while brushing."},
 {q:"Plants are not watered for many days. What will happen?",o:["They grow fast","They dry and die","They fly away","They shine"],a:1,e:"Plants need water to live and grow."},
 {q:"Dirty water is not safe to drink. Why?",o:["It is cold","It has germs","It is clear","It is sweet"],a:1,e:"Dirty water can have germs that make us sick."},
 {q:"Water is boiled before drinking. What happens?",o:["It becomes dirty","It becomes safe","It becomes cold","It becomes salty"],a:1,e:"Boiling water helps make it safer to drink."},
-{q:"You see a tap left open. What should you do?",o:["Ignore it","Close it","Play","Run"],a:1,e:"We should close open taps to save water."},
+{q:"You see a tap left open. What should you do?",image:"assets/ch6_q17.png",o:["Ignore it","Close it","Play","Run"],a:1,e:"We should close open taps to save water."},
 {q:"While washing a car, what is the better choice?",o:["Use a bucket","Use a pipe","Use more water","Do nothing"],a:0,e:"Using a bucket saves more water than using a pipe."},
 {q:"Find the wrong one.",o:["Air helps breathing","Water helps cleaning","Air is for drinking","Water helps plants"],a:2,e:"Air is for breathing, not drinking."},
 {q:"There is no air and no water anywhere. What will happen?",o:["Life is easy","Life is not possible","Plants grow more","Animals run fast"],a:1,e:"Living things need air and water to live."}
@@ -469,9 +491,19 @@ function showScreen(id){
   document.getElementById(id).classList.add("active");
 }
 
+function shuffleQuestions(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
 function startGame(){
   score=0;
   current=0;
+
+  shuffleQuestions(questions);
+
   showScreen("quiz");
   loadQuestion();
 }
@@ -482,12 +514,26 @@ function loadQuestion(){
   clearInterval(timer);
   timeLeft=60;
 
+  const q=questions[current];
+
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("question").innerHTML=q.q;
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
+
+  const imageContainer=document.getElementById("questionImageContainer");
+  imageContainer.innerHTML="";
+
+  if(q.image){
+    const img=document.createElement("img");
+    img.src=q.image;
+    img.alt="Question image";
+    img.loading="eager";
+    img.decoding="async";
+    imageContainer.appendChild(img);
+  }
 
   const progress=((current)/questions.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
@@ -495,10 +541,10 @@ function loadQuestion(){
   const box=document.getElementById("options");
   box.innerHTML="";
 
-  for(let i=0;i<questions[current].o.length;i++){
+  for(let i=0;i<q.o.length;i++){
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=questions[current].o[i];
+    div.textContent=q.o[i];
     div.onclick=function(){
       checkAnswer(i,div);
     };
