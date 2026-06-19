@@ -148,6 +148,22 @@ button:active{
   transition:.3s;
 }
 
+.question-image-container{
+  text-align:center;
+  margin:10px auto 14px;
+  min-height:0;
+}
+
+.question-image-container img{
+  display:block;
+  width:100%;
+  max-width:280px;
+  max-height:180px;
+  object-fit:contain;
+  margin:0 auto;
+  border-radius:18px;
+}
+
 .question{
   font-size:24px;
   line-height:1.4;
@@ -244,14 +260,6 @@ button:active{
   100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
 }
 
-.finalbox{
-  background:#fff8e1;
-  border:2px dashed #ffb300;
-  border-radius:20px;
-  padding:16px;
-  margin-top:16px;
-}
-
 .small{
   font-size:15px;
   color:#546e7a;
@@ -293,6 +301,11 @@ button:active{
   .question{
     font-size:20px;
     margin:18px 0;
+  }
+
+  .question-image-container img{
+    max-width:260px;
+    max-height:170px;
   }
 
   .option{
@@ -388,22 +401,11 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <div id="questionImageContainer" class="question-image-container"></div>
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
     <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
-  </div>
-</div>
-
-<div id="finalChallenge" class="screen">
-  <div class="card">
-    <h1>Final Challenge</h1>
-    <div class="finalbox">
-      <p><b>Think and say:</b></p>
-      <p>Name one place in your neighbourhood and one helper who helps us.</p>
-    </div>
-    <p class="small">Tap finish to see your score.</p>
-    <button onclick="showResult()">Finish</button>
   </div>
 </div>
 
@@ -424,9 +426,9 @@ button:active{
 
 <script>
 const questions=[
-{q:"Hiya sees many houses, a school, and a park around her home. What is this area called?",o:["Classroom","Neighbourhood","Playground","Market"],a:1,e:"The area around our home is called our neighbourhood."},
-{q:"People help each other and live happily together. What does this show?",o:["Bad place","Good neighbourhood","Empty place","Noisy place"],a:1,e:"A good neighbourhood has people who help and care for one another."},
-{q:"A child carries books and goes to learn and study. Where is the child going?",o:["Market","School","Park","Bank"],a:1,e:"Children go to school to learn and study."},
+{q:"Hiya sees many houses, a school, and a park near her home. What is this area called?",o:["Classroom","Neighbourhood","Playground","Market"],a:1,e:"The area around our home is called our neighbourhood."},
+{q:"People help each other and live together happily. What does this show?",o:["Bad place","Good neighbourhood","Empty place","Noisy place"],a:1,e:"A good neighbourhood has people who help and care for one another."},
+{q:"A child carries books and goes to learn and study. Where is the child going?",image:"assets/ch10_q3.png",o:["Market","School","Park","Bank"],a:1,e:"Children go to school to learn and study."},
 {q:"Your family needs fruits and vegetables. Where will you go?",o:["School","Market","Hospital","Bank"],a:1,e:"We buy fruits and vegetables from the market."},
 {q:"A person has high fever and feels very sick. Where should they go?",o:["Park","Hospital","Post office","Bank"],a:1,e:"A sick person should go to a hospital for treatment."},
 {q:"Someone lost their bag and needs help finding it. Who can help?",o:["Teacher","Police","Tailor","Barber"],a:1,e:"The police help keep us safe and help people in trouble."},
@@ -434,16 +436,16 @@ const questions=[
 {q:"Your parents want to keep money safely. Which place helps?",o:["Market","Bank","Park","Hospital"],a:1,e:"A bank helps people keep money safely."},
 {q:"There is a fire in a building. What should people do?",o:["Ignore","Call fire station","Go shopping","Sleep"],a:1,e:"The fire station helps during a fire emergency."},
 {q:"Children are running, playing, and enjoying safely. Where are they?",o:["Road","Park","Hospital","Bank"],a:1,e:"A park is a safe place for children to play."},
-{q:"Which one is different?",o:["School","Hospital","Market","Tailor"],a:3,e:"School, hospital, and market are places. A tailor is a person who helps us."},
+{q:"Which one is different from the others?",o:["School","Hospital","Market","Tailor"],a:3,e:"School, hospital, and market are places. A tailor is a person who helps us."},
 {q:"A person teaches children reading and writing. Who is this?",o:["Teacher","Milkman","Sweeper","Electrician"],a:0,e:"A teacher helps children learn reading, writing, and many new things."},
 {q:"Milk is delivered to your house every morning. Who brings it?",o:["Tailor","Milkman","Barber","Carpenter"],a:1,e:"A milkman brings milk to homes."},
-{q:"Streets are kept clean every day. Who helps with this?",o:["Doctor","Sweeper","Teacher","Banker"],a:1,e:"A sweeper helps keep streets and surroundings clean."},
+{q:"Streets are kept clean every day. Who helps with this?",image:"assets/ch10_q14.png",o:["Doctor","Sweeper","Teacher","Banker"],a:1,e:"A sweeper helps keep streets and surroundings clean."},
 {q:"Lights at home stop working. Who can fix them?",o:["Tailor","Electrician","Barber","Greengrocer"],a:1,e:"An electrician repairs electrical things like lights."},
 {q:"People like plumbers and sweepers help us daily. What should we do?",o:["Ignore them","Respect them","Laugh at them","Avoid them"],a:1,e:"We should respect all helpers because their work is important."},
 {q:"Your neighbour is unwell. What is a kind thing to do?",o:["Ignore","Help them","Make noise","Play loudly"],a:1,e:"Helping an unwell neighbour is kind and caring."},
 {q:"Children in a neighbourhood share toys and play together. What does this show?",o:["Fighting","Friendship","Fear","Anger"],a:1,e:"Sharing and playing together show friendship."},
-{q:"Find the wrong behaviour.",o:["Helping neighbours","Being kind","Fighting with neighbours","Sharing"],a:2,e:"Fighting with neighbours is not good behaviour."},
-{q:"A neighbourhood has schools, parks, and helpers. What does this make life?",o:["Difficult","Easier and better","Noisy","Slow"],a:1,e:"Places and helpers in a neighbourhood make life easier and better."}
+{q:"Which is wrong behaviour?",o:["Helping neighbours","Being kind","Fighting with neighbours","Sharing"],a:2,e:"Fighting with neighbours is not good behaviour."},
+{q:"A neighbourhood has schools, parks, and helpers. How do these places and helpers make life?",o:["Difficult","Easier and better","Noisy","Slow"],a:1,e:"Places and helpers in a neighbourhood make life easier and better."}
 ];
 
 let current=0;
@@ -469,9 +471,17 @@ function showScreen(id){
   document.getElementById(id).classList.add("active");
 }
 
+function shuffleQuestions(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
 function startGame(){
   score=0;
   current=0;
+  shuffleQuestions(questions);
   showScreen("quiz");
   loadQuestion();
 }
@@ -482,12 +492,26 @@ function loadQuestion(){
   clearInterval(timer);
   timeLeft=60;
 
+  const q=questions[current];
+
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("question").textContent=q.q;
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
+
+  const imageContainer=document.getElementById("questionImageContainer");
+  imageContainer.innerHTML="";
+
+  if(q.image){
+    const img=document.createElement("img");
+    img.src=q.image;
+    img.alt="Question image";
+    img.loading="eager";
+    img.decoding="async";
+    imageContainer.appendChild(img);
+  }
 
   const progress=((current)/questions.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
@@ -495,10 +519,10 @@ function loadQuestion(){
   const box=document.getElementById("options");
   box.innerHTML="";
 
-  for(let i=0;i<questions[current].o.length;i++){
+  for(let i=0;i<q.o.length;i++){
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=questions[current].o[i];
+    div.textContent=q.o[i];
     div.onclick=function(){
       checkAnswer(i,div);
     };
@@ -584,7 +608,7 @@ function nextQuestion(){
     loadQuestion();
   }else{
     document.getElementById("progressBar").style.width="100%";
-    showScreen("finalChallenge");
+    showResult();
   }
 }
 
