@@ -430,26 +430,27 @@ button:active{
 
 <script>
 const questions=[
-{q:"Raincoats and umbrellas are most useful during:",image:"assets/ch3_q1.png",o:["Rainy weather","Hot weather","Cold weather","Windy weather"],a:0,e:"Raincoats and umbrellas help us stay dry during rain."},
-{q:"Early humans used leaves and animal skins to cover themselves. Why did they do this?",o:["To protect their body","To make toys","To grow food","To build houses"],a:0,e:"Clothes protect our body from heat, cold, rain, and dust."},
-{q:"Which clothing set is best suited for a hot summer afternoon?",o:["Cotton shirt and shorts","Woollen cap and sweater","Raincoat and gumboots","Leather jacket and gloves"],a:0,e:"Light cotton clothes are suitable for summer."},
-{q:"A child wears a thick woollen sweater on a very hot day. How is the child most likely to feel?",o:["Cool","Comfortable","Hot and uncomfortable","Dry"],a:2,e:"Woollen clothes trap heat and can make us feel uncomfortable in hot weather."},
-{q:"Which season usually requires sweaters, gloves, and caps?",image:"assets/ch3_q5.png",o:["Summer","Winter","Rainy season","Spring"],a:1,e:"Sweaters, gloves, and caps are commonly worn during winter."},
-{q:"Which group contains only winter clothes?",o:["Sweater, gloves, socks","Shorts, vest, cap","Umbrella, raincoat, boots","T-shirt, sandals, hat"],a:0,e:"Sweaters, gloves, and socks help keep us warm in winter."},
-{q:"It starts raining heavily while Dev is going outside. What should he carry first?",o:["Sunglasses","Umbrella","Woollen scarf","Notebook"],a:1,e:"An umbrella helps protect us from rain."},
-{q:"Why are raincoats made from waterproof materials?",o:["To keep us dry in rain","To make them heavier","To change colour","To make them warm"],a:0,e:"Waterproof materials prevent water from passing through easily."},
-{q:"Find the item that does not belong to rainy-season wear.",o:["Raincoat","Umbrella","Gumboots","Sweater"],a:3,e:"A sweater is mainly used during winter."},
-{q:"A cotton T-shirt and a cotton dress are similar because both are made from:",o:["Cotton plant fibres","Wool","Silk","Leather"],a:0,e:"Cotton clothes are made from fibres obtained from the cotton plant."},
-{q:"A family is travelling to a place where it snows often. Which clothes will help them most?",o:["Woollen clothes from sheep's wool","Cotton clothes only","Raincoats only","School uniforms"],a:0,e:"Woollen clothes keep us warm in very cold places."},
-{q:"A saree label says 'Pure Silk'. This material comes from:",o:["Silkworm","Sheep","Cotton plant","Cow"],a:0,e:"Silk is obtained from silkworms."},
-{q:"Tara is attending a wedding with her family. Which clothes is she most likely to wear?",o:["School uniform","Special occasion clothes","Raincoat","Sports dress"],a:1,e:"People often wear special clothes during weddings and festivals."},
-{q:"A nurse wears special clothes while working in a hospital. Such clothes are called:",image:"assets/ch3_q14.png",o:["Costumes","Uniforms","Rainwear","Casual wear"],a:1,e:"Uniforms help us recognise people by their profession."},
-{q:"Why do doctors, nurses, and police officers wear uniforms?",o:["To help people recognise their jobs","To stay warm only","To look taller","To carry books"],a:0,e:"Uniforms help us identify people and the work they do."},
-{q:"After coming home from school, what is the best way to care for your uniform?",o:["Throw it on the floor","Fold and keep it neatly","Hide it","Leave it on the bed"],a:1,e:"Keeping clothes neatly is a good habit."},
-{q:"Find the wrong habit.",o:["Wearing clean clothes","Folding clothes properly","Throwing dirty clothes anywhere","Keeping uniforms neatly"],a:2,e:"Dirty clothes should be kept in the proper place."},
-{q:"People in different states wear different traditional clothes. This shows that clothes can depend on:",o:["Place and culture","Only food","Only games","Only school"],a:0,e:"Traditional clothing often reflects local culture and climate."},
-{q:"You are packing for a snowy hill station. Which item is the best choice?",o:["Cotton shorts","Woollen jacket and gloves","Raincoat only","School uniform"],a:1,e:"Woollen jackets and gloves help protect us from cold weather."},
-{q:"Why is it important to wear clean and suitable clothes?",o:["They keep us healthy and comfortable","They make us hungry","They make us sleepy","They help us miss school"],a:0,e:"Clean and suitable clothes help us stay healthy, comfortable, and safe."}
+[
+{q:"Look at the picture. Why is the child using both a raincoat and an umbrella?",image:"assets/ch3_q1.png",o:["To stay dry while walking in the rain","To keep warm in winter","To play in hot sunshine","To look like a school uniform"],a:0,e:"The picture shows rain. A raincoat and umbrella help the child stay dry."},
+{q:"Early humans covered their bodies with leaves and animal skins. What problem were they trying to solve?",o:["Protecting the body from weather and scratches","Making paper bags","Growing plants faster","Cooking food"],a:0,e:"Early clothes helped protect the body from heat, cold, rain, dust, and scratches."},
+{q:"Riya has to play outside on a hot summer afternoon. Which clothes will help her feel most comfortable?",o:["Loose cotton clothes","A woollen sweater","A raincoat and gumboots","A thick leather jacket"],a:0,e:"Cotton clothes are light and comfortable in hot weather."},
+{q:"A child wears a woollen sweater on a hot day. What is likely to happen?",o:["The child may feel too hot and uncomfortable","The child will feel cooler","The child will stay dry from rain","The child will not need water"],a:0,e:"Woollen clothes keep body heat inside, so they are not suitable for hot days."},
+{q:"Look at the picture. Which weather is this child dressed for?",image:"assets/ch3_q5.png",o:["Cold weather","Rainy weather","Hot weather","Windy weather only"],a:0,e:"The child is wearing a woollen cap, scarf, gloves, sweater, and boots, which are used in cold weather."},
+{q:"Which set would you pack for a winter trip?",o:["Sweater, gloves, socks","Shorts, vest, sandals","Umbrella, raincoat, gumboots","Cotton T-shirt, cap, slippers"],a:0,e:"Sweaters, gloves, and socks help keep the body warm in winter."},
+{q:"Dev sees dark clouds and heavy rain before leaving home. What should he choose?",o:["Umbrella","Sunglasses","Woollen scarf only","School diary"],a:0,e:"An umbrella protects us from getting wet in rain."},
+{q:"Why is a raincoat useful during the rainy season?",o:["It does not let water pass through easily","It makes the body colder","It is made of wool","It is worn only at weddings"],a:0,e:"Raincoats are made from waterproof material, so they help keep us dry."},
+{q:"Which item does not fit with rainy-day clothes?",o:["Sweater","Raincoat","Umbrella","Gumboots"],a:0,e:"A sweater is mainly used in cold weather, not rainy weather."},
+{q:"A cotton T-shirt and cotton dress come from the same source. What is that source?",o:["Cotton plant fibres","Sheep's wool","Silkworm","Leather"],a:0,e:"Cotton clothes are made from fibres of the cotton plant."},
+{q:"A family is going to a snowy hill station. Which clothing choice is safest and most suitable?",o:["Woollen clothes from sheep's wool","Thin cotton clothes only","Raincoats only","Sports uniform"],a:0,e:"Woollen clothes help keep the body warm in very cold places."},
+{q:"A saree label says 'Pure Silk'. Where does silk come from?",o:["Silkworm","Sheep","Cotton plant","Cow"],a:0,e:"Silk is obtained from silkworms."},
+{q:"Tara is going to a wedding. Which clothes would be most suitable?",o:["Special occasion clothes","School uniform","Raincoat","Sports dress"],a:0,e:"People usually wear special clothes for weddings and festivals."},
+{q:"A nurse is working in a hospital and people can recognise her by her clothes. What are such clothes called?",image:"assets/ch3_q14.png",o:["Uniforms","Rainwear","Party clothes","Night clothes"],a:0,e:"Uniforms help us recognise people and the work they do."},
+{q:"Why do doctors, nurses, police officers, and school children wear uniforms?",o:["Uniforms help identify their role or place","Uniforms make everyone taller","Uniforms are only for winter","Uniforms are used instead of books"],a:0,e:"Uniforms show a person's job, school, or role."},
+{q:"After school, Aarav changes out of his uniform. What should he do next?",o:["Fold or keep it neatly","Throw it on the floor","Hide it under the bed","Leave it near the door"],a:0,e:"Keeping clothes neatly is a good habit."},
+{q:"Which action shows poor care of clothes?",o:["Throwing dirty clothes anywhere","Wearing clean clothes","Folding clothes properly","Keeping uniforms neatly"],a:0,e:"Dirty clothes should be kept in the correct place, such as a laundry basket."},
+{q:"People in different states wear different traditional clothes. What does this tell us?",o:["Clothes can depend on place and culture","Everyone wears the same clothes","Clothes depend only on games","Traditional clothes are uniforms"],a:0,e:"Traditional clothes often show the culture and climate of a place."},
+{q:"You are packing for a snowy hill station. Which item should not be missed?",o:["Woollen jacket and gloves","Cotton shorts","Raincoat only","School uniform"],a:0,e:"A woollen jacket and gloves protect the body from cold."},
+{q:"Why should we wear clean clothes that suit the weather?",o:["They help us stay healthy and comfortable","They make us hungry","They make us sleepy","They help us avoid school"],a:0,e:"Clean and suitable clothes help us stay healthy, safe, and comfortable."}
 ]
 
 let current=0;
