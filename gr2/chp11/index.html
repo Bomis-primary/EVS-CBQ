@@ -112,27 +112,47 @@ button{width:100%;font-size:18px;padding:15px 18px}.feedback{font-size:17px}.exp
 
 <script>
 const questions=[
-{q:"Look at the picture showing stones and pebbles of different sizes. These are examples of:",image:"assets/ch11_q1.png",o:["Rocks","Toys","Clothes","Plants"],a:0,e:"Stones and pebbles are examples of rocks."},
-{q:"Why are rocks useful to people?",o:["They help us make roads, houses, and other useful things","They only grow in forests","They are used only for decoration","They melt in sunlight"],a:0,e:"Rocks are used to make roads, houses, floors, and other useful things."},
-{q:"A family is choosing a strong material for their kitchen floor. Which rock would be the best choice?",o:["Granite","Cotton","Wool","Paper"],a:0,e:"Granite is strong and is often used for floors and tiles."},
-{q:"Small smooth stones found near rivers are called:",o:["Pebbles","Clouds","Seeds","Feathers"],a:0,e:"Small smooth stones found near rivers are called pebbles."},
-{q:"Look at the picture of a statue made from stone. Which rock is commonly used for making statues?",image:"assets/ch11_q5.png",o:["Marble","Coal","Talc","Graphite"],a:0,e:"Marble is commonly used for making statues and buildings."},
-{q:"Why is granite used in floors and buildings?",o:["It is strong and durable","It is soft and light","It dissolves in water","It grows quickly"],a:0,e:"Granite is strong and durable, so it is useful in floors and buildings."},
-{q:"Find the odd one out.",o:["Granite","Marble","Sandstone","Banana"],a:3,e:"Granite, marble, and sandstone are rocks. Banana is a fruit."},
-{q:"The teacher writes on the blackboard using a white stick. This is made from:",o:["Chalk","Gold","Iron","Marble"],a:0,e:"Chalk is used for writing on a blackboard."},
-{q:"Find the wrong match.",o:["Granite – Floor","Chalk – Writing on board","Coal – Fuel","Marble – Pencil lead"],a:3,e:"Pencil lead is made from graphite, not marble."},
-{q:"Why is coal important?",o:["It is used as a fuel and source of energy","It helps plants grow","It is used to make rain","It is used only for decoration"],a:0,e:"Coal is used as a fuel and gives energy."},
-{q:"The black part inside a pencil is made from:",o:["Graphite","Silver","Marble","Cotton"],a:0,e:"The black writing part of a pencil is made from graphite."},
-{q:"Look at the picture of a gold necklace. Which mineral is used to make it?",image:"assets/ch11_q12.png",o:["Gold","Iron","Talc","Graphite"],a:0,e:"Gold is used to make jewellery such as necklaces."},
-{q:"Engineers are building a strong bridge. Which mineral is most useful?",o:["Iron","Chalk","Cotton","Wool"],a:0,e:"Iron is strong and useful for building bridges."},
-{q:"Talcum powder is made from:",o:["Talc","Coal","Granite","Sandstone"],a:0,e:"Talcum powder is made from talc."},
-{q:"Rocks and minerals are natural resources. What is the best way to use them?",o:["Use them carefully and avoid wastage","Waste them freely","Throw them away","Break them for fun"],a:0,e:"Natural resources should be used carefully."},
-{q:"A potter wants to make bowls and pots. Which material will help most?",o:["China clay","Wool","Plastic","Cotton"],a:0,e:"China clay is used to make pots, bowls, and other items."},
-{q:"Diamond, ruby, and emerald belong to which group?",o:["Gemstones","Pebbles","Seeds","Roots"],a:0,e:"Diamond, ruby, and emerald are gemstones."},
-{q:"People keep using minerals carelessly for many years. What may happen?",o:["Minerals may slowly finish","Minerals will grow faster","Rivers will disappear","Trees will become rocks"],a:0,e:"Minerals are limited natural resources and may slowly finish if wasted."},
-{q:"Find the wrong statement.",o:["Graphite is used in pencils","Gold is used for jewellery","Pebbles are found near rivers","Chalk is used to make rainbows"],a:3,e:"Chalk is used for writing, not for making rainbows."},
-{q:"Why should we learn about rocks and minerals?",o:["They are useful in everyday life","They are found only in museums","They are used only by builders","They are only for decoration"],a:0,e:"Rocks and minerals are used in many things in everyday life."}
-]
+[
+{q:"Look at the picture showing stones and pebbles of different sizes. What does this picture mainly show?",image:"assets/ch11_q1.png",o:["Different kinds of rocks","Different toys","Different clothes","Different plants"],a:0,e:"The picture shows rocks and pebbles of different sizes."},
+
+{q:"Why are rocks useful in our daily life?",o:["They are used to make roads, houses, and buildings","They grow into trees","They float in the air","They make rain"],a:0,e:"Rocks are used in many construction activities."},
+
+{q:"A family wants a strong material for their kitchen floor. Which rock would be most suitable?",o:["Granite","Paper","Cotton","Wool"],a:0,e:"Granite is strong and commonly used for flooring."},
+
+{q:"Small smooth stones often found near rivers are called:",o:["Pebbles","Seeds","Clouds","Leaves"],a:0,e:"Pebbles are small, smooth stones usually found near rivers and streams."},
+
+{q:"Look at the picture of the stone elephant statue. Which rock is commonly used to make such statues?",image:"assets/ch11_q5.png",o:["Marble","Coal","Graphite","Talc"],a:0,e:"Marble is often used to make statues because it can be carved easily."},
+
+{q:"Why is granite often used in buildings and floors?",o:["It is strong and long-lasting","It is soft and light","It melts quickly","It grows naturally into tiles"],a:0,e:"Granite is hard, strong, and durable."},
+
+{q:"Find the one that is different.",o:["Granite","Marble","Sandstone","Banana"],a:3,e:"Granite, marble, and sandstone are rocks. Banana is a fruit."},
+
+{q:"A teacher writes on the blackboard using a white stick. What is it called?",o:["Chalk","Gold","Iron","Granite"],a:0,e:"Chalk is used for writing on blackboards."},
+
+{q:"Which pair is matched incorrectly?",o:["Granite – Flooring","Coal – Fuel","Chalk – Blackboard writing","Marble – Pencil lead"],a:3,e:"Pencil lead is made from graphite, not marble."},
+
+{q:"Why is coal considered important?",o:["It is used as a fuel","It is used to make jewellery","It is used to grow plants","It is used to make clothes"],a:0,e:"Coal provides energy and is widely used as a fuel."},
+
+{q:"What is the black writing material inside a pencil made from?",o:["Graphite","Gold","Marble","Talc"],a:0,e:"Graphite is used in pencils for writing."},
+
+{q:"Look at the picture of the necklace. Which mineral is used to make this jewellery?",image:"assets/ch11_q12.png",o:["Gold","Iron","Coal","Graphite"],a:0,e:"Gold is commonly used to make jewellery such as necklaces."},
+
+{q:"Builders need a strong material for constructing a bridge. Which mineral is most useful?",o:["Iron","Chalk","Cotton","Wool"],a:0,e:"Iron is strong and widely used in construction."},
+
+{q:"Talcum powder is made from which mineral?",o:["Talc","Coal","Granite","Sandstone"],a:0,e:"Talc is a soft mineral used to make talcum powder."},
+
+{q:"Rocks and minerals are valuable natural resources. How should we use them?",o:["Carefully and without wastage","Waste them freely","Throw them away","Break them for fun"],a:0,e:"Natural resources should be used wisely."},
+
+{q:"A potter wants to make clay pots and bowls. Which material will help the most?",o:["China clay","Cotton","Plastic","Wool"],a:0,e:"China clay is used to make pottery items."},
+
+{q:"Diamond, ruby, and emerald are examples of:",o:["Gemstones","Pebbles","Seeds","Roots"],a:0,e:"These are valuable gemstones."},
+
+{q:"People continue wasting minerals for many years. What may happen?",o:["Minerals may become scarce","Minerals will grow again","More rivers will form","Rocks will turn into trees"],a:0,e:"Minerals are limited resources and can get exhausted."},
+
+{q:"Which statement is incorrect?",o:["Graphite is used in pencils","Gold is used for jewellery","Pebbles are found near rivers","Chalk is used to make rainbows"],a:3,e:"Chalk is used for writing, not for making rainbows."},
+
+{q:"Why is it important to learn about rocks and minerals?",o:["They are useful in many everyday objects","They are found only in museums","Only builders use them","They are only decorative"],a:0,e:"Rocks and minerals are used in many things we use every day."}
+];
 
 let current=0,score=0,attempts=0,timer,timeLeft=60,locked=false;
 const correctSound=document.getElementById("correctSound");
