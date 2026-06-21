@@ -346,26 +346,46 @@ button:active{
 
 <script>
 const questions=[
-{q:"Look at the picture of an elephant living in a forest. This animal is a:",image:"assets/ch8_q1.png",o:["Pet animal","Wild animal","Farm animal","Water animal"],a:1,e:"Animals that live in forests are called wild animals."},
-{q:"Why do people keep domestic animals?",o:["They help us and provide useful things","They live only in forests","They make noise all day","They do not help people"],a:0,e:"Domestic animals give us useful things and help us in many ways."},
-{q:"A farmer gets wool to make warm clothes. Which animal most likely provides it?",o:["Sheep","Hen","Fish","Duck"],a:0,e:"Sheep give us wool."},
-{q:"Which group contains only farm animals?",o:["Cow, duck, goat","Tiger, lion, fox","Whale, shark, fish","Eagle, sparrow, owl"],a:0,e:"Cow, duck, and goat are farm animals."},
-{q:"Look at the picture of a child playing with a rabbit at home. This rabbit is a:",image:"assets/ch8_q5.png",o:["Wild animal","Pet animal","Water animal","Forest animal"],a:1,e:"An animal kept at home is called a pet animal."},
-{q:"A giraffe spends most of its time eating leaves from tall trees. This makes it a:",o:["Plant-eating animal","Flesh-eating animal","Water animal","Pet animal"],a:0,e:"Animals that eat plants are plant-eating animals or herbivores."},
-{q:"A wolf hunts other animals for food. This shows that a wolf is a:",o:["Herbivore","Carnivore","Omnivore","Pet animal"],a:1,e:"Animals that eat flesh are carnivores."},
-{q:"Find the one that is different.",o:["Horse","Donkey","Zebra","Leopard"],a:3,e:"Horse, donkey, and zebra are plant-eating animals. Leopard is a flesh-eating animal."},
-{q:"A crow eats grains as well as insects. This makes it a:",o:["Herbivore","Carnivore","Omnivore","Water animal"],a:2,e:"Animals that eat both plants and animals are called omnivores."},
-{q:"A hen lives in a:",o:["Stable","Coop","Kennel","Den"],a:1,e:"A hen lives in a coop."},
-{q:"Fish cannot live on land because:",o:["They need water to survive","They like trees","They need grass","They cannot swim"],a:0,e:"Fish need water to live."},
-{q:"Your pet dog needs a safe place to rest. Which shelter is suitable?",image:"assets/ch8_q12.png",o:["Kennel","Coop","Stable","Den"],a:0,e:"A dog lives in a kennel."},
-{q:"A duck swims easily in water because it has:",o:["Wings","Webbed feet","Horns","Tail"],a:1,e:"Webbed feet help ducks swim in water."},
-{q:"An eagle can fly high in the sky because it has:",o:["Fins","Wings","Hooves","Claws only"],a:1,e:"Birds fly with the help of wings."},
-{q:"Your pet parrot has no water in its bowl. What should you do?",o:["Ignore it","Give clean water","Close the cage","Take away food"],a:1,e:"Pets need clean water and care."},
-{q:"Some animals are becoming fewer in number and need protection. Which of these is an endangered animal?",o:["Panda","Cow","Goat","Cat"],a:0,e:"Panda is an endangered animal and needs protection."},
-{q:"People cut many trees in a forest. What may happen to monkeys living there?",o:["They lose their homes","They get bigger homes","They become farm animals","They stop climbing"],a:0,e:"Cutting trees destroys homes of many wild animals."},
-{q:"Find the wrong action.",o:["Giving food to animals","Taking sick animals to a doctor","Hurting animals for fun","Keeping shelters clean"],a:2,e:"Hurting animals is wrong. We should care for them."},
-{q:"Your goat is sick and not eating properly. What should be done?",o:["Leave it alone","Call an animal doctor","Make it run","Change its name"],a:1,e:"A sick animal should be shown to an animal doctor."},
-{q:"Taking care of animals shows:",o:["Kindness and responsibility","Laziness","Anger","Fear"],a:0,e:"Caring for animals shows kindness and responsibility."}
+[
+{q:"Look at the picture. Which clue shows that this elephant is a wild animal?",image:"assets/ch8_q1.png",o:["It is living in a forest habitat","It has large ears","It has a long trunk","It is grey in colour"],a:0,e:"Wild animals live in natural habitats such as forests."},
+
+{q:"Why do people keep domestic animals like cows, goats, and hens?",o:["They help people and provide useful products","They live only in forests","They scare wild animals away","They do not help humans"],a:0,e:"Domestic animals help people and provide useful things such as milk, eggs, and wool."},
+
+{q:"A family wants to make a warm woollen sweater. Which animal provides the material?",o:["Sheep","Hen","Fish","Duck"],a:0,e:"Sheep provide wool which is used to make warm clothes."},
+
+{q:"Which group contains only animals commonly reared on farms?",o:["Cow, duck, goat","Tiger, lion, fox","Whale, shark, fish","Eagle, sparrow, owl"],a:0,e:"Cow, duck, and goat are farm animals."},
+
+{q:"Look at the picture. Why is this rabbit called a pet animal?",image:"assets/ch8_q5.png",o:["It is being cared for at home by a child","It lives in a forest","It hunts other animals","It lives in water"],a:0,e:"Animals kept and cared for at home are called pet animals."},
+
+{q:"A giraffe mainly eats leaves from tall trees. What kind of eater is it?",o:["Herbivore","Carnivore","Omnivore","Pet animal"],a:0,e:"Animals that eat plants are called herbivores."},
+
+{q:"A wolf hunts and eats other animals. What does this tell us about its food habit?",o:["It is a carnivore","It is a herbivore","It is an omnivore","It is a pet"],a:0,e:"Animals that eat flesh are called carnivores."},
+
+{q:"Which animal is different from the others based on its food habit?",o:["Leopard","Horse","Donkey","Zebra"],a:0,e:"Leopard is a carnivore, while horse, donkey, and zebra mainly eat plants."},
+
+{q:"A crow eats grains, fruits, and insects. What type of eater is it?",o:["Omnivore","Herbivore","Carnivore","Water animal"],a:0,e:"Animals that eat both plants and animals are omnivores."},
+
+{q:"A farmer wants to build a proper shelter for hens. Which shelter should he choose?",o:["Coop","Stable","Kennel","Den"],a:0,e:"A hen lives in a coop."},
+
+{q:"Why would a fish not survive if it is kept out of water for a long time?",o:["Fish need water to live","Fish cannot see on land","Fish eat only water plants","Fish dislike sunlight"],a:0,e:"Fish need water for survival."},
+
+{q:"Look at the picture. Why is the wooden structure suitable for the dog?",image:"assets/ch8_q12.png",o:["It provides the dog with a safe shelter","It helps the dog fly","It stores food for wild animals","It is a place for hens"],a:0,e:"The picture shows a kennel, which is a dog's shelter."},
+
+{q:"A duck moves easily through ponds and lakes. Which body feature helps it swim?",o:["Webbed feet","Horns","Tail","Beak"],a:0,e:"Webbed feet help ducks paddle through water."},
+
+{q:"An eagle can fly high above forests and mountains. Which body part helps it do this?",o:["Wings","Fins","Hooves","Horns"],a:0,e:"Birds use their wings to fly."},
+
+{q:"Your pet parrot's water bowl is empty on a hot day. What should you do?",o:["Give it clean water","Ignore it","Remove its food","Cover the cage"],a:0,e:"Pets need clean water every day."},
+
+{q:"Some animals are becoming fewer in number and need protection. Which animal below is endangered?",o:["Panda","Cow","Goat","Cat"],a:0,e:"Pandas are endangered animals and need protection."},
+
+{q:"Many trees are cut down in a forest. How might this affect monkeys living there?",o:["They may lose their homes","They will get larger homes","They will become farm animals","They will stop climbing trees"],a:0,e:"Deforestation destroys the habitats of many wild animals."},
+
+{q:"Which action shows that a person is not caring for animals properly?",o:["Hurting animals for fun","Giving them food","Keeping shelters clean","Taking sick animals to a doctor"],a:0,e:"Animals should be treated kindly and cared for."},
+
+{q:"Your goat has stopped eating and looks weak. What is the best thing to do?",o:["Call an animal doctor","Make it run faster","Leave it alone","Change its shelter"],a:0,e:"A sick animal should be treated by a veterinarian."},
+
+{q:"What quality do we show when we feed pets, keep them safe, and care for them when they are sick?",o:["Kindness and responsibility","Laziness","Fear","Anger"],a:0,e:"Taking care of animals shows kindness and responsibility."}
 ];
 
 let current=0;
