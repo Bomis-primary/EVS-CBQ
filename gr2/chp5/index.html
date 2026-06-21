@@ -2,147 +2,104 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Water for All</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 5: Keeping Safe</title>
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;width:100%;min-height:100%;overflow-x:hidden}
-body{
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
   font-family:Arial,sans-serif;
-  background:linear-gradient(135deg,#e3f2fd,#e0f7fa,#fff8e1);
-  color:#263238;
+  background:linear-gradient(135deg,#fff7d6,#e3f7ff,#f4eaff);
+  color:#253238;
+  overflow-x:hidden;
 }
-
+body{display:flex;align-items:center;justify-content:center;padding:12px}
 .bg span{
   position:fixed;
   top:-30px;
   font-size:22px;
-  opacity:.22;
-  animation:float 14s linear infinite;
+  opacity:.18;
+  animation:float 16s linear infinite;
   z-index:0;
 }
 .bg span:nth-child(1){left:8%;animation-delay:0s}
-.bg span:nth-child(2){left:28%;animation-delay:3s}
-.bg span:nth-child(3){left:52%;animation-delay:6s}
-.bg span:nth-child(4){left:76%;animation-delay:2s}
-.bg span:nth-child(5){left:92%;animation-delay:5s}
-
+.bg span:nth-child(2){left:28%;animation-delay:4s}
+.bg span:nth-child(3){left:50%;animation-delay:8s}
+.bg span:nth-child(4){left:72%;animation-delay:2s}
+.bg span:nth-child(5){left:90%;animation-delay:6s}
 @keyframes float{
   from{transform:translateY(-40px) rotate(0deg)}
   to{transform:translateY(110vh) rotate(180deg)}
 }
-
-.screen{
-  display:none;
-  min-height:100vh;
-  padding:16px;
+.app{
   position:relative;
-  z-index:1;
+  z-index:2;
+  width:100%;
+  max-width:760px;
+  min-height:540px;
+  background:rgba(255,255,255,.95);
+  border-radius:28px;
+  box-shadow:0 10px 30px rgba(0,0,0,.18);
+  padding:18px;
+  overflow:hidden;
 }
-
-.active{
+.screen{display:none;text-align:center}
+.screen.active{display:block}
+.logo-wrap{
+  height:500px;
   display:flex;
   align-items:center;
   justify-content:center;
+  flex-direction:column;
 }
-
-.card{
-  width:92vw;
-  max-width:760px;
-  background:rgba(255,255,255,.96);
-  border-radius:26px;
-  padding:22px;
-  box-shadow:0 10px 26px rgba(0,0,0,.13);
-  text-align:center;
-}
-
-.logo{
-  width:180px;
-  max-width:70%;
-  height:auto;
-  margin-bottom:18px;
-}
-
-h1{
-  color:#0277bd;
-  margin:10px 0;
-  font-size:36px;
-  line-height:1.15;
-}
-
-h2{
-  color:#00695c;
-  margin:8px 0;
-  font-size:24px;
-}
-
-p{
-  font-size:18px;
-  line-height:1.45;
-}
-
-button{
+.logo-wrap img{max-width:260px;width:70%;height:auto}
+h1{font-size:30px;margin:12px 0;color:#1864ab}
+h2{font-size:24px;margin:10px 0;color:#2b7a78}
+p{font-size:18px;line-height:1.5}
+.btn{
   border:0;
+  background:#ffb703;
+  color:#222;
+  padding:13px 22px;
+  margin:10px 6px;
   border-radius:18px;
-  padding:15px 24px;
-  margin:8px;
   font-size:18px;
   font-weight:bold;
-  background:#ffca28;
-  color:#263238;
   cursor:pointer;
-  box-shadow:0 5px 0 #f9a825;
-  min-height:54px;
+  box-shadow:0 4px 0 #d89000;
 }
-
-button:active{
-  transform:translateY(3px);
-  box-shadow:0 2px 0 #f9a825;
-}
-
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 #d89000}
 .topbar{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
+  display:flex;
+  justify-content:space-between;
   gap:8px;
-  margin-bottom:14px;
-  font-weight:bold;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-bottom:10px;
 }
-
 .badge{
-  background:#e3f2fd;
+  background:#e7f5ff;
+  border:2px solid #74c0fc;
   border-radius:16px;
-  padding:10px 8px;
-  text-align:center;
-  font-size:16px;
+  padding:8px 12px;
+  font-weight:bold;
+  font-size:15px;
 }
-
-.timer{
-  background:#fff3e0;
+.timer{background:#fff3bf;border-color:#ffd43b}
+.question-card{
+  background:#ffffff;
+  border:2px solid #d0ebff;
+  border-radius:24px;
+  padding:14px;
+  text-align:left;
 }
-
-.progress-wrap{
-  width:100%;
-  height:12px;
-  background:#e0e0e0;
-  border-radius:20px;
-  overflow:hidden;
-  margin-bottom:16px;
-}
-
-.progress-bar{
-  height:100%;
-  width:0%;
-  background:#4fc3f7;
-  transition:.3s;
-}
-
 .question-image-container{
   text-align:center;
   margin:10px auto 14px;
-  min-height:0;
 }
-
 .question-image-container img{
   display:block;
   width:100%;
@@ -152,188 +109,131 @@ button:active{
   margin:0 auto;
   border-radius:18px;
 }
-
 .question{
-  font-size:24px;
-  line-height:1.4;
+  font-size:21px;
   font-weight:bold;
-  margin:22px 0;
+  line-height:1.35;
+  margin:10px 0 14px;
+  text-align:center;
 }
-
 .options{
   display:grid;
   grid-template-columns:1fr;
-  gap:12px;
+  gap:10px;
 }
-
 .option{
-  background:#f1f8e9;
-  border:2px solid #c5e1a5;
-  border-radius:18px;
-  padding:18px;
-  font-size:20px;
-  min-height:70px;
-  display:flex;
-  align-items:center;
-  cursor:pointer;
+  width:100%;
   text-align:left;
-  line-height:1.3;
+  padding:13px 14px;
+  border:2px solid #dee2e6;
+  background:#f8f9fa;
+  border-radius:16px;
+  font-size:17px;
+  cursor:pointer;
 }
-
-.option:hover{
-  background:#e8f5e9;
-}
-
-.correct{
-  background:#c8f7c5!important;
-  border-color:#2e7d32!important;
-  transform:scale(1.01);
-}
-
-.wrong{
-  background:#ffcdd2!important;
-  border-color:#c62828!important;
-}
-
+.option.correct{background:#d3f9d8;border-color:#37b24d}
+.option.wrong{background:#ffe3e3;border-color:#f03e3e}
 .feedback{
-  min-height:62px;
-  margin-top:16px;
-  font-size:18px;
+  min-height:54px;
+  margin-top:12px;
+  font-size:17px;
   font-weight:bold;
+  text-align:center;
 }
-
-.explain{
-  font-size:16px;
-  font-weight:normal;
-  margin-top:6px;
-  line-height:1.4;
+.next-btn{display:none}
+.cross{
+  font-size:42px;
+  color:#e03131;
+  animation:pop .25s ease;
 }
-
-.hidden{display:none}
-
+@keyframes pop{
+  from{transform:scale(.5);opacity:.4}
+  to{transform:scale(1);opacity:1}
+}
 .confetti{
   position:fixed;
-  inset:0;
+  font-size:20px;
   pointer-events:none;
-  z-index:3;
+  animation:fall 900ms ease-out forwards;
+  z-index:20;
 }
-
-.star{
-  position:absolute;
-  font-size:24px;
-  animation:pop 900ms ease-out forwards;
+@keyframes fall{
+  from{transform:translateY(0) rotate(0deg);opacity:1}
+  to{transform:translateY(120px) rotate(180deg);opacity:0}
 }
-
-@keyframes pop{
-  0%{transform:scale(.3) translateY(0);opacity:1}
-  100%{transform:scale(1.4) translateY(-120px);opacity:0}
+.result-box{
+  background:#f8f9fa;
+  border:2px solid #d0ebff;
+  border-radius:24px;
+  padding:22px;
+  margin-top:16px;
 }
-
-.cross{
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-size:88px;
-  color:#e53935;
-  opacity:0;
-  z-index:4;
-  animation:crossfade 700ms ease-out;
-}
-
-@keyframes crossfade{
-  0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}
-  40%{opacity:.85}
-  100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
-}
-
 @media(max-width:520px){
-  .screen{padding:10px}
-  .card{width:94vw;padding:16px;border-radius:22px}
-  h1{font-size:28px}
-  h2{font-size:20px}
+  body{padding:8px}
+  .app{border-radius:20px;padding:12px;min-height:520px}
+  h1{font-size:25px}
+  h2{font-size:21px}
   p{font-size:16px}
-  .topbar{grid-template-columns:1fr;gap:6px}
-  .badge{font-size:15px;padding:9px 8px}
-  .question{font-size:20px;margin:18px 0}
-  .question-image-container img{max-width:260px;max-height:170px}
-  .option{font-size:18px;padding:16px;min-height:64px}
-  button{width:100%;font-size:18px;padding:15px 18px}
-  .feedback{font-size:17px}
-  .explain{font-size:15px}
-}
-
-@media(max-height:520px){
-  .active{align-items:flex-start}
-  .screen{padding-top:10px}
-  .card{margin:8px 0}
-  .question{margin:14px 0}
-  .option{min-height:54px;padding:13px}
-}
-
-@media(prefers-reduced-motion:reduce){
-  .bg span,.star,.cross{animation:none}
+  .question{font-size:18px}
+  .option{font-size:16px;padding:12px}
+  .badge{font-size:13px;padding:7px 9px}
+  .btn{font-size:16px;padding:12px 18px}
 }
 </style>
 </head>
-
 <body>
 
 <div class="bg">
-  <span>💧</span>
-  <span>⭐</span>
-  <span>🚰</span>
-  <span>⭐</span>
-  <span>💧</span>
+  <span>⭐</span><span>🎈</span><span>⭐</span><span>🎉</span><span>⭐</span>
 </div>
 
-<div id="splash" class="screen active">
-  <div class="card">
-    <img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo" loading="eager" decoding="async">
-    <h2>Loading your game...</h2>
-  </div>
-</div>
+<div class="app">
 
-<div id="intro" class="screen">
-  <div class="card">
-    <h1>Water for All</h1>
+  <section id="splash" class="screen active">
+    <div class="logo-wrap">
+      <img src="assets/innovine-logo.png" alt="Innovine Logo">
+    </div>
+  </section>
+
+  <section id="intro" class="screen">
+    <h1>Keeping Safe</h1>
     <h2>Grade 2 EVS</h2>
-    <p>Choose the best answer. You get one retry after a wrong answer.</p>
-    <p>Each question has a 60-second timer.</p>
-    <button onclick="startGame()">Start Game</button>
-  </div>
-</div>
+    <p>Read each question carefully. Choose the safest answer.</p>
+    <p>You get one more try if your first answer is wrong.</p>
+    <button class="btn" onclick="startGame()">Start Game</button>
+  </section>
 
-<div id="quiz" class="screen">
-  <div class="card">
+  <section id="quiz" class="screen">
     <div class="topbar">
-      <div class="badge" id="qCount">Question 1/20</div>
-      <div class="badge">Score: <span id="score">0</span></div>
-      <div class="badge timer">Time: <span id="time">60</span>s</div>
+      <div class="badge" id="progress">Question 1/20</div>
+      <div class="badge" id="score">Score: 0</div>
+      <div class="badge timer" id="timer">Time: 60s</div>
     </div>
 
-    <div class="progress-wrap">
-      <div class="progress-bar" id="progressBar"></div>
+    <div class="question-card">
+      <div class="question-image-container" id="imageBox">
+        <img id="qImage" src="" alt="">
+      </div>
+      <div class="question" id="questionText"></div>
+      <div class="options" id="optionsBox"></div>
+      <div class="feedback" id="feedback"></div>
+      <div style="text-align:center">
+        <button class="btn next-btn" id="nextBtn" onclick="nextQuestion()">Next</button>
+      </div>
     </div>
+  </section>
 
-    <div id="questionImageContainer" class="question-image-container"></div>
-    <div class="question" id="question"></div>
-    <div class="options" id="options"></div>
-    <div class="feedback" id="feedback"></div>
-    <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
-  </div>
+  <section id="result" class="screen">
+    <h1>Game Complete!</h1>
+    <div class="result-box">
+      <h2 id="resultTitle"></h2>
+      <p id="finalScore"></p>
+      <p id="resultMessage"></p>
+      <button class="btn" onclick="restartGame()">Play Again</button>
+    </div>
+  </section>
+
 </div>
-
-<div id="result" class="screen">
-  <div class="card">
-    <h1>Great Work!</h1>
-    <h2>Your Score: <span id="finalScore"></span>/20</h2>
-    <p id="resultMsg"></p>
-    <button onclick="location.reload()">Play Again</button>
-  </div>
-</div>
-
-<div class="confetti" id="confetti"></div>
 
 <audio id="correctSound" src="assets/correct.mp3" preload="auto"></audio>
 <audio id="wrongSound" src="assets/wrong.mp3" preload="auto"></audio>
@@ -341,222 +241,242 @@ button:active{
 
 <script>
 const questions=[
-{q:"A family uses water every day for drinking, cooking, and cleaning. Why is water important?",o:["It is needed for daily life","It is used only for games","It is used only in schools","It is used only in factories"],a:0,e:"Water is needed for many daily activities."},
-{q:"Which activity needs clean drinking water?",o:["Watering plants","Drinking water","Washing a bicycle","Cleaning shoes"],a:1,e:"Clean water is important for drinking."},
-{q:"Which group contains only uses of water?",o:["Drinking, cooking, bathing","Reading, writing, drawing","Running, jumping, singing","Sleeping, resting, dreaming"],a:0,e:"Water is used for drinking, cooking, and bathing."},
-{q:"A tap stops giving water for an entire day. Which problem is most likely to happen?",o:["Difficulty cooking and cleaning","More rainfall","Faster internet","More playgrounds"],a:0,e:"Many daily activities depend on water."},
-{q:"Look at the picture. This is a common source of water found in many homes.",image:"assets/ch5_q5.png",o:["Tap","Television","Chair","Window"],a:0,e:"A tap is a common source of water found in homes."},
-{q:"Which of these is a natural source of water?",o:["River","Water tank","Tap","Bucket"],a:0,e:"A river is a natural source of water."},
-{q:"During the rainy season, water is collected and stored for later use. This is called:",o:["Rainwater harvesting","Water wasting","Water pollution","Water drying"],a:0,e:"Collecting rainwater for later use is called rainwater harvesting."},
-{q:"Why should we close a tap after using it?",o:["To save water","To increase waste","To make noise","To stop cooking"],a:0,e:"Closing the tap helps save water."},
-{q:"Find the one that is different.",o:["River","Pond","Lake","Television"],a:3,e:"River, pond, and lake are water sources. Television is not."},
-{q:"You are thirsty after playing outside. Which water is safest to drink?",o:["Clean drinking water","Dirty puddle water","Drain water","Muddy water"],a:0,e:"Clean drinking water is safest to drink."},
-{q:"Garbage is thrown into a river. What may happen?",o:["Water becomes polluted","Water becomes cleaner","More fish appear immediately","The river disappears"],a:0,e:"Garbage can pollute river water."},
-{q:"Why should drinking water be kept covered?",o:["To keep it clean and safe","To change its colour","To make it colder","To make it heavier"],a:0,e:"Keeping drinking water covered helps keep it clean and safe."},
-{q:"Look at the picture of a tap left running. What should be done?",image:"assets/ch5_q13.png",o:["Close the tap","Leave it open","Break the tap","Walk away"],a:0,e:"A running tap wastes water and should be closed."},
-{q:"While brushing your teeth, what is the best habit?",o:["Keep the tap running","Turn off the tap when not needed","Waste extra water","Fill the sink completely"],a:1,e:"Turning off the tap when not needed saves water."},
-{q:"A child waters plants using leftover water from washing vegetables. What does this show?",o:["Saving water","Wasting water","Polluting water","Ignoring plants"],a:0,e:"Reusing leftover water is a way to save water."},
-{q:"Children are collecting rainwater in a storage tank. What are they doing?",image:"assets/ch5_q16.png",o:["Rainwater harvesting","Water pollution","Water wastage","Flooding"],a:0,e:"Collecting and storing rainwater is rainwater harvesting."},
-{q:"Find the wrong habit.",o:["Closing taps properly","Using water carefully","Leaving taps running unnecessarily","Using buckets for bathing"],a:2,e:"Leaving taps running unnecessarily wastes water."},
-{q:"You see a leaking tap in school. What should you do?",o:["Ignore it","Inform a teacher or adult","Leave it running","Play with it"],a:1,e:"A teacher or adult should be told about a leaking tap."},
-{q:"A village has less water during summer. What is a good practice?",o:["Share water carefully","Waste water","Keep all water for yourself","Spill water"],a:0,e:"When water is less, it should be shared and used carefully."},
-{q:"Water is often called precious because:",o:["We need it for life","It is made of gold","It is used only in cities","It is found only in rivers"],a:0,e:"Water is precious because all living things need it."}
+{q:"Look at the picture. Why are the children crossing on the black and white stripes with an adult?",image:"assets/ch5_q1.png",o:["It is a safer place because vehicles can see people crossing","It is a place for playing games","It is used for parking vehicles","It is the fastest place to run"],a:0,e:"A zebra crossing helps people cross safely because drivers can see them clearly."},
+
+{q:"Aarav reaches a traffic signal and the light is red. What should he do?",o:["Stop and wait safely","Run across quickly","Stand in the middle of the road","Play near the signal"],a:0,e:"A red traffic light tells us to stop and wait."},
+
+{q:"Sana sees a green traffic light but the road is still busy. What should she do before crossing?",o:["Look carefully and cross only when it is safe","Run without looking","Close her eyes and walk","Cross alone quickly"],a:0,e:"Even when the light is green, we must check the road and cross safely."},
+
+{q:"Which pair shows safe road habits?",o:["Use the zebra crossing and walk on the footpath","Run on the road and jump the divider","Play cricket on the road","Cross without looking both ways"],a:0,e:"Using the zebra crossing and footpath helps keep us safe."},
+
+{q:"Mehul is walking beside a busy road. Where should he walk?",o:["On the footpath","In the middle of the road","Behind parked cars","On the road divider"],a:0,e:"People should walk on the footpath to stay away from moving vehicles."},
+
+{q:"Ira sits in a car with her family. What should she use before the car starts?",o:["Seatbelt","Pillow","Toy car","Lunch box"],a:0,e:"A seatbelt helps keep us safe inside a moving car."},
+
+{q:"Children are waiting for the school bus. Which child is following the safest habit?",o:["The child standing in a queue","The child pushing others","The child running behind the bus","The child hanging near the door"],a:0,e:"Waiting in a queue keeps everyone safe while boarding the bus."},
+
+{q:"Why should people wear seatbelts in a car?",o:["To stay safer if the car stops suddenly","To decorate the seat","To open the window","To sleep better"],a:0,e:"A seatbelt protects us if the car stops or jerks suddenly."},
+
+{q:"Which item does not belong with road safety items?",o:["Pillow","Helmet","Seatbelt","Traffic signal"],a:0,e:"Helmet, seatbelt and traffic signal help with safety. A pillow is not a road safety item."},
+
+{q:"Lata is riding on a scooter with her father. What should she wear to protect her head?",o:["Helmet","Cap","Balloon","Ribbon"],a:0,e:"A helmet protects the head while riding a two-wheeler."},
+
+{q:"A child wants to play with matchsticks at home. What could happen?",o:["The child may get burnt","The child will become stronger","The house will become cleaner","The child will get more toys"],a:0,e:"Matchsticks can cause fire and burn injuries."},
+
+{q:"Look at the picture. What should the child do instead of touching the electric socket?",image:"assets/ch5_q12.png",o:["Move away and tell an adult","Put another finger inside","Touch it with wet hands","Pour water near it"],a:0,e:"Electric sockets are dangerous. Children should move away and call an adult."},
+
+{q:"Kunal finds sharp scissors on a table. What should he do?",o:["Ask an adult before using them","Run while holding them","Play sword fight with them","Hide them under a pillow"],a:0,e:"Sharp objects can hurt us, so children should use them only with adult help."},
+
+{q:"Naina has wet hands after washing them. What should she do before touching a switch?",o:["Dry her hands first","Touch the switch quickly","Ask a friend to touch it","Touch it with both hands"],a:0,e:"Wet hands can make electric switches unsafe to touch."},
+
+{q:"A child is jumping on desks in the classroom. Why is this unsafe?",o:["The child may fall and get hurt","The desk will become taller","The classroom will become brighter","The child will learn faster"],a:0,e:"Jumping on furniture can cause falls and injuries."},
+
+{q:"Children are walking down the school stairs after class. Which action is safest?",o:["Walk slowly and hold the railing","Push friends from behind","Slide on the railing","Run down the steps"],a:0,e:"Walking carefully on stairs helps prevent falls."},
+
+{q:"Tara wants to swim in a pool. Which choice is safest?",o:["Swim with an adult or trainer nearby","Swim alone in deep water","Run near the pool edge","Jump in without checking"],a:0,e:"Children should swim only when an adult or trainer is watching."},
+
+{q:"Which playground habit can cause an accident?",o:["Standing in front of a moving swing","Waiting for your turn","Playing peacefully","Not pushing others"],a:0,e:"Standing near a moving swing is unsafe because it can hit you."},
+
+{q:"A stranger offers chocolates and asks Vivaan to come along. What should Vivaan do?",o:["Say no and tell a trusted adult","Go with the stranger","Take chocolates quietly","Follow the stranger"],a:0,e:"Children should never go with strangers and should tell a trusted adult."},
+
+{q:"Why do safety rules matter at home, school, road and playground?",o:["They help us avoid accidents and stay safe","They help us miss school","They make us run faster","They help us lose toys"],a:0,e:"Safety rules protect us from danger and accidents."}
 ];
 
 let current=0;
 let score=0;
 let attempts=0;
-let timer;
 let timeLeft=60;
+let timerId=null;
 let locked=false;
+
+const splash=document.getElementById("splash");
+const intro=document.getElementById("intro");
+const quiz=document.getElementById("quiz");
+const result=document.getElementById("result");
+const progress=document.getElementById("progress");
+const scoreBox=document.getElementById("score");
+const timerBox=document.getElementById("timer");
+const questionText=document.getElementById("questionText");
+const optionsBox=document.getElementById("optionsBox");
+const feedback=document.getElementById("feedback");
+const nextBtn=document.getElementById("nextBtn");
+const imageBox=document.getElementById("imageBox");
+const qImage=document.getElementById("qImage");
 
 const correctSound=document.getElementById("correctSound");
 const wrongSound=document.getElementById("wrongSound");
 const clapSound=document.getElementById("clapSound");
 
-setTimeout(function(){showScreen("intro")},5000);
+setTimeout(()=>{
+  splash.classList.remove("active");
+  intro.classList.add("active");
+},5000);
 
-function showScreen(id){
-  const screens=document.querySelectorAll(".screen");
-  for(let i=0;i<screens.length;i++){
-    screens[i].classList.remove("active");
-  }
-  document.getElementById(id).classList.add("active");
+function showScreen(screen){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  screen.classList.add("active");
 }
 
 function startGame(){
-  score=0;
   current=0;
-  showScreen("quiz");
+  score=0;
+  showScreen(quiz);
   loadQuestion();
 }
 
 function loadQuestion(){
-  locked=false;
+  clearInterval(timerId);
   attempts=0;
-  clearInterval(timer);
+  locked=false;
   timeLeft=60;
+  feedback.innerHTML="";
+  nextBtn.style.display="none";
+  optionsBox.innerHTML="";
 
-  const q=questions[current];
+  const item=questions[current];
+  progress.textContent="Question "+(current+1)+"/"+questions.length;
+  scoreBox.textContent="Score: "+score;
+  timerBox.textContent="Time: "+timeLeft+"s";
+  questionText.textContent=item.q;
 
-  document.getElementById("time").textContent=timeLeft;
-  document.getElementById("score").textContent=score;
-  document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=q.q;
-  document.getElementById("feedback").innerHTML="";
-  document.getElementById("nextBtn").classList.add("hidden");
-
-  const imageContainer=document.getElementById("questionImageContainer");
-  imageContainer.innerHTML="";
-
-  if(q.image){
-    const img=document.createElement("img");
-    img.src=q.image;
-    img.alt="Question image";
-    img.loading="eager";
-    img.decoding="async";
-    imageContainer.appendChild(img);
+  if(item.image){
+    qImage.src=item.image;
+    imageBox.style.display="block";
+  }else{
+    qImage.src="";
+    imageBox.style.display="none";
   }
 
-  const progress=(current/questions.length)*100;
-  document.getElementById("progressBar").style.width=progress+"%";
+  item.o.forEach((opt,index)=>{
+    const btn=document.createElement("button");
+    btn.className="option";
+    btn.textContent=opt;
+    btn.onclick=()=>selectAnswer(btn,index);
+    optionsBox.appendChild(btn);
+  });
 
-  const box=document.getElementById("options");
-  box.innerHTML="";
-
-  for(let i=0;i<q.o.length;i++){
-    const div=document.createElement("div");
-    div.className="option";
-    div.textContent=q.o[i];
-    div.onclick=function(){checkAnswer(i,div)};
-    box.appendChild(div);
-  }
-
-  startTimer();
-}
-
-function startTimer(){
-  timer=setInterval(function(){
+  timerId=setInterval(()=>{
     timeLeft--;
-    document.getElementById("time").textContent=timeLeft;
+    timerBox.textContent="Time: "+timeLeft+"s";
     if(timeLeft<=0){
-      clearInterval(timer);
+      clearInterval(timerId);
       showAnswer("Time is up!");
     }
   },1000);
 }
 
-function checkAnswer(i,el){
-  if(locked){return}
+function selectAnswer(btn,index){
+  if(locked)return;
+  const item=questions[current];
 
-  const q=questions[current];
-
-  if(i===q.a){
+  if(index===item.a){
     locked=true;
-    clearInterval(timer);
+    clearInterval(timerId);
+    btn.classList.add("correct");
     score++;
-    document.getElementById("score").textContent=score;
-    el.classList.add("correct");
-    document.getElementById("feedback").innerHTML="Correct!<div class='explain'>"+q.e+"</div>";
-
-    playSound(correctSound);
-    setTimeout(function(){playSound(clapSound)},250);
-
-    makeConfetti();
-    document.getElementById("nextBtn").classList.remove("hidden");
+    scoreBox.textContent="Score: "+score;
+    feedback.textContent="Correct! "+item.e;
+    playCorrect();
+    starConfetti();
+    nextBtn.style.display="inline-block";
+    disableOptions();
   }else{
     attempts++;
-    el.classList.add("wrong");
-    showCross();
-    playSound(wrongSound);
+    btn.classList.add("wrong");
+    playWrong();
+    feedback.innerHTML='<div class="cross">✖</div>';
 
     if(attempts===1){
-      document.getElementById("feedback").innerHTML="Try once more.";
-      el.onclick=null;
+      setTimeout(()=>{
+        feedback.textContent="Try once more. Think about the safest choice.";
+        btn.disabled=true;
+      },450);
     }else{
       showAnswer("Not quite.");
     }
   }
 }
 
-function showAnswer(msg){
+function showAnswer(prefix){
   locked=true;
-  clearInterval(timer);
+  clearInterval(timerId);
+  const item=questions[current];
+  const buttons=document.querySelectorAll(".option");
+  buttons.forEach((btn,i)=>{
+    btn.disabled=true;
+    if(i===item.a)btn.classList.add("correct");
+  });
+  feedback.textContent=prefix+" Correct answer: "+item.o[item.a]+". "+item.e;
+  nextBtn.style.display="inline-block";
+}
 
-  const q=questions[current];
-  const options=document.querySelectorAll(".option");
-
-  for(let i=0;i<options.length;i++){
-    options[i].onclick=null;
-    if(i===q.a){
-      options[i].classList.add("correct");
-    }
-  }
-
-  document.getElementById("feedback").innerHTML=
-    msg+"<div class='explain'>Correct answer: <b>"+q.o[q.a]+"</b><br>"+q.e+"</div>";
-
-  document.getElementById("nextBtn").classList.remove("hidden");
+function disableOptions(){
+  document.querySelectorAll(".option").forEach(btn=>btn.disabled=true);
 }
 
 function nextQuestion(){
   current++;
-
   if(current<questions.length){
     loadQuestion();
   }else{
-    document.getElementById("progressBar").style.width="100%";
     showResult();
   }
 }
 
 function showResult(){
-  showScreen("result");
-  document.getElementById("finalScore").textContent=score;
+  clearInterval(timerId);
+  showScreen(result);
+  document.getElementById("finalScore").textContent="Score: "+score+"/"+questions.length;
 
-  let msg="Good effort! Keep practising water use and water-saving habits.";
-
-  if(score>=18){
-    msg="Excellent! You understand water sources, uses, saving water, and clean water habits very well.";
-  }else if(score>=14){
-    msg="Well done! A little more practice will make it even better.";
+  let title,msg;
+  if(score>=17){
+    title="Excellent";
+    msg="You made very safe choices!";
+  }else if(score>=12){
+    title="Well Done";
+    msg="Good work. Keep practising safety rules.";
+  }else{
+    title="Good Effort";
+    msg="Revise the safety rules and try again.";
   }
 
-  document.getElementById("resultMsg").textContent=msg;
+  document.getElementById("resultTitle").textContent=title;
+  document.getElementById("resultMessage").textContent=msg;
 }
 
-function makeConfetti(){
-  const box=document.getElementById("confetti");
-  for(let i=0;i<18;i++){
-    const s=document.createElement("div");
-    s.className="star";
-    s.textContent="⭐";
-    s.style.left=Math.random()*100+"vw";
-    s.style.top=(55+Math.random()*25)+"vh";
-    box.appendChild(s);
-    setTimeout(function(){s.remove()},900);
-  }
+function restartGame(){
+  startGame();
 }
 
-function showCross(){
-  const x=document.createElement("div");
-  x.className="cross";
-  x.textContent="✕";
-  document.body.appendChild(x);
-  setTimeout(function(){x.remove()},700);
-}
-
-function playSound(sound){
-  if(!sound){return}
+function playCorrect(){
   try{
-    sound.currentTime=0;
-    const playPromise=sound.play();
-    if(playPromise!==undefined){
-      playPromise.catch(function(){});
-    }
-  }catch(error){}
+    correctSound.currentTime=0;
+    correctSound.play();
+    setTimeout(()=>{
+      clapSound.currentTime=0;
+      clapSound.play();
+    },450);
+  }catch(e){}
+}
+
+function playWrong(){
+  try{
+    wrongSound.currentTime=0;
+    wrongSound.play();
+  }catch(e){}
+}
+
+function starConfetti(){
+  for(let i=0;i<18;i++){
+    const star=document.createElement("div");
+    star.className="confetti";
+    star.textContent="⭐";
+    star.style.left=Math.random()*100+"vw";
+    star.style.top=(Math.random()*25+10)+"vh";
+    document.body.appendChild(star);
+    setTimeout(()=>star.remove(),950);
+  }
 }
 </script>
-
 </body>
 </html>
