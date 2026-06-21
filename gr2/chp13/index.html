@@ -25,6 +25,7 @@ button:active{transform:translateY(3px);box-shadow:0 2px 0 #f9a825}
 .timer{background:#fff3e0}
 .progress-wrap{width:100%;height:12px;background:#e0e0e0;border-radius:20px;overflow:hidden;margin-bottom:16px}
 .progress-bar{height:100%;width:0%;background:#66bb6a;transition:.3s}
+.question-image-container{text-align:center;margin:10px auto 14px;min-height:0}.question-image-container img{display:block;width:100%;max-width:280px;max-height:180px;object-fit:contain;margin:0 auto;border-radius:18px}
 .question{font-size:24px;line-height:1.4;font-weight:bold;margin:22px 0}
 .options{display:grid;grid-template-columns:1fr;gap:12px}
 .option{background:#f1f8e9;border:2px solid #c5e1a5;border-radius:18px;padding:18px;font-size:20px;min-height:70px;display:flex;align-items:center;cursor:pointer;text-align:left;line-height:1.3}
@@ -45,7 +46,7 @@ button:active{transform:translateY(3px);box-shadow:0 2px 0 #f9a825}
 .screen{padding:10px}.card{width:94vw;padding:16px;border-radius:22px}
 h1{font-size:28px}h2{font-size:20px}p{font-size:16px}
 .topbar{grid-template-columns:1fr;gap:6px}.badge{font-size:15px;padding:9px 8px}
-.question{font-size:20px;margin:18px 0}.option{font-size:18px;padding:16px;min-height:64px}
+.question{font-size:20px;margin:18px 0}.question-image-container img{max-width:260px;max-height:170px}.option{font-size:18px;padding:16px;min-height:64px}
 button{width:100%;font-size:18px;padding:15px 18px}.feedback{font-size:17px}.explain{font-size:15px}
 }
 @media(max-height:520px){.active{align-items:flex-start}.screen{padding-top:10px}.card{margin:8px 0}.question{margin:14px 0}.option{min-height:54px;padding:13px}}
@@ -84,6 +85,7 @@ button{width:100%;font-size:18px;padding:15px 18px}.feedback{font-size:17px}.exp
 <div class="badge timer">Time: <span id="time">60</span>s</div>
 </div>
 <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+<div id="questionImageContainer" class="question-image-container"></div>
 <div class="question" id="question"></div>
 <div class="options" id="options"></div>
 <div class="feedback" id="feedback"></div>
@@ -91,17 +93,7 @@ button{width:100%;font-size:18px;padding:15px 18px}.feedback{font-size:17px}.exp
 </div>
 </div>
 
-<div id="finalChallenge" class="screen">
-<div class="card">
-<h1>Final Challenge</h1>
-<div class="finalbox">
-<p><b>Think and say:</b></p>
-<p>Name two professions and explain how they help us.</p>
-</div>
-<p class="small">Tap finish to see your score.</p>
-<button onclick="showResult()">Finish</button>
-</div>
-</div>
+
 
 <div id="result" class="screen">
 <div class="card">
@@ -120,27 +112,27 @@ button{width:100%;font-size:18px;padding:15px 18px}.feedback{font-size:17px}.exp
 
 <script>
 const questions=[
-{q:"People work to earn money and help others. Such work is called:",o:["Profession","Festival","Holiday","Hobby"],a:0,e:"A profession is work people do to earn money and help others."},
+{q:"People do different kinds of work to earn money and help others. Such work is called:",o:["Profession","Festival","Holiday","Hobby"],a:0,e:"A profession is work people do to earn money and help others."},
 {q:"Why is every profession important in our daily life?",o:["Different people help us in different ways","Only famous jobs matter","Jobs are only for adults","Uniforms make jobs important"],a:0,e:"Every profession is important because each worker helps society in a different way."},
-{q:"A child has a fever and needs medicine. Which professional can help?",o:["Doctor","Pilot","Tailor","Cobbler"],a:0,e:"A doctor treats sick people and gives medicine."},
+{q:"Vihaan has a fever and needs medicine. Which professional can help?",o:["Doctor","Pilot","Tailor","Cobbler"],a:0,e:"A doctor treats sick people and gives medicine."},
 {q:"The person who brings milk to our house every morning is called:",o:["Milkman","Engineer","Pilot","Tailor"],a:0,e:"A milkman brings milk to homes."},
-{q:"A person sweeps roads and keeps the neighbourhood clean. Who is this?",o:["Sweeper","Doctor","Driver","Pilot"],a:0,e:"A sweeper helps keep roads and surroundings clean."},
+{q:"Look at the picture of a person sweeping a road. Who is this?",image:"assets/ch13_q5.png",o:["Sweeper","Doctor","Driver","Pilot"],a:0,e:"A sweeper helps keep roads and surroundings clean."},
 {q:"A family wants to buy new clay pots for storing water. Which professional makes them?",o:["Potter","Mechanic","Doctor","Tailor"],a:0,e:"A potter makes clay pots and other clay items."},
 {q:"Find the odd one out.",o:["Tailor","Cobbler","Engineer","Banana"],a:3,e:"Tailor, cobbler, and engineer are professions. Banana is a fruit."},
-{q:"Aman's school shoes are torn before assembly. Who can repair them?",o:["Cobbler","Pilot","Soldier","Chef"],a:0,e:"A cobbler repairs shoes."},
+{q:"Kabir’s school shoes are torn before assembly. Who can repair them?",o:["Cobbler","Pilot","Soldier","Chef"],a:0,e:"A cobbler repairs shoes."},
 {q:"Find the wrong match.",o:["Driver – Drives vehicles","Doctor – Treats patients","Pilot – Repairs bicycles","Engineer – Builds roads"],a:2,e:"A pilot flies an aeroplane. A mechanic repairs bicycles and vehicles."},
 {q:"A scooter stops suddenly on the road. Because of this problem, whom should we call?",o:["Mechanic","Tailor","Journalist","Potter"],a:0,e:"A mechanic repairs vehicles."},
-{q:"A person wearing a white coat checks your fever and gives medicine. This person is a:",o:["Doctor","Potter","Pilot","Soldier"],a:0,e:"A doctor checks patients and gives medicine."},
+{q:"Look at the picture of a person in a white coat checking a patient. This person is a:",image:"assets/ch13_q11.png",o:["Doctor","Potter","Pilot","Soldier"],a:0,e:"A doctor checks patients and gives medicine."},
 {q:"A fire breaks out in a building. Who should be called for help?",o:["Firefighter","Chef","Tailor","Journalist"],a:0,e:"A firefighter helps put out fires and rescues people."},
 {q:"A new bridge is being built in the city. Which professional plans and checks this work?",o:["Engineer","Tailor","Cobbler","Milkman"],a:0,e:"An engineer helps plan and check building work."},
 {q:"A person controls and flies an aeroplane safely. This person is called a:",o:["Pilot","Driver","Mechanic","Plumber"],a:0,e:"A pilot flies an aeroplane."},
 {q:"Sweepers, drivers, and helpers work hard every day. What should we do?",o:["Ignore them","Respect their work","Laugh at them","Disturb them"],a:1,e:"We should respect all workers and their work."},
 {q:"Your school uniform has become too small and needs stitching. Who can help?",o:["Tailor","Doctor","Pilot","Journalist"],a:0,e:"A tailor stitches and alters clothes."},
 {q:"Police officers, soldiers, and firefighters wear uniforms because:",o:["Their work needs safety and discipline","They like colourful clothes","Uniforms are cheaper","They do not have normal clothes"],a:0,e:"Uniforms help identify workers and support safety and discipline."},
-{q:"There is smoke coming from a building. Which person should be called first?",o:["Firefighter","Tailor","Driver","Journalist"],a:0,e:"A firefighter should be called during a fire emergency."},
+{q:"Look at the picture of a firefighter near smoke from a building. Who should be called first?",image:"assets/ch13_q18.png",o:["Firefighter","Tailor","Driver","Journalist"],a:0,e:"A firefighter should be called during a fire emergency."},
 {q:"A person visits places, asks questions, and writes news for newspapers. This person is a:",o:["Journalist","Pilot","Mechanic","Potter"],a:0,e:"A journalist collects and writes news."},
 {q:"Why should children learn about different professions?",o:["Every worker helps society in a special way","Only uniform jobs matter","Professions are only for cities","Jobs are only for earning money"],a:0,e:"Learning about professions helps us respect how different workers help society."}
-];
+]
 
 let current=0,score=0,attempts=0,timer,timeLeft=60,locked=false;
 const correctSound=document.getElementById("correctSound");
@@ -159,19 +151,30 @@ function startGame(){score=0;current=0;showScreen("quiz");loadQuestion()}
 
 function loadQuestion(){
 locked=false;attempts=0;clearInterval(timer);timeLeft=60;
+const q=questions[current];
 document.getElementById("time").textContent=timeLeft;
 document.getElementById("score").textContent=score;
 document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-document.getElementById("question").textContent=questions[current].q;
+document.getElementById("question").textContent=q.q;
 document.getElementById("feedback").innerHTML="";
 document.getElementById("nextBtn").classList.add("hidden");
+const imageContainer=document.getElementById("questionImageContainer");
+imageContainer.innerHTML="";
+if(q.image){
+const img=document.createElement("img");
+img.src=q.image;
+img.alt="Question image";
+img.loading="eager";
+img.decoding="async";
+imageContainer.appendChild(img);
+}
 document.getElementById("progressBar").style.width=((current)/questions.length)*100+"%";
 const box=document.getElementById("options");
 box.innerHTML="";
-for(let i=0;i<questions[current].o.length;i++){
+for(let i=0;i<q.o.length;i++){
 const div=document.createElement("div");
 div.className="option";
-div.textContent=questions[current].o[i];
+div.textContent=q.o[i];
 div.onclick=function(){checkAnswer(i,div)};
 box.appendChild(div);
 }
@@ -227,7 +230,7 @@ document.getElementById("nextBtn").classList.remove("hidden");
 function nextQuestion(){
 current++;
 if(current<questions.length){loadQuestion()}
-else{document.getElementById("progressBar").style.width="100%";showScreen("finalChallenge")}
+else{document.getElementById("progressBar").style.width="100%";showResult()}
 }
 
 function showResult(){
