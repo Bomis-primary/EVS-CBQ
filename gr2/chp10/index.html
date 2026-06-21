@@ -25,106 +25,37 @@ button:active{transform:translateY(3px);box-shadow:0 2px 0 #f9a825}
 .timer{background:#fff3e0}
 .progress-wrap{width:100%;height:12px;background:#e0e0e0;border-radius:20px;overflow:hidden;margin-bottom:16px}
 .progress-bar{height:100%;width:0%;background:#66bb6a;transition:.3s}
+.question-image-container{text-align:center;margin:10px auto 14px;min-height:0}
+.question-image-container img{display:block;width:100%;max-width:280px;max-height:180px;object-fit:contain;margin:0 auto;border-radius:18px}
 .question{font-size:24px;line-height:1.4;font-weight:bold;margin:22px 0}
 .options{display:grid;grid-template-columns:1fr;gap:12px}
 .option{background:#f1f8e9;border:2px solid #c5e1a5;border-radius:18px;padding:18px;font-size:20px;min-height:70px;display:flex;align-items:center;cursor:pointer;text-align:left;line-height:1.3}
-.option:hover{background:#e8f5e9}
-.correct{background:#c8f7c5!important;border-color:#2e7d32!important;transform:scale(1.01)}
-.wrong{background:#ffcdd2!important;border-color:#c62828!important}
-.feedback{min-height:62px;margin-top:16px;font-size:18px;font-weight:bold}
-.explain{font-size:16px;font-weight:normal;margin-top:6px;line-height:1.4}
-.hidden{display:none}
-.confetti{position:fixed;inset:0;pointer-events:none;z-index:3}
-.star{position:absolute;font-size:24px;animation:pop 900ms ease-out forwards}
+.option:hover{background:#e8f5e9}.correct{background:#c8f7c5!important;border-color:#2e7d32!important;transform:scale(1.01)}.wrong{background:#ffcdd2!important;border-color:#c62828!important}
+.feedback{min-height:62px;margin-top:16px;font-size:18px;font-weight:bold}.explain{font-size:16px;font-weight:normal;margin-top:6px;line-height:1.4}.hidden{display:none}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:3}.star{position:absolute;font-size:24px;animation:pop 900ms ease-out forwards}
 @keyframes pop{0%{transform:scale(.3) translateY(0);opacity:1}100%{transform:scale(1.4) translateY(-120px);opacity:0}}
 .cross{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:88px;color:#e53935;opacity:0;z-index:4;animation:crossfade 700ms ease-out}
 @keyframes crossfade{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}40%{opacity:.85}100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}}
-.finalbox{background:#fff8e1;border:2px dashed #ffb300;border-radius:20px;padding:16px;margin-top:16px}
-.small{font-size:15px;color:#546e7a}
-@media(max-width:520px){
-.screen{padding:10px}.card{width:94vw;padding:16px;border-radius:22px}
-h1{font-size:28px}h2{font-size:20px}p{font-size:16px}
-.topbar{grid-template-columns:1fr;gap:6px}.badge{font-size:15px;padding:9px 8px}
-.question{font-size:20px;margin:18px 0}.option{font-size:18px;padding:16px;min-height:64px}
-button{width:100%;font-size:18px;padding:15px 18px}.feedback{font-size:17px}.explain{font-size:15px}
-}
+@media(max-width:520px){.screen{padding:10px}.card{width:94vw;padding:16px;border-radius:22px}h1{font-size:28px}h2{font-size:20px}p{font-size:16px}.topbar{grid-template-columns:1fr;gap:6px}.badge{font-size:15px;padding:9px 8px}.question{font-size:20px;margin:18px 0}.question-image-container img{max-width:260px;max-height:170px}.option{font-size:18px;padding:16px;min-height:64px}button{width:100%;font-size:18px;padding:15px 18px}.feedback{font-size:17px}.explain{font-size:15px}}
 @media(max-height:520px){.active{align-items:flex-start}.screen{padding-top:10px}.card{margin:8px 0}.question{margin:14px 0}.option{min-height:54px;padding:13px}}
 @media(prefers-reduced-motion:reduce){.bg span,.star,.cross{animation:none}}
 </style>
 </head>
-
 <body>
-
-<div class="bg">
-<span>⭐</span><span>💧</span><span>⭐</span><span>🌧️</span><span>⭐</span>
-</div>
-
-<div id="splash" class="screen active">
-<div class="card">
-<img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo">
-<h2>Loading your game...</h2>
-</div>
-</div>
-
-<div id="intro" class="screen">
-<div class="card">
-<h1>Water for All</h1>
-<h2>Grade 2 EVS</h2>
-<p>Choose the best answer. You get one retry after a wrong answer.</p>
-<p>Each question has a 60-second timer.</p>
-<button onclick="startGame()">Start Game</button>
-</div>
-</div>
-
-<div id="quiz" class="screen">
-<div class="card">
-<div class="topbar">
-<div class="badge" id="qCount">Question 1/20</div>
-<div class="badge">Score: <span id="score">0</span></div>
-<div class="badge timer">Time: <span id="time">60</span>s</div>
-</div>
-<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
-<div class="question" id="question"></div>
-<div class="options" id="options"></div>
-<div class="feedback" id="feedback"></div>
-<button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
-</div>
-</div>
-
-<div id="finalChallenge" class="screen">
-<div class="card">
-<h1>Final Challenge</h1>
-<div class="finalbox">
-<p><b>Think and say:</b></p>
-<p>Name one source of water and one way to save water.</p>
-</div>
-<p class="small">Tap finish to see your score.</p>
-<button onclick="showResult()">Finish</button>
-</div>
-</div>
-
-<div id="result" class="screen">
-<div class="card">
-<h1>Great Work!</h1>
-<h2>Your Score: <span id="finalScore"></span>/20</h2>
-<p id="resultMsg"></p>
-<button onclick="location.reload()">Play Again</button>
-</div>
-</div>
-
+<div class="bg"><span>⭐</span><span>💧</span><span>⭐</span><span>🌧️</span><span>⭐</span></div>
+<div id="splash" class="screen active"><div class="card"><img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo"><h2>Loading your game...</h2></div></div>
+<div id="intro" class="screen"><div class="card"><h1>Water for All</h1><h2>Grade 2 EVS</h2><p>Choose the best answer. You get one retry after a wrong answer.</p><p>Each question has a 60-second timer.</p><button onclick="startGame()">Start Game</button></div></div>
+<div id="quiz" class="screen"><div class="card"><div class="topbar"><div class="badge" id="qCount">Question 1/20</div><div class="badge">Score: <span id="score">0</span></div><div class="badge timer">Time: <span id="time">60</span>s</div></div><div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div><div id="questionImageContainer" class="question-image-container"></div><div class="question" id="question"></div><div class="options" id="options"></div><div class="feedback" id="feedback"></div><button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button></div></div>
+<div id="result" class="screen"><div class="card"><h1>Great Work!</h1><h2>Your Score: <span id="finalScore"></span>/20</h2><p id="resultMsg"></p><button onclick="location.reload()">Play Again</button></div></div>
 <div class="confetti" id="confetti"></div>
-
-<audio id="correctSound" src="assets/correct.mp3" preload="auto"></audio>
-<audio id="wrongSound" src="assets/wrong.mp3" preload="auto"></audio>
-<audio id="clapSound" src="assets/clapping.mp3" preload="auto"></audio>
-
+<audio id="correctSound" src="assets/correct.mp3" preload="auto"></audio><audio id="wrongSound" src="assets/wrong.mp3" preload="auto"></audio><audio id="clapSound" src="assets/clapping.mp3" preload="auto"></audio>
 <script>
 const questions=[
-{q:"The picture says “Every Drop Counts.” What does this message teach us?",o:["Waste more water","Save water carefully","Play with water","Use water all day"],a:1,e:"Every drop is important, so we should save water carefully."},
+{q:"Look at the picture with the message “Every Drop Counts.” What does this teach us?",image:"assets/ch10_q1.png",o:["Waste more water","Save water carefully","Play with water","Use water all day"],a:1,e:"Every drop is important, so we should save water carefully."},
 {q:"Why is water important for all living things?",o:["It helps living things survive","It makes toys","It changes colours","It makes noise"],a:0,e:"Plants, animals, and humans need water to live."},
 {q:"Which of these is a natural source of water?",o:["River","Tap","Bottle","Pipe"],a:0,e:"A river is a natural source of water."},
 {q:"Which of these is a man-made source of water?",o:["Pond","River","Hand pump","Rain"],a:2,e:"A hand pump is made by people to get water."},
-{q:"Water is boiled before drinking. Why is this done?",o:["To make it hot forever","To kill germs and make it safer","To change its colour","To make it sweet"],a:1,e:"Boiling water kills many germs and makes water safer to drink."},
+{q:"Why is water boiled before drinking?",o:["To make it hot forever","To kill germs and make it safer","To change its colour","To make it sweet"],a:1,e:"Boiling water kills many germs and makes water safer to drink."},
 {q:"People are washing clothes in a pond. What may happen to the pond water?",o:["It becomes cleaner","It becomes dirty","It becomes colder","It becomes sweet"],a:1,e:"Washing clothes in a pond can make the water dirty."},
 {q:"If someone drinks dirty water every day, what may happen?",o:["They may fall sick","They may run faster","They may grow taller","They may sleep less"],a:0,e:"Dirty water can contain germs and may make us sick."},
 {q:"Find the odd one out.",o:["Lake","River","Well","Pencil"],a:3,e:"Lake, river, and well are sources of water. Pencil is not."},
@@ -132,144 +63,29 @@ const questions=[
 {q:"A water purifier is used to make water:",o:["Colder","Cleaner and safer","Colourful","Salty"],a:1,e:"A water purifier helps clean water and make it safer."},
 {q:"A leaking tap is not repaired for many days. What will happen?",o:["Water will be wasted","Water will become fresh","More rain will come","The tap will disappear"],a:0,e:"A leaking tap wastes water."},
 {q:"Which action helps save water?",o:["Closing taps after use","Leaving taps open","Playing with running water","Wasting clean water"],a:0,e:"Closing taps after use is a good water-saving habit."},
-{q:"Ice is water in which form?",o:["Solid","Liquid","Gas","Cloud"],a:0,e:"Ice is the solid form of water."},
+{q:"Look at the picture of ice cubes. Ice is water in which form?",image:"assets/ch10_q13.png",o:["Solid","Liquid","Gas","Cloud"],a:0,e:"Ice is the solid form of water."},
 {q:"When water is heated for a long time, it changes into:",o:["Dust","Steam","Stone","Paper"],a:1,e:"Heated water changes into steam."},
 {q:"You see water flowing from a broken school tap. What is the best action?",o:["Ignore it","Tell a teacher or plumber","Play near it","Let it flow"],a:1,e:"Telling a teacher or plumber can help stop water wastage."},
 {q:"Rain falls from clouds and fills rivers, ponds, and lakes. This process is called:",o:["Precipitation","Boiling","Freezing","Evaporation"],a:0,e:"Rainfall is a form of precipitation."},
-{q:"Tiny water drops are seen on leaves early in the morning. This is called:",o:["Evaporation","Condensation","Boiling","Freezing"],a:1,e:"Water vapour cools and forms tiny drops. This is condensation."},
+{q:"Look at tiny water drops on leaves early in the morning. This is called:",image:"assets/ch10_q17.png",o:["Evaporation","Condensation","Boiling","Freezing"],a:1,e:"Water vapour cools and forms tiny drops. This is condensation."},
 {q:"Find the wrong practice.",o:["Drink clean water","Close taps properly","Throw garbage into rivers","Boil water before drinking"],a:2,e:"Throwing garbage into rivers makes water dirty."},
-{q:"After heavy rain, lakes and ponds become full. This shows:",o:["Collection of water","Burning of water","Cutting of water","Freezing of water"],a:0,e:"Rainwater collects in lakes and ponds."},
+{q:"After heavy rain, lakes and ponds become full. What does this show?",o:["Collection of water","Burning of water","Cutting of water","Freezing of water"],a:0,e:"Rainwater collects in lakes and ponds."},
 {q:"Why should we save water every day?",o:["Life depends on water","Water makes only ice","Water is always blue","Rain comes every day"],a:0,e:"Life depends on water, so we should save it every day."}
 ];
-
 let current=0,score=0,attempts=0,timer,timeLeft=60,locked=false;
-const correctSound=document.getElementById("correctSound");
-const wrongSound=document.getElementById("wrongSound");
-const clapSound=document.getElementById("clapSound");
-
+const correctSound=document.getElementById("correctSound"),wrongSound=document.getElementById("wrongSound"),clapSound=document.getElementById("clapSound");
 setTimeout(function(){showScreen("intro")},5000);
-
-function showScreen(id){
-const screens=document.querySelectorAll(".screen");
-for(let i=0;i<screens.length;i++){screens[i].classList.remove("active")}
-document.getElementById(id).classList.add("active");
-}
-
+function showScreen(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active")}
 function startGame(){score=0;current=0;showScreen("quiz");loadQuestion()}
-
-function loadQuestion(){
-locked=false;attempts=0;clearInterval(timer);timeLeft=60;
-document.getElementById("time").textContent=timeLeft;
-document.getElementById("score").textContent=score;
-document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-document.getElementById("question").textContent=questions[current].q;
-document.getElementById("feedback").innerHTML="";
-document.getElementById("nextBtn").classList.add("hidden");
-document.getElementById("progressBar").style.width=((current)/questions.length)*100+"%";
-const box=document.getElementById("options");
-box.innerHTML="";
-for(let i=0;i<questions[current].o.length;i++){
-const div=document.createElement("div");
-div.className="option";
-div.textContent=questions[current].o[i];
-div.onclick=function(){checkAnswer(i,div)};
-box.appendChild(div);
-}
-startTimer();
-}
-
-function startTimer(){
-timer=setInterval(function(){
-timeLeft--;
-document.getElementById("time").textContent=timeLeft;
-if(timeLeft<=0){clearInterval(timer);showAnswer("Time is up!")}
-},1000);
-}
-
-function checkAnswer(i,el){
-if(locked){return}
-const q=questions[current];
-if(i===q.a){
-locked=true;clearInterval(timer);score++;
-document.getElementById("score").textContent=score;
-el.classList.add("correct");
-document.getElementById("feedback").innerHTML="Correct!<div class='explain'>"+q.e+"</div>";
-playSound(correctSound);
-setTimeout(function(){playSound(clapSound)},250);
-makeConfetti();
-document.getElementById("nextBtn").classList.remove("hidden");
-}else{
-attempts++;
-el.classList.add("wrong");
-showCross();
-playSound(wrongSound);
-if(attempts===1){
-document.getElementById("feedback").innerHTML="Try once more.";
-el.onclick=null;
-}else{
-showAnswer("Not quite.");
-}
-}
-}
-
-function showAnswer(msg){
-locked=true;clearInterval(timer);
-const q=questions[current];
-const options=document.querySelectorAll(".option");
-for(let i=0;i<options.length;i++){
-options[i].onclick=null;
-if(i===q.a){options[i].classList.add("correct")}
-}
-document.getElementById("feedback").innerHTML=msg+"<div class='explain'>Correct answer: <b>"+q.o[q.a]+"</b><br>"+q.e+"</div>";
-document.getElementById("nextBtn").classList.remove("hidden");
-}
-
-function nextQuestion(){
-current++;
-if(current<questions.length){loadQuestion()}
-else{document.getElementById("progressBar").style.width="100%";showScreen("finalChallenge")}
-}
-
-function showResult(){
-showScreen("result");
-document.getElementById("finalScore").textContent=score;
-playSound(clapSound);
-let msg="Good effort! Keep practising water sources, safe water, and saving water.";
-if(score>=18){msg="Excellent! You understand water sources, forms of water, and conservation very well."}
-else if(score>=14){msg="Well done! A little more practice will make it even better."}
-document.getElementById("resultMsg").textContent=msg;
-}
-
-function makeConfetti(){
-const box=document.getElementById("confetti");
-for(let i=0;i<18;i++){
-const s=document.createElement("div");
-s.className="star";
-s.textContent="⭐";
-s.style.left=Math.random()*100+"vw";
-s.style.top=(55+Math.random()*25)+"vh";
-box.appendChild(s);
-setTimeout(function(){s.remove()},900);
-}
-}
-
-function showCross(){
-const x=document.createElement("div");
-x.className="cross";
-x.textContent="✕";
-document.body.appendChild(x);
-setTimeout(function(){x.remove()},700);
-}
-
-function playSound(sound){
-if(!sound){return}
-try{
-sound.currentTime=0;
-const p=sound.play();
-if(p!==undefined){p.catch(function(){})}
-}catch(error){}
-}
+function loadQuestion(){locked=false;attempts=0;clearInterval(timer);timeLeft=60;const q=questions[current];document.getElementById("time").textContent=timeLeft;document.getElementById("score").textContent=score;document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;document.getElementById("question").textContent=q.q;document.getElementById("feedback").innerHTML="";document.getElementById("nextBtn").classList.add("hidden");const ic=document.getElementById("questionImageContainer");ic.innerHTML="";if(q.image){const img=document.createElement("img");img.src=q.image;img.alt="Question image";img.loading="eager";img.decoding="async";ic.appendChild(img)}document.getElementById("progressBar").style.width=((current)/questions.length)*100+"%";const box=document.getElementById("options");box.innerHTML="";for(let i=0;i<q.o.length;i++){const div=document.createElement("div");div.className="option";div.textContent=q.o[i];div.onclick=function(){checkAnswer(i,div)};box.appendChild(div)}startTimer()}
+function startTimer(){timer=setInterval(function(){timeLeft--;document.getElementById("time").textContent=timeLeft;if(timeLeft<=0){clearInterval(timer);showAnswer("Time is up!")}},1000)}
+function checkAnswer(i,el){if(locked)return;const q=questions[current];if(i===q.a){locked=true;clearInterval(timer);score++;document.getElementById("score").textContent=score;el.classList.add("correct");document.getElementById("feedback").innerHTML="Correct!<div class='explain'>"+q.e+"</div>";playSound(correctSound);setTimeout(function(){playSound(clapSound)},250);makeConfetti();document.getElementById("nextBtn").classList.remove("hidden")}else{attempts++;el.classList.add("wrong");showCross();playSound(wrongSound);if(attempts===1){document.getElementById("feedback").innerHTML="Try once more.";el.onclick=null}else{showAnswer("Not quite.")}}}
+function showAnswer(msg){locked=true;clearInterval(timer);const q=questions[current],opts=document.querySelectorAll(".option");for(let i=0;i<opts.length;i++){opts[i].onclick=null;if(i===q.a)opts[i].classList.add("correct")}document.getElementById("feedback").innerHTML=msg+"<div class='explain'>Correct answer: <b>"+q.o[q.a]+"</b><br>"+q.e+"</div>";document.getElementById("nextBtn").classList.remove("hidden")}
+function nextQuestion(){current++;if(current<questions.length)loadQuestion();else{document.getElementById("progressBar").style.width="100%";showResult()}}
+function showResult(){showScreen("result");document.getElementById("finalScore").textContent=score;playSound(clapSound);let msg="Good effort! Keep practising water sources, safe water, and saving water.";if(score>=18)msg="Excellent! You understand water sources, forms of water, and conservation very well.";else if(score>=14)msg="Well done! A little more practice will make it even better.";document.getElementById("resultMsg").textContent=msg}
+function makeConfetti(){const box=document.getElementById("confetti");for(let i=0;i<18;i++){const s=document.createElement("div");s.className="star";s.textContent="⭐";s.style.left=Math.random()*100+"vw";s.style.top=(55+Math.random()*25)+"vh";box.appendChild(s);setTimeout(function(){s.remove()},900)}}
+function showCross(){const x=document.createElement("div");x.className="cross";x.textContent="✕";document.body.appendChild(x);setTimeout(function(){x.remove()},700)}
+function playSound(sound){if(!sound)return;try{sound.currentTime=0;const p=sound.play();if(p!==undefined)p.catch(function(){})}catch(error){}}
 </script>
-
 </body>
 </html>
