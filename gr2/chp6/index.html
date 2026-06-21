@@ -360,26 +360,46 @@ button:active{
 
 <script>
 const questions=[
-{q:"Look at the picture of children cleaning a park. What does this action show?",image:"assets/ch6_q1.png",o:["Dirty habits","Keeping surroundings clean","Wasting time","Playing games only"],a:1,e:"Cleaning public places helps keep our surroundings clean."},
-{q:"Why should we keep our surroundings clean?",o:["To stay healthy and safe","To make more garbage","To invite insects","To waste water"],a:0,e:"Clean surroundings help us stay healthy and safe."},
-{q:"You finish eating a snack in school. What should you do with the wrapper?",o:["Put it in the dustbin","Throw it on the road","Leave it in the classroom","Drop it in the playground"],a:0,e:"Wrappers should be thrown in the dustbin."},
-{q:"Which set shows good cleanliness habits?",o:["Use dustbin and plant trees","Throw waste outside and spit on road","Burn plastic and leave garbage open","Waste water and cut trees"],a:0,e:"Using dustbins and planting trees are good habits."},
-{q:"A place has garbage lying on the road. What problem may this cause?",o:["Fresh smell","Flies and mosquitoes","More flowers","Cleaner air"],a:1,e:"Garbage can attract flies and mosquitoes."},
-{q:"A busy road has many vehicles giving out smoke every day. What kind of pollution may increase there?",o:["Air pollution","Water pollution","Soil pollution only","Noise-free surroundings"],a:0,e:"Vehicle smoke can increase air pollution."},
-{q:"You see paper pieces near your classroom. What should you do?",o:["Ignore them","Pick them up and use the dustbin","Throw more paper","Kick them away"],a:1,e:"Picking up paper and using the dustbin keeps the classroom clean."},
-{q:"Why should we not throw garbage into rivers and lakes?",o:["It makes water dirty","It makes water sweet","It helps fish grow faster","It makes water colourful"],a:0,e:"Garbage pollutes water bodies and harms living things."},
-{q:"Find the one that is different.",o:["Planting trees","Using dustbin","Throwing waste on road","Keeping places clean"],a:2,e:"Throwing waste on the road is not a clean habit."},
-{q:"Someone is going shopping. Which bag is better for the environment?",o:["Plastic bag","Cloth bag","Open wrapper","Broken basket"],a:1,e:"Cloth bags are reusable and better for the environment."},
-{q:"Many trees are cut down in one area. What may happen?",o:["Cleaner air decreases","More shade appears","More birds come","More rain happens daily"],a:0,e:"Cutting trees can reduce clean air."},
-{q:"Look at the picture of children planting saplings in a garden. This helps to:",image:"assets/ch6_q12.png",o:["Make air cleaner","Create more garbage","Increase pollution","Waste soil"],a:0,e:"Trees and plants help make the air cleaner."},
-{q:"Why should we walk for short distances instead of always using vehicles?",o:["To reduce pollution","To make roads dirty","To waste time","To make more smoke"],a:0,e:"Walking short distances reduces vehicle smoke and pollution."},
-{q:"Why is a covered dustbin better than an open dustbin?",image:"assets/ch6_q14.png",o:["It helps keep germs away","It makes garbage bigger","It increases bad smell","It attracts more flies"],a:0,e:"A covered dustbin keeps germs and flies away."},
-{q:"Which place is best for throwing waste at school?",o:["Classroom floor","Playground corner","Covered dustbin","Under the desk"],a:2,e:"Waste should be thrown in a dustbin."},
-{q:"You see garbage near your school gate. What is the best action?",o:["Walk away","Put it in the dustbin","Throw more waste","Play near it"],a:1,e:"Putting garbage in the dustbin keeps the school clean."},
-{q:"Someone is burning plastic waste near your house. What problem can this cause?",o:["Fresh air","Dirty air and pollution","More flowers","Clean water"],a:1,e:"Burning plastic pollutes the air."},
-{q:"Find the wrong habit.",o:["Using a covered dustbin","Spitting in open areas","Planting trees","Keeping school clean"],a:1,e:"Spitting in open areas is unhealthy and dirty."},
-{q:"Your pet dog makes the garden dirty. What should you do?",o:["Leave it there","Clean the place properly","Ignore it","Move away forever"],a:1,e:"We should clean up after pets to keep places clean."},
-{q:"Clean surroundings help us to live:",o:["Healthily and happily","Lazily","Without water","Without trees"],a:0,e:"Clean surroundings help us stay healthy and happy."}
+[
+{q:"Look at the picture. How are the children helping the environment?",image:"assets/ch6_q1.png",o:["By cleaning the area and putting waste in a dustbin","By making the place dirty","By cutting plants","By wasting water"],a:0,e:"Cleaning public places helps keep the environment clean and healthy."},
+
+{q:"A school playground is full of litter. Why should students help keep it clean?",o:["To stay healthy and enjoy a cleaner place","To attract flies and mosquitoes","To create more waste","To make the playground smaller"],a:0,e:"Clean surroundings help us stay healthy and safe."},
+
+{q:"You finish eating a snack during recess. What is the responsible thing to do with the wrapper?",o:["Put it in the dustbin","Throw it near a tree","Leave it on the bench","Drop it in the playground"],a:0,e:"Waste should always be thrown in a dustbin."},
+
+{q:"Which action shows that a child cares for the environment?",o:["Using a dustbin and planting trees","Throwing waste on roads","Burning plastic waste","Wasting water every day"],a:0,e:"Using dustbins and planting trees are environment-friendly habits."},
+
+{q:"Garbage is left uncovered near houses. What is most likely to happen?",o:["Flies and mosquitoes may gather there","The air becomes fresher","More flowers will grow","The area becomes cleaner"],a:0,e:"Garbage attracts insects that can spread diseases."},
+
+{q:"A road has many vehicles releasing smoke every day. What problem may increase in that area?",o:["Air pollution","Water pollution","Soil pollution only","Cleaner air"],a:0,e:"Vehicle smoke contributes to air pollution."},
+
+{q:"You notice paper pieces lying near your classroom. What should you do?",o:["Pick them up and throw them in a dustbin","Ignore them","Kick them away","Throw more paper nearby"],a:0,e:"Using a dustbin helps keep the school clean."},
+
+{q:"Why should we avoid throwing garbage into rivers and lakes?",o:["It pollutes water and harms living things","It makes water sweeter","It helps fish grow faster","It keeps water cleaner"],a:0,e:"Garbage makes water dirty and unsafe for living things."},
+
+{q:"Which action is not helping to keep surroundings clean?",o:["Throwing waste on the road","Planting trees","Using a dustbin","Keeping places clean"],a:0,e:"Waste should not be thrown on roads."},
+
+{q:"A family goes shopping every week. Which bag is a better choice for the environment?",o:["Cloth bag","Plastic bag","Food wrapper","Disposable packet"],a:0,e:"Cloth bags can be reused many times."},
+
+{q:"Many trees are cut down in one area. How might this affect the environment?",o:["There may be less clean air","There will be more shade","More birds will come","Pollution will reduce"],a:0,e:"Trees help clean the air and provide oxygen."},
+
+{q:"Look at the picture. Why are the children planting and watering saplings?",image:"assets/ch6_q12.png",o:["To help make the environment greener and cleaner","To create more garbage","To increase pollution","To spoil the soil"],a:0,e:"Plants and trees help improve air quality and keep the environment healthy."},
+
+{q:"Your friend's house is only a short distance away. Why is walking a good choice?",o:["It reduces pollution from vehicles","It creates more smoke","It wastes fuel","It makes roads dirtier"],a:0,e:"Walking short distances helps reduce pollution."},
+
+{q:"Look at the picture. Why is the green dustbin a better choice than the blue one?",image:"assets/ch6_q14.png",o:["Its lid helps keep flies and germs away","It can hold more garbage","It is a brighter colour","It attracts insects less because it is green"],a:0,e:"Covered dustbins help prevent the spread of germs and keep surroundings cleaner."},
+
+{q:"Where should waste be thrown in school?",o:["In a covered dustbin","On the classroom floor","In a playground corner","Under a desk"],a:0,e:"Waste should always be thrown in a dustbin."},
+
+{q:"You see litter near your school gate. What is the best action?",o:["Put it in a dustbin","Walk away","Throw more litter","Play around it"],a:0,e:"Keeping public places clean is everyone's responsibility."},
+
+{q:"Someone is burning plastic near your house. Why is this harmful?",o:["It causes air pollution","It makes the air fresh","It helps plants grow","It cleans the surroundings"],a:0,e:"Burning plastic releases harmful smoke into the air."},
+
+{q:"Which habit is unhealthy and makes surroundings dirty?",o:["Spitting in open areas","Using a covered dustbin","Planting trees","Keeping the school clean"],a:0,e:"Spitting in open places can spread germs."},
+
+{q:"Your pet dog dirties part of the garden. What should you do?",o:["Clean the area properly","Ignore it","Leave it there","Move to another place"],a:0,e:"Cleaning up after pets helps keep places hygienic."},
+
+{q:"Why do people prefer living in clean surroundings?",o:["They help us stay healthy and happy","They help us create more waste","They reduce the need for trees","They remove the need for clean water"],a:0,e:"Clean surroundings support good health and well-being."}
 ]
 
 let current=0;
