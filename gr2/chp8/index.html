@@ -144,6 +144,22 @@ button:active{
   transition:.3s;
 }
 
+.question-image-container{
+  text-align:center;
+  margin:10px auto 14px;
+  min-height:0;
+}
+
+.question-image-container img{
+  display:block;
+  width:100%;
+  max-width:280px;
+  max-height:180px;
+  object-fit:contain;
+  margin:0 auto;
+  border-radius:18px;
+}
+
 .question{
   font-size:24px;
   line-height:1.4;
@@ -236,19 +252,6 @@ button:active{
   100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
 }
 
-.finalbox{
-  background:#fff8e1;
-  border:2px dashed #ffb300;
-  border-radius:20px;
-  padding:16px;
-  margin-top:16px;
-}
-
-.small{
-  font-size:15px;
-  color:#546e7a;
-}
-
 @media(max-width:520px){
   .screen{padding:10px}
   .card{width:94vw;padding:16px;border-radius:22px}
@@ -258,6 +261,7 @@ button:active{
   .topbar{grid-template-columns:1fr;gap:6px}
   .badge{font-size:15px;padding:9px 8px}
   .question{font-size:20px;margin:18px 0}
+  .question-image-container img{max-width:260px;max-height:170px}
   .option{font-size:18px;padding:16px;min-height:64px}
   button{width:100%;font-size:18px;padding:15px 18px}
   .feedback{font-size:17px}
@@ -317,22 +321,11 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <div id="questionImageContainer" class="question-image-container"></div>
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
     <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
-  </div>
-</div>
-
-<div id="finalChallenge" class="screen">
-  <div class="card">
-    <h1>Final Challenge</h1>
-    <div class="finalbox">
-      <p><b>Think and say:</b></p>
-      <p>Name one wild animal, one domestic animal, and one way to care for animals.</p>
-    </div>
-    <p class="small">Tap finish to see your score.</p>
-    <button onclick="showResult()">Finish</button>
   </div>
 </div>
 
@@ -353,23 +346,23 @@ button:active{
 
 <script>
 const questions=[
-{q:"An elephant living in a forest is a:",o:["Pet animal","Wild animal","Farm animal","Water animal"],a:1,e:"Animals that live in forests are called wild animals."},
-{q:"Why are domestic animals useful to us?",o:["They give us milk, eggs, wool and help in work","They only make noise","They live only in forests","They do not help people"],a:0,e:"Domestic animals give us useful things and help us in many ways."},
-{q:"A farmer gets wool to make warm clothes. Which animal most likely provides it?",o:["Sheep","Hen","Fish","Rabbit"],a:0,e:"Sheep give us wool."},
+{q:"Look at the picture of an elephant living in a forest. This animal is a:",image:"assets/ch8_q1.png",o:["Pet animal","Wild animal","Farm animal","Water animal"],a:1,e:"Animals that live in forests are called wild animals."},
+{q:"Why do people keep domestic animals?",o:["They help us and provide useful things","They live only in forests","They make noise all day","They do not help people"],a:0,e:"Domestic animals give us useful things and help us in many ways."},
+{q:"A farmer gets wool to make warm clothes. Which animal most likely provides it?",o:["Sheep","Hen","Fish","Duck"],a:0,e:"Sheep give us wool."},
 {q:"Which group contains only farm animals?",o:["Cow, duck, goat","Tiger, lion, fox","Whale, shark, fish","Eagle, sparrow, owl"],a:0,e:"Cow, duck, and goat are farm animals."},
-{q:"A rabbit living at home is called a:",o:["Wild animal","Pet animal","Water animal","Forest animal"],a:1,e:"An animal kept at home is called a pet animal."},
+{q:"Look at the picture of a child playing with a rabbit at home. This rabbit is a:",image:"assets/ch8_q5.png",o:["Wild animal","Pet animal","Water animal","Forest animal"],a:1,e:"An animal kept at home is called a pet animal."},
 {q:"A giraffe spends most of its time eating leaves from tall trees. This makes it a:",o:["Plant-eating animal","Flesh-eating animal","Water animal","Pet animal"],a:0,e:"Animals that eat plants are plant-eating animals or herbivores."},
 {q:"A wolf hunts other animals for food. This shows that a wolf is a:",o:["Herbivore","Carnivore","Omnivore","Pet animal"],a:1,e:"Animals that eat flesh are carnivores."},
 {q:"Find the one that is different.",o:["Horse","Donkey","Zebra","Leopard"],a:3,e:"Horse, donkey, and zebra are plant-eating animals. Leopard is a flesh-eating animal."},
 {q:"A crow eats grains as well as insects. This makes it a:",o:["Herbivore","Carnivore","Omnivore","Water animal"],a:2,e:"Animals that eat both plants and animals are called omnivores."},
 {q:"A hen lives in a:",o:["Stable","Coop","Kennel","Den"],a:1,e:"A hen lives in a coop."},
 {q:"Fish cannot live on land because:",o:["They need water to survive","They like trees","They need grass","They cannot swim"],a:0,e:"Fish need water to live."},
-{q:"Your pet dog needs a place to rest safely. Which shelter is suitable?",o:["Kennel","Coop","Stable","Den"],a:0,e:"A dog lives in a kennel."},
-{q:"A duck moves in water mainly with the help of:",o:["Wings","Webbed feet","Horns","Tail"],a:1,e:"Webbed feet help ducks swim in water."},
-{q:"An eagle flies high in the sky because it has:",o:["Fins","Wings","Hooves","Claws only"],a:1,e:"Birds fly with the help of wings."},
+{q:"Your pet dog needs a safe place to rest. Which shelter is suitable?",image:"assets/ch8_q12.png",o:["Kennel","Coop","Stable","Den"],a:0,e:"A dog lives in a kennel."},
+{q:"A duck swims easily in water because it has:",o:["Wings","Webbed feet","Horns","Tail"],a:1,e:"Webbed feet help ducks swim in water."},
+{q:"An eagle can fly high in the sky because it has:",o:["Fins","Wings","Hooves","Claws only"],a:1,e:"Birds fly with the help of wings."},
 {q:"Your pet parrot has no water in its bowl. What should you do?",o:["Ignore it","Give clean water","Close the cage","Take away food"],a:1,e:"Pets need clean water and care."},
 {q:"Some animals are becoming fewer in number and need protection. Which of these is an endangered animal?",o:["Panda","Cow","Goat","Cat"],a:0,e:"Panda is an endangered animal and needs protection."},
-{q:"People cut many trees in the jungle. What may happen to monkeys?",o:["They lose their homes","They get bigger homes","They become farm animals","They stop climbing"],a:0,e:"Cutting trees destroys homes of many wild animals."},
+{q:"People cut many trees in a forest. What may happen to monkeys living there?",o:["They lose their homes","They get bigger homes","They become farm animals","They stop climbing"],a:0,e:"Cutting trees destroys homes of many wild animals."},
 {q:"Find the wrong action.",o:["Giving food to animals","Taking sick animals to a doctor","Hurting animals for fun","Keeping shelters clean"],a:2,e:"Hurting animals is wrong. We should care for them."},
 {q:"Your goat is sick and not eating properly. What should be done?",o:["Leave it alone","Call an animal doctor","Make it run","Change its name"],a:1,e:"A sick animal should be shown to an animal doctor."},
 {q:"Taking care of animals shows:",o:["Kindness and responsibility","Laziness","Anger","Fear"],a:0,e:"Caring for animals shows kindness and responsibility."}
@@ -411,12 +404,26 @@ function loadQuestion(){
   clearInterval(timer);
   timeLeft=60;
 
+  const q=questions[current];
+
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("question").textContent=q.q;
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
+
+  const imageContainer=document.getElementById("questionImageContainer");
+  imageContainer.innerHTML="";
+
+  if(q.image){
+    const img=document.createElement("img");
+    img.src=q.image;
+    img.alt="Question image";
+    img.loading="eager";
+    img.decoding="async";
+    imageContainer.appendChild(img);
+  }
 
   const progress=((current)/questions.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
@@ -424,10 +431,10 @@ function loadQuestion(){
   const box=document.getElementById("options");
   box.innerHTML="";
 
-  for(let i=0;i<questions[current].o.length;i++){
+  for(let i=0;i<q.o.length;i++){
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=questions[current].o[i];
+    div.textContent=q.o[i];
     div.onclick=function(){
       checkAnswer(i,div);
     };
@@ -506,7 +513,7 @@ function nextQuestion(){
     loadQuestion();
   }else{
     document.getElementById("progressBar").style.width="100%";
-    showScreen("finalChallenge");
+    showResult();
   }
 }
 
