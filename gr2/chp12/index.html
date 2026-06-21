@@ -112,26 +112,46 @@ button{width:100%;font-size:18px;padding:15px 18px}.feedback{font-size:17px}.exp
 
 <script>
 const questions=[
-{q:"The sun rises and daylight begins. This time of the day is called:",o:["Night","Evening","Morning","Midnight"],a:2,e:"The day begins in the morning when the sun rises."},
-{q:"Nisha leaves for school just after the sun rises. Which part of the day is it?",o:["Morning","Noon","Evening","Night"],a:0,e:"Just after sunrise is morning."},
-{q:"At school, Kabir sees the sun shining brightly right above his head. This time is called:",o:["Morning","Noon","Evening","Night"],a:1,e:"When the sun is high in the sky, it is noon."},
-{q:"Look at the picture of the sun setting and the sky turning orange. What time of the day is it?",image:"assets/ch12_q4.png",o:["Morning","Noon","Evening","Midnight"],a:2,e:"The time when the sun sets is evening."},
-{q:"Stars and the moon can be clearly seen in the sky during:",o:["Morning","Afternoon","Night","Noon"],a:2,e:"Stars and the moon are usually seen clearly at night."},
-{q:"Look at the picture of a child standing in sunlight with a dark shape beside them. What is the dark shape called?",image:"assets/ch12_q6.png",o:["Smoke","Shadow","Rain","Cloud"],a:1,e:"A shadow is a dark shape formed when light is blocked."},
-{q:"Why is a shadow formed?",o:["Light is blocked by an object","Wind pushes it","The object is heavy","The floor is dark"],a:0,e:"A shadow forms when an object blocks light."},
-{q:"A child shines a torch on a ball and sees a dark shape behind it. What has been formed?",o:["Shadow","Rainbow","Smoke","Reflection"],a:0,e:"The ball blocks the torchlight and forms a shadow."},
-{q:"A child walks in sunlight and notices that the shadow also moves. What does this show?",o:["Shadows move with the object","The sun is running","The floor is moving","Wind is carrying it"],a:0,e:"When an object moves, its shadow also moves."},
-{q:"Find the odd one out.",o:["Sun","Bulb","Torch","Pillow"],a:3,e:"Sun, bulb, and torch give light. A pillow does not."},
-{q:"There is no light in a room. What happens?",o:["Shadow becomes longer","No shadow is formed","The room becomes brighter","The sun enters inside"],a:1,e:"A shadow needs light. Without light, no shadow is formed."},
-{q:"Look at the picture of a tree making a long shadow in the morning. The shadow is:",image:"assets/ch12_q12.png",o:["Very short","Long","Round","Invisible"],a:1,e:"Morning shadows are usually long because the sun is low in the sky."},
-{q:"At noon, the sun is high in the sky. Because of this, the shadow becomes:",o:["Long","Short","Wet","Colourful"],a:1,e:"At noon, shadows are usually short."},
-{q:"If you stand facing the rising sun, which direction is in front of you?",o:["East","West","North","South"],a:0,e:"The sun rises in the east."},
-{q:"Aman watches the sun rise every morning. In which direction is he looking?",o:["East","West","North","South"],a:0,e:"Sunrise happens in the east."},
-{q:"Maya is standing on the left side of Rohan. Rohan is standing on Maya’s:",o:["Left","Right","Front","Back"],a:1,e:"If Maya is on Rohan’s left, Rohan is on Maya’s right."},
-{q:"Tara is standing in front of Veer. Where is Veer standing?",o:["In front of Tara","Behind Tara","Above Tara","Inside Tara"],a:1,e:"If Tara is in front of Veer, Veer is behind Tara."},
-{q:"Your friend is afraid of shadows at night. What should you do?",o:["Scare your friend more","Explain that shadows form when light is blocked","Switch off all lights","Leave your friend alone"],a:1,e:"A shadow is simply formed when light is blocked by an object."},
-{q:"Find the wrong statement.",o:["Morning shadows are longer","Noon shadows are shortest","Shadows are formed when light is blocked","Shadows are made of water"],a:3,e:"Shadows are not made of water. They are dark shapes formed when light is blocked."},
-{q:"Why do we learn about light, shadow, and directions?",o:["They help us understand time and place around us","They help us grow taller","They are useful only at night","They are only for drawing"],a:0,e:"Light, shadows, and directions help us understand time and position around us."}
+[
+{q:"Riya sees the sun coming up and the sky becoming bright. Which time of the day is it?",o:["Morning","Noon","Evening","Night"],a:0,e:"The day begins in the morning when the sun rises."},
+
+{q:"Nisha leaves for school just after sunrise. Which part of the day is it?",o:["Morning","Noon","Evening","Night"],a:0,e:"Just after sunrise is morning."},
+
+{q:"Kabir sees the sun shining almost above his head at school. What time is it most likely to be?",o:["Noon","Morning","Evening","Night"],a:0,e:"At noon, the sun is high in the sky."},
+
+{q:"Look at the picture. Which clue shows that it is evening?",image:"assets/ch12_q4.png",o:["The sun is setting and the sky is orange","The sun is high above the head","The sky is dark with stars","The moon is bright"],a:0,e:"The picture shows sunset and an orange sky, which tell us it is evening."},
+
+{q:"When are the moon and stars usually seen clearly?",o:["Night","Morning","Noon","Afternoon"],a:0,e:"The moon and stars are usually seen clearly at night."},
+
+{q:"Look at the picture. What is the dark shape on the ground beside the child?",image:"assets/ch12_q6.png",o:["Shadow","Smoke","Rain","Cloud"],a:0,e:"The child is blocking sunlight, so a shadow is formed on the ground."},
+
+{q:"Why is a shadow formed?",o:["An object blocks light","Wind pushes light","The floor becomes wet","The object becomes heavy"],a:0,e:"A shadow forms when light is blocked by an object."},
+
+{q:"A child shines a torch on a ball and sees a dark shape behind it. What has formed?",o:["Shadow","Rainbow","Smoke","Reflection"],a:0,e:"The ball blocks the torchlight and forms a shadow."},
+
+{q:"A child walks in sunlight and notices the shadow moves too. What does this show?",o:["A shadow moves with the object","The sun is running","The floor is moving","Wind carries shadows"],a:0,e:"When an object moves, its shadow also moves."},
+
+{q:"Which object does not give light?",o:["Pillow","Sun","Bulb","Torch"],a:0,e:"The sun, bulb, and torch give light. A pillow does not."},
+
+{q:"A room has no light at all. What will happen to shadows?",o:["No shadow will be formed","The shadow will become longer","The room will become brighter","The shadow will become colourful"],a:0,e:"A shadow needs light to form."},
+
+{q:"Look at the picture. Why is the tree’s shadow long?",image:"assets/ch12_q12.png",o:["The sun is low in the sky","The sun is above the tree","There is no sunlight","The tree is moving"],a:0,e:"When the sun is low in the sky, shadows become long."},
+
+{q:"At noon, the sun is high in the sky. How will the shadow usually look?",o:["Short","Long","Wet","Colourful"],a:0,e:"At noon, shadows are usually short."},
+
+{q:"If you stand facing the rising sun, which direction are you facing?",o:["East","West","North","South"],a:0,e:"The sun rises in the east."},
+
+{q:"Aman watches the sunrise every morning. Which direction is he looking at?",o:["East","West","North","South"],a:0,e:"Sunrise happens in the east."},
+
+{q:"Maya is standing on the left side of Rohan. Rohan is standing on Maya’s:",o:["Right","Left","Front","Back"],a:0,e:"If Maya is on Rohan’s left, Rohan is on Maya’s right."},
+
+{q:"Tara is standing in front of Veer. Where is Veer standing?",o:["Behind Tara","In front of Tara","Above Tara","Inside Tara"],a:0,e:"If Tara is in front of Veer, Veer is behind Tara."},
+
+{q:"Your friend is scared of a shadow at night. What should you explain?",o:["A shadow forms when light is blocked","Shadows are made of water","Shadows are living things","Shadows can talk"],a:0,e:"A shadow is only a dark shape formed when light is blocked."},
+
+{q:"Which statement is incorrect?",o:["Shadows are made of water","Morning shadows are longer","Noon shadows are shorter","Shadows form when light is blocked"],a:0,e:"Shadows are not made of water."},
+
+{q:"Why is it useful to learn about light, shadows, and directions?",o:["They help us understand time and position","They help us grow taller","They are useful only at night","They are only for drawing"],a:0,e:"Light, shadows, and directions help us understand time and place around us."}
 ]
 
 let current=0,score=0,attempts=0,timer,timeLeft=60,locked=false;
