@@ -3,24 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Houses We Need</title>
+<title>Water for All</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
-
-html,body{
-  margin:0;
-  padding:0;
-  width:100%;
-  min-height:100%;
-  overflow-x:hidden;
-}
-
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;width:100%;min-height:100%;overflow-x:hidden}
 body{
-  font-family:Arial, sans-serif;
-  background:linear-gradient(135deg,#fff8e1,#e3f2fd,#f3e5f5);
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#e3f2fd,#e0f7fa,#fff8e1);
   color:#263238;
 }
 
@@ -32,7 +22,6 @@ body{
   animation:float 14s linear infinite;
   z-index:0;
 }
-
 .bg span:nth-child(1){left:8%;animation-delay:0s}
 .bg span:nth-child(2){left:28%;animation-delay:3s}
 .bg span:nth-child(3){left:52%;animation-delay:6s}
@@ -76,14 +65,14 @@ body{
 }
 
 h1{
-  color:#6d4c41;
+  color:#0277bd;
   margin:10px 0;
   font-size:36px;
   line-height:1.15;
 }
 
 h2{
-  color:#1565c0;
+  color:#00695c;
   margin:8px 0;
   font-size:24px;
 }
@@ -144,8 +133,24 @@ button:active{
 .progress-bar{
   height:100%;
   width:0%;
-  background:#66bb6a;
+  background:#4fc3f7;
   transition:.3s;
+}
+
+.question-image-container{
+  text-align:center;
+  margin:10px auto 14px;
+  min-height:0;
+}
+
+.question-image-container img{
+  display:block;
+  width:100%;
+  max-width:280px;
+  max-height:180px;
+  object-fit:contain;
+  margin:0 auto;
+  border-radius:18px;
 }
 
 .question{
@@ -204,9 +209,7 @@ button:active{
   line-height:1.4;
 }
 
-.hidden{
-  display:none;
-}
+.hidden{display:none}
 
 .confetti{
   position:fixed;
@@ -244,107 +247,32 @@ button:active{
   100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
 }
 
-.finalbox{
-  background:#fff8e1;
-  border:2px dashed #ffb300;
-  border-radius:20px;
-  padding:16px;
-  margin-top:16px;
-}
-
-.small{
-  font-size:15px;
-  color:#546e7a;
-}
-
 @media(max-width:520px){
-  .screen{
-    padding:10px;
-  }
-
-  .card{
-    width:94vw;
-    padding:16px;
-    border-radius:22px;
-  }
-
-  h1{
-    font-size:28px;
-  }
-
-  h2{
-    font-size:20px;
-  }
-
-  p{
-    font-size:16px;
-  }
-
-  .topbar{
-    grid-template-columns:1fr;
-    gap:6px;
-  }
-
-  .badge{
-    font-size:15px;
-    padding:9px 8px;
-  }
-
-  .question{
-    font-size:20px;
-    margin:18px 0;
-  }
-
-  .option{
-    font-size:18px;
-    padding:16px;
-    min-height:64px;
-  }
-
-  button{
-    width:100%;
-    font-size:18px;
-    padding:15px 18px;
-  }
-
-  .feedback{
-    font-size:17px;
-  }
-
-  .explain{
-    font-size:15px;
-  }
+  .screen{padding:10px}
+  .card{width:94vw;padding:16px;border-radius:22px}
+  h1{font-size:28px}
+  h2{font-size:20px}
+  p{font-size:16px}
+  .topbar{grid-template-columns:1fr;gap:6px}
+  .badge{font-size:15px;padding:9px 8px}
+  .question{font-size:20px;margin:18px 0}
+  .question-image-container img{max-width:260px;max-height:170px}
+  .option{font-size:18px;padding:16px;min-height:64px}
+  button{width:100%;font-size:18px;padding:15px 18px}
+  .feedback{font-size:17px}
+  .explain{font-size:15px}
 }
 
 @media(max-height:520px){
-  .active{
-    align-items:flex-start;
-  }
-
-  .screen{
-    padding-top:10px;
-  }
-
-  .card{
-    margin:8px 0;
-  }
-
-  .question{
-    margin:14px 0;
-  }
-
-  .option{
-    min-height:54px;
-    padding:13px;
-  }
+  .active{align-items:flex-start}
+  .screen{padding-top:10px}
+  .card{margin:8px 0}
+  .question{margin:14px 0}
+  .option{min-height:54px;padding:13px}
 }
 
 @media(prefers-reduced-motion:reduce){
-  .bg span,
-  .star,
-  .cross{
-    animation:none;
-  }
+  .bg span,.star,.cross{animation:none}
 }
 </style>
 </head>
@@ -352,11 +280,11 @@ button:active{
 <body>
 
 <div class="bg">
+  <span>💧</span>
   <span>⭐</span>
-  <span>🏠</span>
+  <span>🚰</span>
   <span>⭐</span>
-  <span>🧱</span>
-  <span>⭐</span>
+  <span>💧</span>
 </div>
 
 <div id="splash" class="screen active">
@@ -368,7 +296,7 @@ button:active{
 
 <div id="intro" class="screen">
   <div class="card">
-    <h1>Houses We Need</h1>
+    <h1>Water for All</h1>
     <h2>Grade 2 EVS</h2>
     <p>Choose the best answer. You get one retry after a wrong answer.</p>
     <p>Each question has a 60-second timer.</p>
@@ -388,22 +316,11 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <div id="questionImageContainer" class="question-image-container"></div>
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
     <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
-  </div>
-</div>
-
-<div id="finalChallenge" class="screen">
-  <div class="card">
-    <h1>Final Challenge</h1>
-    <div class="finalbox">
-      <p><b>Think and say:</b></p>
-      <p>Name one type of house and one worker who helps build or repair houses.</p>
-    </div>
-    <p class="small">Tap finish to see your score.</p>
-    <button onclick="showResult()">Finish</button>
   </div>
 </div>
 
@@ -424,26 +341,26 @@ button:active{
 
 <script>
 const questions=[
-{q:"Early humans lived in caves. Why do people need houses today?",o:["Only for decoration","For shelter and safety","Only for sleeping","Only for cooking"],a:1,e:"A house gives us shelter and keeps us safe."},
-{q:"During heavy rain and strong wind, people stay safely inside their homes. This shows that a house helps us to:",o:["Stay protected from weather","Grow taller","Learn faster","Play only indoors"],a:0,e:"A house protects us from rain, wind, heat, and cold."},
-{q:"Which house is most likely made from mud and straw?",o:["Kutcha house","Apartment","Skyscraper","Pucca house"],a:0,e:"A kutcha house is often made from materials like mud, straw, bamboo, or leaves."},
-{q:"A family lives in a village where mud and bamboo are easily available. Which type of house are they most likely to build?",o:["Mud and bamboo house","Glass building","Multi-storeyed apartment","Snow house"],a:0,e:"Mud and bamboo are commonly used to build simple houses in some villages."},
-{q:"A tall building made of bricks, cement, and iron is shown in the picture. This is a:",o:["Tent","Pucca house","Caravan","Hut"],a:1,e:"A pucca house is made using strong materials like bricks, cement, and iron."},
-{q:"Which material is commonly used to build a pucca house?",o:["Cement","Straw","Leaves","Snow"],a:0,e:"Cement is commonly used in pucca houses."},
-{q:"A traveller moves from one place to another and carries a folding house. Which house is this?",o:["Tent","Apartment","Bungalow","Flat"],a:0,e:"A tent is a temporary house that can be folded and carried."},
-{q:"Some people travel for work and live in a moving house on wheels. This house is called a:",o:["Houseboat","Caravan","Igloo","Hut"],a:1,e:"A caravan is a house on wheels."},
-{q:"Find the one that is different.",o:["Tent","Caravan","Houseboat","Classroom"],a:3,e:"Tent, caravan, and houseboat are types of houses. A classroom is not a house."},
-{q:"A family lives on Dal Lake and travels using a boat every day. Which house is most suitable for them?",o:["Tent","Houseboat","Igloo","Caravan"],a:1,e:"A houseboat is a floating house used in places like lakes."},
-{q:"In places with heavy rainfall, houses are built high above the ground on bamboo poles. Why is this useful?",o:["To avoid rainwater entering the house","To make houses smaller","To make houses colder","To grow plants inside"],a:0,e:"Houses on stilts help keep rainwater from entering the house."},
-{q:"A place remains covered with snow for most of the year. Which house is most suitable there?",o:["Tent","Igloo","Caravan","Bungalow"],a:1,e:"An igloo is suitable for very cold, snowy regions."},
-{q:"People living in very cold mountain areas often use wooden houses because wood:",o:["Keeps the house warm","Makes the house float","Grows faster","Changes colour"],a:0,e:"Wood helps keep houses warmer in cold areas."},
-{q:"Which house is best suited for a snow-covered region?",o:["Igloo","Tent","Houseboat","Caravan"],a:0,e:"An igloo is a house suited for snow-covered regions."},
-{q:"A person lays bricks using cement to make walls. This worker is called a:",o:["Mason","Painter","Electrician","Carpenter"],a:0,e:"A mason builds walls using bricks and cement."},
-{q:"Your wooden door is broken and needs repair. Whom should you call?",o:["Carpenter","Plumber","Painter","Mason"],a:0,e:"A carpenter repairs and makes wooden things."},
-{q:"After playing, toys are left all over the floor. What should be done?",o:["Leave them there","Keep them back in place","Hide them","Throw them outside"],a:1,e:"Keeping things back in place helps keep the house neat."},
-{q:"Find the wrong habit.",o:["Sweeping the floor daily","Keeping things neatly","Throwing waste inside the room","Helping parents clean"],a:2,e:"Waste should be thrown in a dustbin, not inside the room."},
-{q:"Many people help in building a house. How should we behave with them?",o:["Ignore them","Respect and thank them","Laugh at them","Disturb them"],a:1,e:"We should respect and thank all workers who help us."},
-{q:"A good house helps us live:",o:["Safely and comfortably","Without food","Without sleep","Without family"],a:0,e:"A good house gives safety, comfort, and protection."}
+{q:"A family uses water every day for drinking, cooking, and cleaning. Why is water important?",o:["It is needed for daily life","It is used only for games","It is used only in schools","It is used only in factories"],a:0,e:"Water is needed for many daily activities."},
+{q:"Which activity needs clean drinking water?",o:["Watering plants","Drinking water","Washing a bicycle","Cleaning shoes"],a:1,e:"Clean water is important for drinking."},
+{q:"Which group contains only uses of water?",o:["Drinking, cooking, bathing","Reading, writing, drawing","Running, jumping, singing","Sleeping, resting, dreaming"],a:0,e:"Water is used for drinking, cooking, and bathing."},
+{q:"A tap stops giving water for an entire day. Which problem is most likely to happen?",o:["Difficulty cooking and cleaning","More rainfall","Faster internet","More playgrounds"],a:0,e:"Many daily activities depend on water."},
+{q:"Look at the picture. This is a common source of water found in many homes.",image:"assets/ch5_q5.png",o:["Tap","Television","Chair","Window"],a:0,e:"A tap is a common source of water found in homes."},
+{q:"Which of these is a natural source of water?",o:["River","Water tank","Tap","Bucket"],a:0,e:"A river is a natural source of water."},
+{q:"During the rainy season, water is collected and stored for later use. This is called:",o:["Rainwater harvesting","Water wasting","Water pollution","Water drying"],a:0,e:"Collecting rainwater for later use is called rainwater harvesting."},
+{q:"Why should we close a tap after using it?",o:["To save water","To increase waste","To make noise","To stop cooking"],a:0,e:"Closing the tap helps save water."},
+{q:"Find the one that is different.",o:["River","Pond","Lake","Television"],a:3,e:"River, pond, and lake are water sources. Television is not."},
+{q:"You are thirsty after playing outside. Which water is safest to drink?",o:["Clean drinking water","Dirty puddle water","Drain water","Muddy water"],a:0,e:"Clean drinking water is safest to drink."},
+{q:"Garbage is thrown into a river. What may happen?",o:["Water becomes polluted","Water becomes cleaner","More fish appear immediately","The river disappears"],a:0,e:"Garbage can pollute river water."},
+{q:"Why should drinking water be kept covered?",o:["To keep it clean and safe","To change its colour","To make it colder","To make it heavier"],a:0,e:"Keeping drinking water covered helps keep it clean and safe."},
+{q:"Look at the picture of a tap left running. What should be done?",image:"assets/ch5_q13.png",o:["Close the tap","Leave it open","Break the tap","Walk away"],a:0,e:"A running tap wastes water and should be closed."},
+{q:"While brushing your teeth, what is the best habit?",o:["Keep the tap running","Turn off the tap when not needed","Waste extra water","Fill the sink completely"],a:1,e:"Turning off the tap when not needed saves water."},
+{q:"A child waters plants using leftover water from washing vegetables. What does this show?",o:["Saving water","Wasting water","Polluting water","Ignoring plants"],a:0,e:"Reusing leftover water is a way to save water."},
+{q:"Children are collecting rainwater in a storage tank. What are they doing?",image:"assets/ch5_q16.png",o:["Rainwater harvesting","Water pollution","Water wastage","Flooding"],a:0,e:"Collecting and storing rainwater is rainwater harvesting."},
+{q:"Find the wrong habit.",o:["Closing taps properly","Using water carefully","Leaving taps running unnecessarily","Using buckets for bathing"],a:2,e:"Leaving taps running unnecessarily wastes water."},
+{q:"You see a leaking tap in school. What should you do?",o:["Ignore it","Inform a teacher or adult","Leave it running","Play with it"],a:1,e:"A teacher or adult should be told about a leaking tap."},
+{q:"A village has less water during summer. What is a good practice?",o:["Share water carefully","Waste water","Keep all water for yourself","Spill water"],a:0,e:"When water is less, it should be shared and used carefully."},
+{q:"Water is often called precious because:",o:["We need it for life","It is made of gold","It is used only in cities","It is found only in rivers"],a:0,e:"Water is precious because all living things need it."}
 ];
 
 let current=0;
@@ -457,9 +374,7 @@ const correctSound=document.getElementById("correctSound");
 const wrongSound=document.getElementById("wrongSound");
 const clapSound=document.getElementById("clapSound");
 
-setTimeout(function(){
-  showScreen("intro");
-},5000);
+setTimeout(function(){showScreen("intro")},5000);
 
 function showScreen(id){
   const screens=document.querySelectorAll(".screen");
@@ -482,26 +397,38 @@ function loadQuestion(){
   clearInterval(timer);
   timeLeft=60;
 
+  const q=questions[current];
+
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("question").textContent=q.q;
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
 
-  const progress=((current)/questions.length)*100;
+  const imageContainer=document.getElementById("questionImageContainer");
+  imageContainer.innerHTML="";
+
+  if(q.image){
+    const img=document.createElement("img");
+    img.src=q.image;
+    img.alt="Question image";
+    img.loading="eager";
+    img.decoding="async";
+    imageContainer.appendChild(img);
+  }
+
+  const progress=(current/questions.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
 
   const box=document.getElementById("options");
   box.innerHTML="";
 
-  for(let i=0;i<questions[current].o.length;i++){
+  for(let i=0;i<q.o.length;i++){
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=questions[current].o[i];
-    div.onclick=function(){
-      checkAnswer(i,div);
-    };
+    div.textContent=q.o[i];
+    div.onclick=function(){checkAnswer(i,div)};
     box.appendChild(div);
   }
 
@@ -512,7 +439,6 @@ function startTimer(){
   timer=setInterval(function(){
     timeLeft--;
     document.getElementById("time").textContent=timeLeft;
-
     if(timeLeft<=0){
       clearInterval(timer);
       showAnswer("Time is up!");
@@ -521,9 +447,7 @@ function startTimer(){
 }
 
 function checkAnswer(i,el){
-  if(locked){
-    return;
-  }
+  if(locked){return}
 
   const q=questions[current];
 
@@ -536,9 +460,7 @@ function checkAnswer(i,el){
     document.getElementById("feedback").innerHTML="Correct!<div class='explain'>"+q.e+"</div>";
 
     playSound(correctSound);
-    setTimeout(function(){
-      playSound(clapSound);
-    },250);
+    setTimeout(function(){playSound(clapSound)},250);
 
     makeConfetti();
     document.getElementById("nextBtn").classList.remove("hidden");
@@ -584,7 +506,7 @@ function nextQuestion(){
     loadQuestion();
   }else{
     document.getElementById("progressBar").style.width="100%";
-    showScreen("finalChallenge");
+    showResult();
   }
 }
 
@@ -592,10 +514,10 @@ function showResult(){
   showScreen("result");
   document.getElementById("finalScore").textContent=score;
 
-  let msg="Good effort! Keep practising types of houses and house care.";
+  let msg="Good effort! Keep practising water use and water-saving habits.";
 
   if(score>=18){
-    msg="Excellent! You understand houses, materials, workers, and house care very well.";
+    msg="Excellent! You understand water sources, uses, saving water, and clean water habits very well.";
   }else if(score>=14){
     msg="Well done! A little more practice will make it even better.";
   }
@@ -605,7 +527,6 @@ function showResult(){
 
 function makeConfetti(){
   const box=document.getElementById("confetti");
-
   for(let i=0;i<18;i++){
     const s=document.createElement("div");
     s.className="star";
@@ -613,10 +534,7 @@ function makeConfetti(){
     s.style.left=Math.random()*100+"vw";
     s.style.top=(55+Math.random()*25)+"vh";
     box.appendChild(s);
-
-    setTimeout(function(){
-      s.remove();
-    },900);
+    setTimeout(function(){s.remove()},900);
   }
 }
 
@@ -625,21 +543,14 @@ function showCross(){
   x.className="cross";
   x.textContent="✕";
   document.body.appendChild(x);
-
-  setTimeout(function(){
-    x.remove();
-  },700);
+  setTimeout(function(){x.remove()},700);
 }
 
 function playSound(sound){
-  if(!sound){
-    return;
-  }
-
+  if(!sound){return}
   try{
     sound.currentTime=0;
     const playPromise=sound.play();
-
     if(playPromise!==undefined){
       playPromise.catch(function(){});
     }
