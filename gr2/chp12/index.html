@@ -112,7 +112,7 @@ button{width:100%;font-size:18px;padding:15px 18px}.feedback{font-size:17px}.exp
 
 <script>
 const questions=[
-{q:"Riya sees the sun coming up and the sky becoming bright. Which time of the day is it?",o:["Morning","Noon","Evening","Night"],a:0,e:"The day begins in the morning when the sun rises."},
+{q:"Look at the picture. Which clue shows that it is morning?",image:"assets/ch12_q1.png",o:["The sun has risen and the day is becoming bright","The stars are shining","The moon is visible","The sun is setting"],a:0,e:"Morning begins when the sun rises and daylight appears."},
 
 {q:"Nisha leaves for school just after sunrise. Which part of the day is it?",o:["Morning","Noon","Evening","Night"],a:0,e:"Just after sunrise is morning."},
 
@@ -134,7 +134,7 @@ const questions=[
 
 {q:"A room has no light at all. What will happen to shadows?",o:["No shadow will be formed","The shadow will become longer","The room will become brighter","The shadow will become colourful"],a:0,e:"A shadow needs light to form."},
 
-{q:"Look at the picture. Why is the tree’s shadow long?",image:"assets/ch12_q12.png",o:["The sun is low in the sky","The sun is above the tree","There is no sunlight","The tree is moving"],a:0,e:"When the sun is low in the sky, shadows become long."},
+{q:"Look at the picture. Why is the tree’s shadow long?",image:"assets/ch12_q12.png",o:["The sun is low in the sky","The sun is directly above the tree","There is no sunlight","The tree is moving"],a:0,e:"When the sun is low in the sky, shadows become long."},
 
 {q:"At noon, the sun is high in the sky. How will the shadow usually look?",o:["Short","Long","Wet","Colourful"],a:0,e:"At noon, shadows are usually short."},
 
@@ -151,7 +151,7 @@ const questions=[
 {q:"Which statement is incorrect?",o:["Shadows are made of water","Morning shadows are longer","Noon shadows are shorter","Shadows form when light is blocked"],a:0,e:"Shadows are not made of water."},
 
 {q:"Why is it useful to learn about light, shadows, and directions?",o:["They help us understand time and position","They help us grow taller","They are useful only at night","They are only for drawing"],a:0,e:"Light, shadows, and directions help us understand time and place around us."}
-]
+];
 
 let current=0,score=0,attempts=0,timer,timeLeft=60,locked=false;
 const correctSound=document.getElementById("correctSound");
