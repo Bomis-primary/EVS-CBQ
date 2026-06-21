@@ -112,26 +112,46 @@ button{width:100%;font-size:18px;padding:15px 18px}.feedback{font-size:17px}.exp
 
 <script>
 const questions=[
-{q:"Look at the picture of a kite flying in the sky. What helps the kite move and fly?",image:"assets/ch9_q1.png",o:["Soil","Air","Stones","Fire"],a:1,e:"Air helps kites move and fly."},
-{q:"Why do all living things need air?",o:["To breathe and stay alive","To make toys","To change colour","To sleep more"],a:0,e:"Living things need air to breathe and stay alive."},
-{q:"A fan is switched on in a room. What happens?",o:["Air starts moving and we feel cooler","Water starts moving","Soil starts flying","Books start growing"],a:0,e:"A fan moves air and moving air makes us feel cooler."},
-{q:"Which set helps to keep air clean?",o:["Plant trees and keep windows open","Burn waste and close windows","Keep smoke inside rooms","Cut trees and throw garbage"],a:0,e:"Planting trees and letting fresh air in help keep air clean."},
-{q:"Sunlight enters a room and tiny particles can be seen floating. These are:",o:["Stones","Dust particles","Toys","Leaves"],a:1,e:"Tiny dust particles can float in the air."},
-{q:"Why do clothes dry faster on a windy day?",o:["Moving air helps water dry faster","Clothes become heavier","Wind adds water to clothes","Air becomes wet"],a:0,e:"Moving air helps wet clothes dry faster."},
-{q:"If your nose and mouth are covered for a long time, what may happen?",o:["You breathe easily","You may feel difficulty in breathing","You run faster","You sleep quickly"],a:1,e:"We need air to breathe properly."},
-{q:"Find the one that is different.",o:["Flying kites","Breathing","Drying clothes","Eating food"],a:3,e:"Flying kites, breathing, and drying clothes need air. Eating food is different."},
-{q:"Smoke from factories makes the air dirty. What may this cause?",o:["Fresh smell","Breathing problems","More flowers","Clean roads"],a:1,e:"Dirty air can cause breathing problems."},
-{q:"A slowly moving fan gives us:",o:["Breeze","Storm","Dust","Smoke"],a:0,e:"Slowly moving air is called a breeze."},
-{q:"Very strong winds can cause storms. What may happen during a storm?",o:["Trees may fall","Flowers will bloom","Water becomes sweet","Roads disappear"],a:0,e:"Strong winds during storms can make trees fall."},
-{q:"Look at the picture of leaves moving gently in the wind. This shows:",image:"assets/ch9_q12.png",o:["Gentle breeze","Strong storm","Thick smoke","Dust cloud"],a:0,e:"A gentle breeze is cool, slowly moving air."},
-{q:"Water from wet clothes changes into vapour and mixes with air. This is called:",o:["Water vapour","Dust","Smoke","Mud"],a:0,e:"Water vapour is water in gas form that mixes with air."},
-{q:"Why should we open doors and windows every day?",o:["To let fresh air enter","To make noise","To catch dust","To stop sunlight"],a:0,e:"Opening doors and windows lets fresh air come in."},
-{q:"Your classroom feels hot and stuffy. What should you do first?",o:["Close all windows","Open windows for fresh air","Switch off all fans","Cover your nose"],a:1,e:"Opening windows lets fresh air enter the room."},
-{q:"What should you do while sneezing?",o:["Cover your mouth and nose","Sneeze openly","Turn towards others","Remove your mask"],a:0,e:"Covering the mouth and nose while sneezing helps stop germs from spreading."},
-{q:"Look at the picture of children planting trees near their school. This helps to:",image:"assets/ch9_q17.png",o:["Make air cleaner","Increase smoke","Create more dust","Make storms stronger"],a:0,e:"Trees help clean the air."},
-{q:"Find the wrong habit.",o:["Growing plants","Keeping surroundings clean","Burning plastic waste openly","Opening windows for fresh air"],a:2,e:"Burning plastic waste makes the air dirty."},
-{q:"Why should we stay indoors when strong winds blow?",o:["Strong winds can be dangerous","Birds like windy weather","It is time for games","Trees start dancing"],a:0,e:"Strong winds can cause damage, so it is safer to stay indoors."},
-{q:"Clean air helps us stay:",o:["Healthy and active","Weak and tired","Dirty and sick","Sleepy always"],a:0,e:"Clean air helps us breathe well and stay healthy."}
+[
+{q:"Look at the picture. What is helping the kite stay up in the sky?",image:"assets/ch9_q1.png",o:["Moving air","Soil","Sunlight","Rope alone"],a:0,e:"The kite is flying because moving air pushes against it."},
+
+{q:"Why do people, animals, and plants all need air?",o:["Air helps living things stay alive","Air helps make toys","Air changes colours","Air makes things heavier"],a:0,e:"Living things need air to survive."},
+
+{q:"A child switches on a fan in a warm room. Why does the room feel more comfortable?",o:["The fan moves air around the room","The fan creates water","The fan removes sunlight","The fan makes the room smaller"],a:0,e:"Moving air helps us feel cooler."},
+
+{q:"Which action can help keep the air around us cleaner?",o:["Planting trees","Burning plastic waste","Cutting trees","Keeping smoke inside rooms"],a:0,e:"Trees help improve air quality."},
+
+{q:"Sunlight enters a room through a window. Tiny particles can be seen floating in the light. What are these particles?",o:["Dust particles","Leaves","Stones","Seeds"],a:0,e:"Dust particles can float in the air and become visible in sunlight."},
+
+{q:"Why do wet clothes dry faster on a windy day than on a still day?",o:["Moving air helps water evaporate faster","Wind adds heat to clothes","Wind makes clothes heavier","Wind adds water to clothes"],a:0,e:"Moving air carries away water vapour and helps drying."},
+
+{q:"A child covers both nose and mouth tightly for a long time. Why might this be a problem?",o:["The child may find it difficult to breathe","The child may grow taller","The child may feel colder","The child may run faster"],a:0,e:"We need air to breathe properly."},
+
+{q:"Which activity depends least on air?",o:["Eating food","Flying a kite","Drying clothes","Breathing"],a:0,e:"Flying kites, drying clothes, and breathing depend directly on air."},
+
+{q:"Factories release large amounts of smoke into the air. What problem may this cause?",o:["Breathing difficulties","Cleaner surroundings","More fresh air","More flowers"],a:0,e:"Smoke pollutes the air and can affect health."},
+
+{q:"A child feels a gentle movement of air while sitting near a window. This moving air is called:",o:["Breeze","Storm","Smoke","Dust"],a:0,e:"A gentle movement of air is called a breeze."},
+
+{q:"Weather reports warn people about strong winds. Why should people be careful?",o:["Strong winds can cause damage and danger","Strong winds make plants grow faster","Strong winds make air cleaner","Strong winds stop all rain"],a:0,e:"Storms and strong winds can damage property and trees."},
+
+{q:"Look at the picture. What clue shows that the air is moving gently?",image:"assets/ch9_q12.png",o:["The leaves are bending slightly","The plant is growing","The soil is wet","The leaves are falling off"],a:0,e:"The gently moving leaves show a light breeze."},
+
+{q:"Water from wet clothes disappears into the air as an invisible gas. What is this called?",o:["Water vapour","Smoke","Dust","Mud"],a:0,e:"Water vapour is water in gas form mixed with air."},
+
+{q:"Why is it a good habit to open doors and windows every day?",o:["Fresh air can enter the room","More dust can enter","The room becomes darker","The furniture grows cleaner"],a:0,e:"Fresh air helps keep rooms healthy and comfortable."},
+
+{q:"Your classroom feels hot and stuffy after lunch. What is the best thing to do first?",o:["Open windows for fresh air","Close all windows","Cover your nose","Turn off all fans"],a:0,e:"Fresh air improves comfort and ventilation."},
+
+{q:"Why should you cover your mouth and nose when sneezing?",o:["To stop germs from spreading through the air","To make sneezing louder","To keep air out","To stop breathing"],a:0,e:"Covering your mouth and nose helps protect others from germs."},
+
+{q:"Look at the picture. How are the children helping improve the air around their school?",image:"assets/ch9_q17.png",o:["By planting young trees","By cleaning desks","By watering roads","By collecting stones"],a:0,e:"Trees help make the air cleaner and healthier."},
+
+{q:"Which action makes the air dirtier instead of cleaner?",o:["Burning plastic waste openly","Growing plants","Opening windows","Keeping surroundings clean"],a:0,e:"Burning plastic releases harmful smoke into the air."},
+
+{q:"Why is it safer to stay indoors during very strong winds?",o:["Strong winds can cause accidents and damage","Strong winds help people run faster","Strong winds clean all roads","Strong winds make it easier to play"],a:0,e:"Strong winds can be dangerous."},
+
+{q:"How does clean air help our body?",o:["It helps us stay healthy and active","It makes us sleepy all day","It makes us weaker","It stops us from exercising"],a:0,e:"Clean air helps us breathe properly and stay healthy."}
 ]
 
 let current=0,score=0,attempts=0,timer,timeLeft=60,locked=false;
