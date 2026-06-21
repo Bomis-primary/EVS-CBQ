@@ -148,6 +148,21 @@ button:active{
   transition:.3s;
 }
 
+.question-image-container{
+  text-align:center;
+  margin:10px auto 14px;
+}
+
+.question-image-container img{
+  display:block;
+  width:100%;
+  max-width:280px;
+  max-height:180px;
+  object-fit:contain;
+  margin:0 auto;
+  border-radius:18px;
+}
+
 .question{
   font-size:24px;
   line-height:1.4;
@@ -388,6 +403,7 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <div id="questionImageContainer" class="question-image-container"></div>
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
@@ -395,17 +411,7 @@ button:active{
   </div>
 </div>
 
-<div id="finalChallenge" class="screen">
-  <div class="card">
-    <h1>Final Challenge</h1>
-    <div class="finalbox">
-      <p><b>Think and say:</b></p>
-      <p>Name one summer clothing, one winter clothing, and one rainy day clothing.</p>
-    </div>
-    <p class="small">Tap finish to see your score.</p>
-    <button onclick="showResult()">Finish</button>
-  </div>
-</div>
+
 
 <div id="result" class="screen">
   <div class="card">
@@ -424,27 +430,27 @@ button:active{
 
 <script>
 const questions=[
-{q:"A child is wearing a raincoat and holding an umbrella on a rainy day. Why is the child wearing these clothes?",o:["To stay dry and protected from rain","To look taller","To play indoor games","To carry school books"],a:0,e:"Raincoats and umbrellas help us stay dry during rain."},
+{q:"Raincoats and umbrellas are most useful during:",image:"assets/ch3_q1.png",o:["Rainy weather","Hot weather","Cold weather","Windy weather"],a:0,e:"Raincoats and umbrellas help us stay dry during rain."},
 {q:"Early humans used leaves and animal skins to cover themselves. Why did they do this?",o:["To protect their body","To make toys","To grow food","To build houses"],a:0,e:"Clothes protect our body from heat, cold, rain, and dust."},
-{q:"Choose the correct set of clothes for summer.",o:["Cotton shirt and shorts","Woollen cap and sweater","Raincoat and gumboots","Leather jacket and gloves"],a:0,e:"Light cotton clothes are suitable for summer."},
-{q:"Riya is going to school on a very hot sunny day. Which clothes will help her stay comfortable?",o:["Heavy woollen sweater","Light cotton clothes","Raincoat","Leather jacket"],a:1,e:"Light cotton clothes keep us comfortable in hot weather."},
-{q:"A child is wearing a sweater, gloves, and a cap in cold weather. This season is:",o:["Summer","Winter","Rainy season","Spring"],a:1,e:"Sweaters, gloves, and caps are worn in winter."},
-{q:"Which group belongs to winter wear?",o:["Sweater, gloves, socks","Shorts, vest, cap","Umbrella, raincoat, boots","T-shirt, sandals, hat"],a:0,e:"Sweaters, gloves, and socks keep us warm in winter."},
-{q:"It starts raining heavily while Aman is going outside. What should he carry first?",o:["Sunglasses","Umbrella","Woollen scarf","School bag only"],a:1,e:"An umbrella helps protect us from rain."},
-{q:"Why are raincoats made from waterproof materials?",o:["To keep us dry in rain","To make them heavier","To change colour","To make them warm"],a:0,e:"Waterproof materials do not let water pass through easily."},
-{q:"Find the one that does not belong to rainy season clothes.",o:["Raincoat","Umbrella","Gumboots","Sweater"],a:3,e:"A sweater is worn in winter, not mainly in the rainy season."},
-{q:"Riya has two clothes: Cotton T-shirt and cotton dress. What do both clothes have in common?",o:["They are made from cotton plant fibres","They are made from wool","They are made from silk","They are made from leather"],a:0,e:"Cotton clothes are made from fibres of the cotton plant."},
-{q:"A family is going to a very cold place. Which clothes will help them most?",o:["Woollen clothes from sheep's wool","Cotton clothes only","Raincoats only","School uniforms"],a:0,e:"Woollen clothes keep us warm in very cold places."},
-{q:"Silk saree and silk scarf are made from:",o:["Silkworm","Sheep","Cotton plant","Cow"],a:0,e:"Silk is obtained from silkworms."},
-{q:"Meera is going to a wedding with her family. Which type of clothes will she most likely wear?",o:["School uniform","Special occasion clothes","Raincoat","Sports dress only"],a:1,e:"People often wear special clothes for weddings and festivals."},
-{q:"A nurse wears a special dress while working in a hospital. Such clothes are called:",o:["Costumes","Uniforms","Rainwear","Casual wear"],a:1,e:"Uniforms help us recognise people by their work."},
-{q:"Doctor, nurse, and police officer wear special uniforms. Why?",o:["To help people recognise their jobs","To stay warm only","To look taller","To carry books"],a:0,e:"Uniforms help us identify people and their jobs."},
-{q:"After coming home from school, what is the best habit?",o:["Throw uniform on the floor","Fold and keep clothes neatly","Hide clothes","Leave shoes on bed"],a:1,e:"Folding and keeping clothes neatly is a good habit."},
-{q:"Find the wrong habit.",o:["Wearing clean clothes","Folding clothes properly","Throwing dirty clothes anywhere","Keeping uniforms neatly"],a:2,e:"Dirty clothes should be kept in the right place, not thrown anywhere."},
-{q:"People in different states wear different traditional clothes. This shows that clothes can depend on:",o:["Place and culture","Only food","Only games","Only school"],a:0,e:"Traditional clothes can change from place to place and culture to culture."},
-{q:"You are going on a snowy trip to a hill station. Which would be the best choice?",o:["Cotton shorts","Woollen jacket and gloves","Raincoat only","School uniform"],a:1,e:"Woollen jackets and gloves protect us in snowy and cold places."},
-{q:"Clean and suitable clothes help us:",o:["Stay healthy and comfortable","Become hungry","Feel sleepy all day","Miss school"],a:0,e:"Clean and suitable clothes keep us healthy, safe, and comfortable."}
-];
+{q:"Which clothing set is best suited for a hot summer afternoon?",o:["Cotton shirt and shorts","Woollen cap and sweater","Raincoat and gumboots","Leather jacket and gloves"],a:0,e:"Light cotton clothes are suitable for summer."},
+{q:"A child wears a thick woollen sweater on a very hot day. How is the child most likely to feel?",o:["Cool","Comfortable","Hot and uncomfortable","Dry"],a:2,e:"Woollen clothes trap heat and can make us feel uncomfortable in hot weather."},
+{q:"Which season usually requires sweaters, gloves, and caps?",image:"assets/ch3_q5.png",o:["Summer","Winter","Rainy season","Spring"],a:1,e:"Sweaters, gloves, and caps are commonly worn during winter."},
+{q:"Which group contains only winter clothes?",o:["Sweater, gloves, socks","Shorts, vest, cap","Umbrella, raincoat, boots","T-shirt, sandals, hat"],a:0,e:"Sweaters, gloves, and socks help keep us warm in winter."},
+{q:"It starts raining heavily while Dev is going outside. What should he carry first?",o:["Sunglasses","Umbrella","Woollen scarf","Notebook"],a:1,e:"An umbrella helps protect us from rain."},
+{q:"Why are raincoats made from waterproof materials?",o:["To keep us dry in rain","To make them heavier","To change colour","To make them warm"],a:0,e:"Waterproof materials prevent water from passing through easily."},
+{q:"Find the item that does not belong to rainy-season wear.",o:["Raincoat","Umbrella","Gumboots","Sweater"],a:3,e:"A sweater is mainly used during winter."},
+{q:"A cotton T-shirt and a cotton dress are similar because both are made from:",o:["Cotton plant fibres","Wool","Silk","Leather"],a:0,e:"Cotton clothes are made from fibres obtained from the cotton plant."},
+{q:"A family is travelling to a place where it snows often. Which clothes will help them most?",o:["Woollen clothes from sheep's wool","Cotton clothes only","Raincoats only","School uniforms"],a:0,e:"Woollen clothes keep us warm in very cold places."},
+{q:"A saree label says 'Pure Silk'. This material comes from:",o:["Silkworm","Sheep","Cotton plant","Cow"],a:0,e:"Silk is obtained from silkworms."},
+{q:"Tara is attending a wedding with her family. Which clothes is she most likely to wear?",o:["School uniform","Special occasion clothes","Raincoat","Sports dress"],a:1,e:"People often wear special clothes during weddings and festivals."},
+{q:"A nurse wears special clothes while working in a hospital. Such clothes are called:",image:"assets/ch3_q14.png",o:["Costumes","Uniforms","Rainwear","Casual wear"],a:1,e:"Uniforms help us recognise people by their profession."},
+{q:"Why do doctors, nurses, and police officers wear uniforms?",o:["To help people recognise their jobs","To stay warm only","To look taller","To carry books"],a:0,e:"Uniforms help us identify people and the work they do."},
+{q:"After coming home from school, what is the best way to care for your uniform?",o:["Throw it on the floor","Fold and keep it neatly","Hide it","Leave it on the bed"],a:1,e:"Keeping clothes neatly is a good habit."},
+{q:"Find the wrong habit.",o:["Wearing clean clothes","Folding clothes properly","Throwing dirty clothes anywhere","Keeping uniforms neatly"],a:2,e:"Dirty clothes should be kept in the proper place."},
+{q:"People in different states wear different traditional clothes. This shows that clothes can depend on:",o:["Place and culture","Only food","Only games","Only school"],a:0,e:"Traditional clothing often reflects local culture and climate."},
+{q:"You are packing for a snowy hill station. Which item is the best choice?",o:["Cotton shorts","Woollen jacket and gloves","Raincoat only","School uniform"],a:1,e:"Woollen jackets and gloves help protect us from cold weather."},
+{q:"Why is it important to wear clean and suitable clothes?",o:["They keep us healthy and comfortable","They make us hungry","They make us sleepy","They help us miss school"],a:0,e:"Clean and suitable clothes help us stay healthy, comfortable, and safe."}
+]
 
 let current=0;
 let score=0;
@@ -485,7 +491,13 @@ function loadQuestion(){
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=questions[current].q;
+  const q=questions[current];
+  document.getElementById("question").textContent=q.q;
+  const imageContainer=document.getElementById("questionImageContainer");
+  imageContainer.innerHTML="";
+  if(q.image){
+    imageContainer.innerHTML='<img src="'+q.image+'" alt="Question image">';
+  }
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
 
@@ -584,7 +596,7 @@ function nextQuestion(){
     loadQuestion();
   }else{
     document.getElementById("progressBar").style.width="100%";
-    showScreen("finalChallenge");
+    showResult();
   }
 }
 
