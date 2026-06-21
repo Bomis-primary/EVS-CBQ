@@ -51,26 +51,46 @@ button:active{transform:translateY(3px);box-shadow:0 2px 0 #f9a825}
 <audio id="correctSound" src="assets/correct.mp3" preload="auto"></audio><audio id="wrongSound" src="assets/wrong.mp3" preload="auto"></audio><audio id="clapSound" src="assets/clapping.mp3" preload="auto"></audio>
 <script>
 const questions=[
-{q:"Look at the picture with the message “Every Drop Counts.” What does this teach us?",image:"assets/ch10_q1.png",o:["Waste more water","Save water carefully","Play with water","Use water all day"],a:1,e:"Every drop is important, so we should save water carefully."},
-{q:"Why is water important for all living things?",o:["It helps living things survive","It makes toys","It changes colours","It makes noise"],a:0,e:"Plants, animals, and humans need water to live."},
-{q:"Which of these is a natural source of water?",o:["River","Tap","Bottle","Pipe"],a:0,e:"A river is a natural source of water."},
-{q:"Which of these is a man-made source of water?",o:["Pond","River","Hand pump","Rain"],a:2,e:"A hand pump is made by people to get water."},
-{q:"Why is water boiled before drinking?",o:["To make it hot forever","To kill germs and make it safer","To change its colour","To make it sweet"],a:1,e:"Boiling water kills many germs and makes water safer to drink."},
-{q:"People are washing clothes in a pond. What may happen to the pond water?",o:["It becomes cleaner","It becomes dirty","It becomes colder","It becomes sweet"],a:1,e:"Washing clothes in a pond can make the water dirty."},
-{q:"If someone drinks dirty water every day, what may happen?",o:["They may fall sick","They may run faster","They may grow taller","They may sleep less"],a:0,e:"Dirty water can contain germs and may make us sick."},
-{q:"Find the odd one out.",o:["Lake","River","Well","Pencil"],a:3,e:"Lake, river, and well are sources of water. Pencil is not."},
-{q:"A tap is left running after washing hands. What should be done first?",o:["Leave it open","Close the tap","Call friends","Wash again"],a:1,e:"Closing the tap helps save water."},
-{q:"A water purifier is used to make water:",o:["Colder","Cleaner and safer","Colourful","Salty"],a:1,e:"A water purifier helps clean water and make it safer."},
-{q:"A leaking tap is not repaired for many days. What will happen?",o:["Water will be wasted","Water will become fresh","More rain will come","The tap will disappear"],a:0,e:"A leaking tap wastes water."},
-{q:"Which action helps save water?",o:["Closing taps after use","Leaving taps open","Playing with running water","Wasting clean water"],a:0,e:"Closing taps after use is a good water-saving habit."},
-{q:"Look at the picture of ice cubes. Ice is water in which form?",image:"assets/ch10_q13.png",o:["Solid","Liquid","Gas","Cloud"],a:0,e:"Ice is the solid form of water."},
-{q:"When water is heated for a long time, it changes into:",o:["Dust","Steam","Stone","Paper"],a:1,e:"Heated water changes into steam."},
-{q:"You see water flowing from a broken school tap. What is the best action?",o:["Ignore it","Tell a teacher or plumber","Play near it","Let it flow"],a:1,e:"Telling a teacher or plumber can help stop water wastage."},
-{q:"Rain falls from clouds and fills rivers, ponds, and lakes. This process is called:",o:["Precipitation","Boiling","Freezing","Evaporation"],a:0,e:"Rainfall is a form of precipitation."},
-{q:"Look at tiny water drops on leaves early in the morning. This is called:",image:"assets/ch10_q17.png",o:["Evaporation","Condensation","Boiling","Freezing"],a:1,e:"Water vapour cools and forms tiny drops. This is condensation."},
-{q:"Find the wrong practice.",o:["Drink clean water","Close taps properly","Throw garbage into rivers","Boil water before drinking"],a:2,e:"Throwing garbage into rivers makes water dirty."},
-{q:"After heavy rain, lakes and ponds become full. What does this show?",o:["Collection of water","Burning of water","Cutting of water","Freezing of water"],a:0,e:"Rainwater collects in lakes and ponds."},
-{q:"Why should we save water every day?",o:["Life depends on water","Water makes only ice","Water is always blue","Rain comes every day"],a:0,e:"Life depends on water, so we should save it every day."}
+[
+{q:"Look at the picture. What action is the child taking to save water?",image:"assets/ch10_q1.png",o:["Closing the tap to stop water from dripping","Washing hands for a long time","Playing with water","Filling a bucket"],a:0,e:"The picture shows the child turning off a dripping tap to save water."},
+
+{q:"Why do people, animals, and plants all need water?",o:["Water helps living things stay alive","Water changes colours","Water makes toys","Water creates noise"],a:0,e:"All living things need water to survive."},
+
+{q:"Which source of water occurs naturally in nature?",o:["River","Tap","Bottle","Pipe"],a:0,e:"Rivers are natural sources of water."},
+
+{q:"Which source of water is created by people to collect or draw water?",o:["Hand pump","Rain","River","Lake"],a:0,e:"A hand pump is a man-made source of water."},
+
+{q:"A family boils drinking water before using it. Why is this a good habit?",o:["Boiling helps kill germs and makes water safer","Boiling changes the colour of water","Boiling makes water sweeter","Boiling keeps water hot forever"],a:0,e:"Boiling helps remove many harmful germs."},
+
+{q:"People wash clothes directly in a pond. How might this affect the pond?",o:["The water may become dirty","The water becomes cleaner","The water becomes sweeter","The water turns into ice"],a:0,e:"Soap and dirt can pollute pond water."},
+
+{q:"A child drinks dirty water from an uncovered container. What may happen?",o:["The child may fall sick","The child may grow taller","The child may run faster","The child may feel colder"],a:0,e:"Dirty water may contain germs that cause illness."},
+
+{q:"Which one is not a source of water?",o:["Pencil","Lake","River","Well"],a:0,e:"A pencil is not a source of water."},
+
+{q:"You notice a tap running after someone has finished washing their hands. What should you do?",o:["Close the tap","Leave it running","Call friends to see it","Wash your hands again"],a:0,e:"Closing the tap helps prevent water wastage."},
+
+{q:"Why do some homes use a water purifier?",o:["To make water cleaner and safer to drink","To make water colourful","To make water colder","To make water salty"],a:0,e:"Water purifiers help remove impurities from water."},
+
+{q:"A tap keeps leaking all day. What is the biggest problem?",o:["Water is being wasted","More rain will fall","The water becomes cleaner","The tap becomes bigger"],a:0,e:"A leaking tap wastes a lot of water over time."},
+
+{q:"Which habit shows responsible use of water?",o:["Closing taps after use","Leaving taps open","Playing with running water","Wasting clean water"],a:0,e:"Closing taps helps save water."},
+
+{q:"Look at the picture. What tells you that ice is the solid form of water?",image:"assets/ch10_q13.png",o:["It keeps a fixed shape as cubes","It flows like water","It spreads on the ground","It turns into smoke"],a:0,e:"Ice has a fixed shape, which is a property of solids."},
+
+{q:"A pot of water is heated for a long time and steam rises from it. What happened to the water?",o:["It changed into water vapour","It became soil","It turned into stone","It disappeared forever"],a:0,e:"Heating changes liquid water into water vapour."},
+
+{q:"You see water flowing continuously from a broken tap at school. What is the best action?",o:["Tell a teacher or plumber","Ignore it","Play with the water","Let it keep flowing"],a:0,e:"Reporting the problem can help stop water wastage."},
+
+{q:"After dark clouds form, rain falls and fills ponds, lakes, and rivers. What is this stage called?",o:["Precipitation","Boiling","Freezing","Melting"],a:0,e:"Rainfall is a form of precipitation."},
+
+{q:"Look at the picture. What do the tiny drops on the leaves show?",image:"assets/ch10_q17.png",o:["Water vapour has cooled and changed into droplets","The leaves are melting","The leaves are freezing","The plant is drinking water"],a:0,e:"The tiny water droplets are formed by condensation."},
+
+{q:"Which action harms water sources instead of protecting them?",o:["Throwing garbage into rivers","Drinking clean water","Closing taps properly","Boiling water before drinking"],a:0,e:"Garbage pollutes rivers and other water bodies."},
+
+{q:"After several days of rain, a lake becomes full. What does this show?",o:["Rainwater collects in water bodies","Water disappears during rain","Lakes make rain","Water turns into air"],a:0,e:"Rainwater gathers in lakes, ponds, and rivers."},
+
+{q:"Why should every family try to save water every day?",o:["Water is needed for life","Water is only used to make ice","Rain falls every day","Water can never run out"],a:0,e:"Water is essential for all living things, so it should not be wasted."}
 ];
 let current=0,score=0,attempts=0,timer,timeLeft=60,locked=false;
 const correctSound=document.getElementById("correctSound"),wrongSound=document.getElementById("wrongSound"),clapSound=document.getElementById("clapSound");
