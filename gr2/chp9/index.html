@@ -25,6 +25,7 @@ button:active{transform:translateY(3px);box-shadow:0 2px 0 #f9a825}
 .timer{background:#fff3e0}
 .progress-wrap{width:100%;height:12px;background:#e0e0e0;border-radius:20px;overflow:hidden;margin-bottom:16px}
 .progress-bar{height:100%;width:0%;background:#66bb6a;transition:.3s}
+.question-image-container{text-align:center;margin:10px auto 14px}.question-image-container img{display:block;width:100%;max-width:280px;max-height:180px;object-fit:contain;margin:0 auto;border-radius:18px}
 .question{font-size:24px;line-height:1.4;font-weight:bold;margin:22px 0}
 .options{display:grid;grid-template-columns:1fr;gap:12px}
 .option{background:#f1f8e9;border:2px solid #c5e1a5;border-radius:18px;padding:18px;font-size:20px;min-height:70px;display:flex;align-items:center;cursor:pointer;text-align:left;line-height:1.3}
@@ -84,6 +85,7 @@ button{width:100%;font-size:18px;padding:15px 18px}.feedback{font-size:17px}.exp
 <div class="badge timer">Time: <span id="time">60</span>s</div>
 </div>
 <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+<div id="questionImageContainer" class="question-image-container"></div>
 <div class="question" id="question"></div>
 <div class="options" id="options"></div>
 <div class="feedback" id="feedback"></div>
@@ -91,17 +93,7 @@ button{width:100%;font-size:18px;padding:15px 18px}.feedback{font-size:17px}.exp
 </div>
 </div>
 
-<div id="finalChallenge" class="screen">
-<div class="card">
-<h1>Final Challenge</h1>
-<div class="finalbox">
-<p><b>Think and say:</b></p>
-<p>Name one use of air and one way to keep air clean.</p>
-</div>
-<p class="small">Tap finish to see your score.</p>
-<button onclick="showResult()">Finish</button>
-</div>
-</div>
+
 
 <div id="result" class="screen">
 <div class="card">
@@ -120,27 +112,27 @@ button{width:100%;font-size:18px;padding:15px 18px}.feedback{font-size:17px}.exp
 
 <script>
 const questions=[
-{q:"A kite is flying in the sky. The kite moves because of:",o:["Soil","Air","Stones","Fire"],a:1,e:"Air helps kites move and fly."},
+{q:"Look at the picture of a kite flying in the sky. What helps the kite move and fly?",image:"assets/ch9_q1.png",o:["Soil","Air","Stones","Fire"],a:1,e:"Air helps kites move and fly."},
 {q:"Why do all living things need air?",o:["To breathe and stay alive","To make toys","To change colour","To sleep more"],a:0,e:"Living things need air to breathe and stay alive."},
 {q:"A fan is switched on in a room. What happens?",o:["Air starts moving and we feel cooler","Water starts moving","Soil starts flying","Books start growing"],a:0,e:"A fan moves air and moving air makes us feel cooler."},
 {q:"Which set helps to keep air clean?",o:["Plant trees and keep windows open","Burn waste and close windows","Keep smoke inside rooms","Cut trees and throw garbage"],a:0,e:"Planting trees and letting fresh air in help keep air clean."},
 {q:"Sunlight enters a room and tiny particles can be seen floating. These are:",o:["Stones","Dust particles","Toys","Leaves"],a:1,e:"Tiny dust particles can float in the air."},
 {q:"Why do clothes dry faster on a windy day?",o:["Moving air helps water dry faster","Clothes become heavier","Wind adds water to clothes","Air becomes wet"],a:0,e:"Moving air helps wet clothes dry faster."},
-{q:"If you cover your nose and mouth for a long time, you may:",o:["Breathe easily","Feel difficulty in breathing","Run faster","Sleep quickly"],a:1,e:"We need air to breathe properly."},
+{q:"If your nose and mouth are covered for a long time, what may happen?",o:["You breathe easily","You may feel difficulty in breathing","You run faster","You sleep quickly"],a:1,e:"We need air to breathe properly."},
 {q:"Find the one that is different.",o:["Flying kites","Breathing","Drying clothes","Eating food"],a:3,e:"Flying kites, breathing, and drying clothes need air. Eating food is different."},
-{q:"Smoke from factories makes the air dirty. This may cause:",o:["Fresh smell","Breathing problems","More flowers","Clean roads"],a:1,e:"Dirty air can cause breathing problems."},
+{q:"Smoke from factories makes the air dirty. What may this cause?",o:["Fresh smell","Breathing problems","More flowers","Clean roads"],a:1,e:"Dirty air can cause breathing problems."},
 {q:"A slowly moving fan gives us:",o:["Breeze","Storm","Dust","Smoke"],a:0,e:"Slowly moving air is called a breeze."},
 {q:"Very strong winds can cause storms. What may happen during a storm?",o:["Trees may fall","Flowers will bloom","Water becomes sweet","Roads disappear"],a:0,e:"Strong winds during storms can make trees fall."},
-{q:"Which is an example of a gentle breeze?",o:["Cool, slowly moving air","Strong storm wind","Thick smoke","Dust cloud"],a:0,e:"A gentle breeze is cool, slowly moving air."},
+{q:"Look at the picture of leaves moving gently in the wind. This shows:",image:"assets/ch9_q12.png",o:["Gentle breeze","Strong storm","Thick smoke","Dust cloud"],a:0,e:"A gentle breeze is cool, slowly moving air."},
 {q:"Water from wet clothes changes into vapour and mixes with air. This is called:",o:["Water vapour","Dust","Smoke","Mud"],a:0,e:"Water vapour is water in gas form that mixes with air."},
 {q:"Why should we open doors and windows every day?",o:["To let fresh air enter","To make noise","To catch dust","To stop sunlight"],a:0,e:"Opening doors and windows lets fresh air come in."},
 {q:"Your classroom feels hot and stuffy. What should you do first?",o:["Close all windows","Open windows for fresh air","Switch off all fans","Cover your nose"],a:1,e:"Opening windows lets fresh air enter the room."},
 {q:"What should you do while sneezing?",o:["Cover your mouth and nose","Sneeze openly","Turn towards others","Remove your mask"],a:0,e:"Covering the mouth and nose while sneezing helps stop germs from spreading."},
-{q:"Children plant more trees near their school. This helps to:",o:["Make air cleaner","Increase smoke","Create more dust","Make storms stronger"],a:0,e:"Trees help clean the air."},
+{q:"Look at the picture of children planting trees near their school. This helps to:",image:"assets/ch9_q17.png",o:["Make air cleaner","Increase smoke","Create more dust","Make storms stronger"],a:0,e:"Trees help clean the air."},
 {q:"Find the wrong habit.",o:["Growing plants","Keeping surroundings clean","Burning plastic waste openly","Opening windows for fresh air"],a:2,e:"Burning plastic waste makes the air dirty."},
 {q:"Why should we stay indoors when strong winds blow?",o:["Strong winds can be dangerous","Birds like windy weather","It is time for games","Trees start dancing"],a:0,e:"Strong winds can cause damage, so it is safer to stay indoors."},
 {q:"Clean air helps us stay:",o:["Healthy and active","Weak and tired","Dirty and sick","Sleepy always"],a:0,e:"Clean air helps us breathe well and stay healthy."}
-];
+]
 
 let current=0,score=0,attempts=0,timer,timeLeft=60,locked=false;
 const correctSound=document.getElementById("correctSound");
@@ -162,16 +154,20 @@ locked=false;attempts=0;clearInterval(timer);timeLeft=60;
 document.getElementById("time").textContent=timeLeft;
 document.getElementById("score").textContent=score;
 document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-document.getElementById("question").textContent=questions[current].q;
+const q=questions[current];
+document.getElementById("question").textContent=q.q;
+const imageContainer=document.getElementById("questionImageContainer");
+imageContainer.innerHTML="";
+if(q.image){const img=document.createElement("img");img.src=q.image;imageContainer.appendChild(img);}
 document.getElementById("feedback").innerHTML="";
 document.getElementById("nextBtn").classList.add("hidden");
 document.getElementById("progressBar").style.width=((current)/questions.length)*100+"%";
 const box=document.getElementById("options");
 box.innerHTML="";
-for(let i=0;i<questions[current].o.length;i++){
+for(let i=0;i<q.o.length;i++){
 const div=document.createElement("div");
 div.className="option";
-div.textContent=questions[current].o[i];
+div.textContent=q.o[i];
 div.onclick=function(){checkAnswer(i,div)};
 box.appendChild(div);
 }
@@ -227,7 +223,7 @@ document.getElementById("nextBtn").classList.remove("hidden");
 function nextQuestion(){
 current++;
 if(current<questions.length){loadQuestion()}
-else{document.getElementById("progressBar").style.width="100%";showScreen("finalChallenge")}
+else{document.getElementById("progressBar").style.width="100%";showResult()}
 }
 
 function showResult(){
