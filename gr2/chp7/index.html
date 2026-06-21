@@ -360,26 +360,46 @@ button:active{
 
 <script>
 const questions=[
-{q:"Look at the picture of a lotus growing in a pond. What type of plant is it?",image:"assets/ch7_q1.png",o:["Desert plant","Water plant","Mountain plant","Thorny plant"],a:1,e:"Lotus is a water plant because it grows in water."},
-{q:"Why are plants important to people?",o:["They give us food and useful things","They only make shade","They make noise","They stop rain"],a:0,e:"Plants give us food, wood, cotton, medicines, and clean air."},
-{q:"A young plant remains firmly fixed in the soil even during strong winds. Which part helps it stay in place?",o:["Root","Leaf","Flower","Fruit"],a:0,e:"Roots hold the plant firmly in the soil."},
-{q:"Which group contains only parts of a plant?",o:["Root, stem, leaf","Chair, table, leaf","Fruit, bus, root","Flower, pencil, stem"],a:0,e:"Root, stem, and leaf are parts of a plant."},
-{q:"Why are leaves called the food-making part of a plant?",o:["They prepare food for the plant","They hold the plant in soil","They store seeds","They make flowers bloom"],a:0,e:"Leaves prepare food for the plant."},
-{q:"Which vegetable belongs to the same group as carrot?",o:["Beetroot","Rose","Mango","Coconut"],a:0,e:"Carrot and beetroot are root vegetables."},
-{q:"A gardener gently pulls a plant from the soil and notices many roots below it. What is one important job of roots?",o:["Hold the plant firmly in the soil","Produce flowers","Make fruits colourful","Store sunlight"],a:0,e:"Roots hold the plant firmly in the soil."},
-{q:"Carrot and beetroot are vegetables because we eat their:",o:["Leaves","Roots","Flowers","Fruits"],a:1,e:"Carrot and beetroot are roots that we eat."},
-{q:"Find the one that is different.",o:["Carrot","Beetroot","Potato","Rose"],a:3,e:"Rose is a flower, while the others are vegetables."},
-{q:"Potato and ginger are called stem vegetables because they:",o:["Grow from stems underground","Grow on flowers","Grow inside fruits","Grow only in water"],a:0,e:"Potato and ginger are underground stems that we eat."},
-{q:"A cactus has a thick stem that stores water. Why is this useful?",o:["It grows in dry places with little water","It grows in rivers","It grows in snow","It grows on trees"],a:0,e:"Cactus plants grow in dry places and store water in their thick stems."},
-{q:"Look at the picture of a rose plant with thorns. Why do many thorny plants have thorns?",image:"assets/ch7_q12.png",o:["To protect themselves","To fly away","To change colour","To make sweets"],a:0,e:"Thorns help protect plants from animals."},
-{q:"Rice and wheat belong to which group?",o:["Flowers","Cereals","Roots","Medicines"],a:1,e:"Rice and wheat are cereals."},
-{q:"A cotton farmer sells cotton to a factory. What useful item can be made from it?",image:"assets/ch7_q14.png",o:["Clothes","Chocolates","Tyres","Perfume"],a:0,e:"Cotton from the cotton plant is used to make clothes."},
-{q:"Tulsi leaves are often used when someone has a cough. What does this show?",o:["Tulsi is a medicinal plant","Tulsi is a water plant","Tulsi is a thorny plant","Tulsi is a cereal"],a:0,e:"Tulsi is a medicinal plant."},
-{q:"You notice a small plant near your home looking dry. What is the best thing to do?",o:["Pull it out","Water it regularly","Break its leaves","Ignore it"],a:1,e:"Plants need water to live and grow."},
-{q:"Which habit can help save trees?",o:["Use both sides of paper","Tear paper for fun","Waste notebooks","Cut young trees"],a:0,e:"Using both sides of paper helps reduce paper waste and save trees."},
-{q:"Find the wrong habit.",o:["Watering plants regularly","Planting more trees","Plucking flowers without need","Saving paper"],a:2,e:"Plucking flowers without need harms plants."},
-{q:"Grandmother keeps neem leaves inside clothes. Why is this useful?",o:["To stop insects from damaging clothes","To colour the clothes","To make clothes smaller","To wash the clothes"],a:0,e:"Neem leaves can help keep insects away from clothes."},
-{q:"Taking care of plants helps keep our surroundings:",o:["Green and healthy","Dark and dirty","Noisy and hot","Dry and empty"],a:0,e:"Caring for plants keeps our surroundings green and healthy."}
+[
+{q:"Look at the picture. Which clue shows that the lotus is a water plant?",image:"assets/ch7_q1.png",o:["It is growing in water among floating leaves","It has pink petals","It has a long stem","It is a flowering plant"],a:0,e:"The picture shows the lotus growing in water, which is a feature of water plants."},
+
+{q:"A family uses vegetables, fruits, medicines, and cotton clothes every day. What does this show about plants?",o:["Plants provide many useful things","Plants only give shade","Plants make noise","Plants stop rain"],a:0,e:"Plants provide food, medicines, fibres, wood, and many other useful products."},
+
+{q:"A young plant remains standing even after strong winds. Which plant part helped it stay fixed in the soil?",o:["Root","Leaf","Flower","Fruit"],a:0,e:"Roots hold the plant firmly in the soil."},
+
+{q:"Which group contains only plant parts?",o:["Root, stem, leaf","Chair, table, leaf","Fruit, bus, root","Flower, pencil, stem"],a:0,e:"Root, stem, and leaf are parts of a plant."},
+
+{q:"A plant is growing well because it can make its own food. Which part helps it do this?",o:["Leaf","Root","Flower","Fruit"],a:0,e:"Leaves prepare food for the plant."},
+
+{q:"Carrot and beetroot belong to the same group because we eat their:",o:["Roots","Leaves","Flowers","Fruits"],a:0,e:"Both carrot and beetroot are root vegetables."},
+
+{q:"A gardener removes a plant from the soil. Which important job of the roots can be clearly observed?",o:["Holding the plant firmly in the soil","Making flowers colourful","Producing fruits","Making seeds"],a:0,e:"Roots help anchor the plant in the soil."},
+
+{q:"Why are carrot and beetroot called root vegetables?",o:["The root is the part we eat","They grow on flowers","They grow in water","Their leaves are eaten"],a:0,e:"Carrot and beetroot are roots that are eaten as vegetables."},
+
+{q:"Which one is different from the others?",o:["Rose","Carrot","Beetroot","Potato"],a:0,e:"Rose is mainly a flowering plant, while the others are vegetables."},
+
+{q:"Potato and ginger are called stem vegetables because the part we eat is a:",o:["Stem","Root","Leaf","Flower"],a:0,e:"Potato and ginger are modified stems that grow underground."},
+
+{q:"A cactus survives for a long time in a desert. What special feature helps it do this?",o:["Its thick stem stores water","Its flowers store water","Its roots make food","Its fruits hold soil"],a:0,e:"A cactus stores water in its thick stem."},
+
+{q:"Look at the picture. Why should a person handle this plant carefully?",image:"assets/ch7_q12.png",o:["Its stem has thorns","Its flowers are red","Its leaves are green","Its buds are small"],a:0,e:"The picture clearly shows thorns on the rose stem."},
+
+{q:"Rice and wheat are important foods because they belong to the group called:",o:["Cereals","Flowers","Medicines","Roots"],a:0,e:"Rice and wheat are cereals."},
+
+{q:"Look at the picture. How are the cotton plant and shirt connected?",image:"assets/ch7_q14.png",o:["Cotton from the plant is used to make clothes","The shirt grows on the plant","The plant is watered by the shirt","The shirt produces cotton seeds"],a:0,e:"Cotton fibres from the cotton plant are used to make clothes."},
+
+{q:"Tulsi leaves are often used in home remedies for coughs. What does this tell us about Tulsi?",o:["It is a medicinal plant","It is a water plant","It is a thorny plant","It is a cereal crop"],a:0,e:"Tulsi is widely used as a medicinal plant."},
+
+{q:"A small plant near your home looks dry and weak. What should you do first?",o:["Water it regularly","Pull it out","Break its leaves","Ignore it"],a:0,e:"Plants need water to grow and stay healthy."},
+
+{q:"Which habit can help reduce the number of trees cut for paper?",o:["Using both sides of paper","Tearing paper for fun","Wasting notebooks","Cutting young trees"],a:0,e:"Using both sides of paper reduces paper waste."},
+
+{q:"Which action does not show care for plants?",o:["Plucking flowers without need","Watering plants regularly","Planting more trees","Saving paper"],a:0,e:"Unnecessary plucking can harm plants."},
+
+{q:"Grandmother keeps neem leaves inside cupboards. Why?",o:["Neem helps keep insects away","Neem colours the clothes","Neem washes clothes","Neem makes clothes smaller"],a:0,e:"Neem is commonly used to keep insects away."},
+
+{q:"How does planting and caring for more plants help our neighbourhood?",o:["It keeps the surroundings green and healthy","It makes the area noisier","It reduces shade","It increases dust"],a:0,e:"Plants make surroundings greener, healthier, and cleaner."}
 ]
 
 let current=0;
