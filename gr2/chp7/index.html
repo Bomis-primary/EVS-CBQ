@@ -144,6 +144,22 @@ button:active{
   transition:.3s;
 }
 
+.question-image-container{
+  text-align:center;
+  margin:10px auto 14px;
+  min-height:0;
+}
+
+.question-image-container img{
+  display:block;
+  width:100%;
+  max-width:280px;
+  max-height:180px;
+  object-fit:contain;
+  margin:0 auto;
+  border-radius:18px;
+}
+
 .question{
   font-size:24px;
   line-height:1.4;
@@ -258,6 +274,7 @@ button:active{
   .topbar{grid-template-columns:1fr;gap:6px}
   .badge{font-size:15px;padding:9px 8px}
   .question{font-size:20px;margin:18px 0}
+  .question-image-container img{max-width:260px;max-height:170px}
   .option{font-size:18px;padding:16px;min-height:64px}
   button{width:100%;font-size:18px;padding:15px 18px}
   .feedback{font-size:17px}
@@ -317,6 +334,7 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <div id="questionImageContainer" class="question-image-container"></div>
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
@@ -324,17 +342,6 @@ button:active{
   </div>
 </div>
 
-<div id="finalChallenge" class="screen">
-  <div class="card">
-    <h1>Final Challenge</h1>
-    <div class="finalbox">
-      <p><b>Think and say:</b></p>
-      <p>Name one plant part we eat and one way to take care of plants.</p>
-    </div>
-    <p class="small">Tap finish to see your score.</p>
-    <button onclick="showResult()">Finish</button>
-  </div>
-</div>
 
 <div id="result" class="screen">
   <div class="card">
@@ -353,27 +360,27 @@ button:active{
 
 <script>
 const questions=[
-{q:"A lotus grows in water. This type of plant is called a:",o:["Desert plant","Water plant","Mountain plant","Thorny plant"],a:1,e:"Lotus is a water plant because it grows in water."},
-{q:"Why are plants important for us?",o:["They give us food and useful things","They only make shade","They make noise","They stop rain"],a:0,e:"Plants give us food, wood, cotton, medicines, and clean air."},
-{q:"A plant stays firmly in the soil even during strong winds. Which part helps it do this?",o:["Root","Leaf","Flower","Fruit"],a:0,e:"Roots hold the plant firmly in the soil."},
-{q:"Which group contains only plant parts?",o:["Root, stem, leaf","Chair, table, leaf","Fruit, bus, root","Flower, pencil, stem"],a:0,e:"Root, stem, and leaf are parts of a plant."},
-{q:"The green part of the plant that prepares food is the:",o:["Leaf","Root","Fruit","Seed"],a:0,e:"Leaves prepare food for the plant."},
+{q:"Look at the picture of a lotus growing in a pond. What type of plant is it?",image:"assets/ch7_q1.png",o:["Desert plant","Water plant","Mountain plant","Thorny plant"],a:1,e:"Lotus is a water plant because it grows in water."},
+{q:"Why are plants important to people?",o:["They give us food and useful things","They only make shade","They make noise","They stop rain"],a:0,e:"Plants give us food, wood, cotton, medicines, and clean air."},
+{q:"A young plant remains firmly fixed in the soil even during strong winds. Which part helps it stay in place?",o:["Root","Leaf","Flower","Fruit"],a:0,e:"Roots hold the plant firmly in the soil."},
+{q:"Which group contains only parts of a plant?",o:["Root, stem, leaf","Chair, table, leaf","Fruit, bus, root","Flower, pencil, stem"],a:0,e:"Root, stem, and leaf are parts of a plant."},
+{q:"Why are leaves called the food-making part of a plant?",o:["They prepare food for the plant","They hold the plant in soil","They store seeds","They make flowers bloom"],a:0,e:"Leaves prepare food for the plant."},
 {q:"Which vegetable belongs to the same group as carrot?",o:["Beetroot","Rose","Mango","Coconut"],a:0,e:"Carrot and beetroot are root vegetables."},
-{q:"A strong wind blows, but the plant does not fall. Which part helps it stay fixed?",o:["Flower","Root","Fruit","Leaf"],a:1,e:"The root fixes the plant in the soil."},
+{q:"A gardener gently pulls a plant from the soil and notices many roots below it. What is one important job of roots?",o:["Hold the plant firmly in the soil","Produce flowers","Make fruits colourful","Store sunlight"],a:0,e:"Roots hold the plant firmly in the soil."},
 {q:"Carrot and beetroot are vegetables because we eat their:",o:["Leaves","Roots","Flowers","Fruits"],a:1,e:"Carrot and beetroot are roots that we eat."},
 {q:"Find the one that is different.",o:["Carrot","Beetroot","Potato","Rose"],a:3,e:"Rose is a flower, while the others are vegetables."},
-{q:"Potato and ginger grow under the ground. They are examples of:",o:["Stem vegetables","Leafy vegetables","Fruit vegetables","Flower vegetables"],a:0,e:"Potato and ginger are underground stems that we eat."},
-{q:"A cactus plant stores water in its thick stem because:",o:["It grows in dry places","It grows in water","It grows in snow","It grows on trees"],a:0,e:"Cactus plants grow in dry places and store water in their thick stems."},
-{q:"A rose plant has thorns on its stem. This helps the plant to:",o:["Protect itself","Fly away","Make sweets","Change colour"],a:0,e:"Thorns protect plants from animals."},
-{q:"Rice and wheat belong to:",o:["Flowers","Cereals","Roots","Medicines"],a:1,e:"Rice and wheat are cereals."},
-{q:"A cotton plant helps us make:",o:["Clothes","Chocolates","Tyres","Perfume"],a:0,e:"Cotton from the cotton plant is used to make clothes."},
-{q:"Tulsi leaves are often used when someone has a cough. This shows Tulsi is a:",o:["Decorative plant","Medicinal plant","Water plant","Thorny plant"],a:1,e:"Tulsi is a medicinal plant."},
-{q:"You see a small plant near your home becoming dry. What should you do?",o:["Pull it out","Water it regularly","Break its leaves","Ignore it"],a:1,e:"Plants need water to live and grow."},
-{q:"Which habit helps save trees?",o:["Use both sides of paper","Tear paper for fun","Waste notebooks","Cut young trees"],a:0,e:"Using both sides of paper helps reduce paper waste and save trees."},
+{q:"Potato and ginger are called stem vegetables because they:",o:["Grow from stems underground","Grow on flowers","Grow inside fruits","Grow only in water"],a:0,e:"Potato and ginger are underground stems that we eat."},
+{q:"A cactus has a thick stem that stores water. Why is this useful?",o:["It grows in dry places with little water","It grows in rivers","It grows in snow","It grows on trees"],a:0,e:"Cactus plants grow in dry places and store water in their thick stems."},
+{q:"Look at the picture of a rose plant with thorns. Why do many thorny plants have thorns?",image:"assets/ch7_q12.png",o:["To protect themselves","To fly away","To change colour","To make sweets"],a:0,e:"Thorns help protect plants from animals."},
+{q:"Rice and wheat belong to which group?",o:["Flowers","Cereals","Roots","Medicines"],a:1,e:"Rice and wheat are cereals."},
+{q:"A cotton farmer sells cotton to a factory. What useful item can be made from it?",image:"assets/ch7_q14.png",o:["Clothes","Chocolates","Tyres","Perfume"],a:0,e:"Cotton from the cotton plant is used to make clothes."},
+{q:"Tulsi leaves are often used when someone has a cough. What does this show?",o:["Tulsi is a medicinal plant","Tulsi is a water plant","Tulsi is a thorny plant","Tulsi is a cereal"],a:0,e:"Tulsi is a medicinal plant."},
+{q:"You notice a small plant near your home looking dry. What is the best thing to do?",o:["Pull it out","Water it regularly","Break its leaves","Ignore it"],a:1,e:"Plants need water to live and grow."},
+{q:"Which habit can help save trees?",o:["Use both sides of paper","Tear paper for fun","Waste notebooks","Cut young trees"],a:0,e:"Using both sides of paper helps reduce paper waste and save trees."},
 {q:"Find the wrong habit.",o:["Watering plants regularly","Planting more trees","Plucking flowers without need","Saving paper"],a:2,e:"Plucking flowers without need harms plants."},
 {q:"Grandmother keeps neem leaves inside clothes. Why is this useful?",o:["To stop insects from damaging clothes","To colour the clothes","To make clothes smaller","To wash the clothes"],a:0,e:"Neem leaves can help keep insects away from clothes."},
-{q:"Taking care of plants helps us keep our surroundings:",o:["Green and healthy","Dark and dirty","Noisy and hot","Dry and empty"],a:0,e:"Caring for plants keeps our surroundings green and healthy."}
-];
+{q:"Taking care of plants helps keep our surroundings:",o:["Green and healthy","Dark and dirty","Noisy and hot","Dry and empty"],a:0,e:"Caring for plants keeps our surroundings green and healthy."}
+]
 
 let current=0;
 let score=0;
@@ -411,12 +418,26 @@ function loadQuestion(){
   clearInterval(timer);
   timeLeft=60;
 
+  const q=questions[current];
+
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("question").textContent=q.q;
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
+
+  const imageContainer=document.getElementById("questionImageContainer");
+  imageContainer.innerHTML="";
+
+  if(q.image){
+    const img=document.createElement("img");
+    img.src=q.image;
+    img.alt="Question image";
+    img.loading="eager";
+    img.decoding="async";
+    imageContainer.appendChild(img);
+  }
 
   const progress=((current)/questions.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
@@ -424,10 +445,10 @@ function loadQuestion(){
   const box=document.getElementById("options");
   box.innerHTML="";
 
-  for(let i=0;i<questions[current].o.length;i++){
+  for(let i=0;i<q.o.length;i++){
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=questions[current].o[i];
+    div.textContent=q.o[i];
     div.onclick=function(){
       checkAnswer(i,div);
     };
@@ -506,7 +527,7 @@ function nextQuestion(){
     loadQuestion();
   }else{
     document.getElementById("progressBar").style.width="100%";
-    showScreen("finalChallenge");
+    showResult();
   }
 }
 
