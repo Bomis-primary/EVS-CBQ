@@ -148,6 +148,22 @@ button:active{
   transition:.3s;
 }
 
+.question-image-container{
+  text-align:center;
+  margin:10px auto 14px;
+  min-height:0;
+}
+
+.question-image-container img{
+  display:block;
+  width:100%;
+  max-width:280px;
+  max-height:180px;
+  object-fit:contain;
+  margin:0 auto;
+  border-radius:18px;
+}
+
 .question{
   font-size:24px;
   line-height:1.4;
@@ -295,6 +311,11 @@ button:active{
     margin:18px 0;
   }
 
+  .question-image-container img{
+    max-width:260px;
+    max-height:170px;
+  }
+
   .option{
     font-size:18px;
     padding:16px;
@@ -388,22 +409,11 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <div id="questionImageContainer" class="question-image-container"></div>
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
     <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
-  </div>
-</div>
-
-<div id="finalChallenge" class="screen">
-  <div class="card">
-    <h1>Final Challenge</h1>
-    <div class="finalbox">
-      <p><b>Think and say:</b></p>
-      <p>Name one type of house and one worker who helps build or repair houses.</p>
-    </div>
-    <p class="small">Tap finish to see your score.</p>
-    <button onclick="showResult()">Finish</button>
   </div>
 </div>
 
@@ -425,20 +435,20 @@ button:active{
 <script>
 const questions=[
 {q:"Early humans lived in caves. Why do people need houses today?",o:["Only for decoration","For shelter and safety","Only for sleeping","Only for cooking"],a:1,e:"A house gives us shelter and keeps us safe."},
-{q:"During heavy rain and strong wind, people stay safely inside their homes. This shows that a house helps us to:",o:["Stay protected from weather","Grow taller","Learn faster","Play only indoors"],a:0,e:"A house protects us from rain, wind, heat, and cold."},
-{q:"Which house is most likely made from mud and straw?",o:["Kutcha house","Apartment","Skyscraper","Pucca house"],a:0,e:"A kutcha house is often made from materials like mud, straw, bamboo, or leaves."},
-{q:"A family lives in a village where mud and bamboo are easily available. Which type of house are they most likely to build?",o:["Mud and bamboo house","Glass building","Multi-storeyed apartment","Snow house"],a:0,e:"Mud and bamboo are commonly used to build simple houses in some villages."},
-{q:"A tall building made of bricks, cement, and iron is shown in the picture. This is a:",o:["Tent","Pucca house","Caravan","Hut"],a:1,e:"A pucca house is made using strong materials like bricks, cement, and iron."},
+{q:"During heavy rain and strong wind, people stay safely inside their homes. What does this show?",o:["Houses protect us from weather","Houses help us grow taller","Houses are only for games","Houses stop us from learning"],a:0,e:"A house protects us from rain, wind, heat, and cold."},
+{q:"Which house is usually made from mud, straw, bamboo, or leaves?",o:["Kutcha house","Apartment","Skyscraper","Pucca house"],a:0,e:"A kutcha house is often made from materials like mud, straw, bamboo, or leaves."},
+{q:"A family lives in a village where mud and bamboo are easily available. Which house are they most likely to build?",o:["Mud and bamboo house","Glass building","Multi-storeyed apartment","Snow house"],a:0,e:"Mud and bamboo are commonly used to build simple houses in some villages."},
+{q:"A tall house made with bricks, cement, and iron is shown in the picture. What type of house is it?",image:"assets/ch4_q5.png",o:["Tent","Pucca house","Caravan","Hut"],a:1,e:"A pucca house is made using strong materials like bricks, cement, and iron."},
 {q:"Which material is commonly used to build a pucca house?",o:["Cement","Straw","Leaves","Snow"],a:0,e:"Cement is commonly used in pucca houses."},
-{q:"A traveller moves from one place to another and carries a folding house. Which house is this?",o:["Tent","Apartment","Bungalow","Flat"],a:0,e:"A tent is a temporary house that can be folded and carried."},
-{q:"Some people travel for work and live in a moving house on wheels. This house is called a:",o:["Houseboat","Caravan","Igloo","Hut"],a:1,e:"A caravan is a house on wheels."},
-{q:"Find the one that is different.",o:["Tent","Caravan","Houseboat","Classroom"],a:3,e:"Tent, caravan, and houseboat are types of houses. A classroom is not a house."},
-{q:"A family lives on Dal Lake and travels using a boat every day. Which house is most suitable for them?",o:["Tent","Houseboat","Igloo","Caravan"],a:1,e:"A houseboat is a floating house used in places like lakes."},
-{q:"In places with heavy rainfall, houses are built high above the ground on bamboo poles. Why is this useful?",o:["To avoid rainwater entering the house","To make houses smaller","To make houses colder","To grow plants inside"],a:0,e:"Houses on stilts help keep rainwater from entering the house."},
+{q:"Which house can be folded, carried, and used while camping?",o:["Tent","Apartment","Bungalow","Flat"],a:0,e:"A tent is a temporary house that can be folded and carried."},
+{q:"A house has wheels and can move from one place to another. What is it called?",o:["Houseboat","Caravan","Igloo","Hut"],a:1,e:"A caravan is a house on wheels."},
+{q:"Find the one that does not belong.",o:["Tent","Caravan","Houseboat","Classroom"],a:3,e:"Tent, caravan, and houseboat are types of houses. A classroom is not a house."},
+{q:"A family lives on Dal Lake and travels by boat every day. Which house is most suitable for them?",o:["Tent","Houseboat","Igloo","Caravan"],a:1,e:"A houseboat is a floating house used in places like lakes."},
+{q:"In places with heavy rainfall, some houses are built high above the ground on poles. Why?",o:["To stop rainwater from entering the house","To make the house smaller","To make the house colder","To grow plants inside"],a:0,e:"Houses on stilts help keep rainwater from entering the house."},
 {q:"A place remains covered with snow for most of the year. Which house is most suitable there?",o:["Tent","Igloo","Caravan","Bungalow"],a:1,e:"An igloo is suitable for very cold, snowy regions."},
-{q:"People living in very cold mountain areas often use wooden houses because wood:",o:["Keeps the house warm","Makes the house float","Grows faster","Changes colour"],a:0,e:"Wood helps keep houses warmer in cold areas."},
-{q:"Which house is best suited for a snow-covered region?",o:["Igloo","Tent","Houseboat","Caravan"],a:0,e:"An igloo is a house suited for snow-covered regions."},
-{q:"A person lays bricks using cement to make walls. This worker is called a:",o:["Mason","Painter","Electrician","Carpenter"],a:0,e:"A mason builds walls using bricks and cement."},
+{q:"People living in very cold mountain areas often use wooden houses because wood:",o:["Helps keep the house warm","Makes the house float","Grows faster","Changes colour"],a:0,e:"Wood helps keep houses warmer in cold areas."},
+{q:"Which house is best suited for a snow-covered region?",image:"assets/ch4_q14.png",o:["Igloo","Tent","Houseboat","Caravan"],a:0,e:"An igloo is a house suited for snow-covered regions."},
+{q:"A person lays bricks using cement to make walls. This worker is called a:",image:"assets/ch4_q15.png",o:["Mason","Painter","Electrician","Carpenter"],a:0,e:"A mason builds walls using bricks and cement."},
 {q:"Your wooden door is broken and needs repair. Whom should you call?",o:["Carpenter","Plumber","Painter","Mason"],a:0,e:"A carpenter repairs and makes wooden things."},
 {q:"After playing, toys are left all over the floor. What should be done?",o:["Leave them there","Keep them back in place","Hide them","Throw them outside"],a:1,e:"Keeping things back in place helps keep the house neat."},
 {q:"Find the wrong habit.",o:["Sweeping the floor daily","Keeping things neatly","Throwing waste inside the room","Helping parents clean"],a:2,e:"Waste should be thrown in a dustbin, not inside the room."},
@@ -482,12 +492,26 @@ function loadQuestion(){
   clearInterval(timer);
   timeLeft=60;
 
+  const q=questions[current];
+
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("question").textContent=q.q;
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
+
+  const imageContainer=document.getElementById("questionImageContainer");
+  imageContainer.innerHTML="";
+
+  if(q.image){
+    const img=document.createElement("img");
+    img.src=q.image;
+    img.alt="Question image";
+    img.loading="eager";
+    img.decoding="async";
+    imageContainer.appendChild(img);
+  }
 
   const progress=((current)/questions.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
@@ -495,10 +519,10 @@ function loadQuestion(){
   const box=document.getElementById("options");
   box.innerHTML="";
 
-  for(let i=0;i<questions[current].o.length;i++){
+  for(let i=0;i<q.o.length;i++){
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=questions[current].o[i];
+    div.textContent=q.o[i];
     div.onclick=function(){
       checkAnswer(i,div);
     };
@@ -584,7 +608,7 @@ function nextQuestion(){
     loadQuestion();
   }else{
     document.getElementById("progressBar").style.width="100%";
-    showScreen("finalChallenge");
+    showResult();
   }
 }
 
