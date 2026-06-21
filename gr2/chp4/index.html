@@ -434,28 +434,29 @@ button:active{
 
 <script>
 const questions=[
-{q:"Early humans lived in caves. Why do people need houses today?",o:["Only for decoration","For shelter and safety","Only for sleeping","Only for cooking"],a:1,e:"A house gives us shelter and keeps us safe."},
-{q:"During heavy rain and strong wind, people stay safely inside their homes. What does this show?",o:["Houses protect us from weather","Houses help us grow taller","Houses are only for games","Houses stop us from learning"],a:0,e:"A house protects us from rain, wind, heat, and cold."},
-{q:"Which house is usually made from mud, straw, bamboo, or leaves?",o:["Kutcha house","Apartment","Skyscraper","Pucca house"],a:0,e:"A kutcha house is often made from materials like mud, straw, bamboo, or leaves."},
-{q:"A family lives in a village where mud and bamboo are easily available. Which house are they most likely to build?",o:["Mud and bamboo house","Glass building","Multi-storeyed apartment","Snow house"],a:0,e:"Mud and bamboo are commonly used to build simple houses in some villages."},
-{q:"A tall house made with bricks, cement, and iron is shown in the picture. What type of house is it?",image:"assets/ch4_q5.png",o:["Tent","Pucca house","Caravan","Hut"],a:1,e:"A pucca house is made using strong materials like bricks, cement, and iron."},
-{q:"Which material is commonly used to build a pucca house?",o:["Cement","Straw","Leaves","Snow"],a:0,e:"Cement is commonly used in pucca houses."},
-{q:"Which house can be folded, carried, and used while camping?",o:["Tent","Apartment","Bungalow","Flat"],a:0,e:"A tent is a temporary house that can be folded and carried."},
-{q:"A house has wheels and can move from one place to another. What is it called?",o:["Houseboat","Caravan","Igloo","Hut"],a:1,e:"A caravan is a house on wheels."},
-{q:"Find the one that does not belong.",o:["Tent","Caravan","Houseboat","Classroom"],a:3,e:"Tent, caravan, and houseboat are types of houses. A classroom is not a house."},
-{q:"A family lives on Dal Lake and travels by boat every day. Which house is most suitable for them?",o:["Tent","Houseboat","Igloo","Caravan"],a:1,e:"A houseboat is a floating house used in places like lakes."},
-{q:"In places with heavy rainfall, some houses are built high above the ground on poles. Why?",o:["To stop rainwater from entering the house","To make the house smaller","To make the house colder","To grow plants inside"],a:0,e:"Houses on stilts help keep rainwater from entering the house."},
-{q:"A place remains covered with snow for most of the year. Which house is most suitable there?",o:["Tent","Igloo","Caravan","Bungalow"],a:1,e:"An igloo is suitable for very cold, snowy regions."},
-{q:"People living in very cold mountain areas often use wooden houses because wood:",o:["Helps keep the house warm","Makes the house float","Grows faster","Changes colour"],a:0,e:"Wood helps keep houses warmer in cold areas."},
-{q:"Which house is best suited for a snow-covered region?",image:"assets/ch4_q14.png",o:["Igloo","Tent","Houseboat","Caravan"],a:0,e:"An igloo is a house suited for snow-covered regions."},
-{q:"A person lays bricks using cement to make walls. This worker is called a:",image:"assets/ch4_q15.png",o:["Mason","Painter","Electrician","Carpenter"],a:0,e:"A mason builds walls using bricks and cement."},
-{q:"Your wooden door is broken and needs repair. Whom should you call?",o:["Carpenter","Plumber","Painter","Mason"],a:0,e:"A carpenter repairs and makes wooden things."},
-{q:"After playing, toys are left all over the floor. What should be done?",o:["Leave them there","Keep them back in place","Hide them","Throw them outside"],a:1,e:"Keeping things back in place helps keep the house neat."},
-{q:"Find the wrong habit.",o:["Sweeping the floor daily","Keeping things neatly","Throwing waste inside the room","Helping parents clean"],a:2,e:"Waste should be thrown in a dustbin, not inside the room."},
-{q:"Many people help in building a house. How should we behave with them?",o:["Ignore them","Respect and thank them","Laugh at them","Disturb them"],a:1,e:"We should respect and thank all workers who help us."},
-{q:"A good house helps us live:",o:["Safely and comfortably","Without food","Without sleep","Without family"],a:0,e:"A good house gives safety, comfort, and protection."}
+[
+{q:"A child says, ‘I do not need a house because I can sleep anywhere.’ Why is this not safe?",o:["A house gives shelter and safety","A house is only for decoration","A house is only for cooking","A house is only for keeping toys"],a:0,e:"A house gives us shelter and keeps us safe."},
+{q:"There is heavy rain and strong wind outside. Why should people stay inside their homes?",o:["Homes protect us from bad weather","Homes make us taller","Homes are only for playing","Homes stop us from reading"],a:0,e:"A house protects us from rain, wind, heat, and cold."},
+{q:"Raju sees a house made of mud, straw, bamboo, and leaves. What type of house is it?",o:["Kutcha house","Apartment","Skyscraper","Pucca house"],a:0,e:"A kutcha house is made from materials like mud, straw, bamboo, or leaves."},
+{q:"A family in a village has mud and bamboo nearby. Which house can they build using these materials?",o:["Mud and bamboo house","Glass building","Multi-storeyed apartment","Snow house"],a:0,e:"Mud and bamboo are commonly used to build simple houses in some villages."},
+{q:"Look at the picture. Why can this house be called a pucca house?",image:"assets/ch4_q5.png",o:["It is made with strong materials like bricks, cement, and iron","It is made with leaves and straw","It can be folded and carried","It floats on water"],a:0,e:"The picture shows a strong building. Pucca houses are made using bricks, cement, and iron."},
+{q:"A builder is making a strong wall for a pucca house. Which material will he most likely use?",o:["Cement","Straw","Leaves","Snow"],a:0,e:"Cement is commonly used to build pucca houses."},
+{q:"A group is going camping for two days. Which house can they carry and set up?",o:["Tent","Apartment","Bungalow","Flat"],a:0,e:"A tent is a temporary house that can be folded and carried."},
+{q:"A family travels from place to place and lives in a house with wheels. What is it called?",o:["Caravan","Houseboat","Igloo","Hut"],a:0,e:"A caravan is a house on wheels."},
+{q:"Which one does not belong with movable or special houses?",o:["Classroom","Tent","Caravan","Houseboat"],a:0,e:"A classroom is not a type of house."},
+{q:"A family lives on Dal Lake. Which house would suit them best?",o:["Houseboat","Tent","Igloo","Caravan"],a:0,e:"A houseboat is a floating house used on water."},
+{q:"In a place with heavy rainfall, why are some houses built on poles?",o:["To stop rainwater from entering the house","To make the house smaller","To make the house colder","To grow plants inside"],a:0,e:"Houses on stilts help keep rainwater away from the living area."},
+{q:"A place stays covered with snow for most of the year. Which house is suitable there?",o:["Igloo","Tent","Caravan","Bungalow"],a:0,e:"An igloo is suitable for very cold, snowy regions."},
+{q:"People living in very cold mountain areas often use wooden houses. Why?",o:["Wood helps keep the house warm","Wood makes the house float","Wood melts snow","Wood changes colour"],a:0,e:"Wood helps keep houses warmer in cold areas."},
+{q:"Look at the picture. Why is this house suitable for a snowy region?",image:"assets/ch4_q14.png",o:["It is made of snow blocks and keeps people protected from cold","It is made of bamboo and leaves","It has wheels to travel","It floats on water"],a:0,e:"The picture shows an igloo, which is used in snowy regions."},
+{q:"Look at the picture. What work is the man doing?",image:"assets/ch4_q15.png",o:["Building a wall with bricks and cement","Painting a door","Fixing electric wires","Repairing a tap"],a:0,e:"The picture shows a mason building a wall using bricks and cement."},
+{q:"Your wooden door is broken. Whom should you call?",o:["Carpenter","Plumber","Painter","Mason"],a:0,e:"A carpenter repairs and makes wooden things."},
+{q:"After playing, toys are left all over the floor. What should be done?",o:["Keep them back in place","Leave them there","Hide them","Throw them outside"],a:0,e:"Keeping things back in place helps keep the house neat."},
+{q:"Which action shows a wrong habit at home?",o:["Throwing waste inside the room","Sweeping the floor daily","Keeping things neatly","Helping parents clean"],a:0,e:"Waste should be thrown in a dustbin."},
+{q:"Many workers help build a house. How should we behave with them?",o:["Respect and thank them","Ignore them","Laugh at them","Disturb them"],a:0,e:"We should respect and thank all workers who help us."},
+{q:"Why is a good house important for a family?",o:["It helps the family live safely and comfortably","It removes the need for food","It stops people from sleeping","It keeps everyone outside"],a:0,e:"A good house gives safety, comfort, and protection."}
 ];
-
+  
 let current=0;
 let score=0;
 let attempts=0;
