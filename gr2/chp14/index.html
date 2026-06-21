@@ -113,26 +113,45 @@ button{width:100%;font-size:18px;padding:15px 18px}.feedback{font-size:17px}.exp
 <script>
 const questions=[
 {q:"People go to a special place to pray and thank God together. This place is called:",o:["Playground","Place of worship","Market","Hospital"],a:1,e:"A place where people pray is called a place of worship."},
+
 {q:"Why should we respect all religions?",o:["All religions teach kindness and peace","Only one religion is correct","Festivals are colourful","People wear different clothes"],a:0,e:"We should respect all religions because they teach good values like kindness and peace."},
+
 {q:"Look at the picture of a place of worship with an idol and people offering flowers. Where are they praying?",image:"assets/ch14_q3.png",o:["Temple","Mosque","Church","Gurudwara"],a:0,e:"People offer flowers and pray before an idol in a temple."},
+
 {q:"Anika goes with her family to offer flowers, fruits, and prayers before an idol. Where has she gone?",o:["Temple","Church","Mosque","School"],a:0,e:"Offering flowers and prayers before an idol is usually done in a temple."},
+
 {q:"People offer namaz in this place of worship. They go to the:",o:["Gurudwara","Mosque","Temple","Park"],a:1,e:"Muslims offer namaz in a mosque."},
+
 {q:"A child reads the Bible during prayer time. Which place of worship is connected to this holy book?",o:["Church","Temple","Mosque","Gurudwara"],a:0,e:"The Bible is connected with Christianity, and Christians pray in a church."},
+
 {q:"Kabir is reading the Quran during religious study. Which religion is connected to this holy book?",o:["Muslims","Christians","Hindus","Sikhs"],a:0,e:"The Quran is the holy book of Muslims."},
+
 {q:"Find the odd one out.",o:["Temple","Mosque","Hospital","Church"],a:2,e:"Temple, mosque, and church are places of worship. Hospital is not."},
+
 {q:"Look at the picture of a family decorating a Christmas tree and going for prayer. Which place are they most likely visiting?",image:"assets/ch14_q9.png",o:["Church","Temple","Mosque","Gurudwara"],a:0,e:"Christmas is celebrated by Christians, who pray in a church."},
+
 {q:"Find the wrong match.",o:["Temple – Diwali","Mosque – Eid","Church – Gurpurab","Gurudwara – Baisakhi"],a:2,e:"Gurpurab is connected with Sikhism and is celebrated at a gurudwara, not a church."},
+
 {q:"People pray regularly and follow good values from holy books. What can this help them become?",o:["Kinder and more peaceful","Forgetful","Careless","Unhelpful"],a:0,e:"Prayer and good values help people become kinder and peaceful."},
+
 {q:"Look at the picture of people sitting together, praying, and sharing food in langar. This place is called:",image:"assets/ch14_q12.png",o:["Gurudwara","Temple","Church","Museum"],a:0,e:"Langar is served in a gurudwara."},
+
 {q:"Your friend follows a different religion from yours. What should you do?",o:["Respect their beliefs","Make fun of them","Avoid talking to them","Fight with them"],a:0,e:"We should respect everyone’s beliefs."},
+
 {q:"Diwali, Dussehra, and Holi are mainly festivals celebrated by:",o:["Hindus","Muslims","Christians","Sikhs"],a:0,e:"Diwali, Dussehra, and Holi are mainly Hindu festivals."},
+
 {q:"Jamal wears new clothes, offers namaz, and celebrates Eid with family. His place of worship is the:",o:["Mosque","Temple","Church","Gurudwara"],a:0,e:"Muslims offer namaz in a mosque."},
+
 {q:"A family decorates a Christmas tree and attends special prayers. Which festival are they celebrating?",o:["Christmas","Eid","Baisakhi","Holi"],a:0,e:"Decorating a Christmas tree is linked with Christmas."},
+
 {q:"Balveer covers his head and visits a place where Guru Granth Sahib is kept. He has gone to the:",o:["Gurudwara","Church","Mosque","Temple"],a:0,e:"The Guru Granth Sahib is kept in a gurudwara."},
-{q:"A teacher says, “Holy books teach us honesty, kindness, and helping others.” This means holy books help us:",o:["Become better people","Buy new things","Learn games only","Travel faster"],a:0,e:"Holy books teach good values that help us become better people."},
+
+{q:"A teacher says, 'Holy books teach us honesty, kindness, and helping others.' This means holy books help us:",o:["Become better people","Buy new things","Learn games only","Travel faster"],a:0,e:"Holy books teach good values that help us become better people."},
+
 {q:"Find the wrong behaviour.",o:["Respecting all religions","Helping people of every faith","Making fun of others’ beliefs","Speaking kindly to everyone"],a:2,e:"Making fun of others’ beliefs is wrong. We should respect all religions."},
+
 {q:"India has many religions and festivals. What does this teach us?",o:["Live together with love and respect","Only one festival matters","Religion should divide people","Friends should pray separately"],a:0,e:"India’s diversity teaches us to live together with love and respect."}
-]
+];
 
 let current=0,score=0,attempts=0,timer,timeLeft=60,locked=false;
 const correctSound=document.getElementById("correctSound");
