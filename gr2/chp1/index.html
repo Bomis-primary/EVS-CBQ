@@ -252,13 +252,6 @@ button:active{
   100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
 }
 
-.finalbox{
-  background:#fff8e1;
-  border:2px dashed #ffb300;
-  border-radius:20px;
-  padding:16px;
-  margin-top:16px;
-}
 
 .small{
   font-size:15px;
@@ -373,18 +366,6 @@ button:active{
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
     <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next</button>
-  </div>
-</div>
-
-<div id="finalChallenge" class="screen">
-  <div class="card">
-    <h1>Final Challenge</h1>
-    <div class="finalbox">
-      <p><b>Think and say:</b></p>
-      <p>Name one internal organ, one external organ, and one healthy habit for the body.</p>
-    </div>
-    <p class="small">Tap finish to see your score.</p>
-    <button onclick="showResult()">Finish</button>
   </div>
 </div>
 
@@ -687,7 +668,7 @@ function nextQuestion(){
     loadQuestion();
   }else{
     document.getElementById("progressBar").style.width="100%";
-    showScreen("finalChallenge");
+    showResult();
   }
 }
 
