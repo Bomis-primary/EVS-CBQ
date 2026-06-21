@@ -144,6 +144,22 @@ button:active{
   transition:.3s;
 }
 
+.question-image-container{
+  text-align:center;
+  margin:10px auto 14px;
+  min-height:0;
+}
+
+.question-image-container img{
+  display:block;
+  width:100%;
+  max-width:280px;
+  max-height:180px;
+  object-fit:contain;
+  margin:0 auto;
+  border-radius:18px;
+}
+
 .question{
   font-size:24px;
   line-height:1.4;
@@ -258,6 +274,7 @@ button:active{
   .topbar{grid-template-columns:1fr;gap:6px}
   .badge{font-size:15px;padding:9px 8px}
   .question{font-size:20px;margin:18px 0}
+  .question-image-container img{max-width:260px;max-height:170px}
   .option{font-size:18px;padding:16px;min-height:64px}
   button{width:100%;font-size:18px;padding:15px 18px}
   .feedback{font-size:17px}
@@ -317,6 +334,7 @@ button:active{
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <div id="questionImageContainer" class="question-image-container"></div>
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="feedback" id="feedback"></div>
@@ -324,17 +342,6 @@ button:active{
   </div>
 </div>
 
-<div id="finalChallenge" class="screen">
-  <div class="card">
-    <h1>Final Challenge</h1>
-    <div class="finalbox">
-      <p><b>Think and say:</b></p>
-      <p>Name one clean habit and one way to reduce pollution.</p>
-    </div>
-    <p class="small">Tap finish to see your score.</p>
-    <button onclick="showResult()">Finish</button>
-  </div>
-</div>
 
 <div id="result" class="screen">
   <div class="card">
@@ -353,27 +360,27 @@ button:active{
 
 <script>
 const questions=[
-{q:"Children are cleaning the park. This action shows:",o:["Dirty habits","Keeping surroundings clean","Wasting time","Playing games only"],a:1,e:"Cleaning public places helps keep our surroundings clean."},
+{q:"Look at the picture of children cleaning a park. What does this action show?",image:"assets/ch6_q1.png",o:["Dirty habits","Keeping surroundings clean","Wasting time","Playing games only"],a:1,e:"Cleaning public places helps keep our surroundings clean."},
 {q:"Why should we keep our surroundings clean?",o:["To stay healthy and safe","To make more garbage","To invite insects","To waste water"],a:0,e:"Clean surroundings help us stay healthy and safe."},
 {q:"You finish eating a snack in school. What should you do with the wrapper?",o:["Put it in the dustbin","Throw it on the road","Leave it in the classroom","Drop it in the playground"],a:0,e:"Wrappers should be thrown in the dustbin."},
 {q:"Which set shows good cleanliness habits?",o:["Use dustbin and plant trees","Throw waste outside and spit on road","Burn plastic and leave garbage open","Waste water and cut trees"],a:0,e:"Using dustbins and planting trees are good habits."},
-{q:"A place with garbage lying on the road may have:",o:["Fresh smell","Flies and mosquitoes","More flowers","Cleaner air"],a:1,e:"Garbage attracts flies and mosquitoes."},
-{q:"A busy road has many vehicles giving out smoke every day. What kind of pollution may increase there?",o:["Air pollution","Water pollution","Soil pollution only","Noise-free surroundings"],a:0,e:"Vehicle smoke causes air pollution."},
+{q:"A place has garbage lying on the road. What problem may this cause?",o:["Fresh smell","Flies and mosquitoes","More flowers","Cleaner air"],a:1,e:"Garbage can attract flies and mosquitoes."},
+{q:"A busy road has many vehicles giving out smoke every day. What kind of pollution may increase there?",o:["Air pollution","Water pollution","Soil pollution only","Noise-free surroundings"],a:0,e:"Vehicle smoke can increase air pollution."},
 {q:"You see paper pieces near your classroom. What should you do?",o:["Ignore them","Pick them up and use the dustbin","Throw more paper","Kick them away"],a:1,e:"Picking up paper and using the dustbin keeps the classroom clean."},
 {q:"Why should we not throw garbage into rivers and lakes?",o:["It makes water dirty","It makes water sweet","It helps fish grow faster","It makes water colourful"],a:0,e:"Garbage pollutes water bodies and harms living things."},
 {q:"Find the one that is different.",o:["Planting trees","Using dustbin","Throwing waste on road","Keeping places clean"],a:2,e:"Throwing waste on the road is not a clean habit."},
-{q:"Your mother is going shopping. Which bag is better for the environment?",o:["Plastic bag","Cloth bag","Open wrapper","Broken basket"],a:1,e:"Cloth bags are reusable and better for the environment."},
+{q:"Someone is going shopping. Which bag is better for the environment?",o:["Plastic bag","Cloth bag","Open wrapper","Broken basket"],a:1,e:"Cloth bags are reusable and better for the environment."},
 {q:"Many trees are cut down in one area. What may happen?",o:["Cleaner air decreases","More shade appears","More birds come","More rain happens daily"],a:0,e:"Cutting trees can reduce clean air."},
-{q:"Children are planting saplings in the garden. This helps to:",o:["Make air cleaner","Create more garbage","Increase pollution","Waste soil"],a:0,e:"Trees and plants help make the air cleaner."},
+{q:"Look at the picture of children planting saplings in a garden. This helps to:",image:"assets/ch6_q12.png",o:["Make air cleaner","Create more garbage","Increase pollution","Waste soil"],a:0,e:"Trees and plants help make the air cleaner."},
 {q:"Why should we walk for short distances instead of always using vehicles?",o:["To reduce pollution","To make roads dirty","To waste time","To make more smoke"],a:0,e:"Walking short distances reduces vehicle smoke and pollution."},
-{q:"Why is a covered dustbin better than an open dustbin?",o:["It helps keep germs away","It makes garbage bigger","It increases bad smell","It attracts more flies"],a:0,e:"A covered dustbin keeps germs and flies away."},
-{q:"A covered dustbin is better because it:",o:["Keeps germs away","Makes garbage bigger","Attracts more flies","Wastes more food"],a:0,e:"Covered dustbins help keep surroundings cleaner and safer."},
+{q:"Why is a covered dustbin better than an open dustbin?",image:"assets/ch6_q14.png",o:["It helps keep germs away","It makes garbage bigger","It increases bad smell","It attracts more flies"],a:0,e:"A covered dustbin keeps germs and flies away."},
+{q:"Which place is best for throwing waste at school?",o:["Classroom floor","Playground corner","Covered dustbin","Under the desk"],a:2,e:"Waste should be thrown in a dustbin."},
 {q:"You see garbage near your school gate. What is the best action?",o:["Walk away","Put it in the dustbin","Throw more waste","Play near it"],a:1,e:"Putting garbage in the dustbin keeps the school clean."},
 {q:"Someone is burning plastic waste near your house. What problem can this cause?",o:["Fresh air","Dirty air and pollution","More flowers","Clean water"],a:1,e:"Burning plastic pollutes the air."},
 {q:"Find the wrong habit.",o:["Using a covered dustbin","Spitting in open areas","Planting trees","Keeping school clean"],a:1,e:"Spitting in open areas is unhealthy and dirty."},
 {q:"Your pet dog makes the garden dirty. What should you do?",o:["Leave it there","Clean the place properly","Ignore it","Move away forever"],a:1,e:"We should clean up after pets to keep places clean."},
 {q:"Clean surroundings help us to live:",o:["Healthily and happily","Lazily","Without water","Without trees"],a:0,e:"Clean surroundings help us stay healthy and happy."}
-];
+]
 
 let current=0;
 let score=0;
@@ -411,12 +418,26 @@ function loadQuestion(){
   clearInterval(timer);
   timeLeft=60;
 
+  const q=questions[current];
+
   document.getElementById("time").textContent=timeLeft;
   document.getElementById("score").textContent=score;
   document.getElementById("qCount").textContent="Question "+(current+1)+"/"+questions.length;
-  document.getElementById("question").textContent=questions[current].q;
+  document.getElementById("question").textContent=q.q;
   document.getElementById("feedback").innerHTML="";
   document.getElementById("nextBtn").classList.add("hidden");
+
+  const imageContainer=document.getElementById("questionImageContainer");
+  imageContainer.innerHTML="";
+
+  if(q.image){
+    const img=document.createElement("img");
+    img.src=q.image;
+    img.alt="Question image";
+    img.loading="eager";
+    img.decoding="async";
+    imageContainer.appendChild(img);
+  }
 
   const progress=((current)/questions.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
@@ -424,10 +445,10 @@ function loadQuestion(){
   const box=document.getElementById("options");
   box.innerHTML="";
 
-  for(let i=0;i<questions[current].o.length;i++){
+  for(let i=0;i<q.o.length;i++){
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=questions[current].o[i];
+    div.textContent=q.o[i];
     div.onclick=function(){
       checkAnswer(i,div);
     };
@@ -506,7 +527,7 @@ function nextQuestion(){
     loadQuestion();
   }else{
     document.getElementById("progressBar").style.width="100%";
-    showScreen("finalChallenge");
+    showResult();
   }
 }
 
