@@ -112,26 +112,45 @@ button{width:100%;font-size:18px;padding:15px 18px}.feedback{font-size:17px}.exp
 <script>
 const questions=[
 {q:"Look at the picture of children saluting the Indian National Flag during assembly. Which festival is being celebrated?",image:"assets/ch15_q1.png",o:["Diwali","Independence Day","Christmas","Holi"],a:1,e:"Independence Day is a national festival celebrated with flag hoisting and the national anthem."},
+
 {q:"Why is India called the land of festivals?",o:["It has many festivals celebrated throughout the year","It has only one religion","It has many schools","It has many playgrounds"],a:0,e:"India celebrates many national, religious, and regional festivals."},
+
 {q:"Children are preparing for a parade on 26th January. Which national festival are they celebrating?",o:["Republic Day","Gandhi Jayanti","Independence Day","Holi"],a:0,e:"Republic Day is celebrated on 26th January."},
+
 {q:"A grand parade is taking place in New Delhi and the President is taking the salute. Which day is this?",o:["Republic Day","Eid","Pongal","Onam"],a:0,e:"The Republic Day parade is held in New Delhi."},
+
 {q:"Children are giving speeches about Mahatma Gandhi and remembering him with respect. Which special day is this?",o:["Gandhi Jayanti","Gurpurab","Diwali","Christmas"],a:0,e:"Gandhi Jayanti honours Mahatma Gandhi."},
+
 {q:"Children are playing with gulal and coloured water. Which festival are they celebrating?",o:["Holi","Christmas","Eid","Bihu"],a:0,e:"Holi is known as the festival of colours."},
+
 {q:"People decorate their homes with diyas and lights. Which festival is this?",o:["Diwali","Holi","Eid","Christmas"],a:0,e:"Diwali is the festival of lights."},
+
 {q:"Find the odd one out.",o:["Independence Day","Republic Day","Gandhi Jayanti","Bihu"],a:3,e:"Bihu is a regional festival, while the others are national festivals."},
+
 {q:"Meera decorates her home with diyas and shares sweets with relatives. Which festival is she celebrating?",o:["Diwali","Eid","Holi","Onam"],a:0,e:"Sharing sweets and lighting diyas are part of Diwali."},
+
 {q:"Find the wrong match.",o:["Christmas – Christmas tree","Eid – Sheer Kurma","Gurpurab – Langar","Holi – Santa Claus"],a:3,e:"Santa Claus is linked with Christmas, not Holi."},
+
 {q:"Families celebrate festivals together and visit relatives. What does this help create?",o:["Happiness and unity","Fear","Homework","Silence"],a:0,e:"Festivals bring families and communities together."},
-{q:"Look at the picture of people offering namaz and greeting each other with 'Eid Mubarak'. Which festival is this?",image:"assets/ch15_q12.png",o:["Eid-ul-Fitr","Holi","Christmas","Diwali"],a:0,e:"Eid-ul-Fitr is celebrated with prayers and greetings."},
+
+{q:"Look at the picture of people greeting each other with 'Eid Mubarak' after prayers. Which festival is this?",image:"assets/ch15_q12.png",o:["Eid-ul-Fitr","Holi","Christmas","Diwali"],a:0,e:"Eid-ul-Fitr is celebrated with prayers and greetings."},
+
 {q:"During any festival, the best behaviour is to:",o:["Share happiness with others","Fight with friends","Waste food","Break decorations"],a:0,e:"Festivals are a time for kindness and sharing."},
+
 {q:"Children decorate a Christmas tree, sing carols, and visit the church. Which festival is this?",o:["Christmas","Pongal","Holi","Bihu"],a:0,e:"Christmas is celebrated with trees, carols, and prayers."},
+
 {q:"People pray in the Gurudwara, sing hymns, and eat langar together. Which festival is this?",o:["Gurpurab","Eid","Republic Day","Holi"],a:0,e:"Gurpurab is celebrated in Gurudwaras."},
+
 {q:"People perform the Bihu dance and celebrate the harvest season in which state?",o:["Assam","Punjab","Kerala","Kashmir"],a:0,e:"Bihu is a harvest festival of Assam."},
+
 {q:"Farmers prepare Sweet Pongal and thank the Sun God for good crops. Which festival is this?",o:["Pongal","Christmas","Eid","Holi"],a:0,e:"Pongal is a harvest festival."},
-{q:"Look at the picture showing a flower rangoli and a snake boat race. Which festival is being celebrated?",image:"assets/ch15_q18.png",o:["Onam","Bihu","Christmas","Diwali"],a:0,e:"Onam is famous for pookalam and snake boat races."},
+
+{q:"Look at the picture showing a flower pookalam and a snake boat race. Which festival is being celebrated?",image:"assets/ch15_q18.png",o:["Onam","Bihu","Christmas","Diwali"],a:0,e:"Onam is famous for pookalam and snake boat races."},
+
 {q:"People perform the Bihu dance, wear traditional clothes, and celebrate with music and feasts. Which festival is this?",o:["Bihu","Gurpurab","Eid","Republic Day"],a:0,e:"Bihu includes dance, music, and feasting."},
+
 {q:"Festivals help people from different religions and states celebrate together. What does this teach us?",o:["Love, respect, and unity","Only one festival matters","Festivals are only holidays","Friends should celebrate separately"],a:0,e:"Festivals teach unity in diversity."}
-]
+];
 
 let current=0,score=0,attempts=0,timer,timeLeft=60,locked=false;
 const correctSound=document.getElementById("correctSound");
