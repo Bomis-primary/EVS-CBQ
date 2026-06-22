@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 10: The Universe</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;font-family:Arial,sans-serif;color:#263238;overflow-x:hidden}
+body{background:linear-gradient(135deg,#eef2ff,#fff7d6,#e8f7ff)}
+.splash,.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px;position:relative}
+.splash{background:#fff}
+.logo{max-width:220px;width:65%}
+.card{width:100%;max-width:760px;background:rgba(255,255,255,.95);border-radius:26px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.12);text-align:center;position:relative;z-index:2}
+h1{font-size:clamp(25px,5vw,40px);margin:8px 0;color:#283593}
+h2{font-size:clamp(22px,4vw,32px);color:#283593}
+p{font-size:clamp(16px,3vw,19px);line-height:1.5}
+button{border:0;border-radius:18px;padding:14px 18px;font-size:17px;font-weight:bold;cursor:pointer;background:#3949ab;color:#fff;margin:8px;min-height:48px}
+.topbar{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.badge{background:#e8eaf6;border-radius:999px;padding:9px 13px;font-weight:bold;color:#1a237e}
+.timer{background:#fff3e0;color:#e65100}
+.question{font-size:clamp(18px,3.5vw,24px);font-weight:bold;margin:14px 0;text-align:left}
+.options{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.option{width:100%;background:#fff;color:#263238;border:2px solid #c5cae9;text-align:left;border-radius:18px;padding:14px;font-size:clamp(16px,3vw,19px);font-weight:600}
+.option.correct{background:#d8f8d0;border-color:#43a047}
+.option.wrong{background:#ffe0e0;border-color:#e53935}
+.feedback{min-height:58px;margin-top:14px;font-size:17px;font-weight:bold}
+.explain{font-weight:normal;color:#37474f;margin-top:6px}
+.hide{display:none}
+.question-image-container{text-align:center;margin:10px auto 14px}
+.question-image-container img{display:block;width:100%;max-width:280px;max-height:180px;object-fit:contain;margin:0 auto;border-radius:18px}
+.bg span{position:fixed;font-size:24px;opacity:.22;animation:float 12s linear infinite;z-index:0}
+.bg span:nth-child(1){left:8%;animation-delay:0s}
+.bg span:nth-child(2){left:30%;animation-delay:3s}
+.bg span:nth-child(3){left:58%;animation-delay:6s}
+.bg span:nth-child(4){left:82%;animation-delay:9s}
+@keyframes float{0%{top:105%;transform:rotate(0)}100%{top:-10%;transform:rotate(180deg)}}
+.confetti{position:fixed;top:-20px;font-size:22px;animation:fall 900ms linear forwards;z-index:5}
+@keyframes fall{to{transform:translateY(105vh) rotate(220deg);opacity:0}}
+.cross{position:fixed;left:50%;top:46%;transform:translate(-50%,-50%);font-size:70px;color:#e53935;opacity:.85;z-index:6;animation:pop .55s ease forwards}
+@keyframes pop{0%{transform:translate(-50%,-50%) scale(.4)}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+@media(max-width:520px){.card{padding:16px;border-radius:20px}button{width:100%;margin:7px 0}.topbar{font-size:14px}}
+</style>
+</head>
+<body>
+
+<div class="bg"><span>⭐</span><span>🌙</span><span>✨</span><span>🪐</span></div>
+
+<div id="splash" class="splash">
+  <img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo">
+</div>
+
+<div id="intro" class="screen hide">
+  <div class="card">
+    <h1>The Universe</h1>
+    <p><b>Grade 3 EVS</b></p>
+    <p>Answer carefully. You get one retry after a wrong answer. After the second wrong try, the correct answer and explanation will appear.</p>
+    <button onclick="startGame()">Start Quiz</button>
+  </div>
+</div>
+
+<div id="quiz" class="screen hide">
+  <div class="card">
+    <div class="topbar">
+      <div class="badge" id="progress">Question 1/20</div>
+      <div class="badge">Score: <span id="score">0</span>/20</div>
+      <div class="badge timer">Time: <span id="time">60</span>s</div>
+    </div>
+    <div id="imgBox" class="question-image-container hide">
+      <img id="qImg" src="" alt="Question image">
+    </div>
+    <div id="question" class="question"></div>
+    <div id="options" class="options"></div>
+    <div id="feedback" class="feedback"></div>
+    <button id="nextBtn" class="hide" onclick="nextQuestion()">Next</button>
+  </div>
+</div>
+
+<div id="result" class="screen hide">
+  <div class="card">
+    <h2>Quiz Complete!</h2>
+    <p id="finalScore"></p>
+    <h1 id="remark"></h1>
+    <button onclick="restartGame()">Play Again</button>
+  </div>
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/clapping.mp3"></audio>
+
+<script>
+const questions=[
+{q:"A child looks at the sky shown in the picture. What can the child conclude?",image:"assets/ch10_q1.png",o:["The Moon and stars are heavenly bodies found in space","The Moon and stars are clouds","The Moon and stars are parts of Earth","The Moon and stars appear only during winter"],a:0,e:"The Moon and stars are heavenly bodies found in space."},
+{q:"Rohan notices that stars appear to twinkle while looking at the night sky. What can he infer?",o:["Stars are very far away from Earth","Stars are lamps in the sky","Stars are always moving towards Earth","Stars appear only in winter"],a:0,e:"Stars are extremely far away and appear to twinkle when viewed from Earth."},
+{q:"A school garden receives sunlight throughout the day, and the plants grow well. What does this show?",o:["The Sun provides energy needed for life on Earth","Plants grow without sunlight","Sunlight is useful only for animals","The Sun helps only flowers"],a:0,e:"Plants need sunlight to prepare food."},
+{q:"Why would life on Earth become difficult without the Sun?",o:["Earth would not receive enough heat and light","Oceans would disappear immediately","The Moon would stop moving","Stars would vanish"],a:0,e:"The Sun is the main source of heat and light for Earth."},
+{q:"A student is making a model of the solar system. Which group should be included?",o:["Sun, Earth, Moon","Earth, tree, Moon","Sun, cloud, river","Star, mountain, Moon"],a:0,e:"These are members of the solar system."},
+{q:"A student wants to learn more about planets and stars. Which action would help most?",o:["Observe the sky and read reliable science resources","Ignore observations","Look only at cartoons","Avoid asking questions"],a:0,e:"Observation and learning help us understand space better."},
+{q:"Why is Earth considered part of a larger system?",o:["Earth is one planet in the solar system","Earth exists alone in space","Earth controls all stars","Earth is larger than the Sun"],a:0,e:"Earth is one of the planets that orbit the Sun."},
+{q:"A student says, “The Moon makes its own light.” Why is this incorrect?",o:["The Moon reflects sunlight","The Moon produces electricity","The Moon is a star","The Moon shines because of clouds"],a:0,e:"The Moon reflects the light it receives from the Sun."},
+{q:"A child asks why the Moon always appears near Earth in the sky. What is the best explanation?",o:["The Moon revolves around Earth","The Moon follows clouds","The Moon is attached to Earth","The Moon never moves"],a:0,e:"The Moon is Earth's natural satellite."},
+{q:"A student is sorting pictures of planets and other objects. Which item should NOT be placed in the “planet” group?",o:["Mercury","Venus","Earth","Banyan tree"],a:3,e:"Mercury, Venus and Earth are planets, while a banyan tree is a living thing on Earth."},
+{q:"Astronauts often call Earth the “Blue Planet.” What observation supports this idea?",o:["Much of Earth's surface is covered with water","Earth is made of blue rocks","Earth glows blue at night","Earth's soil is blue"],a:0,e:"Large water bodies make Earth appear blue from space."},
+{q:"A child sees a crescent Moon one week and a full Moon later. Why does the Moon appear different?",o:["We see different portions of its sunlit side","The Moon changes shape","Clouds cut the Moon into parts","The Moon grows bigger"],a:0,e:"Moon phases occur due to its position relative to Earth and the Sun."},
+{q:"A student is preparing a chart of planets. Which object should be included?",o:["Mars","Moon","Pole Star","Sun"],a:0,e:"Mars is one of the planets in the solar system."},
+{q:"The picture shows Chandrayaan-3 on the Moon. What can we infer about the purpose of this mission?",image:"assets/ch10_q14.png",o:["To study and learn more about the Moon and space","To bring stars to Earth","To stop the Moon from moving","To make nights brighter"],a:0,e:"Space missions help scientists explore and understand celestial bodies."},
+{q:"A student notices something bright moving across the night sky and wants to know what it is. What should the student do?",o:["Observe carefully and seek scientific information","Make up an answer","Ignore it completely","Assume it is magic"],a:0,e:"Scientific observation helps us understand natural phenomena."},
+{q:"How do artificial satellites help people on Earth?",o:["They support communication, weather forecasting and research","They create sunlight","They move planets","They produce stars"],a:0,e:"Satellites have many useful applications in daily life."},
+{q:"Why is it important to ask questions about space?",o:["Curiosity helps people discover and understand the universe","Questions are unnecessary in science","Only scientists should be curious","Space cannot be studied"],a:0,e:"Scientific discoveries begin with curiosity and observation."},
+{q:"A family notices a bright full Moon during a festival night. Why does it appear so bright?",o:["The side facing Earth is fully lit by the Sun","The Moon makes its own light","Stars light up the Moon","Earth shines on the Moon"],a:0,e:"A full Moon occurs when the visible side is fully illuminated."},
+{q:"Students are discussing Indian achievements in space exploration. Which achievement would be a good example?",o:["Chandrayaan missions studying the Moon","Building mountains","Creating rivers","Growing forests"],a:0,e:"Chandrayaan missions are important achievements in space exploration."},
+{q:"Stars, planets, moons, galaxies and satellites are all connected through one larger idea. What is it?",o:["They are all part of the universe","They all belong to Earth","They are all stars","They are all planets"],a:0,e:"The universe includes everything that exists in space."}
+];
+
+let index=0,score=0,tries=0,timer,timeLeft=60,locked=false;
+
+setTimeout(()=>{splash.classList.add("hide");intro.classList.remove("hide")},5000);
+
+function startGame(){
+index=0;score=0;tries=0;
+intro.classList.add("hide");
+quiz.classList.remove("hide");
+showQuestion();
+}
+
+function showQuestion(){
+locked=false;
+tries=0;
+clearInterval(timer);
+timeLeft=60;
+time.textContent=timeLeft;
+document.getElementById("score").textContent=score;
+progress.textContent=`Question ${index+1}/${questions.length}`;
+feedback.innerHTML="";
+nextBtn.classList.add("hide");
+
+const q=questions[index];
+question.textContent=q.q;
+
+if(q.image){
+qImg.src=q.image;
+imgBox.classList.remove("hide");
+}else{
+qImg.src="";
+imgBox.classList.add("hide");
+}
+
+options.innerHTML="";
+q.o.forEach((opt,i)=>{
+const btn=document.createElement("button");
+btn.className="option";
+btn.textContent=opt;
+btn.onclick=()=>checkAnswer(btn,i);
+options.appendChild(btn);
+});
+
+timer=setInterval(()=>{
+timeLeft--;
+time.textContent=timeLeft;
+if(timeLeft<=0){
+clearInterval(timer);
+showAnswer("Time is up!");
+}
+},1000);
+}
+
+function checkAnswer(btn,chosen){
+if(locked)return;
+const q=questions[index];
+if(chosen===q.a){
+locked=true;
+clearInterval(timer);
+score++;
+btn.classList.add("correct");
+document.getElementById("score").textContent=score;
+feedback.innerHTML=`Correct!<div class="explain">${q.e}</div>`;
+playCorrect();
+starConfetti();
+nextBtn.classList.remove("hide");
+}else{
+tries++;
+btn.classList.add("wrong");
+playWrong();
+redCross();
+if(tries===1){
+feedback.textContent="Try once more.";
+btn.disabled=true;
+}else{
+showAnswer("Not quite.");
+}
+}
+}
+
+function showAnswer(msg){
+locked=true;
+clearInterval(timer);
+const q=questions[index];
+document.querySelectorAll(".option").forEach((b,i)=>{
+b.disabled=true;
+if(i===q.a)b.classList.add("correct");
+});
+feedback.innerHTML=`${msg} Correct answer: ${q.o[q.a]}<div class="explain">${q.e}</div>`;
+nextBtn.classList.remove("hide");
+}
+
+function nextQuestion(){
+index++;
+if(index<questions.length)showQuestion();
+else showResult();
+}
+
+function showResult(){
+quiz.classList.add("hide");
+result.classList.remove("hide");
+finalScore.textContent=`Score: ${score}/${questions.length}`;
+remark.textContent=score>=18?"Excellent":score>=14?"Well Done":"Good Effort";
+}
+
+function restartGame(){
+result.classList.add("hide");
+intro.classList.remove("hide");
+}
+
+function playCorrect(){
+correctSound.play().catch(()=>{});
+setTimeout(()=>clapSound.play().catch(()=>{}),350);
+}
+
+function playWrong(){
+wrongSound.play().catch(()=>{});
+}
+
+function starConfetti(){
+for(let i=0;i<18;i++){
+const s=document.createElement("div");
+s.className="confetti";
+s.textContent="⭐";
+s.style.left=Math.random()*100+"vw";
+s.style.animationDelay=Math.random()*250+"ms";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),1200);
+}
+}
+
+function redCross(){
+const x=document.createElement("div");
+x.className="cross";
+x.textContent="✖";
+document.body.appendChild(x);
+setTimeout(()=>x.remove(),600);
+}
+</script>
+</body>
+</html>
