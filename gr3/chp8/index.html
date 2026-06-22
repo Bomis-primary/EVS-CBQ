@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 8: Measurement</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;font-family:Arial,sans-serif;color:#263238;overflow-x:hidden}
+body{background:linear-gradient(135deg,#fff7d6,#e8f7ff,#f3ecff)}
+.splash,.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px;position:relative}
+.splash{background:#fff}
+.logo{max-width:220px;width:65%}
+.card{width:100%;max-width:760px;background:rgba(255,255,255,.95);border-radius:26px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.12);text-align:center;position:relative;z-index:2}
+h1{font-size:clamp(25px,5vw,40px);margin:8px 0;color:#6a1b9a}
+h2{font-size:clamp(22px,4vw,32px);color:#6a1b9a}
+p{font-size:clamp(16px,3vw,19px);line-height:1.5}
+button{border:0;border-radius:18px;padding:14px 18px;font-size:17px;font-weight:bold;cursor:pointer;background:#8e24aa;color:#fff;margin:8px;min-height:48px}
+.topbar{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.badge{background:#f3e5f5;border-radius:999px;padding:9px 13px;font-weight:bold;color:#4a148c}
+.timer{background:#fff3e0;color:#e65100}
+.question{font-size:clamp(18px,3.5vw,24px);font-weight:bold;margin:14px 0;text-align:left}
+.options{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.option{width:100%;background:#fff;color:#263238;border:2px solid #e1bee7;text-align:left;border-radius:18px;padding:14px;font-size:clamp(16px,3vw,19px);font-weight:600}
+.option.correct{background:#d8f8d0;border-color:#43a047}
+.option.wrong{background:#ffe0e0;border-color:#e53935}
+.feedback{min-height:58px;margin-top:14px;font-size:17px;font-weight:bold}
+.explain{font-weight:normal;color:#37474f;margin-top:6px}
+.hide{display:none}
+.question-image-container{text-align:center;margin:10px auto 14px}
+.question-image-container img{display:block;width:100%;max-width:280px;max-height:180px;object-fit:contain;margin:0 auto;border-radius:18px}
+.bg span{position:fixed;font-size:24px;opacity:.22;animation:float 12s linear infinite;z-index:0}
+.bg span:nth-child(1){left:8%;animation-delay:0s}
+.bg span:nth-child(2){left:30%;animation-delay:3s}
+.bg span:nth-child(3){left:58%;animation-delay:6s}
+.bg span:nth-child(4){left:82%;animation-delay:9s}
+@keyframes float{0%{top:105%;transform:rotate(0)}100%{top:-10%;transform:rotate(180deg)}}
+.confetti{position:fixed;top:-20px;font-size:22px;animation:fall 900ms linear forwards;z-index:5}
+@keyframes fall{to{transform:translateY(105vh) rotate(220deg);opacity:0}}
+.cross{position:fixed;left:50%;top:46%;transform:translate(-50%,-50%);font-size:70px;color:#e53935;opacity:.85;z-index:6;animation:pop .55s ease forwards}
+@keyframes pop{0%{transform:translate(-50%,-50%) scale(.4)}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+@media(max-width:520px){.card{padding:16px;border-radius:20px}button{width:100%;margin:7px 0}.topbar{font-size:14px}}
+</style>
+</head>
+<body>
+
+<div class="bg"><span>⭐</span><span>📏</span><span>✨</span><span>⏰</span></div>
+
+<div id="splash" class="splash">
+  <img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo">
+</div>
+
+<div id="intro" class="screen hide">
+  <div class="card">
+    <h1>Measurement</h1>
+    <p><b>Grade 3 EVS</b></p>
+    <p>Answer carefully. You get one retry after a wrong answer. After the second wrong try, the correct answer and explanation will appear.</p>
+    <button onclick="startGame()">Start Quiz</button>
+  </div>
+</div>
+
+<div id="quiz" class="screen hide">
+  <div class="card">
+    <div class="topbar">
+      <div class="badge" id="progress">Question 1/20</div>
+      <div class="badge">Score: <span id="score">0</span>/20</div>
+      <div class="badge timer">Time: <span id="time">60</span>s</div>
+    </div>
+    <div id="imgBox" class="question-image-container hide">
+      <img id="qImg" src="" alt="Question image">
+    </div>
+    <div id="question" class="question"></div>
+    <div id="options" class="options"></div>
+    <div id="feedback" class="feedback"></div>
+    <button id="nextBtn" class="hide" onclick="nextQuestion()">Next</button>
+  </div>
+</div>
+
+<div id="result" class="screen hide">
+  <div class="card">
+    <h2>Quiz Complete!</h2>
+    <p id="finalScore"></p>
+    <h1 id="remark"></h1>
+    <button onclick="restartGame()">Play Again</button>
+  </div>
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/clapping.mp3"></audio>
+
+<script>
+const questions=[
+{q:"The student in the picture is using a ruler on a notebook. What is the ruler helping the student find?",image:"assets/ch8_q1.png",o:["Length of the notebook","Weight of the notebook","Temperature of the notebook","Capacity of the notebook"],a:0,e:"A ruler is used to measure the length of small objects."},
+{q:"Anna and Aman both say their classroom table is “long.” Their teacher asks them to measure it. Why?",o:["Measurement gives an exact answer","Measurement changes the table size","Measurement makes objects longer","Measurement is only for mathematics"],a:0,e:"Measurement helps us compare and describe things accurately."},
+{q:"A gardener wants to measure the length of a school garden. Which tool would be most suitable?",o:["Measuring tape","Small ruler","Thermometer","Clock"],a:0,e:"Measuring tapes are useful for measuring longer distances."},
+{q:"Two students measure the same desk using handspans and get different answers. Why?",o:["Handspans differ from person to person","The desk changes size","One student measured incorrectly","Handspans are always equal"],a:0,e:"Handspan is a non-standard unit, so results may vary."},
+{q:"A doctor wants to check a patient's temperature, while a shopkeeper wants to weigh rice. Which pair of tools should they use?",o:["Thermometer and balance","Ruler and clock","Measuring tape and ruler","Clock and thermometer"],a:0,e:"Different quantities require different measuring tools."},
+{q:"A shopkeeper needs to weigh 10 kg of rice. Which instrument should be used?",o:["Balance","Clock","Measuring tape","Thermometer"],a:0,e:"A balance is used to measure weight."},
+{q:"Why is measurement important in daily life?",o:["It helps us compare, buy, build and use things correctly","It is used only in schools","It is useful only for shopkeepers","It is needed only in science"],a:0,e:"Measurement is part of many everyday activities."},
+{q:"A student says, “Litre is used to measure the length of a rope.” Why is this incorrect?",o:["Litre measures capacity, not length","Litre measures weight","Litre measures time","Litre measures temperature"],a:0,e:"Capacity and length are measured using different units."},
+{q:"A mother buys 1 litre of milk. What is being measured?",o:["Capacity","Length","Weight only","Temperature"],a:0,e:"Litres are used to measure liquids."},
+{q:"A child is making labels for a science corner. Which item should NOT be placed under “Units of Measurement”?",o:["Metre","Kilogram","Litre","Mango"],a:3,e:"Metre, kilogram and litre are units of measurement, while a mango is an object."},
+{q:"A watermelon and a pencil need to be weighed. Which statement is correct?",o:["A watermelon is usually measured in kilograms and a pencil in grams","Both are measured in litres","Both are measured in hours","Both are measured in metres"],a:0,e:"Heavier objects are usually measured in kilograms, while lighter objects are measured in grams."},
+{q:"Why would a bucket of water be measured in litres rather than grams?",o:["Litres measure how much liquid a container can hold","Litres measure temperature","Litres measure distance","Litres measure time"],a:0,e:"Capacity is commonly measured in litres."},
+{q:"A child wants to know if water is very hot. Which measuring tool would provide the best information?",o:["Thermometer","Ruler","Balance","Clock"],a:0,e:"A thermometer measures temperature."},
+{q:"The clock in the picture shows a specific measurement. What is being measured?",image:"assets/ch8_q14.png",o:["Time","Weight","Length","Capacity"],a:0,e:"A clock is used to measure and display time."},
+{q:"A child feels unwell and may have a fever. Which tool should be used first?",o:["Thermometer","Balance","Measuring tape","Clock"],a:0,e:"A thermometer measures body temperature."},
+{q:"Why do scientists, doctors and shopkeepers use standard units?",o:["Standard units give consistent and accurate measurements","Standard units are easier to draw","Standard units change every day","Standard units are used only in cities"],a:0,e:"Standard units help everyone understand measurements in the same way."},
+{q:"A fruit seller uses a faulty weighing scale to charge customers more money. Why is this wrong?",o:["Measurements should be fair and accurate for everyone","Customers should not buy fruits","Scales are not important","Weight does not matter"],a:0,e:"Honest measurement helps build trust and fairness."},
+{q:"A football match begins at 4:00 p.m. and ends at 5:00 p.m. How long did it last?",o:["1 hour","30 minutes","2 hours","15 minutes"],a:0,e:"The difference between 4:00 p.m. and 5:00 p.m. is one hour."},
+{q:"A tailor needs to measure cloth for making a uniform. Which unit would be most appropriate?",o:["Metre","Kilogram","Litre","Degree Celsius"],a:0,e:"Cloth length is usually measured in metres."},
+{q:"A ruler, balance, measuring can and thermometer all have one thing in common. What is it?",o:["They help us measure different things accurately","They measure only length","They are used only in science labs","They measure time"],a:0,e:"Different tools are designed to measure different quantities."}
+];
+
+let index=0,score=0,tries=0,timer,timeLeft=60,locked=false;
+
+setTimeout(()=>{splash.classList.add("hide");intro.classList.remove("hide")},5000);
+
+function startGame(){
+index=0;score=0;tries=0;
+intro.classList.add("hide");
+quiz.classList.remove("hide");
+showQuestion();
+}
+
+function showQuestion(){
+locked=false;
+tries=0;
+clearInterval(timer);
+timeLeft=60;
+time.textContent=timeLeft;
+document.getElementById("score").textContent=score;
+progress.textContent=`Question ${index+1}/${questions.length}`;
+feedback.innerHTML="";
+nextBtn.classList.add("hide");
+
+const q=questions[index];
+question.textContent=q.q;
+
+if(q.image){
+qImg.src=q.image;
+imgBox.classList.remove("hide");
+}else{
+qImg.src="";
+imgBox.classList.add("hide");
+}
+
+options.innerHTML="";
+q.o.forEach((opt,i)=>{
+const btn=document.createElement("button");
+btn.className="option";
+btn.textContent=opt;
+btn.onclick=()=>checkAnswer(btn,i);
+options.appendChild(btn);
+});
+
+timer=setInterval(()=>{
+timeLeft--;
+time.textContent=timeLeft;
+if(timeLeft<=0){
+clearInterval(timer);
+showAnswer("Time is up!");
+}
+},1000);
+}
+
+function checkAnswer(btn,chosen){
+if(locked)return;
+const q=questions[index];
+if(chosen===q.a){
+locked=true;
+clearInterval(timer);
+score++;
+btn.classList.add("correct");
+document.getElementById("score").textContent=score;
+feedback.innerHTML=`Correct!<div class="explain">${q.e}</div>`;
+playCorrect();
+starConfetti();
+nextBtn.classList.remove("hide");
+}else{
+tries++;
+btn.classList.add("wrong");
+playWrong();
+redCross();
+if(tries===1){
+feedback.textContent="Try once more.";
+btn.disabled=true;
+}else{
+showAnswer("Not quite.");
+}
+}
+}
+
+function showAnswer(msg){
+locked=true;
+clearInterval(timer);
+const q=questions[index];
+document.querySelectorAll(".option").forEach((b,i)=>{
+b.disabled=true;
+if(i===q.a)b.classList.add("correct");
+});
+feedback.innerHTML=`${msg} Correct answer: ${q.o[q.a]}<div class="explain">${q.e}</div>`;
+nextBtn.classList.remove("hide");
+}
+
+function nextQuestion(){
+index++;
+if(index<questions.length)showQuestion();
+else showResult();
+}
+
+function showResult(){
+quiz.classList.add("hide");
+result.classList.remove("hide");
+finalScore.textContent=`Score: ${score}/${questions.length}`;
+remark.textContent=score>=18?"Excellent":score>=14?"Well Done":"Good Effort";
+}
+
+function restartGame(){
+result.classList.add("hide");
+intro.classList.remove("hide");
+}
+
+function playCorrect(){
+correctSound.play().catch(()=>{});
+setTimeout(()=>clapSound.play().catch(()=>{}),350);
+}
+
+function playWrong(){
+wrongSound.play().catch(()=>{});
+}
+
+function starConfetti(){
+for(let i=0;i<18;i++){
+const s=document.createElement("div");
+s.className="confetti";
+s.textContent="⭐";
+s.style.left=Math.random()*100+"vw";
+s.style.animationDelay=Math.random()*250+"ms";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),1200);
+}
+}
+
+function redCross(){
+const x=document.createElement("div");
+x.className="cross";
+x.textContent="✖";
+document.body.appendChild(x);
+setTimeout(()=>x.remove(),600);
+}
+</script>
+</body>
+</html>
