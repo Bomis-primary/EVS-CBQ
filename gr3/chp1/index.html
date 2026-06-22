@@ -1,1 +1,277 @@
-1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 1: Living and Non-Living Things</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;font-family:Arial,sans-serif;background:#f4fbff;color:#263238;overflow-x:hidden}
+body{background:linear-gradient(135deg,#fff8d9,#e8f7ff,#f3ecff)}
+.splash,.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px;position:relative}
+.splash{background:#fff}
+.logo{max-width:220px;width:65%}
+.card{width:100%;max-width:760px;background:rgba(255,255,255,.94);border-radius:26px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.12);text-align:center;position:relative;z-index:2}
+h1{font-size:clamp(25px,5vw,40px);margin:8px 0;color:#1769aa}
+h2{font-size:clamp(22px,4vw,32px);color:#1769aa}
+p{font-size:clamp(16px,3vw,19px);line-height:1.5}
+button{border:0;border-radius:18px;padding:14px 18px;font-size:17px;font-weight:bold;cursor:pointer;background:#1e88e5;color:#fff;margin:8px;min-height:48px}
+button:hover{filter:brightness(.96)}
+.topbar{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.badge{background:#e3f2fd;border-radius:999px;padding:9px 13px;font-weight:bold;color:#0d47a1}
+.timer{background:#fff3e0;color:#e65100}
+.question{font-size:clamp(18px,3.5vw,24px);font-weight:bold;margin:14px 0;text-align:left}
+.options{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.option{width:100%;background:#ffffff;color:#263238;border:2px solid #bbdefb;text-align:left;border-radius:18px;padding:14px;font-size:clamp(16px,3vw,19px);font-weight:600}
+.option.correct{background:#d8f8d0;border-color:#43a047}
+.option.wrong{background:#ffe0e0;border-color:#e53935}
+.feedback{min-height:58px;margin-top:14px;font-size:17px;font-weight:bold}
+.explain{font-weight:normal;color:#37474f;margin-top:6px}
+.hide{display:none}
+.question-image-container{text-align:center;margin:10px auto 14px}
+.question-image-container img{display:block;width:100%;max-width:280px;max-height:180px;object-fit:contain;margin:0 auto;border-radius:18px}
+.bg span{position:fixed;font-size:24px;opacity:.22;animation:float 12s linear infinite;z-index:0}
+.bg span:nth-child(1){left:8%;animation-delay:0s}
+.bg span:nth-child(2){left:30%;animation-delay:3s}
+.bg span:nth-child(3){left:58%;animation-delay:6s}
+.bg span:nth-child(4){left:82%;animation-delay:9s}
+@keyframes float{0%{top:105%;transform:rotate(0)}100%{top:-10%;transform:rotate(180deg)}}
+.confetti{position:fixed;top:-20px;font-size:22px;animation:fall 900ms linear forwards;z-index:5}
+@keyframes fall{to{transform:translateY(105vh) rotate(220deg);opacity:0}}
+.cross{position:fixed;left:50%;top:46%;transform:translate(-50%,-50%);font-size:70px;color:#e53935;opacity:.85;z-index:6;animation:pop .55s ease forwards}
+@keyframes pop{0%{transform:translate(-50%,-50%) scale(.4)}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+@media(max-width:520px){
+.card{padding:16px;border-radius:20px}
+button{width:100%;margin:7px 0}
+.topbar{font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<div class="bg"><span>⭐</span><span>🎈</span><span>✨</span><span>🎉</span></div>
+
+<div id="splash" class="splash">
+  <img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo">
+</div>
+
+<div id="intro" class="screen hide">
+  <div class="card">
+    <h1>Living and Non-Living Things</h1>
+    <p><b>Grade 3 EVS</b></p>
+    <p>Answer each question carefully. You get one retry after a wrong answer. After the second wrong try, the correct answer will be shown.</p>
+    <button onclick="startGame()">Start Quiz</button>
+  </div>
+</div>
+
+<div id="quiz" class="screen hide">
+  <div class="card">
+    <div class="topbar">
+      <div class="badge" id="progress">Question 1/20</div>
+      <div class="badge">Score: <span id="score">0</span>/20</div>
+      <div class="badge timer">Time: <span id="time">60</span>s</div>
+    </div>
+
+    <div id="imgBox" class="question-image-container hide">
+      <img id="qImg" src="" alt="Question image">
+    </div>
+
+    <div id="question" class="question"></div>
+    <div id="options" class="options"></div>
+    <div id="feedback" class="feedback"></div>
+    <button id="nextBtn" class="hide" onclick="nextQuestion()">Next</button>
+  </div>
+</div>
+
+<div id="result" class="screen hide">
+  <div class="card">
+    <h2>Quiz Complete!</h2>
+    <p id="finalScore"></p>
+    <h1 id="remark"></h1>
+    <button onclick="restartGame()">Play Again</button>
+  </div>
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/clapping.mp3"></audio>
+
+<script>
+const questions=[
+{q:"Sia planted two saplings on the same day. After one month, one sapling became taller and had many new leaves, while the other looked the same. What can Sia conclude about the taller sapling?",o:["It is showing growth as a living thing","It is changing into a different plant","It does not need water","It is becoming non-living"],a:0,e:"Growing taller and producing new leaves are characteristics of living things."},
+{q:"What can you conclude from the picture?",image:"assets/ch1_q2.png",o:["Puppies do not need food","Puppies are non-living","Living things need water to survive","Water is only for cleaning"],a:2,e:"The puppy is drinking water, showing that living things need water for survival."},
+{q:"A balloon moves when the wind blows, and a butterfly moves from flower to flower. Why is only the butterfly considered living?",o:["It is colourful","It can move on its own","It is smaller","It flies higher"],a:1,e:"Living things can move by themselves, while non-living things move only when acted upon."},
+{q:"A pet bird was not given food for many days and became weak. What is the best reason?",o:["Living things need food for energy","Birds need toys","Birds need only water","Food changes colour"],a:0,e:"Food provides energy needed for growth and daily activities."},
+{q:"A class plant is drying because no one waters it regularly. What should the students do?",o:["Move it into a cupboard","Water it regularly","Cover it with paper","Remove its leaves"],a:1,e:"Plants are living things and need water to stay healthy."},
+{q:"Rohan found some old seeds in a box. His friend said they were non-living because they were not moving. After planting them, small plants began to grow. What does this show?",o:["Seeds can change colour","Seeds are living because they can grow into plants","Seeds need only sunlight","Seeds are toys for plants"],a:1,e:"The ability to grow into a new plant shows that seeds are living."},
+{q:"A child is going on a week-long holiday. Before leaving, the child wants to make sure that everything at home is cared for properly. Which item does the child NOT need to arrange care for?",o:["Pet fish","Rose plant","Puppy","Bicycle"],a:3,e:"The bicycle is non-living and does not need food, water, or care to stay alive."},
+{q:"A child touches a hot vessel and immediately pulls back the hand. What does this show?",o:["Living things can feel and respond","Living things change colour","Living things shine","Living things stop moving"],a:0,e:"Living things respond to changes in their surroundings."},
+{q:"Ravi says that a rose plant, a dog, and a sparrow belong in the same group. Which reason best supports his idea?",o:["They are all colourful","They are all found outdoors","They are all living things that need food and water","They are all the same size"],a:2,e:"All three show characteristics of living things."},
+{q:"A student says, “Anything that moves is living.” Why is this statement incorrect?",o:["Cars and bicycles can move but are non-living","All living things fly","Plants never move","Only animals move"],a:0,e:"Some non-living things can move when acted upon."},
+{q:"A wooden table and a young plant were placed in a room for five years. The plant became much bigger, but the table remained the same size. What does this tell us?",o:["Only living things grow by themselves","Tables do not need sunlight","Plants are lighter than tables","Wood cannot change colour"],a:0,e:"Growth is a characteristic of living things."},
+{q:"A scientist discovers a new organism in a forest. Which observation would best help prove that it is living?",o:["It is green in colour","It needs food and water to survive","It is very large","It makes a sound"],a:1,e:"All living things need food and water to survive."},
+{q:"A hen lays eggs and chicks hatch later. Which life process is shown?",o:["Breathing","Reproduction","Movement","Sleeping"],a:1,e:"Living things produce young ones of their own kind."},
+{q:"Your rabbit refuses to eat and looks weak. What should you do first?",o:["Ignore it","Give fresh food and water","Hide it","Remove its bowl"],a:1,e:"Living things need proper care, food, and water."},
+{q:"A child finds an unknown object in the garden. After several months, the object grows larger and produces young ones like itself. What can the child conclude?",o:["It is living","It is made of plastic","It is a toy","It is non-living"],a:0,e:"Growth and reproduction are strong evidence that something is living."},
+{q:"A child says that the tree and the bicycle belong to different groups. Which reason best supports the child's idea?",image:"assets/ch1_q16.png",o:["The tree is green and the bicycle is red","The tree can grow and needs water, while the bicycle cannot","The bicycle has two wheels","The tree is taller than the bicycle"],a:1,e:"The tree shows characteristics of life, while the bicycle does not."},
+{q:"Some children are pulling leaves off a healthy plant just for fun. What is the best reason they should stop?",o:["Plants are expensive","Plants are living things that need care and protection","Plants cannot run away","Plants grow very slowly"],a:1,e:"Plants are living things and should be treated with care."},
+{q:"What is most likely to happen if all living things stopped reproducing?",o:["More living things would appear","Living things would gradually disappear","Plants would grow faster","Animals would become larger"],a:1,e:"Reproduction helps continue life on Earth."},
+{q:"For a school project, Meera is making a chart called “Natural but Non-Living Things.” Which set should she place under this heading?",o:["Sun, rocks, clouds","Tree, river, mountain","Fish, cloud, rock","Bird, river, sun"],a:0,e:"The sun, rocks, and clouds occur naturally but do not grow, breathe, reproduce, or need food and water."},
+{q:"A cloud moves across the sky, and a bird flies across the sky. Why is only the bird considered living?",o:["The bird can carry itself from one place to another and performs life processes","The bird moves faster","The cloud is larger","The cloud changes shape"],a:0,e:"Living things carry out life processes such as growth, breathing, and reproduction. Movement alone does not make something living."}
+];
+
+let index=0,score=0,tries=0,timer,timeLeft=60,locked=false;
+
+const splash=document.getElementById("splash");
+const intro=document.getElementById("intro");
+const quiz=document.getElementById("quiz");
+const result=document.getElementById("result");
+
+setTimeout(()=>{splash.classList.add("hide");intro.classList.remove("hide")},5000);
+
+function startGame(){
+index=0;score=0;tries=0;
+intro.classList.add("hide");
+quiz.classList.remove("hide");
+showQuestion();
+}
+
+function showQuestion(){
+locked=false;
+tries=0;
+clearInterval(timer);
+timeLeft=60;
+document.getElementById("time").textContent=timeLeft;
+document.getElementById("score").textContent=score;
+document.getElementById("progress").textContent=`Question ${index+1}/${questions.length}`;
+document.getElementById("feedback").innerHTML="";
+document.getElementById("nextBtn").classList.add("hide");
+
+const q=questions[index];
+document.getElementById("question").textContent=q.q;
+
+const imgBox=document.getElementById("imgBox");
+const qImg=document.getElementById("qImg");
+if(q.image){
+qImg.src=q.image;
+imgBox.classList.remove("hide");
+}else{
+qImg.src="";
+imgBox.classList.add("hide");
+}
+
+const options=document.getElementById("options");
+options.innerHTML="";
+q.o.forEach((opt,i)=>{
+const btn=document.createElement("button");
+btn.className="option";
+btn.textContent=opt;
+btn.onclick=()=>checkAnswer(btn,i);
+options.appendChild(btn);
+});
+
+timer=setInterval(()=>{
+timeLeft--;
+document.getElementById("time").textContent=timeLeft;
+if(timeLeft<=0){
+clearInterval(timer);
+showAnswer("Time is up!");
+}
+},1000);
+}
+
+function checkAnswer(btn,chosen){
+if(locked)return;
+const q=questions[index];
+if(chosen===q.a){
+locked=true;
+clearInterval(timer);
+score++;
+btn.classList.add("correct");
+document.getElementById("score").textContent=score;
+document.getElementById("feedback").innerHTML=`Correct!<div class="explain">${q.e}</div>`;
+playCorrect();
+starConfetti();
+document.getElementById("nextBtn").classList.remove("hide");
+}else{
+tries++;
+btn.classList.add("wrong");
+playWrong();
+redCross();
+if(tries===1){
+document.getElementById("feedback").textContent="Try once more.";
+btn.disabled=true;
+}else{
+showAnswer("Not quite.");
+}
+}
+}
+
+function showAnswer(msg){
+locked=true;
+clearInterval(timer);
+const q=questions[index];
+const buttons=document.querySelectorAll(".option");
+buttons.forEach((b,i)=>{
+b.disabled=true;
+if(i===q.a)b.classList.add("correct");
+});
+document.getElementById("feedback").innerHTML=`${msg} Correct answer: ${q.o[q.a]}<div class="explain">${q.e}</div>`;
+document.getElementById("nextBtn").classList.remove("hide");
+}
+
+function nextQuestion(){
+index++;
+if(index<questions.length){
+showQuestion();
+}else{
+showResult();
+}
+}
+
+function showResult(){
+quiz.classList.add("hide");
+result.classList.remove("hide");
+document.getElementById("finalScore").textContent=`Score: ${score}/${questions.length}`;
+let remark="Good Effort";
+if(score>=18)remark="Excellent";
+else if(score>=14)remark="Well Done";
+document.getElementById("remark").textContent=remark;
+}
+
+function restartGame(){
+result.classList.add("hide");
+intro.classList.remove("hide");
+}
+
+function playCorrect(){
+document.getElementById("correctSound").play().catch(()=>{});
+setTimeout(()=>document.getElementById("clapSound").play().catch(()=>{}),350);
+}
+
+function playWrong(){
+document.getElementById("wrongSound").play().catch(()=>{});
+}
+
+function starConfetti(){
+for(let i=0;i<18;i++){
+const s=document.createElement("div");
+s.className="confetti";
+s.textContent="⭐";
+s.style.left=Math.random()*100+"vw";
+s.style.animationDelay=Math.random()*250+"ms";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),1200);
+}
+}
+
+function redCross(){
+const x=document.createElement("div");
+x.className="cross";
+x.textContent="✖";
+document.body.appendChild(x);
+setTimeout(()=>x.remove(),600);
+}
+</script>
+</body>
+</html>
