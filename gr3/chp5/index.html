@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 5: Food Habits of Animals</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;font-family:Arial,sans-serif;color:#263238;overflow-x:hidden}
+body{background:linear-gradient(135deg,#f1ffe8,#e8f7ff,#fff7d6)}
+.splash,.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px;position:relative}
+.splash{background:#fff}
+.logo{max-width:220px;width:65%}
+.card{width:100%;max-width:760px;background:rgba(255,255,255,.95);border-radius:26px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.12);text-align:center;position:relative;z-index:2}
+h1{font-size:clamp(25px,5vw,40px);margin:8px 0;color:#2e7d32}
+h2{font-size:clamp(22px,4vw,32px);color:#2e7d32}
+p{font-size:clamp(16px,3vw,19px);line-height:1.5}
+button{border:0;border-radius:18px;padding:14px 18px;font-size:17px;font-weight:bold;cursor:pointer;background:#43a047;color:#fff;margin:8px;min-height:48px}
+.topbar{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.badge{background:#e8f5e9;border-radius:999px;padding:9px 13px;font-weight:bold;color:#1b5e20}
+.timer{background:#fff3e0;color:#e65100}
+.question{font-size:clamp(18px,3.5vw,24px);font-weight:bold;margin:14px 0;text-align:left}
+.options{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.option{width:100%;background:#fff;color:#263238;border:2px solid #c8e6c9;text-align:left;border-radius:18px;padding:14px;font-size:clamp(16px,3vw,19px);font-weight:600}
+.option.correct{background:#d8f8d0;border-color:#43a047}
+.option.wrong{background:#ffe0e0;border-color:#e53935}
+.feedback{min-height:58px;margin-top:14px;font-size:17px;font-weight:bold}
+.explain{font-weight:normal;color:#37474f;margin-top:6px}
+.hide{display:none}
+.question-image-container{text-align:center;margin:10px auto 14px}
+.question-image-container img{display:block;width:100%;max-width:280px;max-height:180px;object-fit:contain;margin:0 auto;border-radius:18px}
+.bg span{position:fixed;font-size:24px;opacity:.22;animation:float 12s linear infinite;z-index:0}
+.bg span:nth-child(1){left:8%;animation-delay:0s}
+.bg span:nth-child(2){left:30%;animation-delay:3s}
+.bg span:nth-child(3){left:58%;animation-delay:6s}
+.bg span:nth-child(4){left:82%;animation-delay:9s}
+@keyframes float{0%{top:105%;transform:rotate(0)}100%{top:-10%;transform:rotate(180deg)}}
+.confetti{position:fixed;top:-20px;font-size:22px;animation:fall 900ms linear forwards;z-index:5}
+@keyframes fall{to{transform:translateY(105vh) rotate(220deg);opacity:0}}
+.cross{position:fixed;left:50%;top:46%;transform:translate(-50%,-50%);font-size:70px;color:#e53935;opacity:.85;z-index:6;animation:pop .55s ease forwards}
+@keyframes pop{0%{transform:translate(-50%,-50%) scale(.4)}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+@media(max-width:520px){.card{padding:16px;border-radius:20px}button{width:100%;margin:7px 0}.topbar{font-size:14px}}
+</style>
+</head>
+<body>
+
+<div class="bg"><span>⭐</span><span>🌿</span><span>✨</span><span>🐾</span></div>
+
+<div id="splash" class="splash">
+  <img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo">
+</div>
+
+<div id="intro" class="screen hide">
+  <div class="card">
+    <h1>Food Habits of Animals</h1>
+    <p><b>Grade 3 EVS</b></p>
+    <p>Answer carefully. You get one retry after a wrong answer. After the second wrong try, the correct answer and explanation will appear.</p>
+    <button onclick="startGame()">Start Quiz</button>
+  </div>
+</div>
+
+<div id="quiz" class="screen hide">
+  <div class="card">
+    <div class="topbar">
+      <div class="badge" id="progress">Question 1/20</div>
+      <div class="badge">Score: <span id="score">0</span>/20</div>
+      <div class="badge timer">Time: <span id="time">60</span>s</div>
+    </div>
+    <div id="imgBox" class="question-image-container hide">
+      <img id="qImg" src="" alt="Question image">
+    </div>
+    <div id="question" class="question"></div>
+    <div id="options" class="options"></div>
+    <div id="feedback" class="feedback"></div>
+    <button id="nextBtn" class="hide" onclick="nextQuestion()">Next</button>
+  </div>
+</div>
+
+<div id="result" class="screen hide">
+  <div class="card">
+    <h2>Quiz Complete!</h2>
+    <p id="finalScore"></p>
+    <h1 id="remark"></h1>
+    <button onclick="restartGame()">Play Again</button>
+  </div>
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/clapping.mp3"></audio>
+
+<script>
+const questions=[
+{q:"The animal in the picture is eating plant parts such as grass and leaves. What can you conclude about its food habit?",image:"assets/ch5_q1.png",o:["It is a carnivore","It is a herbivore","It is a scavenger","It eats only insects"],a:1,e:"Deer eat grass, leaves and other plant parts, so they are herbivores."},
+{q:"A cow spends most of its day eating grass and other plant parts. Which group does it belong to?",o:["Carnivores","Herbivores","Omnivores","Scavengers"],a:1,e:"Herbivores eat plant-based food."},
+{q:"Lions have long, sharp teeth. How does this help them survive?",o:["It helps them tear flesh while eating prey","It helps them climb trees","It helps them drink water","It helps them build nests"],a:0,e:"Carnivores have sharp teeth suited for tearing meat."},
+{q:"A child wants to place a rabbit in the correct food group. Which evidence would help most?",o:["Rabbits eat grass and vegetables","Rabbits can run fast","Rabbits have fur","Rabbits live in burrows"],a:0,e:"Food habits determine the animal group."},
+{q:"A child observes a crow eating grains one day and insects the next day. What does this suggest about the crow?",o:["It is an omnivore","It is a herbivore","It is a carnivore","It drinks only water"],a:0,e:"Omnivores eat both plant and animal matter."},
+{q:"A pet guinea pig is being fed only biscuits every day. What would be a better choice?",o:["Give suitable plant foods such as vegetables and greens","Give more biscuits","Give only sweets","Stop feeding it"],a:0,e:"Animals should be given food suitable to their natural diet."},
+{q:"Why do different animals have different feeding habits?",o:["Different animals are adapted to different food sources","All animals eat the same food","Food habits depend only on colour","Animals choose food randomly"],a:0,e:"Animals are adapted to obtain and eat specific kinds of food."},
+{q:"A student says, “All animals that eat plants are omnivores.” Why is this incorrect?",o:["Animals that eat only plants are herbivores","Omnivores eat only plants","Carnivores eat plants","Scavengers eat leaves"],a:0,e:"Herbivores eat only plants, while omnivores eat both plants and animals."},
+{q:"A vulture is seen feeding on the remains of a dead animal. Why is this important for nature?",o:["It helps clean the environment","It grows more plants","It makes rivers cleaner","It produces oxygen"],a:0,e:"Scavengers help remove dead animals from the environment."},
+{q:"A farmer keeps goats, cows and deer in one enclosure. Why can these animals be placed in the same food group?",o:["They mainly eat plant-based food","They all hunt other animals","They eat only insects","They are all scavengers"],a:0,e:"Goats, cows and deer are herbivores."},
+{q:"A frog catches insects using a sticky tongue. How does this adaptation help?",o:["It helps catch food quickly","It helps swim faster","It helps breathe underwater","It helps build nests"],a:0,e:"The sticky tongue helps frogs capture insects efficiently."},
+{q:"If grass disappears from a grassland, what is likely to happen first?",o:["Herbivores may struggle to find food","Eagles will stop flying","Rivers will dry up","Rocks will break"],a:0,e:"Herbivores depend directly on plants for food."},
+{q:"A child watches a butterfly sitting on a flower and drinking nectar. Which feeding method is the butterfly using?",o:["Sucking nectar through a tube-like structure","Tearing flesh with sharp teeth","Gnawing nuts with front teeth","Swallowing food whole"],a:0,e:"Butterflies use a proboscis to suck nectar from flowers."},
+{q:"What does the picture show about how living things obtain food?",image:"assets/ch5_q14.png",o:["It shows a food chain where each organism depends on another for food","It shows the life cycle of an eagle","It shows a weather pattern","It shows animal migration"],a:0,e:"A food chain shows how energy and food pass from one organism to another."},
+{q:"A forest area is losing many animals because of illegal hunting. What is the best solution?",o:["Stop poaching and protect habitats","Cut more trees","Build roads through forests only","Ignore the problem"],a:0,e:"Protecting habitats and preventing poaching helps animals survive."},
+{q:"Why would many animals be affected if plants disappeared from Earth?",o:["Most food chains begin with plants","Animals need plants for shelter only","Plants produce noise","Plants stop rainfall"],a:0,e:"Plants are producers and form the base of most food chains."},
+{q:"Why should endangered animals be protected?",o:["Every animal plays a role in maintaining nature's balance","Only large animals are important","Animals are useful only in zoos","Forests do not need animals"],a:0,e:"Biodiversity helps keep ecosystems healthy and balanced."},
+{q:"A squirrel is seen using its sharp front teeth to crack a nut. Which feeding habit does this show?",o:["Gnawing","Lapping","Sucking","Swallowing whole"],a:0,e:"Gnawing animals use strong front teeth to cut hard food."},
+{q:"A snake swallows a rat without chewing it. What is the best explanation?",o:["Snakes do not chew food like humans","Snakes do not eat animals","Snakes have no mouth","Snakes eat only plants"],a:0,e:"Snakes usually swallow prey whole."},
+{q:"Why is it important to understand the food habits of animals?",o:["It helps us understand how animals survive and depend on one another","It helps animals change colour","It helps plants move faster","It helps rivers flow"],a:0,e:"Food habits show how living things are connected in nature."}
+];
+
+let index=0,score=0,tries=0,timer,timeLeft=60,locked=false;
+
+setTimeout(()=>{splash.classList.add("hide");intro.classList.remove("hide")},5000);
+
+function startGame(){
+index=0;score=0;tries=0;
+intro.classList.add("hide");
+quiz.classList.remove("hide");
+showQuestion();
+}
+
+function showQuestion(){
+locked=false;
+tries=0;
+clearInterval(timer);
+timeLeft=60;
+time.textContent=timeLeft;
+document.getElementById("score").textContent=score;
+progress.textContent=`Question ${index+1}/${questions.length}`;
+feedback.innerHTML="";
+nextBtn.classList.add("hide");
+
+const q=questions[index];
+question.textContent=q.q;
+
+if(q.image){
+qImg.src=q.image;
+imgBox.classList.remove("hide");
+}else{
+qImg.src="";
+imgBox.classList.add("hide");
+}
+
+options.innerHTML="";
+q.o.forEach((opt,i)=>{
+const btn=document.createElement("button");
+btn.className="option";
+btn.textContent=opt;
+btn.onclick=()=>checkAnswer(btn,i);
+options.appendChild(btn);
+});
+
+timer=setInterval(()=>{
+timeLeft--;
+time.textContent=timeLeft;
+if(timeLeft<=0){
+clearInterval(timer);
+showAnswer("Time is up!");
+}
+},1000);
+}
+
+function checkAnswer(btn,chosen){
+if(locked)return;
+const q=questions[index];
+if(chosen===q.a){
+locked=true;
+clearInterval(timer);
+score++;
+btn.classList.add("correct");
+document.getElementById("score").textContent=score;
+feedback.innerHTML=`Correct!<div class="explain">${q.e}</div>`;
+playCorrect();
+starConfetti();
+nextBtn.classList.remove("hide");
+}else{
+tries++;
+btn.classList.add("wrong");
+playWrong();
+redCross();
+if(tries===1){
+feedback.textContent="Try once more.";
+btn.disabled=true;
+}else{
+showAnswer("Not quite.");
+}
+}
+}
+
+function showAnswer(msg){
+locked=true;
+clearInterval(timer);
+const q=questions[index];
+document.querySelectorAll(".option").forEach((b,i)=>{
+b.disabled=true;
+if(i===q.a)b.classList.add("correct");
+});
+feedback.innerHTML=`${msg} Correct answer: ${q.o[q.a]}<div class="explain">${q.e}</div>`;
+nextBtn.classList.remove("hide");
+}
+
+function nextQuestion(){
+index++;
+if(index<questions.length)showQuestion();
+else showResult();
+}
+
+function showResult(){
+quiz.classList.add("hide");
+result.classList.remove("hide");
+finalScore.textContent=`Score: ${score}/${questions.length}`;
+remark.textContent=score>=18?"Excellent":score>=14?"Well Done":"Good Effort";
+}
+
+function restartGame(){
+result.classList.add("hide");
+intro.classList.remove("hide");
+}
+
+function playCorrect(){
+correctSound.play().catch(()=>{});
+setTimeout(()=>clapSound.play().catch(()=>{}),350);
+}
+
+function playWrong(){
+wrongSound.play().catch(()=>{});
+}
+
+function starConfetti(){
+for(let i=0;i<18;i++){
+const s=document.createElement("div");
+s.className="confetti";
+s.textContent="⭐";
+s.style.left=Math.random()*100+"vw";
+s.style.animationDelay=Math.random()*250+"ms";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),1200);
+}
+}
+
+function redCross(){
+const x=document.createElement("div");
+x.className="cross";
+x.textContent="✖";
+document.body.appendChild(x);
+setTimeout(()=>x.remove(),600);
+}
+</script>
+</body>
+</html>
