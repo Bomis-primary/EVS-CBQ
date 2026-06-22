@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 4: The Food That We Eat</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;font-family:Arial,sans-serif;color:#263238;overflow-x:hidden}
+body{background:linear-gradient(135deg,#fff7d6,#e8f7ff,#f1ffe8)}
+.splash,.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px;position:relative}
+.splash{background:#fff}
+.logo{max-width:220px;width:65%}
+.card{width:100%;max-width:760px;background:rgba(255,255,255,.95);border-radius:26px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.12);text-align:center;position:relative;z-index:2}
+h1{font-size:clamp(25px,5vw,40px);margin:8px 0;color:#ef6c00}
+h2{font-size:clamp(22px,4vw,32px);color:#ef6c00}
+p{font-size:clamp(16px,3vw,19px);line-height:1.5}
+button{border:0;border-radius:18px;padding:14px 18px;font-size:17px;font-weight:bold;cursor:pointer;background:#fb8c00;color:#fff;margin:8px;min-height:48px}
+.topbar{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.badge{background:#fff3e0;border-radius:999px;padding:9px 13px;font-weight:bold;color:#e65100}
+.timer{background:#e3f2fd;color:#0d47a1}
+.question{font-size:clamp(18px,3.5vw,24px);font-weight:bold;margin:14px 0;text-align:left}
+.options{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.option{width:100%;background:#fff;color:#263238;border:2px solid #ffe0b2;text-align:left;border-radius:18px;padding:14px;font-size:clamp(16px,3vw,19px);font-weight:600}
+.option.correct{background:#d8f8d0;border-color:#43a047}
+.option.wrong{background:#ffe0e0;border-color:#e53935}
+.feedback{min-height:58px;margin-top:14px;font-size:17px;font-weight:bold}
+.explain{font-weight:normal;color:#37474f;margin-top:6px}
+.hide{display:none}
+.question-image-container{text-align:center;margin:10px auto 14px}
+.question-image-container img{display:block;width:100%;max-width:280px;max-height:180px;object-fit:contain;margin:0 auto;border-radius:18px}
+.bg span{position:fixed;font-size:24px;opacity:.22;animation:float 12s linear infinite;z-index:0}
+.bg span:nth-child(1){left:8%;animation-delay:0s}
+.bg span:nth-child(2){left:30%;animation-delay:3s}
+.bg span:nth-child(3){left:58%;animation-delay:6s}
+.bg span:nth-child(4){left:82%;animation-delay:9s}
+@keyframes float{0%{top:105%;transform:rotate(0)}100%{top:-10%;transform:rotate(180deg)}}
+.confetti{position:fixed;top:-20px;font-size:22px;animation:fall 900ms linear forwards;z-index:5}
+@keyframes fall{to{transform:translateY(105vh) rotate(220deg);opacity:0}}
+.cross{position:fixed;left:50%;top:46%;transform:translate(-50%,-50%);font-size:70px;color:#e53935;opacity:.85;z-index:6;animation:pop .55s ease forwards}
+@keyframes pop{0%{transform:translate(-50%,-50%) scale(.4)}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+@media(max-width:520px){.card{padding:16px;border-radius:20px}button{width:100%;margin:7px 0}.topbar{font-size:14px}}
+</style>
+</head>
+<body>
+
+<div class="bg"><span>⭐</span><span>🍎</span><span>✨</span><span>🥕</span></div>
+
+<div id="splash" class="splash">
+  <img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo">
+</div>
+
+<div id="intro" class="screen hide">
+  <div class="card">
+    <h1>The Food That We Eat</h1>
+    <p><b>Grade 3 EVS</b></p>
+    <p>Answer carefully. You get one retry after a wrong answer. After the second wrong try, the correct answer and explanation will appear.</p>
+    <button onclick="startGame()">Start Quiz</button>
+  </div>
+</div>
+
+<div id="quiz" class="screen hide">
+  <div class="card">
+    <div class="topbar">
+      <div class="badge" id="progress">Question 1/20</div>
+      <div class="badge">Score: <span id="score">0</span>/20</div>
+      <div class="badge timer">Time: <span id="time">60</span>s</div>
+    </div>
+    <div id="imgBox" class="question-image-container hide">
+      <img id="qImg" src="" alt="Question image">
+    </div>
+    <div id="question" class="question"></div>
+    <div id="options" class="options"></div>
+    <div id="feedback" class="feedback"></div>
+    <button id="nextBtn" class="hide" onclick="nextQuestion()">Next</button>
+  </div>
+</div>
+
+<div id="result" class="screen hide">
+  <div class="card">
+    <h2>Quiz Complete!</h2>
+    <p id="finalScore"></p>
+    <h1 id="remark"></h1>
+    <button onclick="restartGame()">Play Again</button>
+  </div>
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/clapping.mp3"></audio>
+
+<script>
+const questions=[
+{q:"A child observes the meal shown in the picture. What is the best conclusion about this meal?",image:"assets/ch4_q1.png",o:["Eating only one type of food is enough","Different foods together help us stay healthy","Vegetables are not needed in meals","Only curd provides nutrition"],a:1,e:"A balanced meal contains different food groups that provide various nutrients needed by the body."},
+{q:"Ravi skipped breakfast before coming to school and felt tired during games period. What is the best reason?",o:["Food gives energy for daily activities","Food helps us sleep during class","Breakfast makes children weak","Games require only water"],a:0,e:"Food provides energy needed for learning, playing and working."},
+{q:"A child wants a snack after school. Which choice is healthier?",o:["Fruit salad","Packet of chips","Sugary soft drink","Candy"],a:0,e:"Fruits provide vitamins and minerals that help keep us healthy."},
+{q:"A child regularly eats fruits and vegetables and falls sick less often. Why?",o:["Protective foods help the body fight diseases","Fruits remove the need for water","Vegetables replace exercise","Fruits make children taller overnight"],a:0,e:"Fruits and vegetables contain nutrients that help protect us from illnesses."},
+{q:"Which group contains foods obtained mainly from plants?",o:["Rice, mango, spinach","Milk, egg, fish","Butter, cheese, curd","Egg, chicken, milk"],a:0,e:"These foods come directly from plants."},
+{q:"Your friend eats only chocolates during lunch every day. What would be the best advice?",o:["Include fruits, vegetables and other healthy foods","Eat more chocolates","Skip lunch completely","Drink only soft drinks"],a:0,e:"The body needs different nutrients from different foods."},
+{q:"People living in different parts of India often eat different foods. What is the main reason?",o:["Food choices depend on climate and locally available resources","Everyone dislikes the same foods","Food grows equally everywhere","Only cities decide food habits"],a:0,e:"Climate and availability influence food habits."},
+{q:"A student says, “The tastiest food is always the healthiest food.” Why is this statement incorrect?",o:["Some tasty foods may not be healthy if eaten too often","Healthy food has no taste","Only sweets are healthy","Taste and health are always the same"],a:0,e:"Healthy eating depends on nutrition, not just taste."},
+{q:"During a visit to Kerala, a child notices that many meals include fish. What is the best explanation?",o:["Fish is easily available in coastal regions","Rice cannot grow there","Fish grows on farms only","People there eat only fish"],a:0,e:"Coastal areas have easy access to fish."},
+{q:"A child is helping to arrange food items into groups. Rice, wheat and maize are placed together. Why?",o:["They are cereals that provide energy","They are all animal products","They are all protective foods","They are all cooked by steaming"],a:0,e:"Rice, wheat and maize are cereals that mainly provide energy."},
+{q:"A family wants to prepare a healthy evening snack with very little oil. Which method is most suitable?",o:["Steaming","Deep frying","Burning","Roasting in excess oil"],a:0,e:"Steaming usually requires little or no oil."},
+{q:"Why is cooked food generally safer to eat than raw food?",o:["Cooking can destroy many harmful germs","Cooking removes all nutrients","Cooking creates germs","Cooking makes food heavier"],a:0,e:"Heat helps kill many germs present in food."},
+{q:"A child wants to prepare food using steam instead of oil. Which foods would be most suitable?",o:["Idli and momos","Chips and pakoras","Toast and bread","Corn and papad"],a:0,e:"Idli and momos are commonly prepared by steaming."},
+{q:"Which child is following a healthier food habit?",image:"assets/ch4_q14.png",o:["The child who washes hands before eating","The child who starts eating immediately","Both are equally safe","Neither child"],a:0,e:"Washing hands before eating helps prevent germs from entering the body."},
+{q:"You notice uncovered food being sold near a dusty roadside. What is the safest choice?",o:["Avoid eating it and choose clean, covered food","Eat it immediately","Share it with friends","Ignore the dust"],a:0,e:"Uncovered food may contain germs and dust."},
+{q:"Why should we avoid wasting food?",o:["Food requires resources, effort and time to produce","Food disappears automatically","Food has no value after cooking","Farmers can easily replace it every day"],a:0,e:"Producing food requires land, water, labour and time."},
+{q:"A student throws away untouched food every day. Which value should be encouraged?",o:["Respect food and take only what is needed","Waste food freely","Ignore hungry people","Leave food unfinished"],a:0,e:"Food should be valued and not wasted."},
+{q:"Which lunch is likely to keep a child active for a longer time?",o:["Roti, dal, vegetables and fruit","Only candy","Only chips","Only soft drink"],a:0,e:"A balanced meal provides different nutrients needed by the body."},
+{q:"A child wants a food item that comes from animals. Which option should be chosen?",o:["Milk","Wheat","Rice","Spinach"],a:0,e:"Milk is obtained from animals such as cows and buffaloes."},
+{q:"Why do we need different kinds of food instead of eating only one food item every day?",o:["Different foods provide different nutrients needed for growth, energy and protection","One food can provide everything","Different foods are needed only for taste","Food colour decides health"],a:0,e:"The body requires a variety of nutrients to stay healthy."}
+];
+
+let index=0,score=0,tries=0,timer,timeLeft=60,locked=false;
+
+setTimeout(()=>{splash.classList.add("hide");intro.classList.remove("hide")},5000);
+
+function startGame(){
+index=0;score=0;tries=0;
+intro.classList.add("hide");
+quiz.classList.remove("hide");
+showQuestion();
+}
+
+function showQuestion(){
+locked=false;
+tries=0;
+clearInterval(timer);
+timeLeft=60;
+time.textContent=timeLeft;
+document.getElementById("score").textContent=score;
+progress.textContent=`Question ${index+1}/${questions.length}`;
+feedback.innerHTML="";
+nextBtn.classList.add("hide");
+
+const q=questions[index];
+question.textContent=q.q;
+
+if(q.image){
+qImg.src=q.image;
+imgBox.classList.remove("hide");
+}else{
+qImg.src="";
+imgBox.classList.add("hide");
+}
+
+options.innerHTML="";
+q.o.forEach((opt,i)=>{
+const btn=document.createElement("button");
+btn.className="option";
+btn.textContent=opt;
+btn.onclick=()=>checkAnswer(btn,i);
+options.appendChild(btn);
+});
+
+timer=setInterval(()=>{
+timeLeft--;
+time.textContent=timeLeft;
+if(timeLeft<=0){
+clearInterval(timer);
+showAnswer("Time is up!");
+}
+},1000);
+}
+
+function checkAnswer(btn,chosen){
+if(locked)return;
+const q=questions[index];
+if(chosen===q.a){
+locked=true;
+clearInterval(timer);
+score++;
+btn.classList.add("correct");
+document.getElementById("score").textContent=score;
+feedback.innerHTML=`Correct!<div class="explain">${q.e}</div>`;
+playCorrect();
+starConfetti();
+nextBtn.classList.remove("hide");
+}else{
+tries++;
+btn.classList.add("wrong");
+playWrong();
+redCross();
+if(tries===1){
+feedback.textContent="Try once more.";
+btn.disabled=true;
+}else{
+showAnswer("Not quite.");
+}
+}
+}
+
+function showAnswer(msg){
+locked=true;
+clearInterval(timer);
+const q=questions[index];
+document.querySelectorAll(".option").forEach((b,i)=>{
+b.disabled=true;
+if(i===q.a)b.classList.add("correct");
+});
+feedback.innerHTML=`${msg} Correct answer: ${q.o[q.a]}<div class="explain">${q.e}</div>`;
+nextBtn.classList.remove("hide");
+}
+
+function nextQuestion(){
+index++;
+if(index<questions.length)showQuestion();
+else showResult();
+}
+
+function showResult(){
+quiz.classList.add("hide");
+result.classList.remove("hide");
+finalScore.textContent=`Score: ${score}/${questions.length}`;
+remark.textContent=score>=18?"Excellent":score>=14?"Well Done":"Good Effort";
+}
+
+function restartGame(){
+result.classList.add("hide");
+intro.classList.remove("hide");
+}
+
+function playCorrect(){
+correctSound.play().catch(()=>{});
+setTimeout(()=>clapSound.play().catch(()=>{}),350);
+}
+
+function playWrong(){
+wrongSound.play().catch(()=>{});
+}
+
+function starConfetti(){
+for(let i=0;i<18;i++){
+const s=document.createElement("div");
+s.className="confetti";
+s.textContent="⭐";
+s.style.left=Math.random()*100+"vw";
+s.style.animationDelay=Math.random()*250+"ms";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),1200);
+}
+}
+
+function redCross(){
+const x=document.createElement("div");
+x.className="cross";
+x.textContent="✖";
+document.body.appendChild(x);
+setTimeout(()=>x.remove(),600);
+}
+</script>
+</body>
+</html>
