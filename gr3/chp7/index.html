@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 7: Air, Water and Soil</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;font-family:Arial,sans-serif;color:#263238;overflow-x:hidden}
+body{background:linear-gradient(135deg,#e8f7ff,#fff7d6,#f1ffe8)}
+.splash,.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px;position:relative}
+.splash{background:#fff}
+.logo{max-width:220px;width:65%}
+.card{width:100%;max-width:760px;background:rgba(255,255,255,.95);border-radius:26px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.12);text-align:center;position:relative;z-index:2}
+h1{font-size:clamp(25px,5vw,40px);margin:8px 0;color:#0277bd}
+h2{font-size:clamp(22px,4vw,32px);color:#0277bd}
+p{font-size:clamp(16px,3vw,19px);line-height:1.5}
+button{border:0;border-radius:18px;padding:14px 18px;font-size:17px;font-weight:bold;cursor:pointer;background:#0288d1;color:#fff;margin:8px;min-height:48px}
+.topbar{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.badge{background:#e1f5fe;border-radius:999px;padding:9px 13px;font-weight:bold;color:#01579b}
+.timer{background:#fff3e0;color:#e65100}
+.question{font-size:clamp(18px,3.5vw,24px);font-weight:bold;margin:14px 0;text-align:left}
+.options{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.option{width:100%;background:#fff;color:#263238;border:2px solid #b3e5fc;text-align:left;border-radius:18px;padding:14px;font-size:clamp(16px,3vw,19px);font-weight:600}
+.option.correct{background:#d8f8d0;border-color:#43a047}
+.option.wrong{background:#ffe0e0;border-color:#e53935}
+.feedback{min-height:58px;margin-top:14px;font-size:17px;font-weight:bold}
+.explain{font-weight:normal;color:#37474f;margin-top:6px}
+.hide{display:none}
+.question-image-container{text-align:center;margin:10px auto 14px}
+.question-image-container img{display:block;width:100%;max-width:280px;max-height:180px;object-fit:contain;margin:0 auto;border-radius:18px}
+.bg span{position:fixed;font-size:24px;opacity:.22;animation:float 12s linear infinite;z-index:0}
+.bg span:nth-child(1){left:8%;animation-delay:0s}
+.bg span:nth-child(2){left:30%;animation-delay:3s}
+.bg span:nth-child(3){left:58%;animation-delay:6s}
+.bg span:nth-child(4){left:82%;animation-delay:9s}
+@keyframes float{0%{top:105%;transform:rotate(0)}100%{top:-10%;transform:rotate(180deg)}}
+.confetti{position:fixed;top:-20px;font-size:22px;animation:fall 900ms linear forwards;z-index:5}
+@keyframes fall{to{transform:translateY(105vh) rotate(220deg);opacity:0}}
+.cross{position:fixed;left:50%;top:46%;transform:translate(-50%,-50%);font-size:70px;color:#e53935;opacity:.85;z-index:6;animation:pop .55s ease forwards}
+@keyframes pop{0%{transform:translate(-50%,-50%) scale(.4)}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+@media(max-width:520px){.card{padding:16px;border-radius:20px}button{width:100%;margin:7px 0}.topbar{font-size:14px}}
+</style>
+</head>
+<body>
+
+<div class="bg"><span>⭐</span><span>💧</span><span>✨</span><span>🌱</span></div>
+
+<div id="splash" class="splash">
+  <img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo">
+</div>
+
+<div id="intro" class="screen hide">
+  <div class="card">
+    <h1>Air, Water and Soil</h1>
+    <p><b>Grade 3 EVS</b></p>
+    <p>Answer carefully. You get one retry after a wrong answer. After the second wrong try, the correct answer and explanation will appear.</p>
+    <button onclick="startGame()">Start Quiz</button>
+  </div>
+</div>
+
+<div id="quiz" class="screen hide">
+  <div class="card">
+    <div class="topbar">
+      <div class="badge" id="progress">Question 1/20</div>
+      <div class="badge">Score: <span id="score">0</span>/20</div>
+      <div class="badge timer">Time: <span id="time">60</span>s</div>
+    </div>
+    <div id="imgBox" class="question-image-container hide">
+      <img id="qImg" src="" alt="Question image">
+    </div>
+    <div id="question" class="question"></div>
+    <div id="options" class="options"></div>
+    <div id="feedback" class="feedback"></div>
+    <button id="nextBtn" class="hide" onclick="nextQuestion()">Next</button>
+  </div>
+</div>
+
+<div id="result" class="screen hide">
+  <div class="card">
+    <h2>Quiz Complete!</h2>
+    <p id="finalScore"></p>
+    <h1 id="remark"></h1>
+    <button onclick="restartGame()">Play Again</button>
+  </div>
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/clapping.mp3"></audio>
+
+<script>
+const questions=[
+{q:"The kites in the picture are staying up in the sky. What is helping them move and fly?",image:"assets/ch7_q1.png",o:["Soil","Air","Sand","Clouds"],a:1,e:"Moving air pushes against the kite and helps it fly."},
+{q:"Mala covers her nose and mouth tightly for some time and feels uncomfortable. What does this show?",o:["Living things need air for breathing","Air is needed only by plants","Air is used only for flying kites","Air is needed only during sleep"],a:0,e:"Humans and animals need air continuously to survive."},
+{q:"Two streets are shown below: Street A has many trees. Street B has very little greenery and heavy traffic. Which street is likely to have cleaner air?",o:["Street A","Street B","Both are the same","Cannot be determined"],a:0,e:"Trees help absorb harmful gases and improve air quality."},
+{q:"Why is burning garbage in open areas harmful?",o:["It releases smoke and harmful gases into the air","It increases rainfall","It makes soil richer immediately","It produces oxygen"],a:0,e:"Burning waste pollutes the air and affects health."},
+{q:"A child wants to fly a kite on a calm day with no wind. What is most likely to happen?",o:["The kite may not fly easily","The kite will fly higher","The kite will become heavier","The kite will turn into paper"],a:0,e:"Moving air helps lift and move a kite."},
+{q:"Your school is only a short distance from your house. Which choice would help reduce air pollution?",o:["Walking or cycling to school","Using a car every day","Keeping vehicles running while waiting","Burning dry leaves"],a:0,e:"Walking and cycling reduce vehicle emissions."},
+{q:"Why is air considered essential for life?",o:["Most living things need it to survive","It is used only by animals","It helps only plants grow","It is needed only during the day"],a:0,e:"Air supports life processes in plants, animals and humans."},
+{q:"A student says, “Air is not present around us because we cannot see it.” Why is this incorrect?",o:["Air can be felt even though it cannot be seen","Air exists only in bottles","Air has a colour","Air is visible at night"],a:0,e:"Many things like air are invisible but can still be present."},
+{q:"A child places ice cubes on a plate. After some time, water collects around them. What has happened?",o:["Ice melted into water","Water changed into ice","Water disappeared","Ice became soil"],a:0,e:"Ice is the solid form of water and melts when warmed."},
+{q:"A child observes steam rising from a kettle and water inside a glass. What do these observations show?",o:["Water can exist in different forms","Steam is not water","Water exists only as a liquid","Steam changes into soil"],a:0,e:"Water can exist as solid, liquid and gas."},
+{q:"A leaking tap in the school washroom is wasting water. What should students do?",o:["Close the tap and inform an adult","Ignore it","Let the water flow","Play with the water"],a:0,e:"Saving water is everyone's responsibility."},
+{q:"Water droplets form on the lid of a boiling pot. Why?",o:["Water vapour cools and changes back into liquid water","The lid produces water","The pot becomes cold","Water turns into soil"],a:0,e:"This process is called condensation."},
+{q:"Which action would help a family save water at home?",o:["Collecting rainwater for later use","Leaving taps open","Washing vehicles with running water","Throwing clean water away"],a:0,e:"Rainwater harvesting helps save water."},
+{q:"The picture shows rocks breaking into smaller and smaller pieces over time. What will eventually form from these rock particles?",image:"assets/ch7_q14.png",o:["Soil","Clouds","Rivers","Air"],a:0,e:"Soil forms slowly as rocks break down over a long period."},
+{q:"A farmer wants to grow healthy crops. Which soil would generally be the best choice?",o:["Loamy soil","Rocky soil","Plastic-covered soil","Bare rock"],a:0,e:"Loamy soil contains humus and holds water and air well."},
+{q:"Why does planting trees help protect soil?",o:["Tree roots hold the soil firmly in place","Trees remove all water from soil","Trees change soil into rock","Trees stop sunlight completely"],a:0,e:"Roots help prevent soil from being washed or blown away."},
+{q:"Why should we avoid throwing plastic waste on the ground?",o:["It can pollute soil and harm living things","It makes soil stronger","It helps crops grow faster","It increases rainfall"],a:0,e:"Plastic waste damages the environment and affects soil quality."},
+{q:"Why are earthworms commonly found in soil?",o:["Soil provides shelter and food for them","Soil helps them fly","Soil changes them into insects","Soil produces feathers"],a:0,e:"Soil is a habitat for many living organisms."},
+{q:"Some families collect rainwater in tanks during the rainy season. What is the main purpose?",o:["To store water for future use","To increase rainfall","To make houses heavier","To stop evaporation"],a:0,e:"Stored rainwater can be used when water is scarce."},
+{q:"Air, water and soil are often called natural resources. Why are they important?",o:["They support life and help living things survive","They are used only by farmers","They are important only in villages","They are useful only for plants"],a:0,e:"Air, water and soil are essential for all living things and ecosystems."}
+];
+
+let index=0,score=0,tries=0,timer,timeLeft=60,locked=false;
+
+setTimeout(()=>{splash.classList.add("hide");intro.classList.remove("hide")},5000);
+
+function startGame(){
+index=0;score=0;tries=0;
+intro.classList.add("hide");
+quiz.classList.remove("hide");
+showQuestion();
+}
+
+function showQuestion(){
+locked=false;
+tries=0;
+clearInterval(timer);
+timeLeft=60;
+time.textContent=timeLeft;
+document.getElementById("score").textContent=score;
+progress.textContent=`Question ${index+1}/${questions.length}`;
+feedback.innerHTML="";
+nextBtn.classList.add("hide");
+
+const q=questions[index];
+question.textContent=q.q;
+
+if(q.image){
+qImg.src=q.image;
+imgBox.classList.remove("hide");
+}else{
+qImg.src="";
+imgBox.classList.add("hide");
+}
+
+options.innerHTML="";
+q.o.forEach((opt,i)=>{
+const btn=document.createElement("button");
+btn.className="option";
+btn.textContent=opt;
+btn.onclick=()=>checkAnswer(btn,i);
+options.appendChild(btn);
+});
+
+timer=setInterval(()=>{
+timeLeft--;
+time.textContent=timeLeft;
+if(timeLeft<=0){
+clearInterval(timer);
+showAnswer("Time is up!");
+}
+},1000);
+}
+
+function checkAnswer(btn,chosen){
+if(locked)return;
+const q=questions[index];
+if(chosen===q.a){
+locked=true;
+clearInterval(timer);
+score++;
+btn.classList.add("correct");
+document.getElementById("score").textContent=score;
+feedback.innerHTML=`Correct!<div class="explain">${q.e}</div>`;
+playCorrect();
+starConfetti();
+nextBtn.classList.remove("hide");
+}else{
+tries++;
+btn.classList.add("wrong");
+playWrong();
+redCross();
+if(tries===1){
+feedback.textContent="Try once more.";
+btn.disabled=true;
+}else{
+showAnswer("Not quite.");
+}
+}
+}
+
+function showAnswer(msg){
+locked=true;
+clearInterval(timer);
+const q=questions[index];
+document.querySelectorAll(".option").forEach((b,i)=>{
+b.disabled=true;
+if(i===q.a)b.classList.add("correct");
+});
+feedback.innerHTML=`${msg} Correct answer: ${q.o[q.a]}<div class="explain">${q.e}</div>`;
+nextBtn.classList.remove("hide");
+}
+
+function nextQuestion(){
+index++;
+if(index<questions.length)showQuestion();
+else showResult();
+}
+
+function showResult(){
+quiz.classList.add("hide");
+result.classList.remove("hide");
+finalScore.textContent=`Score: ${score}/${questions.length}`;
+remark.textContent=score>=18?"Excellent":score>=14?"Well Done":"Good Effort";
+}
+
+function restartGame(){
+result.classList.add("hide");
+intro.classList.remove("hide");
+}
+
+function playCorrect(){
+correctSound.play().catch(()=>{});
+setTimeout(()=>clapSound.play().catch(()=>{}),350);
+}
+
+function playWrong(){
+wrongSound.play().catch(()=>{});
+}
+
+function starConfetti(){
+for(let i=0;i<18;i++){
+const s=document.createElement("div");
+s.className="confetti";
+s.textContent="⭐";
+s.style.left=Math.random()*100+"vw";
+s.style.animationDelay=Math.random()*250+"ms";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),1200);
+}
+}
+
+function redCross(){
+const x=document.createElement("div");
+x.className="cross";
+x.textContent="✖";
+document.body.appendChild(x);
+setTimeout(()=>x.remove(),600);
+}
+</script>
+</body>
+</html>
