@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 9: Light, Sound and Force</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;font-family:Arial,sans-serif;color:#263238;overflow-x:hidden}
+body{background:linear-gradient(135deg,#fff7d6,#e8f7ff,#f3ecff)}
+.splash,.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px;position:relative}
+.splash{background:#fff}
+.logo{max-width:220px;width:65%}
+.card{width:100%;max-width:760px;background:rgba(255,255,255,.95);border-radius:26px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.12);text-align:center;position:relative;z-index:2}
+h1{font-size:clamp(25px,5vw,40px);margin:8px 0;color:#f57c00}
+h2{font-size:clamp(22px,4vw,32px);color:#f57c00}
+p{font-size:clamp(16px,3vw,19px);line-height:1.5}
+button{border:0;border-radius:18px;padding:14px 18px;font-size:17px;font-weight:bold;cursor:pointer;background:#fb8c00;color:#fff;margin:8px;min-height:48px}
+.topbar{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.badge{background:#fff3e0;border-radius:999px;padding:9px 13px;font-weight:bold;color:#e65100}
+.timer{background:#e3f2fd;color:#0d47a1}
+.question{font-size:clamp(18px,3.5vw,24px);font-weight:bold;margin:14px 0;text-align:left}
+.options{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.option{width:100%;background:#fff;color:#263238;border:2px solid #ffe0b2;text-align:left;border-radius:18px;padding:14px;font-size:clamp(16px,3vw,19px);font-weight:600}
+.option.correct{background:#d8f8d0;border-color:#43a047}
+.option.wrong{background:#ffe0e0;border-color:#e53935}
+.feedback{min-height:58px;margin-top:14px;font-size:17px;font-weight:bold}
+.explain{font-weight:normal;color:#37474f;margin-top:6px}
+.hide{display:none}
+.question-image-container{text-align:center;margin:10px auto 14px}
+.question-image-container img{display:block;width:100%;max-width:280px;max-height:180px;object-fit:contain;margin:0 auto;border-radius:18px}
+.bg span{position:fixed;font-size:24px;opacity:.22;animation:float 12s linear infinite;z-index:0}
+.bg span:nth-child(1){left:8%;animation-delay:0s}
+.bg span:nth-child(2){left:30%;animation-delay:3s}
+.bg span:nth-child(3){left:58%;animation-delay:6s}
+.bg span:nth-child(4){left:82%;animation-delay:9s}
+@keyframes float{0%{top:105%;transform:rotate(0)}100%{top:-10%;transform:rotate(180deg)}}
+.confetti{position:fixed;top:-20px;font-size:22px;animation:fall 900ms linear forwards;z-index:5}
+@keyframes fall{to{transform:translateY(105vh) rotate(220deg);opacity:0}}
+.cross{position:fixed;left:50%;top:46%;transform:translate(-50%,-50%);font-size:70px;color:#e53935;opacity:.85;z-index:6;animation:pop .55s ease forwards}
+@keyframes pop{0%{transform:translate(-50%,-50%) scale(.4)}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+@media(max-width:520px){.card{padding:16px;border-radius:20px}button{width:100%;margin:7px 0}.topbar{font-size:14px}}
+</style>
+</head>
+<body>
+
+<div class="bg"><span>⭐</span><span>💡</span><span>✨</span><span>🔔</span></div>
+
+<div id="splash" class="splash">
+  <img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo">
+</div>
+
+<div id="intro" class="screen hide">
+  <div class="card">
+    <h1>Light, Sound and Force</h1>
+    <p><b>Grade 3 EVS</b></p>
+    <p>Answer carefully. You get one retry after a wrong answer. After the second wrong try, the correct answer and explanation will appear.</p>
+    <button onclick="startGame()">Start Quiz</button>
+  </div>
+</div>
+
+<div id="quiz" class="screen hide">
+  <div class="card">
+    <div class="topbar">
+      <div class="badge" id="progress">Question 1/20</div>
+      <div class="badge">Score: <span id="score">0</span>/20</div>
+      <div class="badge timer">Time: <span id="time">60</span>s</div>
+    </div>
+    <div id="imgBox" class="question-image-container hide">
+      <img id="qImg" src="" alt="Question image">
+    </div>
+    <div id="question" class="question"></div>
+    <div id="options" class="options"></div>
+    <div id="feedback" class="feedback"></div>
+    <button id="nextBtn" class="hide" onclick="nextQuestion()">Next</button>
+  </div>
+</div>
+
+<div id="result" class="screen hide">
+  <div class="card">
+    <h2>Quiz Complete!</h2>
+    <p id="finalScore"></p>
+    <h1 id="remark"></h1>
+    <button onclick="restartGame()">Play Again</button>
+  </div>
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/clapping.mp3"></audio>
+
+<script>
+const questions=[
+{q:"The room is dark, but the chair can still be seen clearly. Which object is making this possible?",image:"assets/ch9_q1.png",o:["Wooden chair","Candle","Both equally","Neither"],a:1,e:"The candle produces its own light and helps us see nearby objects."},
+{q:"A child enters a dark room and cannot find her school bag. What is the main reason?",o:["There is not enough light to see objects clearly","The bag disappeared","The room became smaller","The bag changed colour"],a:0,e:"Light is needed for us to see objects."},
+{q:"During a power cut at night, which item would help a family move around safely?",o:["Torch","Pillow","Water bottle","School bag"],a:0,e:"A torch provides light when it is dark."},
+{q:"When a child stands in sunlight, a shadow appears on the ground. Why?",o:["The child's body blocks the light","The ground becomes dark automatically","The Sun becomes smaller","Air creates the shadow"],a:0,e:"Shadows form when an object blocks light."},
+{q:"A child wants sunlight to enter a room through a window. Which material would be the best choice?",o:["Clean glass","Wooden board","Brick wall","Thick cardboard"],a:0,e:"Transparent materials allow most light to pass through."},
+{q:"A friend wants to look directly at the Sun during an eclipse. What should you advise?",o:["Use proper protective viewing glasses","Look directly at the Sun","Use no protection","Stare longer for a better view"],a:0,e:"Looking directly at the Sun can damage the eyes."},
+{q:"Why is light important in our daily life?",o:["It helps us see and perform activities safely","It is useful only at night","It is needed only in schools","It is useful only for plants"],a:0,e:"Light helps us see and interact with our surroundings."},
+{q:"A student says, “All objects that shine are sources of light.” Why is this incorrect?",o:["Some objects only reflect light and do not produce it","All shiny objects produce light","Reflection and light are the same","Only the Sun reflects light"],a:0,e:"Some objects appear bright because they reflect light."},
+{q:"A school bell rings and students immediately leave their classrooms. What does this show?",o:["Sound carries information and messages","Sound changes colour","Sound creates light","Sound moves buildings"],a:0,e:"Sound helps us communicate and respond to events."},
+{q:"A child is sorting things related to sound. Which item should NOT be placed in the sound group?",o:["Bell","Drum","Flute","Shadow"],a:3,e:"A shadow is related to light, not sound."},
+{q:"Which sound is most likely to be pleasant?",o:["Chirping of birds","Continuous vehicle horns","Loud drilling machine","Firecracker blasts"],a:0,e:"Pleasant sounds are generally soft and soothing."},
+{q:"A hospital is located near a busy road with loud traffic. Why can this be a problem?",o:["Excessive noise can disturb patients and staff","Noise improves sleep","Noise makes people healthier","Noise reduces traffic"],a:0,e:"Loud noise can affect comfort and health."},
+{q:"A child wants to demonstrate how sound is produced. Which activity would work best?",o:["Ringing a bell","Looking in a mirror","Reading a book","Drawing a picture"],a:0,e:"Sound is produced when objects vibrate."},
+{q:"The trolley in the picture is moving because the child is pushing it. What does this show?",image:"assets/ch9_q14.png",o:["A force can move an object","Sound moves objects","Light causes motion","Wheels move by themselves"],a:0,e:"A push or pull is a force that can make objects move."},
+{q:"Your neighbour is playing very loud music near a hospital. What is the best suggestion?",o:["Lower the volume","Increase the volume","Add more speakers","Ignore the situation"],a:0,e:"Noise should be reduced near hospitals and quiet zones."},
+{q:"A football rolling on the ground stops after some time. Which statement is true?",o:["Forces can change the motion of objects","Force only starts movement","Force creates sound only","Force cannot stop objects"],a:0,e:"Forces can start, stop or change motion."},
+{q:"Why should we avoid creating unnecessary noise in public places?",o:["It shows respect for others and their surroundings","Loud noise helps everyone concentrate","Noise is always harmless","Public places must always be noisy"],a:0,e:"Responsible behaviour includes controlling noise levels."},
+{q:"Which activity shows force changing the shape of an object?",o:["Pressing dough to make a chapati","Watching television","Reading a storybook","Drinking water"],a:0,e:"Force can change the shape of soft materials."},
+{q:"A goalkeeper catches a moving football during a match. What does this demonstrate?",o:["Force can stop a moving object","Force creates shadows","Force produces light","Force changes weather"],a:0,e:"Applying force can stop motion."},
+{q:"Light, sound and force help us in different ways every day. What does this show?",o:["They are important parts of everyday life and help us interact with the world","They are used only in science labs","They are important only in schools","They are needed only during daytime"],a:0,e:"Light, sound and force play essential roles in daily activities."}
+];
+
+let index=0,score=0,tries=0,timer,timeLeft=60,locked=false;
+
+setTimeout(()=>{splash.classList.add("hide");intro.classList.remove("hide")},5000);
+
+function startGame(){
+index=0;score=0;tries=0;
+intro.classList.add("hide");
+quiz.classList.remove("hide");
+showQuestion();
+}
+
+function showQuestion(){
+locked=false;
+tries=0;
+clearInterval(timer);
+timeLeft=60;
+time.textContent=timeLeft;
+document.getElementById("score").textContent=score;
+progress.textContent=`Question ${index+1}/${questions.length}`;
+feedback.innerHTML="";
+nextBtn.classList.add("hide");
+
+const q=questions[index];
+question.textContent=q.q;
+
+if(q.image){
+qImg.src=q.image;
+imgBox.classList.remove("hide");
+}else{
+qImg.src="";
+imgBox.classList.add("hide");
+}
+
+options.innerHTML="";
+q.o.forEach((opt,i)=>{
+const btn=document.createElement("button");
+btn.className="option";
+btn.textContent=opt;
+btn.onclick=()=>checkAnswer(btn,i);
+options.appendChild(btn);
+});
+
+timer=setInterval(()=>{
+timeLeft--;
+time.textContent=timeLeft;
+if(timeLeft<=0){
+clearInterval(timer);
+showAnswer("Time is up!");
+}
+},1000);
+}
+
+function checkAnswer(btn,chosen){
+if(locked)return;
+const q=questions[index];
+if(chosen===q.a){
+locked=true;
+clearInterval(timer);
+score++;
+btn.classList.add("correct");
+document.getElementById("score").textContent=score;
+feedback.innerHTML=`Correct!<div class="explain">${q.e}</div>`;
+playCorrect();
+starConfetti();
+nextBtn.classList.remove("hide");
+}else{
+tries++;
+btn.classList.add("wrong");
+playWrong();
+redCross();
+if(tries===1){
+feedback.textContent="Try once more.";
+btn.disabled=true;
+}else{
+showAnswer("Not quite.");
+}
+}
+}
+
+function showAnswer(msg){
+locked=true;
+clearInterval(timer);
+const q=questions[index];
+document.querySelectorAll(".option").forEach((b,i)=>{
+b.disabled=true;
+if(i===q.a)b.classList.add("correct");
+});
+feedback.innerHTML=`${msg} Correct answer: ${q.o[q.a]}<div class="explain">${q.e}</div>`;
+nextBtn.classList.remove("hide");
+}
+
+function nextQuestion(){
+index++;
+if(index<questions.length)showQuestion();
+else showResult();
+}
+
+function showResult(){
+quiz.classList.add("hide");
+result.classList.remove("hide");
+finalScore.textContent=`Score: ${score}/${questions.length}`;
+remark.textContent=score>=18?"Excellent":score>=14?"Well Done":"Good Effort";
+}
+
+function restartGame(){
+result.classList.add("hide");
+intro.classList.remove("hide");
+}
+
+function playCorrect(){
+correctSound.play().catch(()=>{});
+setTimeout(()=>clapSound.play().catch(()=>{}),350);
+}
+
+function playWrong(){
+wrongSound.play().catch(()=>{});
+}
+
+function starConfetti(){
+for(let i=0;i<18;i++){
+const s=document.createElement("div");
+s.className="confetti";
+s.textContent="⭐";
+s.style.left=Math.random()*100+"vw";
+s.style.animationDelay=Math.random()*250+"ms";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),1200);
+}
+}
+
+function redCross(){
+const x=document.createElement("div");
+x.className="cross";
+x.textContent="✖";
+document.body.appendChild(x);
+setTimeout(()=>x.remove(),600);
+}
+</script>
+</body>
+</html>
