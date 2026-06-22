@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 3: Man – The Living Machine</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;font-family:Arial,sans-serif;color:#263238;overflow-x:hidden}
+body{background:linear-gradient(135deg,#e8f7ff,#fff7d6,#f3ecff)}
+.splash,.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px;position:relative}
+.splash{background:#fff}
+.logo{max-width:220px;width:65%}
+.card{width:100%;max-width:760px;background:rgba(255,255,255,.95);border-radius:26px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.12);text-align:center;position:relative;z-index:2}
+h1{font-size:clamp(25px,5vw,40px);margin:8px 0;color:#1565c0}
+h2{font-size:clamp(22px,4vw,32px);color:#1565c0}
+p{font-size:clamp(16px,3vw,19px);line-height:1.5}
+button{border:0;border-radius:18px;padding:14px 18px;font-size:17px;font-weight:bold;cursor:pointer;background:#1976d2;color:#fff;margin:8px;min-height:48px}
+.topbar{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.badge{background:#e3f2fd;border-radius:999px;padding:9px 13px;font-weight:bold;color:#0d47a1}
+.timer{background:#fff3e0;color:#e65100}
+.question{font-size:clamp(18px,3.5vw,24px);font-weight:bold;margin:14px 0;text-align:left}
+.options{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.option{width:100%;background:#fff;color:#263238;border:2px solid #bbdefb;text-align:left;border-radius:18px;padding:14px;font-size:clamp(16px,3vw,19px);font-weight:600}
+.option.correct{background:#d8f8d0;border-color:#43a047}
+.option.wrong{background:#ffe0e0;border-color:#e53935}
+.feedback{min-height:58px;margin-top:14px;font-size:17px;font-weight:bold}
+.explain{font-weight:normal;color:#37474f;margin-top:6px}
+.hide{display:none}
+.question-image-container{text-align:center;margin:10px auto 14px}
+.question-image-container img{display:block;width:100%;max-width:280px;max-height:180px;object-fit:contain;margin:0 auto;border-radius:18px}
+.bg span{position:fixed;font-size:24px;opacity:.22;animation:float 12s linear infinite;z-index:0}
+.bg span:nth-child(1){left:8%;animation-delay:0s}
+.bg span:nth-child(2){left:30%;animation-delay:3s}
+.bg span:nth-child(3){left:58%;animation-delay:6s}
+.bg span:nth-child(4){left:82%;animation-delay:9s}
+@keyframes float{0%{top:105%;transform:rotate(0)}100%{top:-10%;transform:rotate(180deg)}}
+.confetti{position:fixed;top:-20px;font-size:22px;animation:fall 900ms linear forwards;z-index:5}
+@keyframes fall{to{transform:translateY(105vh) rotate(220deg);opacity:0}}
+.cross{position:fixed;left:50%;top:46%;transform:translate(-50%,-50%);font-size:70px;color:#e53935;opacity:.85;z-index:6;animation:pop .55s ease forwards}
+@keyframes pop{0%{transform:translate(-50%,-50%) scale(.4)}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+@media(max-width:520px){.card{padding:16px;border-radius:20px}button{width:100%;margin:7px 0}.topbar{font-size:14px}}
+</style>
+</head>
+<body>
+
+<div class="bg"><span>⭐</span><span>🫧</span><span>✨</span><span>🎈</span></div>
+
+<div id="splash" class="splash">
+  <img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo">
+</div>
+
+<div id="intro" class="screen hide">
+  <div class="card">
+    <h1>Man – The Living Machine</h1>
+    <p><b>Grade 3 EVS</b></p>
+    <p>Answer carefully. You get one retry after a wrong answer. After the second wrong try, the correct answer and explanation will appear.</p>
+    <button onclick="startGame()">Start Quiz</button>
+  </div>
+</div>
+
+<div id="quiz" class="screen hide">
+  <div class="card">
+    <div class="topbar">
+      <div class="badge" id="progress">Question 1/20</div>
+      <div class="badge">Score: <span id="score">0</span>/20</div>
+      <div class="badge timer">Time: <span id="time">60</span>s</div>
+    </div>
+    <div id="imgBox" class="question-image-container hide">
+      <img id="qImg" src="" alt="Question image">
+    </div>
+    <div id="question" class="question"></div>
+    <div id="options" class="options"></div>
+    <div id="feedback" class="feedback"></div>
+    <button id="nextBtn" class="hide" onclick="nextQuestion()">Next</button>
+  </div>
+</div>
+
+<div id="result" class="screen hide">
+  <div class="card">
+    <h2>Quiz Complete!</h2>
+    <p id="finalScore"></p>
+    <h1 id="remark"></h1>
+    <button onclick="restartGame()">Play Again</button>
+  </div>
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/clapping.mp3"></audio>
+
+<script>
+const questions=[
+{q:"The child is pedalling, balancing, breathing and looking ahead at the same time. What does this show?",image:"assets/ch3_q1.png",o:["Only one body part works at a time","Different body systems work together to perform activities","Bones work without muscles","Breathing happens only during exercise"],a:1,e:"Activities such as cycling require many body systems to work together."},
+{q:"Tina gets a small cut on her finger. The skin repairs itself after a few days. Which statement best explains this?",o:["The body is made of tiny living cells that help repair damage","Only bones repair the body","Food alone repairs cuts","Muscles grow over the wound"],a:0,e:"Cells are the basic units that help the body grow and repair itself."},
+{q:"A child is able to stand upright even when not moving. Which body system mainly helps the child maintain shape and support?",o:["Skeletal system","Respiratory system","Digestive system","Excretory system"],a:0,e:"Bones provide shape and support to the body."},
+{q:"A cyclist wears a helmet while riding. Which body part is being protected?",o:["Heart","Brain","Lungs","Stomach"],a:1,e:"The skull protects the brain, and a helmet provides extra protection."},
+{q:"Which habit will help keep bones strong?",o:["Eating nutritious food and exercising regularly","Sitting indoors all day","Skipping meals","Avoiding physical activity"],a:0,e:"Healthy food and exercise help maintain strong bones."},
+{q:"A child touches a hot object and quickly pulls the hand away. Which group of body parts helps this happen?",o:["Brain, spinal cord and nerves","Heart, blood and blood vessels","Nose, windpipe and lungs","Stomach, liver and intestine"],a:0,e:"The nervous system receives information and controls quick responses."},
+{q:"While carrying a heavy school bag, which body system helps the child lift and move it?",o:["Muscular system","Digestive system","Excretory system","Reproductive system"],a:0,e:"Muscles help us move and perform physical activities."},
+{q:"A student says, “Bones alone help us move.” Why is this statement incorrect?",o:["Bones and muscles work together for movement","Bones do not help in movement","Only muscles are needed","Blood causes movement"],a:0,e:"Muscles pull on bones to create movement."},
+{q:"After running a race, a child breathes faster than usual. Why?",o:["The body needs more oxygen during activity","The lungs become smaller","Blood stops flowing","Bones need air"],a:0,e:"Faster breathing supplies more oxygen to the body."},
+{q:"A child eats food and later uses the energy to play football. Which body system first helps break down the food?",o:["Digestive system","Nervous system","Skeletal system","Excretory system"],a:0,e:"The digestive system breaks down food so the body can use it for energy."},
+{q:"A child eats food quickly without chewing properly. What is most likely to happen?",o:["Digestion may become difficult","Bones become stronger immediately","Breathing improves","Heart beats slower"],a:0,e:"Chewing food properly helps digestion."},
+{q:"Why does a cut finger bleed?",o:["Blood flows through blood vessels throughout the body","Bones release blood","Muscles create blood","Skin stores blood"],a:0,e:"Blood travels through blood vessels present all over the body."},
+{q:"Which habit helps the respiratory system work well?",o:["Breathing fresh air and keeping the nose clean","Covering the face while sleeping","Staying in smoky places","Avoiding outdoor activities completely"],a:0,e:"Clean air helps the respiratory system stay healthy."},
+{q:"The child in the picture looks tired and is sweating after playing football. Why is the child sweating?",image:"assets/ch3_q14.png",o:["The body is helping remove waste and cool itself","The body is making food","The bones are growing","The lungs are resting"],a:0,e:"Sweating helps remove waste and regulate body temperature."},
+{q:"A child spends most of the day watching television and rarely plays outdoors. What would be the best suggestion?",o:["Spend some time exercising and playing outside","Watch more television","Skip physical activities","Sleep throughout the day"],a:0,e:"Exercise helps keep muscles, bones and other systems healthy."},
+{q:"A child accidentally touches a hot pan and quickly pulls the hand away. Which body system helps the child react quickly?",o:["Nervous system","Digestive system","Skeletal system only","Excretory system"],a:0,e:"The nervous system receives information and controls responses."},
+{q:"Why is it important to take care of our body?",o:["All body systems need to work well to keep us healthy","Only the heart is important","Only muscles need care","The body repairs everything automatically"],a:0,e:"Healthy habits help all body systems function properly."},
+{q:"A child eats a banana before a football match and then runs around the field. Which systems are working together?",o:["Digestive, respiratory, circulatory and muscular systems","Only digestive system","Only muscular system","Only skeletal system"],a:0,e:"Different systems work together to provide energy and movement."},
+{q:"A child plays outdoors on a hot day and notices sweat on the skin. What does this show?",o:["The body is removing waste and helping control temperature","The body is making bones stronger","The lungs are digesting food","The muscles are storing blood"],a:0,e:"Sweating is one way the body removes waste and stays cool."},
+{q:"Why is the human body often called a “living machine”?",o:["Different organs and systems work together to keep us alive and healthy","It is made of metal parts","It never gets tired","It works without food"],a:0,e:"The body functions through the coordinated work of many organ systems."}
+];
+
+let index=0,score=0,tries=0,timer,timeLeft=60,locked=false;
+
+setTimeout(()=>{splash.classList.add("hide");intro.classList.remove("hide")},5000);
+
+function startGame(){
+index=0;score=0;tries=0;
+intro.classList.add("hide");
+quiz.classList.remove("hide");
+showQuestion();
+}
+
+function showQuestion(){
+locked=false;
+tries=0;
+clearInterval(timer);
+timeLeft=60;
+time.textContent=timeLeft;
+document.getElementById("score").textContent=score;
+progress.textContent=`Question ${index+1}/${questions.length}`;
+feedback.innerHTML="";
+nextBtn.classList.add("hide");
+
+const q=questions[index];
+question.textContent=q.q;
+
+if(q.image){
+qImg.src=q.image;
+imgBox.classList.remove("hide");
+}else{
+qImg.src="";
+imgBox.classList.add("hide");
+}
+
+options.innerHTML="";
+q.o.forEach((opt,i)=>{
+const btn=document.createElement("button");
+btn.className="option";
+btn.textContent=opt;
+btn.onclick=()=>checkAnswer(btn,i);
+options.appendChild(btn);
+});
+
+timer=setInterval(()=>{
+timeLeft--;
+time.textContent=timeLeft;
+if(timeLeft<=0){
+clearInterval(timer);
+showAnswer("Time is up!");
+}
+},1000);
+}
+
+function checkAnswer(btn,chosen){
+if(locked)return;
+const q=questions[index];
+if(chosen===q.a){
+locked=true;
+clearInterval(timer);
+score++;
+btn.classList.add("correct");
+document.getElementById("score").textContent=score;
+feedback.innerHTML=`Correct!<div class="explain">${q.e}</div>`;
+playCorrect();
+starConfetti();
+nextBtn.classList.remove("hide");
+}else{
+tries++;
+btn.classList.add("wrong");
+playWrong();
+redCross();
+if(tries===1){
+feedback.textContent="Try once more.";
+btn.disabled=true;
+}else{
+showAnswer("Not quite.");
+}
+}
+}
+
+function showAnswer(msg){
+locked=true;
+clearInterval(timer);
+const q=questions[index];
+document.querySelectorAll(".option").forEach((b,i)=>{
+b.disabled=true;
+if(i===q.a)b.classList.add("correct");
+});
+feedback.innerHTML=`${msg} Correct answer: ${q.o[q.a]}<div class="explain">${q.e}</div>`;
+nextBtn.classList.remove("hide");
+}
+
+function nextQuestion(){
+index++;
+if(index<questions.length)showQuestion();
+else showResult();
+}
+
+function showResult(){
+quiz.classList.add("hide");
+result.classList.remove("hide");
+finalScore.textContent=`Score: ${score}/${questions.length}`;
+remark.textContent=score>=18?"Excellent":score>=14?"Well Done":"Good Effort";
+}
+
+function restartGame(){
+result.classList.add("hide");
+intro.classList.remove("hide");
+}
+
+function playCorrect(){
+correctSound.play().catch(()=>{});
+setTimeout(()=>clapSound.play().catch(()=>{}),350);
+}
+
+function playWrong(){
+wrongSound.play().catch(()=>{});
+}
+
+function starConfetti(){
+for(let i=0;i<18;i++){
+const s=document.createElement("div");
+s.className="confetti";
+s.textContent="⭐";
+s.style.left=Math.random()*100+"vw";
+s.style.animationDelay=Math.random()*250+"ms";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),1200);
+}
+}
+
+function redCross(){
+const x=document.createElement("div");
+x.className="cross";
+x.textContent="✖";
+document.body.appendChild(x);
+setTimeout(()=>x.remove(),600);
+}
+</script>
+</body>
+</html>
