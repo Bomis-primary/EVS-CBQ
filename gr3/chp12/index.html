@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 12: Early Humans</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;font-family:Arial,sans-serif;color:#263238;overflow-x:hidden}
+body{background:linear-gradient(135deg,#fff7d6,#f1ffe8,#e8f7ff)}
+.splash,.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px;position:relative}
+.splash{background:#fff}
+.logo{max-width:220px;width:65%}
+.card{width:100%;max-width:760px;background:rgba(255,255,255,.95);border-radius:26px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.12);text-align:center;position:relative;z-index:2}
+h1{font-size:clamp(25px,5vw,40px);margin:8px 0;color:#795548}
+h2{font-size:clamp(22px,4vw,32px);color:#795548}
+p{font-size:clamp(16px,3vw,19px);line-height:1.5}
+button{border:0;border-radius:18px;padding:14px 18px;font-size:17px;font-weight:bold;cursor:pointer;background:#8d6e63;color:#fff;margin:8px;min-height:48px}
+.topbar{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.badge{background:#efebe9;border-radius:999px;padding:9px 13px;font-weight:bold;color:#4e342e}
+.timer{background:#fff3e0;color:#e65100}
+.question{font-size:clamp(18px,3.5vw,24px);font-weight:bold;margin:14px 0;text-align:left}
+.options{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.option{width:100%;background:#fff;color:#263238;border:2px solid #d7ccc8;text-align:left;border-radius:18px;padding:14px;font-size:clamp(16px,3vw,19px);font-weight:600}
+.option.correct{background:#d8f8d0;border-color:#43a047}
+.option.wrong{background:#ffe0e0;border-color:#e53935}
+.feedback{min-height:58px;margin-top:14px;font-size:17px;font-weight:bold}
+.explain{font-weight:normal;color:#37474f;margin-top:6px}
+.hide{display:none}
+.question-image-container{text-align:center;margin:10px auto 14px}
+.question-image-container img{display:block;width:100%;max-width:280px;max-height:180px;object-fit:contain;margin:0 auto;border-radius:18px}
+.bg span{position:fixed;font-size:24px;opacity:.22;animation:float 12s linear infinite;z-index:0}
+.bg span:nth-child(1){left:8%;animation-delay:0s}
+.bg span:nth-child(2){left:30%;animation-delay:3s}
+.bg span:nth-child(3){left:58%;animation-delay:6s}
+.bg span:nth-child(4){left:82%;animation-delay:9s}
+@keyframes float{0%{top:105%;transform:rotate(0)}100%{top:-10%;transform:rotate(180deg)}}
+.confetti{position:fixed;top:-20px;font-size:22px;animation:fall 900ms linear forwards;z-index:5}
+@keyframes fall{to{transform:translateY(105vh) rotate(220deg);opacity:0}}
+.cross{position:fixed;left:50%;top:46%;transform:translate(-50%,-50%);font-size:70px;color:#e53935;opacity:.85;z-index:6;animation:pop .55s ease forwards}
+@keyframes pop{0%{transform:translate(-50%,-50%) scale(.4)}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+@media(max-width:520px){.card{padding:16px;border-radius:20px}button{width:100%;margin:7px 0}.topbar{font-size:14px}}
+</style>
+</head>
+<body>
+
+<div class="bg"><span>⭐</span><span>🔥</span><span>✨</span><span>🪨</span></div>
+
+<div id="splash" class="splash">
+  <img src="assets/innovine-logo.png" class="logo" alt="Innovine Logo">
+</div>
+
+<div id="intro" class="screen hide">
+  <div class="card">
+    <h1>Early Humans</h1>
+    <p><b>Grade 3 EVS</b></p>
+    <p>Answer carefully. You get one retry after a wrong answer. After the second wrong try, the correct answer and explanation will appear.</p>
+    <button onclick="startGame()">Start Quiz</button>
+  </div>
+</div>
+
+<div id="quiz" class="screen hide">
+  <div class="card">
+    <div class="topbar">
+      <div class="badge" id="progress">Question 1/20</div>
+      <div class="badge">Score: <span id="score">0</span>/20</div>
+      <div class="badge timer">Time: <span id="time">60</span>s</div>
+    </div>
+    <div id="imgBox" class="question-image-container hide">
+      <img id="qImg" src="" alt="Question image">
+    </div>
+    <div id="question" class="question"></div>
+    <div id="options" class="options"></div>
+    <div id="feedback" class="feedback"></div>
+    <button id="nextBtn" class="hide" onclick="nextQuestion()">Next</button>
+  </div>
+</div>
+
+<div id="result" class="screen hide">
+  <div class="card">
+    <h2>Quiz Complete!</h2>
+    <p id="finalScore"></p>
+    <h1 id="remark"></h1>
+    <button onclick="restartGame()">Play Again</button>
+  </div>
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/clapping.mp3"></audio>
+
+<script>
+const questions=[
+{q:"The picture shows early humans gathered near a fire outside a cave. What can we conclude from this scene?",image:"assets/ch12_q1.png",o:["Early humans used natural shelters and fire for survival","Early humans lived in modern houses","Early humans travelled by cars","Early humans used electricity"],a:0,e:"Early humans depended on caves for shelter and fire for warmth, safety and daily activities."},
+{q:"Heavy rain and wild animals made life difficult for early humans. Where would they most likely stay for safety?",o:["In caves","In shopping malls","In schools","In buses"],a:0,e:"Caves protected early humans from weather and wild animals."},
+{q:"A child visits a museum and sees stone axes and spears. What do these objects tell us?",o:["Early humans used tools to survive","Early humans used machines","Early humans avoided hunting","Early humans lived in cities"],a:0,e:"Tools helped early humans hunt, cut and protect themselves."},
+{q:"Why was the discovery of fire an important turning point for early humans?",o:["It helped them stay warm, cook food and stay safe","It helped them build aeroplanes","It created rivers","It stopped rainfall"],a:0,e:"Fire improved survival and daily life."},
+{q:"An early human searching for food in a forest would most likely depend on which resources?",o:["Fruits, roots and animals","Factories, roads and vehicles","Computers, phones and electricity","Banks, schools and hospitals"],a:0,e:"Early humans relied on natural resources available around them."},
+{q:"If you were an early human living in a forest, which skill would be most useful?",o:["Finding food and safe shelter","Using a television","Driving a vehicle","Using an elevator"],a:0,e:"Survival depended on finding food and protection."},
+{q:"What helped early humans gradually improve their way of life?",o:["Learning new skills and making tools","Waiting for help from others","Avoiding all changes","Living alone all the time"],a:0,e:"Human progress happened through learning and innovation."},
+{q:"A student says, “Early humans bought food from markets.” Why is this incorrect?",o:["Markets did not exist during that time","Early humans did not eat food","Markets existed only in caves","Early humans ate only plants"],a:0,e:"Early humans gathered food and hunted animals."},
+{q:"An early human wants to hunt an animal from a safe distance. Which tool would be most useful?",o:["Spear","Pillow","Basket","Pot"],a:0,e:"Spears helped early humans hunt more effectively."},
+{q:"A museum display contains a stone axe, spear, bow and a mobile phone. Which item does not belong to the early human collection?",o:["Stone axe","Spear","Bow","Mobile phone"],a:3,e:"Mobile phones are modern inventions, unlike the other tools."},
+{q:"Why did early humans use animal skins, leaves and bark as clothing?",o:["These materials were easily available in nature","They preferred uniforms","They had factories making clothes","They used synthetic fabrics"],a:0,e:"Early humans used resources available around them."},
+{q:"How did the beginning of farming change human life?",o:["People could grow food instead of only hunting and gathering","People stopped eating food","People moved to caves permanently","People stopped making tools"],a:0,e:"Farming provided a more reliable food supply."},
+{q:"A child wants to experience a lifestyle similar to that of early humans. Which activity would be most similar?",o:["Gathering fruits and roots from nature","Shopping online","Watching television","Travelling by train"],a:0,e:"Early humans depended on nature for food."},
+{q:"The picture shows people using stone tools while preparing food. What does this suggest?",image:"assets/ch12_q14.png",o:["Tools made everyday tasks easier","Early humans avoided using tools","Food was available in shops","Stone tools were decorations"],a:0,e:"Tools helped early humans perform tasks more efficiently."},
+{q:"Why was living in groups useful for early humans?",o:["It helped them stay safer and share work","It made hunting impossible","It reduced food availability","It prevented communication"],a:0,e:"Cooperation increased chances of survival."},
+{q:"Why did people begin living in one place after learning farming?",o:["Crops needed care and attention over time","They stopped eating food","They forgot how to travel","They avoided rivers"],a:0,e:"Farming encouraged permanent settlements."},
+{q:"Why is it important to learn about early humans?",o:["It helps us understand how human life has changed over time","It teaches only hunting skills","It is useful only for scientists","It has no connection to today"],a:0,e:"Studying history helps us understand human development."},
+{q:"An early human needed to cut branches for shelter. Which invention would have helped most?",o:["Stone axe","Clay pot","Basket","Firewood"],a:0,e:"Stone axes were useful for cutting wood and other materials."},
+{q:"At night, early humans often kept a fire burning outside their shelter. Why?",o:["It helped keep wild animals away","It attracted dangerous animals","It made caves smaller","It stopped rainfall"],a:0,e:"Fire provided protection and warmth."},
+{q:"The journey from cave life to farming shows that humans can:",o:["Adapt, learn and improve their way of life over time","Live without food","Avoid all changes","Depend only on luck"],a:0,e:"Human development happened through learning, adaptation and innovation."}
+];
+
+let index=0,score=0,tries=0,timer,timeLeft=60,locked=false;
+
+setTimeout(()=>{splash.classList.add("hide");intro.classList.remove("hide")},5000);
+
+function startGame(){
+index=0;score=0;tries=0;
+intro.classList.add("hide");
+quiz.classList.remove("hide");
+showQuestion();
+}
+
+function showQuestion(){
+locked=false;
+tries=0;
+clearInterval(timer);
+timeLeft=60;
+time.textContent=timeLeft;
+document.getElementById("score").textContent=score;
+progress.textContent=`Question ${index+1}/${questions.length}`;
+feedback.innerHTML="";
+nextBtn.classList.add("hide");
+
+const q=questions[index];
+question.textContent=q.q;
+
+if(q.image){
+qImg.src=q.image;
+imgBox.classList.remove("hide");
+}else{
+qImg.src="";
+imgBox.classList.add("hide");
+}
+
+options.innerHTML="";
+q.o.forEach((opt,i)=>{
+const btn=document.createElement("button");
+btn.className="option";
+btn.textContent=opt;
+btn.onclick=()=>checkAnswer(btn,i);
+options.appendChild(btn);
+});
+
+timer=setInterval(()=>{
+timeLeft--;
+time.textContent=timeLeft;
+if(timeLeft<=0){
+clearInterval(timer);
+showAnswer("Time is up!");
+}
+},1000);
+}
+
+function checkAnswer(btn,chosen){
+if(locked)return;
+const q=questions[index];
+if(chosen===q.a){
+locked=true;
+clearInterval(timer);
+score++;
+btn.classList.add("correct");
+document.getElementById("score").textContent=score;
+feedback.innerHTML=`Correct!<div class="explain">${q.e}</div>`;
+playCorrect();
+starConfetti();
+nextBtn.classList.remove("hide");
+}else{
+tries++;
+btn.classList.add("wrong");
+playWrong();
+redCross();
+if(tries===1){
+feedback.textContent="Try once more.";
+btn.disabled=true;
+}else{
+showAnswer("Not quite.");
+}
+}
+}
+
+function showAnswer(msg){
+locked=true;
+clearInterval(timer);
+const q=questions[index];
+document.querySelectorAll(".option").forEach((b,i)=>{
+b.disabled=true;
+if(i===q.a)b.classList.add("correct");
+});
+feedback.innerHTML=`${msg} Correct answer: ${q.o[q.a]}<div class="explain">${q.e}</div>`;
+nextBtn.classList.remove("hide");
+}
+
+function nextQuestion(){
+index++;
+if(index<questions.length)showQuestion();
+else showResult();
+}
+
+function showResult(){
+quiz.classList.add("hide");
+result.classList.remove("hide");
+finalScore.textContent=`Score: ${score}/${questions.length}`;
+remark.textContent=score>=18?"Excellent":score>=14?"Well Done":"Good Effort";
+}
+
+function restartGame(){
+result.classList.add("hide");
+intro.classList.remove("hide");
+}
+
+function playCorrect(){
+correctSound.play().catch(()=>{});
+setTimeout(()=>clapSound.play().catch(()=>{}),350);
+}
+
+function playWrong(){
+wrongSound.play().catch(()=>{});
+}
+
+function starConfetti(){
+for(let i=0;i<18;i++){
+const s=document.createElement("div");
+s.className="confetti";
+s.textContent="⭐";
+s.style.left=Math.random()*100+"vw";
+s.style.animationDelay=Math.random()*250+"ms";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),1200);
+}
+}
+
+function redCross(){
+const x=document.createElement("div");
+x.className="cross";
+x.textContent="✖";
+document.body.appendChild(x);
+setTimeout(()=>x.remove(),600);
+}
+</script>
+</body>
+</html>
