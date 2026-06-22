@@ -63,7 +63,6 @@
             100% { transform: translateY(-10vh) rotate(360deg) scale(1.2); opacity: 0; }
         }
 
-        /* Canvas Overlay for Confetti/Cross Indicators */
         #fxCanvas {
             position: absolute;
             top: 0;
@@ -74,7 +73,6 @@
             pointer-events: none;
         }
 
-        /* App Containers */
         .app-container {
             width: 92%;
             max-width: 550px;
@@ -381,7 +379,6 @@
             color: var(--text-main);
         }
 
-        /* Responsive adjustments */
         @media (max-width: 480px) {
             body { padding: 10px; }
             .app-container { padding: 18px; }
@@ -393,13 +390,9 @@
 </head>
 <body>
 
-    <!-- Light Background Streamers & Stars Layer -->
     <div class="bg-animation" id="bg-layer"></div>
-
-    <!-- Canvas layer for gameplay feedback animations -->
     <canvas id="fxCanvas"></canvas>
 
-    <!-- MANDATORY BRAND SCREEN (Fixed 5 seconds) -->
     <div id="brand-screen">
         <img src="assets/innovine-logo.png" alt="Innovine Logo" class="brand-logo" onerror="this.style.display='none';">
         <div style="font-weight:600; font-size:1.1rem; color:#34495E;">Innovine Labs</div>
@@ -409,7 +402,6 @@
         </div>
     </div>
 
-    <!-- INTRO/START SCREEN -->
     <div id="intro-screen" class="app-container">
         <div class="hero-title">🌍 Transport Explorer!</div>
         <div class="hero-desc">Welcome to the Chapter 13 Competency Challenge. Put on your seatbelt and test your skills about how we move goods and people across land, water, and air!</div>
@@ -418,10 +410,9 @@
             <p>⏱️ You have <strong>60 seconds</strong> per question.</p>
             <p>🔄 Missed a question? You get <strong>one retry</strong> right away!</p>
         </div>
-        <button class="action-btn" onclick="switchView('intro-screen', 'game-screen'); startGame();">Start Adventure</button>
+        <button class="action-btn" onclick="initAudioAndStart()">Start Adventure</button>
     </div>
 
-    <!-- MAIN GAMEPLAY FLOW SCREEN -->
     <div id="game-screen" class="app-container">
         <div class="header-bar">
             <div class="score-box">Score: <span id="live-score">0</span></div>
@@ -438,9 +429,7 @@
 
         <div class="question-text" id="q-text">Loading question data...</div>
 
-        <div class="options-grid" id="options-box">
-            <!-- Programmatic injection of options -->
-        </div>
+        <div class="options-grid" id="options-box"></div>
 
         <div class="feedback-panel" id="feedback-box">
             <div class="feedback-title" id="feedback-title">Alert</div>
@@ -450,7 +439,6 @@
         <button class="action-btn" id="next-btn" onclick="handleNextAction()" style="display:none;">Continue</button>
     </div>
 
-    <!-- FINAL SCREEN / RESULTS SCREEN -->
     <div id="result-screen" class="app-container">
         <div class="hero-title" id="res-title">Excellent Journey!</div>
         <div class="badge-container">
@@ -460,7 +448,7 @@
 
         <div class="stats-summary">
             <div class="stat-row">
-                <span class="stat-label">Final Score</span>
+                <span class="stat-label">Questions Solved</span>
                 <span class="stat-val" id="stat-score">0/20</span>
             </div>
             <div class="stat-row">
@@ -477,33 +465,34 @@
     </div>
 
     <script>
-        // AUDIO CONDITIONAL STATUS
-        // Verified: The asset repository folder includes audio files ('correct.mp3','wrong.mp3','clapping.mp3')
-        const audioAssets = {
-            correct: new Audio('assets/correct.mp3'),
-            wrong: new Audio('assets/wrong.mp3'),
-            clapping: new Audio('assets/clapping.mp3')
-        };
+        // Sound configuration initiated safely on user gesture click 
+        let audioAssets = {};
 
-        function playSound(type) {
-            try {
-                if (audioAssets[type]) {
-                    audioAssets[type].currentTime = 0;
-                    audioAssets[type].play();
-                }
-            } catch(e) { console.log('Audio playback postponed until user interaction.'); }
+        function initAudioAndStart() {
+            audioAssets.correct = new Audio('assets/correct.mp3');
+            audioAssets.wrong = new Audio('assets/wrong.mp3');
+            audioAssets.clapping = new Audio('assets/clapping.mp3');
+            
+            // Warm up audio elements
+            Object.values(audioAssets).forEach(track => {
+                track.play().then(() => { track.pause(); track.currentTime = 0; }).catch(() => {});
+            });
+
+            switchView('intro-screen', 'game-screen'); 
+            startGame();
         }
 
-        // COMPETENCY CONTEXT DEFINITION - 20 GRADUALLY INCREASING COMPETENCY QUESTIONS
+        function playSound(type) {
+            if (audioAssets[type]) {
+                audioAssets[type].currentTime = 0;
+                audioAssets[type].play().catch(e => console.log("Audio play blocked:", e));
+            }
+        }
+
         const questions = [
             {
                 text: "Why is a school bus a suitable mode of transport for students?",
-                options: [
-                    "It can carry many students together safely",
-                    "It moves only on holidays",
-                    "It carries only one person",
-                    "It does not need roads"
-                ],
+                options: ["It can carry many students together safely", "It moves only on holidays", "It carries only one person", "It does not need roads"],
                 correct: 0,
                 explanation: "Buses can transport many people efficiently and safely.",
                 image: "assets/ch13_q1.png"
@@ -522,56 +511,31 @@
             },
             {
                 text: "How has modern transport changed people's lives?",
-                options: [
-                    "It has stopped communication",
-                    "It has reduced travel time and improved connectivity",
-                    "It has reduced trade completely",
-                    "It has made travel impossible"
-                ],
+                options: ["It has stopped communication", "It has reduced travel time and improved connectivity", "It has reduced trade completely", "It has made travel impossible"],
                 correct: 1,
                 explanation: "Transport helps people and goods move quickly from one place to another."
             },
             {
                 text: "Which group contains only land transport?",
-                options: [
-                    "Bus, train, bicycle",
-                    "Ship, boat, ferry",
-                    "Aeroplane, helicopter, glider",
-                    "Boat, train, bus"
-                ],
+                options: ["Bus, train, bicycle", "Ship, boat, ferry", "Aeroplane, helicopter, glider", "Boat, train, bus"],
                 correct: 0,
                 explanation: "These vehicles move on roads or railway tracks."
             },
             {
                 text: "While travelling in a car, which action is the safest?",
-                options: [
-                    "Standing inside the car",
-                    "Leaning out of the window",
-                    "Wearing a seat belt",
-                    "Distracting the driver"
-                ],
+                options: ["Standing inside the car", "Leaning out of the window", "Wearing a seat belt", "Distracting the driver"],
                 correct: 2,
                 explanation: "Seat belts help protect passengers during travel."
             },
             {
                 text: "Why is transport important for society?",
-                options: [
-                    "It helps people and goods move from one place to another",
-                    "It creates rivers",
-                    "It changes weather conditions",
-                    "It replaces communication"
-                ],
+                options: ["It helps people and goods move from one place to another", "It creates rivers", "It changes weather conditions", "It replaces communication"],
                 correct: 0,
                 explanation: "Transport connects places and supports daily life."
             },
             {
                 text: "A student says, 'All transport vehicles carry only people.' Why is this incorrect?",
-                options: [
-                    "Vehicles carry only animals",
-                    "Many vehicles are used to transport goods as well",
-                    "Goods cannot be transported",
-                    "Only trains carry people"
-                ],
+                options: ["Vehicles carry only animals", "Many vehicles are used to transport goods as well", "Goods cannot be transported", "Only trains carry people"],
                 correct: 1,
                 explanation: "Transport is used for both passengers and goods."
             },
@@ -595,12 +559,7 @@
             },
             {
                 text: "Why are roads, railways and ports important for trade?",
-                options: [
-                    "They help move goods efficiently between places",
-                    "They create products",
-                    "They reduce production",
-                    "They stop travel"
-                ],
+                options: ["They help move goods efficiently between places", "They create products", "They reduce production", "They stop travel"],
                 correct: 0,
                 explanation: "Transport networks support the movement of goods and services."
             },
@@ -612,46 +571,26 @@
             },
             {
                 text: "What advantage of public transport is shown in this picture?",
-                options: [
-                    "Many people can travel together efficiently",
-                    "It uses no energy",
-                    "It carries only goods",
-                    "It travels on water"
-                ],
+                options: ["Many people can travel together efficiently", "It uses no energy", "It carries only goods", "It travels on water"],
                 correct: 0,
                 explanation: "Public transport helps move large numbers of people.",
                 image: "assets/ch13_q14.png"
             },
             {
                 text: "A child lives close to school. Which transport choice is most environment-friendly?",
-                options: [
-                    "Travelling alone in a large car",
-                    "Walking or cycling",
-                    "Taking an aeroplane",
-                    "Using a truck"
-                ],
+                options: ["Travelling alone in a large car", "Walking or cycling", "Taking an aeroplane", "Using a truck"],
                 correct: 1,
                 explanation: "Walking and cycling reduce pollution and improve health."
             },
             {
                 text: "How does good transport help villages and towns develop?",
-                options: [
-                    "It reduces communication",
-                    "It prevents trade",
-                    "It improves access to markets, schools and hospitals",
-                    "It stops tourism"
-                ],
+                options: ["It reduces communication", "It prevents trade", "It improves access to markets, schools and hospitals", "It stops tourism"],
                 correct: 2,
                 explanation: "Better transport improves connectivity and opportunities."
             },
             {
                 text: "Why should passengers follow traffic rules while travelling?",
-                options: [
-                    "To make vehicles move slower",
-                    "To ensure safety for everyone on the road",
-                    "To avoid reaching destinations",
-                    "To increase traffic"
-                ],
+                options: ["To make vehicles move slower", "To ensure safety for everyone on the road", "To avoid reaching destinations", "To increase traffic"],
                 correct: 1,
                 explanation: "Traffic rules help prevent accidents."
             },
@@ -669,27 +608,20 @@
             },
             {
                 text: "Roads, railways, waterways and airways all serve a common purpose. What is it?",
-                options: [
-                    "Producing food",
-                    "Connecting people and places through transportation",
-                    "Generating rainfall",
-                    "Creating electricity"
-                ],
+                options: ["Producing food", "Connecting people and places through transportation", "Generating rainfall", "Creating electricity"],
                 correct: 1,
                 explanation: "All transport systems help movement and connectivity."
             }
         ];
 
-        // GAMEPLAY ARCHITECTURE STATE
         let currentIdx = 0;
-        let gameScore = 0;
-        let timerVal = 60; // Strict Grade 3 mandate rule allocation
+        let scoreCount = 0; 
+        let timerVal = 60;
         let gameCountdown = null;
         let tryCount = 0; 
         let perfectRunAnswers = 0;
         let isOptionProcessing = false;
 
-        // CANVAS GRAPHICS ANIMATIONS CORE Engine
         const canvas = document.getElementById('fxCanvas');
         const ctx = canvas.getContext('2d');
         let activeFX = [];
@@ -783,7 +715,6 @@
         }
         requestAnimationFrame(engineLoop);
 
-        // INITIAL DECORATIVE BACKGROUND AMBIENCE
         function generateBgDecorations() {
             const layer = document.getElementById('bg-layer');
             for (let i = 0; i < 8; i++) {
@@ -798,13 +729,11 @@
         }
         generateBgDecorations();
 
-        // CORE BRAND TIMING CONTROLLER
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
-                const brandScreen = document.getElementById('brand-screen');
-                brandScreen.style.display = 'none';
+                document.getElementById('brand-screen').style.display = 'none';
                 switchView(null, 'intro-screen');
-            }, 5000); // Strict branding protection rule requirement
+            }, 5000);
         });
 
         function switchView(fromId, toId) {
@@ -812,10 +741,9 @@
             document.getElementById(toId).classList.add('active-view');
         }
 
-        // GAME CONTROLLER RULES INTERACTIVE HANDLERS
         function startGame() {
             currentIdx = 0;
-            gameScore = 0;
+            scoreCount = 0;
             perfectRunAnswers = 0;
             loadQuestion();
         }
@@ -823,24 +751,20 @@
         function loadQuestion() {
             isOptionProcessing = false;
             tryCount = 0;
-            timerVal = 60; // 60s rule for grade 3
+            timerVal = 60;
             
-            document.getElementById('live-score').innerText = gameScore;
+            document.getElementById('live-score').innerText = scoreCount;
             document.getElementById('next-btn').style.display = 'none';
             document.getElementById('feedback-box').style.display = 'none';
             document.getElementById('timer-wrapper').classList.remove('timer-warning');
             
-            // Progress tracker calc
             const progressPct = (currentIdx / questions.length) * 100;
-            document.getElementById('game-progress').style.style = 'width'; 
             document.getElementById('game-progress').style.width = progressPct + '%';
 
             const qData = questions[currentIdx];
-            
-            // Render conditionally media structure asset rule
             const mediaSlot = document.getElementById('media-slot');
             if (qData.image) {
-                mediaSlot.innerHTML = `<img src="${qData.image}" class="q-image" alt="Question Image Container">`;
+                mediaSlot.innerHTML = `<img src="${qData.image}" class="q-image" alt="Question Graphic">`;
             } else {
                 mediaSlot.innerHTML = '';
             }
@@ -889,47 +813,40 @@
             const feedbackDesc = document.getElementById('feedback-desc');
 
             if(chosenIdx === qData.correct) {
-                // Correct Choice Path
                 clearInterval(gameCountdown);
                 isOptionProcessing = true;
                 clickedBtn.classList.add('selected-correct');
                 playSound('correct');
                 triggerFX('star');
                 
+                scoreCount += 1; // Increment exactly by 1 point per correctly answered item
                 if(tryCount === 0) {
-                    gameScore += 10;
                     perfectRunAnswers++;
-                } else {
-                    gameScore += 5; // Reduced reward weight tier for 2nd trial execution
                 }
-                document.getElementById('live-score').innerText = gameScore;
+                document.getElementById('live-score').innerText = scoreCount;
 
-                // Lock buttons safely
                 Array.from(optionsBox.children).forEach(b => b.disabled = true);
 
-                feedbackTitle.innerText = "✨ Correct answer!";
+                feedbackTitle.innerText = "✨ Correct!";
                 feedbackDesc.innerText = qData.explanation;
                 feedbackBox.className = "feedback-panel explanation-alert";
                 feedbackBox.style.display = "block";
                 
-                setupNextActionButton("Continue");
+                setupNextActionButton();
             } else {
-                // Incorrect Choice Path
                 tryCount++;
                 playSound('wrong');
                 triggerFX('cross');
                 
                 if(tryCount === 1) {
-                    // Retry execution boundary rule implementation
                     clickedBtn.classList.add('selected-wrong');
                     clickedBtn.disabled = true;
                     
-                    feedbackTitle.innerText = "❌ Incorrect attempt";
-                    feedbackDesc.innerText = "Don't worry! You have one retry opportunity left for this question.";
+                    feedbackTitle.innerText = "❌ Try Again";
+                    feedbackDesc.innerText = "That choice was incorrect. Don't worry, you have 1 retry left!";
                     feedbackBox.className = "feedback-panel wrong-alert";
                     feedbackBox.style.display = "block";
                 } else {
-                    // Exhausted double tries execution protocol
                     clearInterval(gameCountdown);
                     isOptionProcessing = true;
                     clickedBtn.classList.add('selected-wrong');
@@ -939,12 +856,12 @@
                         if(i === qData.correct) b.classList.add('selected-correct');
                     });
 
-                    feedbackTitle.innerText = "💡 Answer explanation";
+                    feedbackTitle.innerText = "💡 Correct Answer Explanation";
                     feedbackDesc.innerText = qData.explanation;
                     feedbackBox.className = "feedback-panel explanation-alert";
                     feedbackBox.style.display = "block";
                     
-                    setupNextActionButton("Continue");
+                    setupNextActionButton();
                 }
             }
         }
@@ -960,18 +877,18 @@
                 if(i === qData.correct) b.classList.add('selected-correct');
             });
 
-            document.getElementById('feedback-title').innerText = "⏱️ Time Out!";
+            document.getElementById('feedback-title').innerText = "⏱️ Time's Up!";
             document.getElementById('feedback-desc').innerText = qData.explanation;
             feedbackBox.className = "feedback-panel wrong-alert";
             feedbackBox.style.display = "block";
             
             playSound('wrong');
-            setupNextActionButton("Continue");
+            setupNextActionButton();
         }
 
-        function setupNextActionButton(label) {
+        function setupNextActionButton() {
             const nBtn = document.getElementById('next-btn');
-            nBtn.innerText = label;
+            nBtn.innerText = (currentIdx === questions.length - 1) ? "Finish Challenge" : "Next Question";
             nBtn.style.display = 'block';
         }
 
@@ -989,10 +906,9 @@
             switchView('game-screen', 'result-screen');
             playSound('clapping');
 
-            const totalPossible = questions.length * 10;
-            const accuracy = Math.round((perfectRunAnswers / questions.length) * 100);
+            const accuracy = Math.round((scoreCount / questions.length) * 100);
             
-            document.getElementById('stat-score').innerText = `${gameScore} / ${totalPossible}`;
+            document.getElementById('stat-score').innerText = `${scoreCount} / ${questions.length}`;
             document.getElementById('stat-accuracy').innerText = `${accuracy}%`;
             document.getElementById('stat-perfect').innerText = perfectRunAnswers;
 
