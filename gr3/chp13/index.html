@@ -1,1 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grade 3 EVS - Means of Transport Quiz</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(#dff3ff,#f8fbff);overflow-x:hidden}
+.screen{display:none;min-height:100vh;justify-content:center;align-items:center;padding:20px;text-align:center}
+.active{display:flex;flex-direction:column}
+.card{max-width:800px;width:100%;background:#fff;border-radius:18px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+button{padding:12px 18px;border:none;border-radius:10px;background:#2d7ff9;color:#fff;font-weight:bold;cursor:pointer}
+.option{display:block;margin:8px 0;padding:12px;border:1px solid #ccc;border-radius:10px;cursor:pointer}
+.top{display:flex;justify-content:space-between;gap:10px;margin-bottom:10px}
+img.qimg{max-width:100%;max-height:220px;border-radius:12px}
+.correctFlash{position:fixed;inset:0;pointer-events:none}
+.star{position:absolute;font-size:24px;animation:fall 1s linear forwards}
+@keyframes fall{to{transform:translateY(120px);opacity:0}}
+.wrong{color:red;font-size:40px}
+.bgstar{position:fixed;color:#dbeafe;animation:float 10s linear infinite}
+@keyframes float{from{transform:translateY(100vh)}to{transform:translateY(-100px)}}
+</style>
+</head>
+<body>
+<div id="splash" class="screen active">
+<img src="assets/innovine-logo.png" style="max-width:220px"><h2>Innovine Presents</h2>
+</div>
 
+<div id="intro" class="screen">
+<div class="card"><h1>Means of Transport Quiz</h1><p>Grade 3 EVS</p><button onclick="startGame()">Start Quiz</button></div>
+</div>
+
+<div id="quiz" class="screen">
+<div class="card">
+<div class="top"><div>Score: <span id="score">0</span></div><div>Time: <span id="timer">60</span></div></div>
+<h3 id="qtext"></h3>
+<img id="qimg" class="qimg" style="display:none">
+<div id="options"></div>
+<div id="feedback"></div>
+</div>
+</div>
+
+<div id="challenge" class="screen">
+<div class="card"><h2>Final Challenge</h2><p>Name one transport you use most often and why.</p><button onclick="showResult()">Finish</button></div>
+</div>
+
+<div id="result" class="screen">
+<div class="card"><h2>Quiz Complete!</h2><h3 id="finalScore"></h3><button onclick="location.reload()">Play Again</button></div>
+</div>
+
+<audio id="correct" src="assets/correct.mp3"></audio>
+<audio id="wrong" src="assets/wrong.mp3"></audio>
+<audio id="clap" src="assets/clapping.mp3"></audio>
+
+<script>
+const questions=[
+{q:"Why is a school bus a suitable mode of transport for students?",img:"assets/ch13_q1.png",o:["It can carry many students together safely","It moves only on holidays","It carries only one person","It does not need roads"],a:0,e:"Buses can transport many people efficiently and safely."},
+{q:"Riya wants to visit her grandmother 1500 km away. Which transport is most suitable?",o:["Aeroplane","Bicycle","Rickshaw","Walking"],a:0,e:"Air transport is suitable for long distances."},
+{q:"A farmer needs to transport vegetables to a nearby market.",o:["Truck","Boat","Helicopter","Ship"],a:0,e:"Trucks carry goods on land."},
+{q:"How has modern transport changed lives?",o:["Reduced travel time and improved connectivity","Stopped communication","Reduced trade completely","Made travel impossible"],a:0,e:"Transport helps movement."},
+{q:"Which group contains only land transport?",o:["Bus, train, bicycle","Ship, boat, ferry","Aeroplane, helicopter, glider","Boat, train, bus"],a:0,e:"All are land transport."},
+{q:"Safest action in a car?",o:["Wearing a seat belt","Standing inside","Leaning out","Distracting driver"],a:0,e:"Seat belts improve safety."},
+{q:"Why is transport important?",o:["Helps people and goods move","Creates rivers","Changes weather","Replaces communication"],a:0,e:"Transport connects places."},
+{q:"Why is 'all transport carries only people' incorrect?",o:["Many vehicles carry goods too","Vehicles carry only animals","Goods cannot be transported","Only trains carry people"],a:0,e:"Goods are transported too."},
+{q:"Best transport for an island village?",o:["Boat or ferry","Bicycle","Metro train","Bullock cart"],a:0,e:"Water transport suits islands."},
+{q:"Which does not belong?",o:["Train","Bus","Bicycle","Submarine"],a:3,e:"Submarine is water transport."},
+{q:"Vehicle for medical emergencies?",o:["Ambulance","School bus","Bicycle","Goods truck"],a:0,e:"Ambulances are for emergencies."},
+{q:"Why are roads and railways important for trade?",o:["Move goods efficiently","Create products","Reduce production","Stop travel"],a:0,e:"They support movement of goods."},
+{q:"Which belongs to air transport?",o:["Helicopter","Metro train","Ferry","Bus"],a:0,e:"Helicopters travel through air."},
+{q:"What advantage of public transport is shown?",img:"assets/ch13_q14.png",o:["Many people can travel together efficiently","It uses no energy","It carries only goods","It travels on water"],a:0,e:"Public transport moves many people."},
+{q:"Most environment-friendly choice near school?",o:["Walking or cycling","Large car","Aeroplane","Truck"],a:0,e:"Reduces pollution."},
+{q:"How does good transport help development?",o:["Improves access to markets, schools and hospitals","Reduces communication","Prevents trade","Stops tourism"],a:0,e:"Improves connectivity."},
+{q:"Why follow traffic rules?",o:["Ensure safety","Make vehicles slower","Avoid destinations","Increase traffic"],a:0,e:"Rules prevent accidents."},
+{q:"Fastest Mumbai to Delhi?",o:["Aeroplane","Bicycle","Bullock cart","Walking"],a:0,e:"Air travel is fastest."},
+{q:"Best for heavy machinery across states?",o:["Goods train","Bicycle","Scooter","Rickshaw"],a:0,e:"Goods trains carry heavy loads."},
+{q:"Common purpose of roads, railways, waterways and airways?",o:["Connecting people and places","Producing food","Generating rainfall","Creating electricity"],a:0,e:"All support transportation."}
+];
+
+questions.sort(()=>Math.random()-0.5);
+let i=0,score=0,time=60,retry=false,timer;
+const q=document.getElementById('qtext'),ops=document.getElementById('options'),img=document.getElementById('qimg');
+
+setTimeout(()=>{splash.classList.remove('active');intro.classList.add('active')},5000);
+
+function startGame(){intro.classList.remove('active');quiz.classList.add('active');loadQ();}
+function loadQ(){
+retry=false;document.getElementById('feedback').innerHTML='';
+let x=questions[i]; q.textContent=(i+1)+". "+x.q;
+if(x.img){img.src=x.img;img.style.display='block';}else img.style.display='none';
+ops.innerHTML='';
+x.o.forEach((t,idx)=>{let b=document.createElement('button');b.className='option';b.textContent=t;b.onclick=()=>check(idx);ops.appendChild(b);});
+time=60;document.getElementById('timer').textContent=time;
+clearInterval(timer);timer=setInterval(()=>{time--;timerEl.textContent=time;if(time<=0){clearInterval(timer);nextQ();}},1000);
+}
+const timerEl=document.getElementById('timer');
+function check(idx){
+let x=questions[i];
+if(idx===x.a){
+score++;scoreEl.textContent=score;correct.play();confetti();nextQ();
+}else{
+wrong.play();
+if(!retry){retry=true;feedback.innerHTML='<div class="wrong">✖</div><p>Try once more!</p>';}
+else{feedback.innerHTML='<p><b>Correct Answer:</b> '+x.o[x.a]+'<br>'+x.e+'</p>';setTimeout(nextQ,2500);}
+}
+}
+function nextQ(){clearInterval(timer);i++;if(i<questions.length)loadQ();else{quiz.classList.remove('active');challenge.classList.add('active');clap.play();}}
+function showResult(){challenge.classList.remove('active');result.classList.add('active');finalScore.textContent='Your Score: '+score+' / '+questions.length;}
+const scoreEl=document.getElementById('score');
+function confetti(){for(let i=0;i<15;i++){let s=document.createElement('div');s.className='star';s.textContent='⭐';s.style.left=Math.random()*window.innerWidth+'px';s.style.top='40%';document.body.appendChild(s);setTimeout(()=>s.remove(),1000);}}
+for(let i=0;i<20;i++){let s=document.createElement('div');s.className='bgstar';s.textContent='✦';s.style.left=Math.random()*100+'%';s.style.animationDuration=(6+Math.random()*8)+'s';document.body.appendChild(s);}
+</script>
+</body></html>
