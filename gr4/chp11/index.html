@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Grade 4 EVS: Chapter 11 Challenge</title>
+    <title>Grade 4 EVS: Our Culture and Heritage Challenge</title>
     <style>
         :root {
             --primary-color: #4A90E2;
@@ -397,9 +397,9 @@
     </div>
 
     <div id="intro-screen" class="app-container">
-        <div class="hero-title">🌸 Chapter 11 Explorer!</div>
+        <div class="hero-title">🎭 Our Culture and Heritage Explorer!</div>
         <div class="hero-desc">
-            Welcome to the Grade 4 Chapter 11 Competency Challenge. Use what you know from this chapter to answer questions and make smart, real-life decisions.
+            Welcome to the Grade 4 Chapter 11 Competency Challenge. Discover how India's culture, traditions and heritage make our country unique and strong.
         </div>
         <div style="background:#F0F4F8; padding:15px; border-radius:12px; margin-bottom:25px; font-size:0.9rem; color:#546E7A;">
             <p style="margin-bottom:6px; font-weight:600;">🎮 Game Rules:</p>
@@ -483,15 +483,229 @@
             }
         }
 
-        // 👉 Paste your new Chapter 11 question objects here:
         const questions = [
-            // {
-            //   text: "...",
-            //   options: ["...", "...", "...", "..."],
-            //   correct: index_of_correct_option,
-            //   explanation: "...",
-            //   image: "assets/ch11_q2_4.png" // or q12 image where needed
-            // },
+            {
+                text: "A group of students visits an ancient fort. One student wants to carve their name on the wall. What is the most responsible action?",
+                options: [
+                    "Ignore the student",
+                    "Paint over the wall",
+                    "Explain that historical monuments should be protected and not damaged",
+                    "Encourage everyone to write their names"
+                ],
+                correct: 2,
+                explanation: "Historical monuments are part of our heritage and must be protected from damage."
+            },
+            {
+                text: "What does this picture mainly show?",
+                options: [
+                    "India's rich cultural diversity",
+                    "Everyone wears the same clothes",
+                    "Only festivals are important",
+                    "States have no unique traditions"
+                ],
+                correct: 0,
+                explanation: "Traditional dresses from different states show India’s cultural variety.",
+                image: "assets/ch11_q2_4.png"
+            },
+            {
+                text: "A grandmother teaches her grandchild a traditional folk dance. What is she helping to preserve?",
+                options: [
+                    "Road safety",
+                    "Wildlife",
+                    "Communication skills",
+                    "Cultural heritage"
+                ],
+                correct: 3,
+                explanation: "Traditional dances are part of cultural heritage."
+            },
+            {
+                text: "Why is it important to preserve historical monuments?",
+                options: [
+                    "They create rainfall",
+                    "They increase traffic",
+                    "They help us learn about our history and culture",
+                    "They produce electricity"
+                ],
+                correct: 2,
+                explanation: "Monuments tell us stories about our past and culture."
+            },
+            {
+                text: "Which group contains examples of cultural heritage?",
+                options: [
+                    "Roads, bridges, flyovers",
+                    "Folk dances, festivals, traditional music",
+                    "Cars, buses, aeroplanes",
+                    "Computers, mobile phones, tablets"
+                ],
+                correct: 1,
+                explanation: "Dances, festivals and music are parts of cultural heritage."
+            },
+            {
+                text: "A new student celebrates a festival that is different from yours. What should you do?",
+                options: [
+                    "Ignore the student",
+                    "Make fun of the celebration",
+                    "Respect and learn about the festival",
+                    "Tell the student not to celebrate it"
+                ],
+                correct: 2,
+                explanation: "Respecting and learning about other festivals shows care for diversity."
+            },
+            {
+                text: "Why is culture important?",
+                options: [
+                    "It reflects the traditions, values and way of life of people",
+                    "It changes the weather",
+                    "It replaces education",
+                    "It is useful only during festivals"
+                ],
+                correct: 0,
+                explanation: "Culture shows how people live, what they believe and how they celebrate."
+            },
+            {
+                text: "A student says, 'Heritage includes only old buildings.' Why is this incorrect?",
+                options: [
+                    "Heritage means only ancient objects",
+                    "Heritage includes only monuments",
+                    "Heritage also includes traditions, festivals, art, music and languages",
+                    "Heritage exists only in cities"
+                ],
+                correct: 2,
+                explanation: "Heritage includes both monuments and living traditions."
+            },
+            {
+                text: "A family buys handmade clay lamps from local artisans during a festival. How does this help?",
+                options: [
+                    "It damages heritage",
+                    "It supports traditional crafts and local artisans",
+                    "It replaces festivals",
+                    "It reduces cultural traditions"
+                ],
+                correct: 1,
+                explanation: "Buying traditional crafts supports artisans and keeps traditions alive."
+            },
+            {
+                text: "Which one does NOT belong?",
+                options: [
+                    "Festival",
+                    "Traditional music",
+                    "Laptop",
+                    "Folk dance"
+                ],
+                correct: 2,
+                explanation: "Laptop is not a cultural tradition; the others are cultural activities."
+            },
+            {
+                text: "Students organise a cleanliness drive around a historical monument. What is the main purpose?",
+                options: [
+                    "To increase tourism only",
+                    "To repaint the monument",
+                    "To help protect and preserve the monument",
+                    "To change its design"
+                ],
+                correct: 2,
+                explanation: "Keeping the area clean helps preserve the monument."
+            },
+            {
+                text: "What important message does this picture give?",
+                options: [
+                    "People of different cultures can celebrate together with respect",
+                    "Only one festival should be celebrated",
+                    "Festivals create divisions",
+                    "Festivals are celebrated only by children"
+                ],
+                correct: 0,
+                explanation: "Celebrating Diwali, Eid, Christmas and Gurpurab together shows unity in diversity.",
+                image: "assets/ch11_q12_4.png"
+            },
+            {
+                text: "Why do people continue celebrating traditional festivals?",
+                options: [
+                    "They reduce family time",
+                    "They stop traditions",
+                    "They help preserve culture and strengthen community bonds",
+                    "They replace education"
+                ],
+                correct: 2,
+                explanation: "Festivals keep traditions alive and bring families and communities together."
+            },
+            {
+                text: "You notice litter around a historical monument during a visit. What should you do?",
+                options: [
+                    "Throw more waste",
+                    "Leave the litter there",
+                    "Use a dustbin and encourage others to keep the place clean",
+                    "Ignore the surroundings"
+                ],
+                correct: 2,
+                explanation: "Using dustbins and encouraging cleanliness protects heritage sites."
+            },
+            {
+                text: "How does India's cultural diversity make the country stronger?",
+                options: [
+                    "Different traditions together create a rich national identity",
+                    "Diversity weakens the country",
+                    "Traditions are unimportant",
+                    "Only one culture is valuable"
+                ],
+                correct: 0,
+                explanation: "Many traditions together make India’s culture rich and strong."
+            },
+            {
+                text: "Which example is part of India's tangible heritage?",
+                options: [
+                    "A folk song",
+                    "A historical fort",
+                    "A local language",
+                    "A traditional story"
+                ],
+                correct: 1,
+                explanation: "A fort is a physical, or tangible, heritage site."
+            },
+            {
+                text: "What may happen if historical monuments are neglected?",
+                options: [
+                    "New monuments appear naturally",
+                    "Future generations may lose important links to history",
+                    "Traditions increase immediately",
+                    "Culture becomes stronger automatically"
+                ],
+                correct: 1,
+                explanation: "If monuments are damaged or lost, future generations lose important history."
+            },
+            {
+                text: "Why should we respect people who follow customs different from our own?",
+                options: [
+                    "Different traditions are unimportant",
+                    "Everyone must follow the same customs",
+                    "Respect for diversity promotes peace and harmony",
+                    "Diversity creates problems"
+                ],
+                correct: 2,
+                explanation: "Respecting different customs helps people live together peacefully."
+            },
+            {
+                text: "Students visit a museum displaying old tools, clothes and coins. What can they learn?",
+                options: [
+                    "How electricity is produced",
+                    "How plants grow",
+                    "How people lived in the past",
+                    "How weather changes"
+                ],
+                correct: 2,
+                explanation: "Old tools, clothes and coins show how people lived long ago."
+            },
+            {
+                text: "Students perform traditional dances, learn regional songs and prepare displays on famous monuments. What is the main purpose of this programme?",
+                options: [
+                    "To promote only one culture",
+                    "To encourage competition between states",
+                    "To replace classroom learning",
+                    "To understand, appreciate and preserve India's cultural heritage"
+                ],
+                correct: 3,
+                explanation: "Such programmes help children learn about and value India’s heritage."
+            }
         ];
 
         let currentIdx = 0;
@@ -797,16 +1011,16 @@
             const resBadge = document.getElementById('res-badge');
 
             if(accuracy >= 80) {
-                resTitle.innerText = "🏆 Chapter 11 Star!";
-                resDesc.innerText = "Excellent understanding of the ideas and values in this chapter.";
-                resBadge.innerText = "🌸";
+                resTitle.innerText = "🏆 Heritage Guardian!";
+                resDesc.innerText = "Excellent understanding of India's culture, diversity and the need to protect our heritage.";
+                resBadge.innerText = "🎭";
             } else if(accuracy >= 50) {
-                resTitle.innerText = "🌿 Chapter 11 Explorer!";
-                resDesc.innerText = "Good work applying the chapter concepts. Keep practising to grow even stronger.";
+                resTitle.innerText = "🎉 Culture Explorer!";
+                resDesc.innerText = "Good work appreciating different traditions and heritage. Keep exploring and practising.";
                 resBadge.innerText = "⭐";
             } else {
-                resTitle.innerText = "📚 Chapter 11 Learner!";
-                resDesc.innerText = "Nice effort! Review Chapter 11 again and retry the challenge to deepen your understanding.";
+                resTitle.innerText = "📚 Culture & Heritage Learner!";
+                resDesc.innerText = "Nice effort! Review Chapter 11 again and retry the challenge to deepen your ideas about culture and heritage.";
                 resBadge.innerText = "📖";
             }
         }
