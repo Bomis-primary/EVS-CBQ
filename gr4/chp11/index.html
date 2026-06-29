@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Grade 4 EVS: Our Culture and Heritage Challenge</title>
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #5C6BC0;
+            --success-color: #2ECC71;
+            --error-color: #E74C3C;
+            --warning-color: #F1C40F;
+            --bg-color: #EEF2F7;
+            --card-bg: #FFFFFF;
+            --text-main: #2C3E50;
+            --text-muted: #7F8C8D;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .bg-star {
+            position: absolute;
+            background: rgba(241, 196, 15, 0.3);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: float-around 15s linear infinite;
+        }
+
+        @keyframes float-around {
+            0% { transform: translateY(105vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+
+        #fxCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        .app-container {
+            width: 92%;
+            max-width: 550px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 25px;
+            z-index: 10;
+            position: relative;
+            display: none;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .active-view {
+            display: block;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        #brand-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: #ffffff;
+            border-radius: 20px;
+            width: 92%;
+            max-width: 550px;
+            padding: 40px;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .brand-logo {
+            max-width: 220px;
+            height: auto;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+
+        .loader-bar {
+            width: 140px;
+            height: 5px;
+            background: #E0E0E0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .loader-progress {
+            width: 0%;
+            height: 100%;
+            background: var(--primary-color);
+            animation: load 5s linear forwards;
+        }
+
+        @keyframes load {
+            to { width: 100%; }
+        }
+
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #F0F3F7;
+            padding-bottom: 12px;
+        }
+
+        .score-box {
+            background: #E8F4FD;
+            color: var(--primary-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .timer-box {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
+        .timer-circle {
+            width: 12px;
+            height: 12px;
+            background: var(--success-color);
+            border-radius: 50%;
+            margin-right: 8px;
+            transition: background 0.3s;
+        }
+
+        .timer-warning .timer-circle {
+            background: var(--error-color);
+            animation: blink 0.5s infinite alternate;
+        }
+
+        @keyframes blink {
+            to { opacity: 0.3; }
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #EBF0F6;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .q-image {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            background: #F8FAFC;
+            padding: 5px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            line-height: 1.5;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background: #F8FAFC;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 14px 18px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-main);
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary-color);
+            background: #F0F7FF;
+        }
+
+        .option-btn.selected-wrong {
+            background: #FDEDEC;
+            border-color: var(--error-color);
+            color: var(--error-color);
+        }
+
+        .option-btn.selected-correct {
+            background: #EAFAF1;
+            border-color: var(--success-color);
+            color: var(--success-color);
+        }
+
+        .feedback-panel {
+            background: #FFF9E6;
+            border-left: 4px solid var(--warning-color);
+            padding: 15px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .feedback-panel.wrong-alert {
+            background: #FDEDEC;
+            border-left-color: var(--error-color);
+        }
+
+        .feedback-panel.explanation-alert {
+            background: #EAFAF1;
+            border-left-color: var(--success-color);
+        }
+
+        .feedback-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .feedback-desc {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .action-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        .action-btn:active {
+            transform: scale(0.98);
+        }
+
+        .hero-title {
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .hero-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .final-badge {
+            width: 110px;
+            height: 110px;
+            background: #FFF9E6;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            border: 4px solid var(--warning-color);
+            animation: bounce 2s infinite alternate;
+        }
+
+        @keyframes bounce {
+            to { transform: translateY(-10px); }
+        }
+
+        .stats-summary {
+            background: #F8FAFC;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .stat-row:not(:last-child) {
+            border-bottom: 1px dashed #E2E8F0;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+        }
+
+        .stat-val {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 10px; }
+            .app-container { padding: 18px; }
+            .question-text { font-size: 1.05rem; }
+            .option-btn { padding: 12px 14px; font-size: 0.95rem; }
+            .hero-title { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation" id="bg-layer"></div>
+    <canvas id="fxCanvas"></canvas>
+
+    <div id="brand-screen">
+        <img src="assets/innovine-logo.png" alt="Innovine Logo" class="brand-logo" onerror="this.style.display='none';">
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+    </div>
+
+    <div id="intro-screen" class="app-container">
+        <div class="hero-title">🎭 Our Culture and Heritage Explorer!</div>
+        <div class="hero-desc">
+            Welcome to the Grade 4 Chapter 11 Competency Challenge. Discover how traditions, festivals, monuments and arts together form India's rich heritage.
+        </div>
+        <div style="background:#F0F4F8; padding:15px; border-radius:12px; margin-bottom:25px; font-size:0.9rem; color:#546E7A;">
+            <p style="margin-bottom:6px; font-weight:600;">🎮 Game Rules:</p>
+            <p>⏱️ You have <strong>60 seconds</strong> per question.</p>
+            <p>🔄 Missed a question? You get <strong>one retry</strong> right away!</p>
+        </div>
+        <button class="action-btn" onclick="initAudioAndStart()">Start Adventure</button>
+    </div>
+
+    <div id="game-screen" class="app-container">
+        <div class="header-bar">
+            <div class="score-box">Score: <span id="live-score">0</span></div>
+            <div class="timer-box" id="timer-wrapper">
+                <div class="timer-circle"></div>
+                <span id="time-left">60</span>s
+            </div>
+        </div>
+        <div class="progress-container">
+            <div class="progress-fill" id="game-progress"></div>
+        </div>
+
+        <div id="media-slot"></div>
+
+        <div class="question-text" id="q-text">Loading question data...</div>
+
+        <div class="options-grid" id="options-box"></div>
+
+        <div class="feedback-panel" id="feedback-box">
+            <div class="feedback-title" id="feedback-title">Alert</div>
+            <div class="feedback-desc" id="feedback-desc">Notice description text.</div>
+        </div>
+
+        <button class="action-btn" id="next-btn" onclick="handleNextAction()" style="display:none;">Continue</button>
+    </div>
+
+    <div id="result-screen" class="app-container">
+        <div class="hero-title" id="res-title">Excellent Journey!</div>
+        <div class="badge-container">
+            <div class="final-badge" id="res-badge">🏆</div>
+        </div>
+        <div class="hero-desc" id="res-desc">You completed the competency track.</div>
+
+        <div class="stats-summary">
+            <div class="stat-row">
+                <span class="stat-label">Questions Solved</span>
+                <span class="stat-val" id="stat-score">0/20</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Accuracy Rate</span>
+                <span class="stat-val" id="stat-accuracy">0%</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Perfect First-Try Answers</span>
+                <span class="stat-val" id="stat-perfect">0</span>
+            </div>
+        </div>
+
+        <button class="action-btn" onclick="restartGame()">Try Again</button>
+    </div>
+
+    <script>
+        let audioAssets = {};
+
+        function initAudioAndStart() {
+            audioAssets.correct = new Audio('assets/correct.mp3');
+            audioAssets.wrong = new Audio('assets/wrong.mp3');
+            audioAssets.clapping = new Audio('assets/clapping.mp3');
+            
+            Object.values(audioAssets).forEach(track => {
+                track.play().then(() => { track.pause(); track.currentTime = 0; }).catch(() => {});
+            });
+
+            switchView('intro-screen', 'game-screen'); 
+            startGame();
+        }
+
+        function playSound(type) {
+            if (audioAssets[type]) {
+                audioAssets[type].currentTime = 0;
+                audioAssets[type].play().catch(e => console.log("Audio play blocked:", e));
+            }
+        }
+
+        const questions = [
+            {
+                text: "A group of students visits an ancient fort. One student wants to carve their name on the wall. What is the most responsible action?",
+                options: [
+                    "Explain that historical monuments should be protected and not damaged",
+                    "Encourage everyone to write their names",
+                    "Ignore the student",
+                    "Paint over the wall"
+                ],
+                correct: 0,
+                explanation: "Historical monuments are part of our heritage and should be preserved."
+            },
+            {
+                text: "What does this picture mainly show?",
+                options: [
+                    "India's rich cultural diversity",
+                    "Everyone wears the same clothes",
+                    "Only festivals are important",
+                    "States have no unique traditions"
+                ],
+                correct: 0,
+                explanation: "India is known for its variety of cultures, languages and traditions.",
+                image: "assets/ch11_q2_4.png"
+            },
+            {
+                text: "A grandmother teaches her grandchild a traditional folk dance. What is she helping to preserve?",
+                options: [
+                    "Cultural heritage",
+                    "Wildlife",
+                    "Road safety",
+                    "Communication skills"
+                ],
+                correct: 0,
+                explanation: "Traditional art forms are part of our cultural heritage."
+            },
+            {
+                text: "Why is it important to preserve historical monuments?",
+                options: [
+                    "They help us learn about our history and culture",
+                    "They increase traffic",
+                    "They produce electricity",
+                    "They create rainfall"
+                ],
+                correct: 0,
+                explanation: "Monuments connect us with our past."
+            },
+            {
+                text: "Which group contains examples of cultural heritage?",
+                options: [
+                    "Folk dances, festivals, traditional music",
+                    "Cars, buses, aeroplanes",
+                    "Computers, mobile phones, tablets",
+                    "Roads, bridges, flyovers"
+                ],
+                correct: 0,
+                explanation: "Cultural heritage includes traditions, arts and customs."
+            },
+            {
+                text: "A new student celebrates a festival that is different from yours. What should you do?",
+                options: [
+                    "Respect and learn about the festival",
+                    "Make fun of the celebration",
+                    "Tell the student not to celebrate it",
+                    "Ignore the student"
+                ],
+                correct: 0,
+                explanation: "Respecting different traditions promotes harmony."
+            },
+            {
+                text: "Why is culture important?",
+                options: [
+                    "It reflects the traditions, values and way of life of people",
+                    "It changes the weather",
+                    "It replaces education",
+                    "It is useful only during festivals"
+                ],
+                correct: 0,
+                explanation: "Culture shapes the identity of communities."
+            },
+            {
+                text: "A student says, 'Heritage includes only old buildings.' Why is this incorrect?",
+                options: [
+                    "Heritage also includes traditions, festivals, art, music and languages",
+                    "Heritage includes only monuments",
+                    "Heritage means only ancient objects",
+                    "Heritage exists only in cities"
+                ],
+                correct: 0,
+                explanation: "Heritage includes both tangible and intangible elements."
+            },
+            {
+                text: "A family buys handmade clay lamps from local artisans during a festival. How does this help?",
+                options: [
+                    "It supports traditional crafts and local artisans",
+                    "It reduces cultural traditions",
+                    "It damages heritage",
+                    "It replaces festivals"
+                ],
+                correct: 0,
+                explanation: "Supporting artisans helps preserve traditional skills."
+            },
+            {
+                text: "Which one does NOT belong?",
+                options: [
+                    "Folk dance",
+                    "Traditional music",
+                    "Festival",
+                    "Laptop"
+                ],
+                correct: 3,
+                explanation: "The first three are examples of cultural heritage."
+            },
+            {
+                text: "Students organise a cleanliness drive around a historical monument. What is the main purpose?",
+                options: [
+                    "To help protect and preserve the monument",
+                    "To change its design",
+                    "To repaint the monument",
+                    "To increase tourism only"
+                ],
+                correct: 0,
+                explanation: "Keeping heritage sites clean helps preserve them."
+            },
+            {
+                text: "What important message does this picture give?",
+                options: [
+                    "People of different cultures can celebrate together with respect",
+                    "Only one festival should be celebrated",
+                    "Festivals create divisions",
+                    "Festivals are celebrated only by children"
+                ],
+                correct: 0,
+                explanation: "Festivals strengthen unity and mutual respect.",
+                image: "assets/ch11_q12_4.png"
+            },
+            {
+                text: "Why do people continue celebrating traditional festivals?",
+                options: [
+                    "They help preserve culture and strengthen community bonds",
+                    "They replace education",
+                    "They reduce family time",
+                    "They stop traditions"
+                ],
+                correct: 0,
+                explanation: "Festivals keep traditions alive across generations."
+            },
+            {
+                text: "You notice litter around a historical monument during a visit. What should you do?",
+                options: [
+                    "Use a dustbin and encourage others to keep the place clean",
+                    "Leave the litter there",
+                    "Throw more waste",
+                    "Ignore the surroundings"
+                ],
+                correct: 0,
+                explanation: "Heritage sites should be treated with care and respect."
+            },
+            {
+                text: "How does India's cultural diversity make the country stronger?",
+                options: [
+                    "Different traditions together create a rich national identity",
+                    "Diversity weakens the country",
+                    "Only one culture is valuable",
+                    "Traditions are unimportant"
+                ],
+                correct: 0,
+                explanation: "Diversity contributes to India's unique identity."
+            },
+            {
+                text: "Which example is part of India's tangible heritage?",
+                options: [
+                    "A historical fort",
+                    "A folk song",
+                    "A traditional story",
+                    "A local language"
+                ],
+                correct: 0,
+                explanation: "Tangible heritage includes physical structures and objects."
+            },
+            {
+                text: "What may happen if historical monuments are neglected?",
+                options: [
+                    "Future generations may lose important links to history",
+                    "Culture becomes stronger automatically",
+                    "New monuments appear naturally",
+                    "Traditions increase immediately"
+                ],
+                correct: 0,
+                explanation: "Heritage must be preserved for future generations."
+            },
+            {
+                text: "Why should we respect people who follow customs different from our own?",
+                options: [
+                    "Respect for diversity promotes peace and harmony",
+                    "Everyone must follow the same customs",
+                    "Different traditions are unimportant",
+                    "Diversity creates problems"
+                ],
+                correct: 0,
+                explanation: "Respecting others strengthens society."
+            },
+            {
+                text: "Students visit a museum displaying old tools, clothes and coins. What can they learn?",
+                options: [
+                    "How people lived in the past",
+                    "How weather changes",
+                    "How plants grow",
+                    "How electricity is produced"
+                ],
+                correct: 0,
+                explanation: "Museums preserve objects that teach us about history."
+            },
+            {
+                text: "Students participate in a school programme where they perform traditional dances, learn regional songs and prepare displays on famous monuments. What is the main purpose of this programme?",
+                options: [
+                    "To understand, appreciate and preserve India's cultural heritage",
+                    "To promote only one culture",
+                    "To replace classroom learning",
+                    "To encourage competition between states"
+                ],
+                correct: 0,
+                explanation: "Learning about culture helps preserve and celebrate India's heritage."
+            }
+        ];
+
+        let currentIdx = 0;
+        let scoreCount = 0; 
+        let timerVal = 60;
+        let gameCountdown = null;
+        let tryCount = 0; 
+        let perfectRunAnswers = 0;
+        let isOptionProcessing = false;
+
+        const canvas = document.getElementById('fxCanvas');
+        const ctx = canvas.getContext('2d');
+        let activeFX = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class StarParticle {
+            constructor(x, y) {
+                this.x = x; this.y = y;
+                this.size = Math.random() * 12 + 8;
+                this.speedX = (Math.random() - 0.5) * 6;
+                this.speedY = (Math.random() - 0.7) * 7 - 2;
+                this.gravity = 0.2;
+                this.rotation = Math.random() * 360;
+                this.rotSpeed = (Math.random() - 0.5) * 10;
+                this.alpha = 1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.speedY += this.gravity;
+                this.rotation += this.rotSpeed;
+                this.alpha -= 0.02;
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.fillStyle = `rgba(241, 196, 15, ${this.alpha})`;
+                ctx.beginPath();
+                for (let i = 0; i < 5; i++) {
+                    ctx.lineTo(0, -this.size / 2);
+                    ctx.rotate(72 * Math.PI / 180);
+                    ctx.lineTo(0, -this.size / 4);
+                    ctx.rotate(72 * Math.PI / 180);
+                }
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        class CrossIndicator {
+            constructor(x, y) {
+                this.x = x; this.y = y;
+                this.size = 35;
+                this.alpha = 1;
+                this.scale = 0.5;
+            }
+            update() {
+                if(this.scale < 1) this.scale += 0.1;
+                this.alpha -= 0.02;
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.scale(this.scale, this.scale);
+                ctx.strokeStyle = `rgba(231, 76, 60, ${this.alpha})`;
+                ctx.lineWidth = 6;
+                ctx.lineCap = 'round';
+                ctx.beginPath();
+                ctx.moveTo(-this.size/2, -this.size/2);
+                ctx.lineTo(this.size/2, this.size/2);
+                ctx.moveTo(this.size/2, -this.size/2);
+                ctx.lineTo(-this.size/2, this.size/2);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        function triggerFX(type) {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight * 0.4;
+            if(type === 'star') {
+                for(let i=0; i<25; i++) activeFX.push(new StarParticle(centerX, centerY));
+            } else if(type === 'cross') {
+                activeFX.push(new CrossIndicator(centerX, centerY));
+            }
+        }
+
+        function engineLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            activeFX = activeFX.filter(p => p.alpha > 0);
+            activeFX.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(engineLoop);
+        }
+        requestAnimationFrame(engineLoop);
+
+        function generateBgDecorations() {
+            const layer = document.getElementById('bg-layer');
+            for (let i = 0; i < 8; i++) {
+                let star = document.createElement('div');
+                star.className = 'bg-star';
+                star.style.left = Math.random() * 90 + '%';
+                star.style.width = star.style.height = (Math.random() * 20 + 15) + 'px';
+                star.style.animationDelay = (Math.random() * 10) + 's';
+                star.style.animationDuration = (Math.random() * 8 + 12) + 's';
+                layer.appendChild(star);
+            }
+        }
+        generateBgDecorations();
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('brand-screen').style.display = 'none';
+                switchView(null, 'intro-screen');
+            }, 5000);
+        });
+
+        function switchView(fromId, toId) {
+            if(fromId) document.getElementById(fromId).classList.remove('active-view');
+            document.getElementById(toId).classList.add('active-view');
+        }
+
+        function startGame() {
+            currentIdx = 0;
+            scoreCount = 0;
+            perfectRunAnswers = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            isOptionProcessing = false;
+            tryCount = 0;
+            timerVal = 60;
+            
+            document.getElementById('live-score').innerText = scoreCount;
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('feedback-box').style.display = 'none';
+            document.getElementById('timer-wrapper').classList.remove('timer-warning');
+            
+            const progressPct = (currentIdx / questions.length) * 100;
+            document.getElementById('game-progress').style.width = progressPct + '%';
+
+            const qData = questions[currentIdx];
+            const mediaSlot = document.getElementById('media-slot');
+            if (qData.image) {
+                mediaSlot.innerHTML = `<img src="${qData.image}" class="q-image" alt="Question Graphic">`;
+            } else {
+                mediaSlot.innerHTML = '';
+            }
+
+            document.getElementById('q-text').innerText = `${currentIdx + 1}. ${qData.text}`;
+            
+            const optionsBox = document.getElementById('options-box');
+            optionsBox.innerHTML = '';
+            
+            qData.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => selectOption(idx, btn);
+                optionsBox.appendChild(btn);
+            });
+
+            startCountdown();
+        }
+
+        function startCountdown() {
+            clearInterval(gameCountdown);
+            document.getElementById('time-left').innerText = timerVal;
+            gameCountdown = setInterval(() => {
+                timerVal--;
+                document.getElementById('time-left').innerText = timerVal;
+                
+                if(timerVal <= 10) {
+                    document.getElementById('timer-wrapper').classList.add('timer-warning');
+                }
+                
+                if(timerVal <= 0) {
+                    clearInterval(gameCountdown);
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+
+        function selectOption(chosenIdx, clickedBtn) {
+            if(isOptionProcessing) return;
+            
+            const qData = questions[currentIdx];
+            const optionsBox = document.getElementById('options-box');
+            const feedbackBox = document.getElementById('feedback-box');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackDesc = document.getElementById('feedback-desc');
+
+            if(chosenIdx === qData.correct) {
+                clearInterval(gameCountdown);
+                isOptionProcessing = true;
+                clickedBtn.classList.add('selected-correct');
+                playSound('correct');
+                triggerFX('star');
+                
+                scoreCount += 1; 
+                if(tryCount === 0) {
+                    perfectRunAnswers++;
+                }
+                document.getElementById('live-score').innerText = scoreCount;
+
+                Array.from(optionsBox.children).forEach(b => b.disabled = true);
+
+                feedbackTitle.innerText = "✨ Correct!";
+                feedbackDesc.innerText = qData.explanation;
+                feedbackBox.className = "feedback-panel explanation-alert";
+                feedbackBox.style.display = "block";
+                
+                setupNextActionButton();
+            } else {
+                tryCount++;
+                playSound('wrong');
+                triggerFX('cross');
+                
+                if(tryCount === 1) {
+                    clickedBtn.classList.add('selected-wrong');
+                    clickedBtn.disabled = true;
+                    
+                    feedbackTitle.innerText = "❌ Try Again";
+                    feedbackDesc.innerText = "That choice was incorrect. Don't worry, you have 1 retry left!";
+                    feedbackBox.className = "feedback-panel wrong-alert";
+                    feedbackBox.style.display = "block";
+                } else {
+                    clearInterval(gameCountdown);
+                    isOptionProcessing = true;
+                    clickedBtn.classList.add('selected-wrong');
+                    
+                    Array.from(optionsBox.children).forEach((b, i) => {
+                        b.disabled = true;
+                        if(i === qData.correct) b.classList.add('selected-correct');
+                    });
+
+                    feedbackTitle.innerText = "💡 Correct Answer Explanation";
+                    feedbackDesc.innerText = qData.explanation;
+                    feedbackBox.className = "feedback-panel explanation-alert";
+                    feedbackBox.style.display = "block";
+                    
+                    setupNextActionButton();
+                }
+            }
+        }
+
+        function handleTimeOut() {
+            isOptionProcessing = true;
+            const qData = questions[currentIdx];
+            const optionsBox = document.getElementById('options-box');
+            const feedbackBox = document.getElementById('feedback-box');
+            
+            Array.from(optionsBox.children).forEach((b, i) => {
+                b.disabled = true;
+                if(i === qData.correct) b.classList.add('selected-correct');
+            });
+
+            document.getElementById('feedback-title').innerText = "⏱️ Time's Up!";
+            document.getElementById('feedback-desc').innerText = qData.explanation;
+            feedbackBox.className = "feedback-panel wrong-alert";
+            feedbackBox.style.display = "block";
+            
+            playSound('wrong');
+            setupNextActionButton();
+        }
+
+        function setupNextActionButton() {
+            const nBtn = document.getElementById('next-btn');
+            nBtn.innerText = (currentIdx === questions.length - 1) ? "Finish Challenge" : "Next Question";
+            nBtn.style.display = 'block';
+        }
+
+        function handleNextAction() {
+            currentIdx++;
+            if(currentIdx < questions.length) {
+                loadQuestion();
+            } else {
+                showFinalResults();
+            }
+        }
+
+        function showFinalResults() {
+            clearInterval(gameCountdown);
+            switchView('game-screen', 'result-screen');
+            playSound('clapping');
+
+            const accuracy = Math.round((scoreCount / questions.length) * 100);
+            
+            document.getElementById('stat-score').innerText = `${scoreCount} / ${questions.length}`;
+            document.getElementById('stat-accuracy').innerText = `${accuracy}%`;
+            document.getElementById('stat-perfect').innerText = perfectRunAnswers;
+
+            const resTitle = document.getElementById('res-title');
+            const resDesc = document.getElementById('res-desc');
+            const resBadge = document.getElementById('res-badge');
+
+            if(accuracy >= 80) {
+                resTitle.innerText = "🏆 Heritage Champion!";
+                resDesc.innerText = "Excellent understanding of India's diverse cultures, festivals and monuments.";
+                resBadge.innerText = "🎭";
+            } else if(accuracy >= 50) {
+                resTitle.innerText = "🌈 Culture Explorer!";
+                resDesc.innerText = "Great job learning how different traditions and heritage pieces fit together. Keep exploring to deepen your understanding.";
+                resBadge.innerText = "⭐";
+            } else {
+                resTitle.innerText = "📚 Heritage Learner!";
+                resDesc.innerText = "Good effort! Review Chapter 11 again and retry the challenge to strengthen your ideas about culture and heritage.";
+                resBadge.innerText = "📖";
+            }
+        }
+
+        function restartGame() {
+            switchView('result-screen', 'game-screen');
+            startGame();
+        }
+    </script>
+</body>
+</html>
