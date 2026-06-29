@@ -68,7 +68,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 999;
+            z-index: 5;
             pointer-events: none;
         }
 
@@ -204,7 +204,7 @@
 
         .q-image {
             width: 100%;
-            max-height: 220px;
+            max-height: 200px;
             object-fit: contain;
             border-radius: 12px;
             margin-bottom: 15px;
@@ -246,6 +246,11 @@
         .option-btn:hover:not(:disabled) {
             border-color: var(--primary-color);
             background: #F0F7FF;
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
         }
 
         .option-btn.selected-wrong {
@@ -399,7 +404,7 @@
     <div id="intro-screen" class="app-container">
         <div class="hero-title">🌱 A Clean World Explorer!</div>
         <div class="hero-desc">
-            Welcome to the Grade 4 Chapter 14 Competency Challenge. Learn how small daily actions like waste segregation, saving water and planting trees keep our Earth healthy.
+            Welcome to the Grade 4 Chapter 14 Competency Challenge. Discover how your everyday choices keep our environment clean, healthy, and green.
         </div>
         <div style="background:#F0F4F8; padding:15px; border-radius:12px; margin-bottom:25px; font-size:0.9rem; color:#546E7A;">
             <p style="margin-bottom:6px; font-weight:600;">🎮 Game Rules:</p>
@@ -444,11 +449,11 @@
 
         <div class="stats-summary">
             <div class="stat-row">
-                <span class="stat-label">Questions Solved</span>
+                <span class="stat-label">Questions Solved Successfully</span>
                 <span class="stat-val" id="stat-score">0/20</span>
             </div>
             <div class="stat-row">
-                <span class="stat-label">Accuracy Rate</span>
+                <span class="stat-label">First-Try Accuracy Rate</span>
                 <span class="stat-val" id="stat-accuracy">0%</span>
             </div>
             <div class="stat-row">
@@ -469,7 +474,7 @@
             audioAssets.clapping = new Audio('assets/clapping.mp3');
             
             Object.values(audioAssets).forEach(track => {
-                track.play().then(() => { track.pause(); track.currentTime = 0; }).catch(() => {});
+                track.load();
             });
 
             switchView('intro-screen', 'game-screen'); 
@@ -486,225 +491,125 @@
         const questions = [
             {
                 text: "After the lunch break, some students throw plastic wrappers on the playground while others use the dustbin. Which action helps keep the environment clean?",
-                options: [
-                    "Throwing waste into the dustbin",
-                    "Burning plastic in the playground",
-                    "Throwing waste into the drain",
-                    "Leaving waste on the ground"
-                ],
-                correct: 0,
-                explanation: "Proper disposal of waste helps keep the surroundings clean and prevents pollution."
+                options: ["Burning plastic in the playground", "Throwing waste into the drain", "Throwing waste into the dustbin", "Leaving waste on the ground"],
+                correct: 2,
+                explanation: "Using dustbins prevents littering and keeps our public spaces sanitary."
             },
             {
                 text: "What good practice is shown in the picture?",
-                options: [
-                    "Separating waste before disposal",
-                    "Mixing all waste together",
-                    "Burning household waste",
-                    "Throwing waste on the roadside"
-                ],
+                options: ["Separating waste before disposal", "Mixing all waste together", "Burning household waste", "Throwing waste on the roadside"],
                 correct: 0,
-                explanation: "Waste segregation makes recycling and composting easier.",
+                explanation: "Segregating wet and dry waste makes sorting, recycling, and composting possible.",
                 image: "assets/ch14_q2_4.png"
             },
             {
                 text: "A family carries cloth bags while shopping instead of plastic bags. What is the main benefit of this habit?",
-                options: [
-                    "It reduces plastic waste and pollution.",
-                    "It creates more garbage.",
-                    "It wastes natural resources.",
-                    "It increases the use of plastic."
-                ],
-                correct: 0,
-                explanation: "Reusable bags reduce the amount of plastic entering the environment."
+                options: ["It creates more garbage.", "It reduces plastic waste and pollution.", "It wastes natural resources.", "It increases the use of plastic."],
+                correct: 1,
+                explanation: "Cloth bags are reusable and minimize reliance on single-use plastics that clog ecosystems."
             },
             {
                 text: "Why can litter thrown into drains cause problems during heavy rain?",
-                options: [
-                    "It can block drains and lead to waterlogging.",
-                    "It makes roads wider.",
-                    "It improves water flow.",
-                    "It reduces rainfall."
-                ],
-                correct: 0,
-                explanation: "Blocked drains can cause flooding and dirty surroundings."
+                options: ["It makes roads wider.", "It improves water flow.", "It reduces rainfall.", "It can block drains and lead to waterlogging."],
+                correct: 3,
+                explanation: "Litter blocks up sewer and storm drains, preventing stormwater drainage and causing local floods."
             },
             {
                 text: "Which group contains only biodegradable waste?",
-                options: [
-                    "Vegetable peels, fruit skins, dry leaves",
-                    "Plastic wrapper, broken toy, bottle cap",
-                    "Plastic bottle, glass jar, aluminium can",
-                    "Rubber tyre, plastic bag, metal spoon"
-                ],
-                correct: 0,
-                explanation: "Biodegradable waste decomposes naturally."
+                options: ["Plastic wrapper, broken toy, bottle cap", "Vegetable peels, fruit skins, dry leaves", "Plastic bottle, glass jar, aluminium can", "Rubber tyre, plastic bag, metal spoon"],
+                correct: 1,
+                explanation: "Organic wastes like fruit and vegetable parts decompose naturally back into the soil."
             },
             {
                 text: "You finish eating a packet of biscuits while travelling in a bus. What should you do with the empty wrapper?",
-                options: [
-                    "Keep it with you until you find a dustbin.",
-                    "Throw it out of the window.",
-                    "Hide it under the bus.",
-                    "Leave it on the seat."
-                ],
-                correct: 0,
-                explanation: "Responsible disposal of waste keeps public places clean."
+                options: ["Throw it out of the window.", "Hide it under the bus.", "Keep it with you until you find a dustbin.", "Leave it on the seat."],
+                correct: 2,
+                explanation: "Responsible citizens hold on to their packaging trash until a proper disposal container is reached."
             },
             {
                 text: "Why is a clean environment important?",
-                options: [
-                    "It keeps people healthy and protects plants and animals.",
-                    "It increases pollution.",
-                    "It reduces rainfall.",
-                    "It creates more waste."
-                ],
-                correct: 0,
-                explanation: "A clean environment supports healthy living."
+                options: ["It increases pollution.", "It reduces rainfall.", "It keeps people healthy and protects plants and animals.", "It creates more waste."],
+                correct: 2,
+                explanation: "Sanitation minimizes pathogens, preserves biodiversity, and elevates life standards."
             },
             {
                 text: "A student says, 'Only factories cause pollution.' Why is this incorrect?",
-                options: [
-                    "Pollution can also be caused by littering, vehicle smoke and burning waste.",
-                    "Trees create pollution.",
-                    "Pollution happens only in villages.",
-                    "Factories never cause pollution."
-                ],
-                correct: 0,
-                explanation: "Many human activities contribute to pollution."
+                options: ["Trees create pollution.", "Pollution happens only in villages.", "Factories never cause pollution.", "Pollution can also be caused by littering, vehicle smoke and burning waste."],
+                correct: 3,
+                explanation: "Pollution is caused by both industrial actions and regular public lifestyle habits like vehicular transport and littering."
             },
             {
                 text: "A person washes paint brushes directly in a river. What could be the result?",
-                options: [
-                    "The river water may become polluted and harm aquatic life.",
-                    "Fish grow faster.",
-                    "The river becomes cleaner.",
-                    "Water becomes safe to drink immediately."
-                ],
-                correct: 0,
-                explanation: "Harmful substances can pollute water and affect living organisms."
+                options: ["Fish grow faster.", "The river becomes cleaner.", "The river water may become polluted and harm aquatic life.", "Water becomes safe to drink immediately."],
+                correct: 2,
+                explanation: "Chemical inputs like paints alter the chemistry of freshwater channels, causing harm to aquatic organisms."
             },
             {
                 text: "Which one does NOT belong?",
-                options: [
-                    "Planting trees",
-                    "Using a cloth bag",
-                    "Recycling paper",
-                    "Throwing garbage into a river"
-                ],
-                correct: 3,
-                explanation: "The first three protect the environment, while the last harms it."
+                options: ["Planting trees", "Using a cloth bag", "Throwing garbage into a river", "Recycling paper"],
+                correct: 2,
+                explanation: "Throwing garbage into a river causes environmental degradation, whereas the other options help protect the earth."
             },
             {
                 text: "A child uses both sides of a notebook before buying a new one. Which R is being practised?",
-                options: [
-                    "Reduce",
-                    "Replace",
-                    "Repair",
-                    "Recycle"
-                ],
-                correct: 0,
-                explanation: "Using resources carefully reduces waste."
+                options: ["Replace", "Reduce", "Repair", "Recycle"],
+                correct: 1,
+                explanation: "Maximizing material use minimizes total manufacturing demand, which maps directly to 'Reduce'."
             },
             {
                 text: "What message does this picture give?",
-                options: [
-                    "Everyone can help keep the environment clean and green.",
-                    "Only adults should care for nature.",
-                    "Parks should not be cleaned.",
-                    "Trees are useful only for decoration."
-                ],
+                options: ["Everyone can help keep the environment clean and green.", "Only adults should care for nature.", "Parks should not be cleaned.", "Trees are useful only for decoration."],
                 correct: 0,
-                explanation: "Protecting the environment is everyone's responsibility.",
+                explanation: "Community cleanup operations demonstrate that micro-actions by individuals can keep local neighborhoods healthy.",
                 image: "assets/ch14_q12_4.png"
             },
             {
                 text: "Why do people plant more trees in cities?",
-                options: [
-                    "Trees help reduce pollution and improve air quality.",
-                    "Trees create more plastic waste.",
-                    "Trees increase noise pollution.",
-                    "Trees reduce sunlight completely."
-                ],
-                correct: 0,
-                explanation: "Trees absorb carbon dioxide and release oxygen."
+                options: ["Trees create more plastic waste.", "Trees increase noise pollution.", "Trees help reduce pollution and improve air quality.", "Trees reduce sunlight completely."],
+                correct: 2,
+                explanation: "Urban vegetation absorbs carbon pollutants and synthesizes clean oxygen, purifying local micro-climates."
             },
             {
                 text: "While brushing your teeth, the tap is left running. What should you do?",
-                options: [
-                    "Turn off the tap while brushing.",
-                    "Ignore the wastage.",
-                    "Leave it running.",
-                    "Use more water."
-                ],
-                correct: 0,
-                explanation: "Saving water helps conserve natural resources."
+                options: ["Ignore the wastage.", "Turn off the tap while brushing.", "Leave it running.", "Use more water."],
+                correct: 1,
+                explanation: "Closing active pipelines during internal hygiene tasks prevents excessive processing loss of drinkable water."
             },
             {
                 text: "How are cleanliness, recycling and tree plantation connected?",
-                options: [
-                    "They all help protect the environment.",
-                    "They increase pollution.",
-                    "They affect only cities.",
-                    "They waste natural resources."
-                ],
-                correct: 0,
-                explanation: "These actions contribute to environmental conservation."
+                options: ["They affect only cities.", "They increase pollution.", "They all help protect the environment.", "They waste natural resources."],
+                correct: 2,
+                explanation: "All three techniques operate together as sustainable actions intended to preserve global ecosystems."
             },
             {
                 text: "Which item is most suitable for recycling?",
-                options: [
-                    "Newspaper",
-                    "Banana peel",
-                    "Leftover food",
-                    "Vegetable scraps"
-                ],
-                correct: 0,
-                explanation: "Paper can be collected and recycled into new products."
+                options: ["Banana peel", "Leftover food", "Newspaper", "Vegetable scraps"],
+                correct: 2,
+                explanation: "Newspaper uses wood pulp fiber that can easily be processed back down to yield fresh consumer-ready stock."
             },
             {
                 text: "Why should people avoid burning piles of dry leaves and plastic together?",
-                options: [
-                    "It releases harmful smoke that pollutes the air.",
-                    "It produces fresh oxygen.",
-                    "It cleans the environment.",
-                    "It increases rainfall."
-                ],
-                correct: 0,
-                explanation: "Burning waste releases harmful gases and smoke."
+                options: ["It produces fresh oxygen.", "It cleans the environment.", "It increases rainfall.", "It releases harmful smoke that pollutes the air."],
+                correct: 3,
+                explanation: "Combustion of mixed waste releases airborne toxins that trigger respiratory health issues."
             },
             {
                 text: "Why should children develop environment-friendly habits from a young age?",
-                options: [
-                    "Small daily actions can make a big difference in protecting the Earth.",
-                    "Environmental protection is unnecessary.",
-                    "Only adults can protect nature.",
-                    "Children cannot help the environment."
-                ],
-                correct: 0,
-                explanation: "Responsible habits developed early continue throughout life."
+                options: ["Environmental protection is unnecessary.", "Only adults can protect nature.", "Small daily actions can make a big difference in protecting the Earth.", "Children cannot help the environment."],
+                correct: 2,
+                explanation: "Adopting ecological values early guarantees continuous responsible resource consumption throughout life."
             },
             {
                 text: "A school collects fruit peels and dry leaves to prepare compost. What is the main benefit?",
-                options: [
-                    "Organic waste is converted into useful manure.",
-                    "Air pollution increases.",
-                    "More plastic is produced.",
-                    "Waste increases."
-                ],
-                correct: 0,
-                explanation: "Composting recycles biodegradable waste into nutrient-rich manure."
+                options: ["Air pollution increases.", "More plastic is produced.", "Organic waste is converted into useful manure.", "Waste increases."],
+                correct: 2,
+                explanation: "Composting turns organic litter into high-nutrient fertilizers for crops and garden soils."
             },
             {
                 text: "A neighbourhood starts using separate bins, plants trees, avoids single-use plastics and organises monthly cleanliness drives. What is the most likely result?",
-                options: [
-                    "A cleaner, healthier and more sustainable community",
-                    "Increased pollution",
-                    "More waste on roads",
-                    "Poorer environmental conditions"
-                ],
-                correct: 0,
-                explanation: "Collective environmental actions improve the quality of life for everyone."
+                options: ["Increased pollution", "Poorer environmental conditions", "More waste on roads", "A cleaner, healthier and more sustainable community."],
+                correct: 3,
+                explanation: "Coordinated green initiatives convert neighborhoods into safer, cleaner, and more resilient environments."
             }
         ];
 
@@ -852,7 +757,7 @@
             document.getElementById('feedback-box').style.display = 'none';
             document.getElementById('timer-wrapper').classList.remove('timer-warning');
             
-            const progressPct = (currentIdx / questions.length) * 100;
+            const progressPct = ((currentIdx + 1) / questions.length) * 100;
             document.getElementById('game-progress').style.width = progressPct + '%';
 
             const qData = questions[currentIdx];
@@ -913,9 +818,11 @@
                 playSound('correct');
                 triggerFX('star');
                 
-                scoreCount += 1; 
                 if(tryCount === 0) {
+                    scoreCount += 1;
                     perfectRunAnswers++;
+                } else {
+                    scoreCount += 0.5;
                 }
                 document.getElementById('live-score').innerText = scoreCount;
 
@@ -1000,7 +907,7 @@
             switchView('game-screen', 'result-screen');
             playSound('clapping');
 
-            const accuracy = Math.round((scoreCount / questions.length) * 100);
+            const accuracy = Math.round((perfectRunAnswers / questions.length) * 100);
             
             document.getElementById('stat-score').innerText = `${scoreCount} / ${questions.length}`;
             document.getElementById('stat-accuracy').innerText = `${accuracy}%`;
