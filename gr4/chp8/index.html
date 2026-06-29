@@ -204,7 +204,7 @@
 
         .q-image {
             width: 100%;
-            max-height: 180px;
+            max-height: 220px;
             object-fit: contain;
             border-radius: 12px;
             margin-bottom: 15px;
@@ -250,14 +250,14 @@
 
         .option-btn.selected-wrong {
             background: #FDEDEC;
-            border-color: var(--error-color);
-            color: var(--error-color);
+            border-color: #E74C3C;
+            color: #E74C3C;
         }
 
         .option-btn.selected-correct {
             background: #EAFAF1;
-            border-color: var(--success-color);
-            color: var(--success-color);
+            border-color: #2ECC71;
+            color: #2ECC71;
         }
 
         .feedback-panel {
@@ -271,12 +271,12 @@
 
         .feedback-panel.wrong-alert {
             background: #FDEDEC;
-            border-left-color: var(--error-color);
+            border-left-color: #E74C3C;
         }
 
         .feedback-panel.explanation-alert {
             background: #EAFAF1;
-            border-left-color: var(--success-color);
+            border-left-color: #2ECC71;
         }
 
         .feedback-title {
@@ -397,9 +397,9 @@
     </div>
 
     <div id="intro-screen" class="app-container">
-        <div class="hero-title">🚦 Safety First Explorer!</div>
+        <div class="hero-title">🛡️ Safety First Explorer!</div>
         <div class="hero-desc">
-            Welcome to the Grade 4 Chapter 8 Competency Challenge. Learn how smart safety choices protect you at home, school, on roads and near water.
+            Welcome to the Grade 4 Chapter 8 Competency Challenge. Learn how daily safety habits protect you and others at home, school and outside.
         </div>
         <div style="background:#F0F4F8; padding:15px; border-radius:12px; margin-bottom:25px; font-size:0.9rem; color:#546E7A;">
             <p style="margin-bottom:6px; font-weight:600;">🎮 Game Rules:</p>
@@ -487,13 +487,13 @@
             {
                 text: "A child wants to cross a busy road after school. What is the safest action?",
                 options: [
-                    "Use the zebra crossing and look both ways before crossing",
-                    "Run across quickly",
                     "Cross between moving vehicles",
+                    "Run across quickly",
+                    "Use the zebra crossing and look both ways before crossing",
                     "Follow friends without checking traffic"
                 ],
-                correct: 0,
-                explanation: "Zebra crossings and careful observation help prevent accidents."
+                correct: 2,
+                explanation: "Using a zebra crossing and checking both sides reduces the chance of accidents."
             },
             {
                 text: "Why are the children wearing helmets?",
@@ -504,107 +504,107 @@
                     "To improve balance automatically"
                 ],
                 correct: 0,
-                explanation: "Helmets reduce the risk of serious head injuries.",
+                explanation: "Helmets protect the head if a fall or accident happens.",
                 image: "assets/ch8_q2_4.png"
             },
             {
                 text: "A bottle of cleaning liquid is kept within reach of young children. What should be done?",
                 options: [
-                    "Store it in a safe place away from children",
+                    "Keep it open",
                     "Leave it where it is",
-                    "Transfer it to a drinking bottle",
-                    "Keep it open"
+                    "Store it in a safe place away from children",
+                    "Transfer it to a drinking bottle"
                 ],
-                correct: 0,
-                explanation: "Harmful substances should be stored safely."
+                correct: 2,
+                explanation: "Keeping chemicals away from children prevents accidental poisoning."
             },
             {
                 text: "Why should we avoid playing with matches and lighters?",
                 options: [
-                    "They can accidentally start fires and cause injuries",
                     "They improve concentration",
                     "They help save electricity",
-                    "They cool the surroundings"
+                    "They cool the surroundings",
+                    "They can accidentally start fires and cause injuries"
                 ],
-                correct: 0,
-                explanation: "Matches and lighters can be dangerous if misused."
+                correct: 3,
+                explanation: "Matches and lighters can cause dangerous fires if misused."
             },
             {
                 text: "Which group contains items used for safety?",
                 options: [
+                    "Spoon, plate, bowl",
                     "Helmet, seat belt, first-aid kit",
                     "Football, bat, racket",
-                    "Pencil, eraser, ruler",
-                    "Spoon, plate, bowl"
+                    "Pencil, eraser, ruler"
                 ],
-                correct: 0,
-                explanation: "These items help prevent or manage injuries."
+                correct: 1,
+                explanation: "Helmets, seat belts and first-aid kits help protect people from injuries."
             },
             {
                 text: "A student notices water spilled on the classroom floor. What is the best action?",
                 options: [
-                    "Inform the teacher and clean it safely",
                     "Ignore it",
                     "Run across it",
+                    "Inform the teacher and clean it safely",
                     "Ask others to jump over it"
                 ],
-                correct: 0,
-                explanation: "Wet floors can cause slips and injuries."
+                correct: 2,
+                explanation: "Cleaning the spill and informing the teacher prevents slipping accidents."
             },
             {
                 text: "Why do we follow safety rules?",
                 options: [
-                    "To prevent accidents and protect ourselves and others",
                     "To make life difficult",
-                    "To reduce learning opportunities",
-                    "To avoid responsibility"
+                    "To prevent accidents and protect ourselves and others",
+                    "To avoid responsibility",
+                    "To reduce learning opportunities"
                 ],
-                correct: 0,
-                explanation: "Safety rules help reduce risks."
+                correct: 1,
+                explanation: "Safety rules are meant to keep everyone safe from harm."
             },
             {
                 text: "A student says, 'Accidents happen only on roads.' Why is this incorrect?",
                 options: [
-                    "Accidents can happen at home, school, playgrounds and roads",
                     "Roads are the only dangerous places",
                     "Homes are always risk-free",
-                    "Schools never have accidents"
+                    "Schools never have accidents",
+                    "Accidents can happen at home, school, playgrounds and roads"
                 ],
-                correct: 0,
-                explanation: "Safety is important in all environments."
+                correct: 3,
+                explanation: "Accidents can occur anywhere, so safety is important in all places."
             },
             {
                 text: "A child sees a damaged electrical wire at home. What should the child do?",
                 options: [
-                    "Inform an adult immediately and stay away from it",
-                    "Touch it carefully",
                     "Try to repair it alone",
-                    "Play with it"
+                    "Inform an adult immediately and stay away from it",
+                    "Play with it",
+                    "Touch it carefully"
                 ],
-                correct: 0,
-                explanation: "Damaged wires can cause electric shocks."
+                correct: 1,
+                explanation: "Staying away and informing an adult helps prevent electric shocks."
             },
             {
                 text: "Which one does NOT belong?",
                 options: [
+                    "Television",
                     "Seat belt",
                     "Helmet",
-                    "First-aid kit",
-                    "Television"
+                    "First-aid kit"
                 ],
-                correct: 3,
-                explanation: "The first three are related to safety."
+                correct: 0,
+                explanation: "Television is not a safety item; the others are used for safety."
             },
             {
                 text: "Why should children wait for their turn while using playground equipment?",
                 options: [
-                    "To avoid pushing and accidents",
+                    "To reduce exercise",
                     "To make games longer",
                     "To stop others from playing",
-                    "To reduce exercise"
+                    "To avoid pushing and accidents"
                 ],
-                correct: 0,
-                explanation: "Taking turns helps prevent injuries."
+                correct: 3,
+                explanation: "Waiting prevents pushing and falling, keeping the playground safe."
             },
             {
                 text: "What is the main purpose of this activity?",
@@ -615,96 +615,96 @@
                     "To decorate the building"
                 ],
                 correct: 0,
-                explanation: "Fire drills prepare people to respond safely during emergencies.",
+                explanation: "Fire drills train students to react safely in real emergencies.",
                 image: "assets/ch8_q12_4.png"
             },
             {
                 text: "Why should passengers wear seat belts in moving vehicles?",
                 options: [
-                    "Seat belts help reduce injuries during sudden stops or accidents",
-                    "Seat belts make vehicles faster",
                     "Seat belts improve fuel efficiency",
-                    "Seat belts reduce traffic"
+                    "Seat belts make vehicles faster",
+                    "Seat belts reduce traffic",
+                    "Seat belts help reduce injuries during sudden stops or accidents"
                 ],
-                correct: 0,
-                explanation: "Seat belts help protect passengers."
+                correct: 3,
+                explanation: "Seat belts hold passengers in place during sudden stops and crashes."
             },
             {
                 text: "A stranger offers a child a ride home from school. What should the child do?",
                 options: [
+                    "Go without informing anyone",
                     "Refuse politely and inform a trusted adult",
                     "Accept immediately",
-                    "Go without informing anyone",
                     "Follow the stranger"
                 ],
-                correct: 0,
-                explanation: "Children should avoid going with unknown people."
+                correct: 1,
+                explanation: "Not going with strangers and telling an adult protects the child."
             },
             {
                 text: "Why is being alert an important part of safety?",
                 options: [
+                    "It removes danger completely",
                     "It helps us notice risks and act wisely",
                     "It prevents all accidents automatically",
-                    "It replaces safety rules",
-                    "It removes danger completely"
+                    "It replaces safety rules"
                 ],
-                correct: 0,
-                explanation: "Awareness helps people make safer decisions."
+                correct: 1,
+                explanation: "Alertness helps us spot danger early and take safe actions."
             },
             {
                 text: "Which situation requires immediate adult help?",
                 options: [
-                    "Smelling gas leakage at home",
                     "Finishing homework late",
-                    "Losing a pencil",
-                    "Forgetting a notebook"
+                    "Smelling gas leakage at home",
+                    "Forgetting a notebook",
+                    "Losing a pencil"
                 ],
-                correct: 0,
-                explanation: "Gas leaks can be dangerous and require urgent attention."
+                correct: 1,
+                explanation: "Gas leakage is dangerous and needs quick adult action."
             },
             {
                 text: "Why should children avoid swimming alone?",
                 options: [
-                    "Emergencies may occur and assistance may be needed",
                     "Swimming becomes slower",
+                    "Swimming is impossible alone",
                     "Water becomes deeper automatically",
-                    "Swimming is impossible alone"
+                    "Emergencies may occur and assistance may be needed"
                 ],
-                correct: 0,
-                explanation: "Adult supervision increases safety near water."
+                correct: 3,
+                explanation: "Having someone nearby helps in case of water emergencies."
             },
             {
                 text: "Why should older students help younger children follow safety rules?",
                 options: [
-                    "Safety is a shared responsibility",
-                    "Younger children should learn alone",
                     "Rules are only for adults",
-                    "Safety is unimportant"
+                    "Younger children should learn alone",
+                    "Safety is unimportant",
+                    "Safety is a shared responsibility"
                 ],
-                correct: 0,
-                explanation: "Looking out for others helps create a safer environment."
+                correct: 3,
+                explanation: "Everyone shares responsibility for safety, including older students."
             },
             {
                 text: "A child gets a small cut while playing. What should be done first?",
                 options: [
-                    "Clean the wound and seek appropriate help",
                     "Ignore it",
+                    "Cover it with dirt",
                     "Continue playing immediately",
-                    "Cover it with dirt"
+                    "Clean the wound and seek appropriate help"
                 ],
-                correct: 0,
-                explanation: "Basic first aid helps prevent infection."
+                correct: 3,
+                explanation: "Cleaning and treating a wound prevents infection and further harm."
             },
             {
                 text: "A student wears a helmet while cycling, uses the zebra crossing, and avoids touching electrical switches with wet hands. What does this show?",
                 options: [
-                    "Safety is built through good daily habits",
-                    "Safety is needed only during emergencies",
                     "Rules are followed only at school",
+                    "Safety is needed only during emergencies",
+                    "Safety is built through good daily habits",
                     "Accidents cannot happen"
                 ],
-                correct: 0,
-                explanation: "Safe habits help reduce risks in everyday life."
+                correct: 2,
+                explanation: "Regular safe actions show that safety is part of daily habits."
             }
         ];
 
@@ -1012,15 +1012,15 @@
 
             if(accuracy >= 80) {
                 resTitle.innerText = "🏆 Safety Star!";
-                resDesc.innerText = "Amazing understanding of safety rules and how they protect you and others.";
-                resBadge.innerText = "🚦";
+                resDesc.innerText = "Excellent understanding of daily safety rules and responsible habits.";
+                resBadge.innerText = "🛡️";
             } else if(accuracy >= 50) {
-                resTitle.innerText = "🛡️ Safe Habits Explorer!";
-                resDesc.innerText = "Great job learning about safety in different places. Keep practising to make safe choices automatic.";
+                resTitle.innerText = "🚦 Safe Habits Explorer!";
+                resDesc.innerText = "Good work learning how to stay safe at home, school and outside. Keep practising.";
                 resBadge.innerText = "⭐";
             } else {
-                resTitle.innerText = "🚑 Safety Learner!";
-                resDesc.innerText = "Good effort! Review Chapter 8 again and retry the challenge to build stronger safety habits.";
+                resTitle.innerText = "📚 Safety First Learner!";
+                resDesc.innerText = "Nice effort! Review Chapter 8 again and retry the challenge to strengthen your safety habits.";
                 resBadge.innerText = "📖";
             }
         }
