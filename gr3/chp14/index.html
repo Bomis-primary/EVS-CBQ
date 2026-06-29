@@ -37,7 +37,6 @@
             position: relative;
         }
 
-        /* Animated Background Elements */
         .bg-animation {
             position: absolute;
             top: 0;
@@ -96,7 +95,6 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* Branding Screen */
         #brand-screen {
             display: flex;
             flex-direction: column;
@@ -144,7 +142,6 @@
             to { width: 100%; }
         }
 
-        /* Game UI Components */
         .header-bar {
             display: flex;
             justify-content: space-between;
@@ -311,7 +308,6 @@
             transform: scale(0.98);
         }
 
-        /* Intro & Result Specific UI */
         .hero-title {
             font-size: 1.65rem;
             font-weight: 700;
@@ -467,7 +463,6 @@
     </div>
 
     <script>
-        // Sound configuration initiated safely on user gesture click 
         let audioAssets = {};
 
         function initAudioAndStart() {
@@ -475,7 +470,6 @@
             audioAssets.wrong = new Audio('assets/wrong.mp3');
             audioAssets.clapping = new Audio('assets/clapping.mp3');
             
-            // Warm up audio elements
             Object.values(audioAssets).forEach(track => {
                 track.play().then(() => { track.pause(); track.currentTime = 0; }).catch(() => {});
             });
@@ -502,7 +496,7 @@
                 ],
                 correct: 0,
                 explanation: "Modern communication helps people stay connected across long distances.",
-                image: "assets/ch14_q1.jpg"
+                image: "assets/ch14_q1.png"
             },
             {
                 text: "Riya wants to inform her friend immediately about a change in the school picnic schedule. Which method would be the fastest?",
@@ -626,7 +620,7 @@
                 ],
                 correct: 0,
                 explanation: "Communication has evolved from traditional to digital methods.",
-                image: "assets/ch14_q14.jpg"
+                image: "assets/ch14_q14.png"
             },
             {
                 text: "While using the internet, which habit is most responsible?",
