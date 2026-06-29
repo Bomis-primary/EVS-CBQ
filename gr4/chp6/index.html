@@ -204,7 +204,7 @@
 
         .q-image {
             width: 100%;
-            max-height: 180px;
+            max-height: 220px;
             object-fit: contain;
             border-radius: 12px;
             margin-bottom: 15px;
@@ -250,14 +250,14 @@
 
         .option-btn.selected-wrong {
             background: #FDEDEC;
-            border-color: var(--error-color);
-            color: var(--error-color);
+            border-color: #E74C3C;
+            color: #E74C3C;
         }
 
         .option-btn.selected-correct {
             background: #EAFAF1;
-            border-color: var(--success-color);
-            color: var(--success-color);
+            border-color: #2ECC71;
+            color: #2ECC71;
         }
 
         .feedback-panel {
@@ -271,12 +271,12 @@
 
         .feedback-panel.wrong-alert {
             background: #FDEDEC;
-            border-left-color: var(--error-color);
+            border-left-color: #E74C3C;
         }
 
         .feedback-panel.explanation-alert {
             background: #EAFAF1;
-            border-left-color: var(--success-color);
+            border-left-color: #2ECC71;
         }
 
         .feedback-title {
@@ -391,16 +391,15 @@
 
     <div id="brand-screen">
         <img src="assets/innovine-logo.png" alt="Innovine Logo" class="brand-logo" onerror="this.style.display='none';">
-        <div style="font-size:0.85rem; color:#95A5A6; margin-top:4px;">Preparing Smart Explorers</div>
         <div class="loader-bar">
             <div class="loader-progress"></div>
         </div>
     </div>
 
     <div id="intro-screen" class="app-container">
-        <div class="hero-title">🐣 Life Goes On Explorer!</div>
+        <div class="hero-title">🐾 Animals: How Life Goes On!</div>
         <div class="hero-desc">
-            Welcome to the Grade 4 Chapter 6 Competency Challenge. Learn how animals grow, reproduce and continue their species.
+            Welcome to the Grade 4 Chapter 6 Competency Challenge. Explore how animals grow, reproduce and how life continues through different stages.
         </div>
         <div style="background:#F0F4F8; padding:15px; border-radius:12px; margin-bottom:25px; font-size:0.9rem; color:#546E7A;">
             <p style="margin-bottom:6px; font-weight:600;">🎮 Game Rules:</p>
@@ -488,13 +487,13 @@
             {
                 text: "A farmer notices that new chicks hatch every year even though older hens grow old. What does this show?",
                 options: [
-                    "Living things reproduce to continue their kind",
-                    "Animals never die",
                     "Chicks appear automatically",
-                    "Only birds grow"
+                    "Only birds grow",
+                    "Living things reproduce to continue their kind",
+                    "Animals never die"
                 ],
-                correct: 0,
-                explanation: "Reproduction helps ensure the continuation of a species."
+                correct: 2,
+                explanation: "Reproduction allows new chicks to be born so the species continues."
             },
             {
                 text: "What does this picture mainly show?",
@@ -505,107 +504,107 @@
                     "Animal habitats"
                 ],
                 correct: 0,
-                explanation: "Many animals pass through different stages during their life cycle.",
+                explanation: "Egg, caterpillar, pupa and butterfly show the stages in a butterfly’s life cycle.",
                 image: "assets/ch6_q2_4.png"
             },
             {
                 text: "A puppy depends on its mother during the first few weeks after birth. Why is the mother important?",
                 options: [
+                    "She changes the puppy's colour",
                     "She provides food, protection and care",
-                    "She teaches the puppy to fly",
                     "She helps the puppy lay eggs",
-                    "She changes the puppy's colour"
+                    "She teaches the puppy to fly"
                 ],
-                correct: 0,
-                explanation: "Many animals care for their young until they can survive independently."
+                correct: 1,
+                explanation: "The mother feeds and protects the puppy so it can grow properly."
             },
             {
                 text: "Why would a species face danger if it stopped reproducing?",
                 options: [
-                    "No new individuals would replace older ones",
-                    "Animals would become stronger",
                     "Habitats would disappear immediately",
+                    "Animals would become stronger",
+                    "No new individuals would replace older ones",
                     "Food would increase"
                 ],
-                correct: 0,
-                explanation: "Reproduction is necessary for the survival of a species."
+                correct: 2,
+                explanation: "Without reproduction, older animals die and no new ones take their place."
             },
             {
                 text: "Which group contains animals that give birth to young ones?",
                 options: [
-                    "Cow, dog, cat",
                     "Hen, pigeon, duck",
-                    "Frog, butterfly, mosquito",
-                    "Eagle, parrot, sparrow"
+                    "Eagle, parrot, sparrow",
+                    "Cow, dog, cat",
+                    "Frog, butterfly, mosquito"
                 ],
-                correct: 0,
-                explanation: "These animals are mammals and give birth to young ones."
+                correct: 2,
+                explanation: "Cow, dog and cat are mammals that give birth to live young."
             },
             {
                 text: "A child finds a bird's nest with eggs in a tree. What is the most responsible action?",
                 options: [
-                    "Leave the nest undisturbed and observe from a distance",
                     "Pick up the eggs",
-                    "Move the nest to another place",
-                    "Take the eggs home"
+                    "Take the eggs home",
+                    "Leave the nest undisturbed and observe from a distance",
+                    "Move the nest to another place"
                 ],
-                correct: 0,
-                explanation: "Animals need safe environments to raise their young."
+                correct: 2,
+                explanation: "Not touching the nest keeps the eggs and parent birds safe."
             },
             {
                 text: "Why do animals produce offspring?",
                 options: [
                     "To continue their species and maintain populations",
-                    "To change habitats",
+                    "To stop growing",
                     "To avoid eating food",
-                    "To stop growing"
+                    "To change habitats"
                 ],
                 correct: 0,
-                explanation: "Reproduction is a basic characteristic of living things."
+                explanation: "Producing young ones keeps the species alive over time."
             },
             {
                 text: "A student says, 'All animals reproduce in exactly the same way.' Why is this incorrect?",
                 options: [
                     "Different animals reproduce in different ways",
-                    "All animals lay eggs",
                     "All animals give birth to young ones",
-                    "Reproduction happens only in mammals"
+                    "Reproduction happens only in mammals",
+                    "All animals lay eggs"
                 ],
                 correct: 0,
-                explanation: "Some animals lay eggs, while others give birth to young ones."
+                explanation: "Some animals lay eggs, others give birth; methods of reproduction differ."
             },
             {
                 text: "A child observes tadpoles in a pond and later sees frogs. What does this observation demonstrate?",
                 options: [
-                    "Animals go through stages of growth and development",
                     "Frogs appear suddenly",
-                    "Tadpoles are different animals",
-                    "Water changes into frogs"
+                    "Water changes into frogs",
+                    "Animals go through stages of growth and development",
+                    "Tadpoles are different animals"
                 ],
-                correct: 0,
-                explanation: "Frogs undergo a life cycle involving several stages."
+                correct: 2,
+                explanation: "Tadpoles grow and change into frogs, showing a life cycle."
             },
             {
                 text: "Which one does NOT belong?",
                 options: [
-                    "Hen",
-                    "Duck",
+                    "Cow",
                     "Pigeon",
-                    "Cow"
+                    "Duck",
+                    "Hen"
                 ],
-                correct: 3,
-                explanation: "The first three lay eggs, while the cow gives birth to young ones."
+                correct: 0,
+                explanation: "Cow gives birth to young; the others are birds that lay eggs."
             },
             {
                 text: "A kitten has just been born. Which need is most important during its early days?",
                 options: [
-                    "Mother's care and milk",
-                    "Flying lessons",
                     "Hunting practice",
-                    "Nest building"
+                    "Flying lessons",
+                    "Nest building",
+                    "Mother's care and milk"
                 ],
-                correct: 0,
-                explanation: "Young mammals depend on their mothers for nourishment and protection."
+                correct: 3,
+                explanation: "A newborn kitten needs its mother’s milk and care to survive."
             },
             {
                 text: "Why is the hen sitting on the eggs?",
@@ -616,96 +615,96 @@
                     "To change the egg colour"
                 ],
                 correct: 0,
-                explanation: "Warmth is necessary for the development of chicks inside eggs.",
+                explanation: "Heat from the hen helps the chicks develop inside the eggs.",
                 image: "assets/ch6_q12_4.png"
             },
             {
                 text: "Why do many parent animals protect their young ones?",
                 options: [
-                    "Young animals are often unable to protect themselves",
                     "Young animals are stronger than adults",
-                    "Protection helps animals lay eggs",
-                    "Young animals do not need food"
+                    "Young animals are often unable to protect themselves",
+                    "Young animals do not need food",
+                    "Protection helps animals lay eggs"
                 ],
-                correct: 0,
-                explanation: "Protection increases the chances of survival."
+                correct: 1,
+                explanation: "Young animals are weak and need protection until they grow."
             },
             {
                 text: "A forest area where animals breed is being destroyed. What is the best solution?",
                 options: [
-                    "Protect breeding habitats and forests",
-                    "Remove all animals",
                     "Build more roads through nesting areas",
+                    "Remove all animals",
+                    "Protect breeding habitats and forests",
                     "Reduce protected areas"
                 ],
-                correct: 0,
-                explanation: "Safe habitats are essential for reproduction and survival."
+                correct: 2,
+                explanation: "Saving habitats allows animals to breed and raise young safely."
             },
             {
                 text: "Life cycles help us understand that living things:",
                 options: [
-                    "Grow, reproduce and change over time",
                     "Stay the same forever",
-                    "Do not need parents",
-                    "Never develop"
+                    "Grow, reproduce and change over time",
+                    "Never develop",
+                    "Do not need parents"
                 ],
-                correct: 0,
-                explanation: "Growth and development are important characteristics of living things."
+                correct: 1,
+                explanation: "Life cycles show how living things grow, change and have offspring."
             },
             {
                 text: "Which group contains only animals that lay eggs?",
                 options: [
+                    "Tiger, lion, elephant",
                     "Hen, duck, turtle",
                     "Cow, goat, dog",
-                    "Cat, horse, rabbit",
-                    "Tiger, lion, elephant"
+                    "Cat, horse, rabbit"
                 ],
-                correct: 0,
-                explanation: "These animals reproduce by laying eggs."
+                correct: 1,
+                explanation: "Hen, duck and turtle all lay eggs."
             },
             {
                 text: "Why are some animal populations decreasing?",
                 options: [
+                    "Animals stop growing",
                     "Habitat loss and human activities affect reproduction and survival",
                     "Animals stop eating food",
-                    "Animals stop growing",
                     "All animals migrate permanently"
                 ],
-                correct: 0,
-                explanation: "Habitat destruction affects breeding and survival rates."
+                correct: 1,
+                explanation: "Destroying habitats and hunting reduce animals’ chances to survive and reproduce."
             },
             {
                 text: "Why should we avoid disturbing nests, eggs and young animals?",
                 options: [
-                    "They need safety and care to survive and grow",
                     "They grow faster when disturbed",
-                    "Nests are not important",
-                    "Young animals can survive alone immediately"
+                    "Young animals can survive alone immediately",
+                    "They need safety and care to survive and grow",
+                    "Nests are not important"
                 ],
-                correct: 0,
-                explanation: "Respecting animal life helps protect biodiversity."
+                correct: 2,
+                explanation: "Disturbing them can harm or scare parents away, risking the young ones."
             },
             {
                 text: "A child compares a chick and a calf. Which statement is correct?",
                 options: [
-                    "Both are young forms of animals that need care while growing",
+                    "Young animals do not change as they grow",
                     "Only chicks grow",
-                    "Only calves need food",
-                    "Young animals do not change as they grow"
+                    "Both are young forms of animals that need care while growing",
+                    "Only calves need food"
                 ],
-                correct: 0,
-                explanation: "Young animals depend on food, care and protection."
+                correct: 2,
+                explanation: "Both chick and calf are young animals that need food and care to grow."
             },
             {
                 text: "In a wildlife sanctuary, scientists observe animals breeding successfully and raising young ones. Why is this a positive sign?",
                 options: [
-                    "It shows the population can continue into the future",
                     "It reduces biodiversity",
+                    "It decreases survival chances",
                     "It stops animal growth",
-                    "It decreases survival chances"
+                    "It shows the population can continue into the future"
                 ],
-                correct: 0,
-                explanation: "Successful reproduction helps maintain healthy populations."
+                correct: 3,
+                explanation: "Successful breeding means the species can survive into the future."
             }
         ];
 
@@ -1012,16 +1011,16 @@
             const resBadge = document.getElementById('res-badge');
 
             if(accuracy >= 80) {
-                resTitle.innerText = "🏆 Life Cycle Champion!";
-                resDesc.innerText = "Outstanding understanding of how animals grow, reproduce and depend on safe habitats.";
-                resBadge.innerText = "🐣";
+                resTitle.innerText = "🏆 Life Cycle Star!";
+                resDesc.innerText = "Excellent understanding of animal reproduction, care and how life continues.";
+                resBadge.innerText = "🐾";
             } else if(accuracy >= 50) {
-                resTitle.innerText = "🦋 Growth & Change Explorer!";
-                resDesc.innerText = "Great job learning about life cycles and care for young ones. Keep practising to deepen your understanding.";
+                resTitle.innerText = "🌱 Growing Lives Explorer!";
+                resDesc.innerText = "Good work learning how young animals grow and why habitats must be protected.";
                 resBadge.innerText = "⭐";
             } else {
-                resTitle.innerText = "🐾 Life Goes On Learner!";
-                resDesc.innerText = "Good effort! Review Chapter 6 again and retry the challenge to strengthen your ideas about animal life cycles.";
+                resTitle.innerText = "📚 Animals & Life Cycles Learner!";
+                resDesc.innerText = "Nice effort! Review Chapter 6 again and retry the challenge to deepen your understanding of how life goes on.";
                 resBadge.innerText = "📖";
             }
         }
