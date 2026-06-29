@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Grade 4 EVS: Transport System Challenge</title>
+    <title>Grade 4 EVS: Our Rights and Duties Challenge</title>
     <style>
         :root {
             --primary-color: #4A90E2;
@@ -397,9 +397,9 @@
     </div>
 
     <div id="intro-screen" class="app-container">
-        <div class="hero-title">🚗 Transport System Explorer!</div>
+        <div class="hero-title">⚖️ Our Rights and Duties Explorer!</div>
         <div class="hero-desc">
-            Welcome to the Grade 4 Chapter 10 Competency Challenge. Explore different means of transport and learn how they help people and goods move safely.
+            Welcome to the Grade 4 Chapter 10 Competency Challenge. Learn how rights and duties work together to build a fair and caring community.
         </div>
         <div style="background:#F0F4F8; padding:15px; border-radius:12px; margin-bottom:25px; font-size:0.9rem; color:#546E7A;">
             <p style="margin-bottom:6px; font-weight:600;">🎮 Game Rules:</p>
@@ -483,15 +483,229 @@
             }
         }
 
-        // 👉 Paste your 20 Chapter 10 question objects here (like you did for Chapters 12–14):
         const questions = [
-            // {
-            //   text: "…",
-            //   options: ["…","…","…","…"],
-            //   correct: index_of_correct_option,
-            //   explanation: "…",
-            //   image: "assets/ch10_q2_4.png" // or ch10_q12_4.png where needed
-            // },
+            {
+                text: "A village gets a new government school, and children who could not study earlier are now attending classes regularly. Which right is being supported?",
+                options: [
+                    "Right to Buy Property",
+                    "Right to Play Only",
+                    "Right to Education",
+                    "Right to Travel"
+                ],
+                correct: 2,
+                explanation: "A school allows children to enjoy their Right to Education."
+            },
+            {
+                text: "What important value is shown in the picture?",
+                options: [
+                    "Everyone should be treated equally and given equal opportunities",
+                    "Only some children should study",
+                    "Schools should admit only local students",
+                    "Children should study separately"
+                ],
+                correct: 0,
+                explanation: "Children from different backgrounds learning together shows equality.",
+                image: "assets/ch10_q2_4.png"
+            },
+            {
+                text: "A student is not allowed to participate in a school activity because of the language they speak. What would be the fair action?",
+                options: [
+                    "Exclude new students",
+                    "Allow only local-language speakers",
+                    "Give every student an equal opportunity to participate",
+                    "Cancel the activity"
+                ],
+                correct: 2,
+                explanation: "All students should get equal chances, no matter which language they speak."
+            },
+            {
+                text: "Why is it important for children to know their rights?",
+                options: [
+                    "Rights remove all responsibilities",
+                    "They can protect themselves and respect the rights of others",
+                    "Rights apply only in schools",
+                    "Rights are useful only for adults"
+                ],
+                correct: 1,
+                explanation: "Knowing rights helps children stay safe and respect others’ rights."
+            },
+            {
+                text: "Which group contains duties of a responsible citizen?",
+                options: [
+                    "Ignoring traffic signals, damaging parks, shouting in class",
+                    "Breaking rules, wasting water, littering",
+                    "Following rules, respecting others, protecting public property",
+                    "Avoiding school, wasting food, damaging books"
+                ],
+                correct: 2,
+                explanation: "Responsible citizens follow rules, respect others and protect shared places."
+            },
+            {
+                text: "A student notices someone writing on a classroom wall. What should the student do?",
+                options: [
+                    "Join in writing",
+                    "Write on another wall",
+                    "Stop the person politely or inform the teacher",
+                    "Ignore it completely"
+                ],
+                correct: 2,
+                explanation: "Stopping or reporting the damage helps protect school property."
+            },
+            {
+                text: "Why should rights and duties go together?",
+                options: [
+                    "Duties are only for adults",
+                    "Rights are more important than duties",
+                    "Rights remove responsibilities",
+                    "Enjoying rights also means acting responsibly towards others"
+                ],
+                correct: 3,
+                explanation: "We must use our rights in a way that respects others and follows duties."
+            },
+            {
+                text: "A student says, 'Only adults have duties.' Why is this incorrect?",
+                options: [
+                    "Duties are optional for everyone",
+                    "Children also have responsibilities at home, school and in society",
+                    "Schools have no rules",
+                    "Children have only rights"
+                ],
+                correct: 1,
+                explanation: "Children also share duties, like following rules and helping at home."
+            },
+            {
+                text: "After lunch, students leave wrappers on the playground. What is the responsible action?",
+                options: [
+                    "Cover it with soil",
+                    "Leave it for others",
+                    "Throw more wrappers",
+                    "Pick up the waste and throw it in a dustbin"
+                ],
+                correct: 3,
+                explanation: "Using dustbins keeps the school clean and shows responsibility."
+            },
+            {
+                text: "Which one does NOT belong?",
+                options: [
+                    "Respecting the National Flag",
+                    "Obeying traffic rules",
+                    "Damaging school furniture",
+                    "Protecting public property"
+                ],
+                correct: 2,
+                explanation: "Damaging furniture is against responsible behaviour; the others are good duties."
+            },
+            {
+                text: "Students are allowed to express their ideas during a class discussion. What responsibility should they also show?",
+                options: [
+                    "Interrupt everyone",
+                    "Listen respectfully to others' opinions",
+                    "Refuse to listen",
+                    "Make fun of different ideas"
+                ],
+                correct: 1,
+                explanation: "Freedom of expression must be used with respect for others’ views."
+            },
+            {
+                text: "Which duty is being shown?",
+                options: [
+                    "Protecting and caring for the environment",
+                    "Celebrating a festival",
+                    "Playing a sport",
+                    "Travelling to school"
+                ],
+                correct: 0,
+                explanation: "Planting saplings shows care for the environment.",
+                image: "assets/ch10_q12_4.png"
+            },
+            {
+                text: "Why do schools have rules?",
+                options: [
+                    "They reduce learning",
+                    "They stop students from playing",
+                    "They create confusion",
+                    "They help maintain discipline, safety and fairness"
+                ],
+                correct: 3,
+                explanation: "Rules keep school safe, fair and organised."
+            },
+            {
+                text: "A new classmate speaks a different language. What is the best way to welcome the student?",
+                options: [
+                    "Exclude the student from activities",
+                    "Ignore the student",
+                    "Treat the student with kindness and respect",
+                    "Make fun of the language"
+                ],
+                correct: 2,
+                explanation: "Kindness and respect show good citizenship and respect for diversity."
+            },
+            {
+                text: "Why is it important to respect the rights of others?",
+                options: [
+                    "Rights belong only to adults",
+                    "Respect is optional",
+                    "Only teachers have rights",
+                    "Everyone deserves fairness, dignity and equal treatment"
+                ],
+                correct: 3,
+                explanation: "All people should be treated fairly and with respect."
+            },
+            {
+                text: "Which action shows responsible citizenship?",
+                options: [
+                    "Wasting food every day",
+                    "Saving water and electricity",
+                    "Damaging public parks",
+                    "Ignoring traffic rules"
+                ],
+                correct: 1,
+                explanation: "Saving resources shows care for the environment and community."
+            },
+            {
+                text: "What could happen if everyone damaged public property?",
+                options: [
+                    "Roads would improve automatically",
+                    "Schools would become larger",
+                    "Everyone would lose access to useful community facilities",
+                    "More parks would be built"
+                ],
+                correct: 2,
+                explanation: "If property is damaged, people cannot use important shared facilities."
+            },
+            {
+                text: "Why should we help classmates who need support?",
+                options: [
+                    "It reduces learning",
+                    "Friends should never help each other",
+                    "Helping others builds a caring and responsible community",
+                    "It is only the teacher's job"
+                ],
+                correct: 2,
+                explanation: "Helping classmates creates a friendly and responsible class."
+            },
+            {
+                text: "Which action shows responsibility at home?",
+                options: [
+                    "Throwing waste on the floor",
+                    "Keeping your room clean and helping with simple household tasks",
+                    "Refusing to help family members",
+                    "Leaving lights switched on unnecessarily"
+                ],
+                correct: 1,
+                explanation: "Helping at home and keeping things clean shows responsibility."
+            },
+            {
+                text: "Children enjoy studying in a clean, safe classroom. They also keep the classroom tidy and follow school rules. What does this show?",
+                options: [
+                    "Duties are more important than rights",
+                    "Rights remove responsibilities",
+                    "Rights and duties work together to create a better community",
+                    "Rules are unnecessary"
+                ],
+                correct: 2,
+                explanation: "Using rights (a safe classroom) and doing duties (keeping it clean) together create a good environment."
+            }
         ];
 
         let currentIdx = 0;
@@ -797,16 +1011,16 @@
             const resBadge = document.getElementById('res-badge');
 
             if(accuracy >= 80) {
-                resTitle.innerText = "🏆 Transport Smart Star!";
-                resDesc.innerText = "Excellent understanding of different transport modes and safe travel choices.";
-                resBadge.innerText = "🚆";
+                resTitle.innerText = "🏆 Rights & Duties Champion!";
+                resDesc.innerText = "Excellent understanding of how rights and responsibilities create a fair and caring community.";
+                resBadge.innerText = "⚖️";
             } else if(accuracy >= 50) {
-                resTitle.innerText = "🚍 Everyday Transport Explorer!";
-                resDesc.innerText = "Good job learning how land, water and air transport help people and goods move.";
+                resTitle.innerText = "🧭 Responsible Citizen Explorer!";
+                resDesc.innerText = "Good work learning to balance rights with duties. Keep practising responsible choices.";
                 resBadge.innerText = "⭐";
             } else {
-                resTitle.innerText = "📚 Transport System Learner!";
-                resDesc.innerText = "Nice effort! Review Chapter 10 again and retry the challenge to strengthen your transport concepts.";
+                resTitle.innerText = "📚 Rights and Duties Learner!";
+                resDesc.innerText = "Nice effort! Review Chapter 10 again and retry the challenge to strengthen your ideas about citizenship.";
                 resBadge.innerText = "📖";
             }
         }
