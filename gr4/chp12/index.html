@@ -68,7 +68,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 999;
+            z-index: 5;
             pointer-events: none;
         }
 
@@ -246,6 +246,11 @@
         .option-btn:hover:not(:disabled) {
             border-color: var(--primary-color);
             background: #F0F7FF;
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
         }
 
         .option-btn.selected-wrong {
@@ -444,11 +449,11 @@
 
         <div class="stats-summary">
             <div class="stat-row">
-                <span class="stat-label">Questions Solved</span>
+                <span class="stat-label">Questions Solved Successfully</span>
                 <span class="stat-val" id="stat-score">0/20</span>
             </div>
             <div class="stat-row">
-                <span class="stat-label">Accuracy Rate</span>
+                <span class="stat-label">First-Try Accuracy Rate</span>
                 <span class="stat-val" id="stat-accuracy">0%</span>
             </div>
             <div class="stat-row">
@@ -469,7 +474,7 @@
             audioAssets.clapping = new Audio('assets/clapping.mp3');
             
             Object.values(audioAssets).forEach(track => {
-                track.play().then(() => { track.pause(); track.currentTime = 0; }).catch(() => {});
+                track.load();
             });
 
             switchView('intro-screen', 'game-screen'); 
@@ -486,224 +491,124 @@
         const questions = [
             {
                 text: "A family plans to travel from Mumbai to Delhi for an important event and wants to reach quickly. Which mode of transport would be the most suitable?",
-                options: [
-                    "Aeroplane",
-                    "Bicycle",
-                    "Bullock cart",
-                    "Walking"
-                ],
-                correct: 0,
+                options: ["Walking", "Bullock cart", "Aeroplane", "Bicycle"],
+                correct: 2,
                 explanation: "Air transport is the fastest option for long-distance travel."
             },
             {
                 text: "What is the main purpose of the objects shown in the picture?",
-                options: [
-                    "They are used to buy and sell goods and services",
-                    "They are used for communication",
-                    "They are used for measuring length",
-                    "They are used to grow crops"
-                ],
+                options: ["They are used to buy and sell goods and services", "They are used for communication", "They are used for measuring length", "They are used to grow crops"],
                 correct: 0,
                 explanation: "Currency is the medium of exchange used in daily transactions.",
                 image: "assets/ch12_q2_4.png"
             },
             {
                 text: "A farmer needs to send fresh vegetables to a nearby town every morning. Which transport would be most suitable?",
-                options: [
-                    "Truck or mini goods vehicle",
-                    "Ship",
-                    "Helicopter",
-                    "Bicycle"
-                ],
-                correct: 0,
+                options: ["Helicopter", "Truck or mini goods vehicle", "Ship", "Bicycle"],
+                correct: 1,
                 explanation: "Road transport is practical for transporting goods over short distances."
             },
             {
                 text: "How has better transport helped people in India?",
-                options: [
-                    "It has made travel and movement of goods faster and easier",
-                    "It has reduced communication completely",
-                    "It has stopped trade",
-                    "It has made travel more difficult"
-                ],
-                correct: 0,
+                options: ["It has reduced communication completely", "It has stopped trade", "It has made travel more difficult", "It has made travel and movement of goods faster and easier"],
+                correct: 3,
                 explanation: "Efficient transport supports trade, tourism and daily life."
             },
             {
                 text: "Which group contains only public transport?",
-                options: [
-                    "Bus, metro, train",
-                    "Car, motorcycle, bicycle",
-                    "Bicycle, scooter, skateboard",
-                    "Truck, tractor, crane"
-                ],
-                correct: 0,
+                options: ["Truck, tractor, crane", "Bicycle, scooter, skateboard", "Bus, metro, train", "Car, motorcycle, bicycle"],
+                correct: 2,
                 explanation: "Public transport carries many passengers together."
             },
             {
                 text: "A student receives ₹500 as a birthday gift and wants to buy many expensive toys immediately. What would be the wisest decision?",
-                options: [
-                    "Spend carefully and save some money for future needs",
-                    "Spend all the money at once",
-                    "Give the money away without thinking",
-                    "Throw the money away"
-                ],
-                correct: 0,
+                options: ["Give the money away without thinking", "Throw the money away", "Spend all the money at once", "Spend carefully and save some money for future needs"],
+                correct: 3,
                 explanation: "Good financial habits include saving and thoughtful spending."
             },
             {
                 text: "Why do we use money instead of exchanging goods directly?",
-                options: [
-                    "Money makes buying and selling easier and more convenient",
-                    "Goods cannot be exchanged",
-                    "Money replaces transport",
-                    "Currency is used only in banks"
-                ],
-                correct: 0,
+                options: ["Currency is used only in banks", "Goods cannot be exchanged", "Money makes buying and selling easier and more convenient", "Money replaces transport"],
+                correct: 2,
                 explanation: "Currency is a common medium of exchange."
             },
             {
                 text: "A student says, 'Only paper notes are considered money.' Why is this incorrect?",
-                options: [
-                    "Coins are also valid currency in India",
-                    "Coins are toys",
-                    "Only digital payments are money",
-                    "Notes are used only in banks"
-                ],
-                correct: 0,
+                options: ["Notes are used only in banks", "Coins are also valid currency in India", "Coins are toys", "Only digital payments are money"],
+                correct: 1,
                 explanation: "Indian currency includes both notes and coins."
             },
             {
                 text: "A shopkeeper accepts payment using a QR code. What advantage does this provide?",
-                options: [
-                    "It allows quick and cashless payment",
-                    "It replaces transport",
-                    "It increases the price of goods",
-                    "It reduces the value of money"
-                ],
-                correct: 0,
+                options: ["It increases the price of goods", "It replaces transport", "It allows quick and cashless payment", "It reduces the value of money"],
+                correct: 2,
                 explanation: "Digital payments make transactions faster and more convenient."
             },
             {
                 text: "Which one does NOT belong?",
-                options: [
-                    "Bus",
-                    "Train",
-                    "Ship",
-                    "Wallet"
-                ],
-                correct: 3,
+                options: ["Ship", "Bus", "Wallet", "Train"],
+                correct: 2,
                 explanation: "The first three are modes of transport, while a wallet is used to keep money."
             },
             {
                 text: "A group of students is going on a school picnic within the city. Which transport would usually be the most practical?",
-                options: [
-                    "School bus",
-                    "Aeroplane",
-                    "Ship",
-                    "Helicopter"
-                ],
-                correct: 0,
+                options: ["Ship", "Helicopter", "Aeroplane", "School bus"],
+                correct: 3,
                 explanation: "A school bus is suitable for group travel over short distances."
             },
             {
                 text: "What problem is this transport system helping to solve?",
-                options: [
-                    "It helps many people travel efficiently and reduces traffic congestion",
-                    "It increases road traffic",
-                    "It replaces schools",
-                    "It reduces rainfall"
-                ],
+                options: ["It helps many people travel efficiently and reduces traffic congestion", "It increases road traffic", "It replaces schools", "It reduces rainfall"],
                 correct: 0,
                 explanation: "Metro systems provide efficient urban transport.",
                 image: "assets/ch12_q12_4.png"
             },
             {
                 text: "Why is saving money considered a good habit?",
-                options: [
-                    "It helps meet future needs and emergencies",
-                    "It prevents shopping forever",
-                    "It stops people from earning",
-                    "It reduces the value of money"
-                ],
-                correct: 0,
+                options: ["It reduces the value of money", "It helps meet future needs and emergencies", "It prevents shopping forever", "It stops people from earning"],
+                correct: 1,
                 explanation: "Savings provide financial security."
             },
             {
                 text: "While travelling by bus, you notice an elderly passenger standing. What is the most responsible action?",
-                options: [
-                    "Offer your seat politely",
-                    "Ignore the passenger",
-                    "Block the aisle",
-                    "Occupy more seats"
-                ],
-                correct: 0,
+                options: ["Ignore the passenger", "Occupy more seats", "Offer your seat politely", "Block the aisle"],
+                correct: 2,
                 explanation: "Respect and kindness are important while using public transport."
             },
             {
                 text: "How are transport and currency connected?",
-                options: [
-                    "Both help people meet their daily needs and support the economy",
-                    "They are completely unrelated",
-                    "Currency replaces transport",
-                    "Transport replaces money"
-                ],
-                correct: 0,
+                options: ["Currency replaces transport", "Transport replaces money", "They are completely unrelated", "Both help people meet their daily needs and support the economy"],
+                correct: 3,
                 explanation: "Transport moves people and goods, while currency helps buy and sell them."
             },
             {
                 text: "Which transport would be best for travelling across a river?",
-                options: [
-                    "Boat",
-                    "Train",
-                    "Bicycle",
-                    "Scooter"
-                ],
-                correct: 0,
+                options: ["Scooter", "Train", "Boat", "Bicycle"],
+                correct: 2,
                 explanation: "Boats are designed for water transport."
             },
             {
                 text: "Why does good transport encourage tourism?",
-                options: [
-                    "It helps people reach different places safely and conveniently",
-                    "It reduces the number of visitors",
-                    "It closes tourist places",
-                    "It stops travel"
-                ],
-                correct: 0,
+                options: ["It closes tourist places", "It stops travel", "It reduces the number of visitors", "It helps people reach different places safely and conveniently"],
+                correct: 3,
                 explanation: "Better connectivity makes travel easier."
             },
             {
                 text: "Why should children learn the value of money?",
-                options: [
-                    "It helps them become responsible spenders and savers",
-                    "Saving is unnecessary",
-                    "Money has no value",
-                    "Money should be spent immediately"
-                ],
-                correct: 0,
+                options: ["Saving is unnecessary", "Money should be spent immediately", "Money has no value", "It helps them become responsible spenders and savers"],
+                correct: 3,
                 explanation: "Good financial habits develop from an early age."
             },
             {
                 text: "A factory needs to transport heavy goods to another state. Which transport is generally the most suitable?",
-                options: [
-                    "Goods train",
-                    "Bicycle",
-                    "Scooter",
-                    "Auto-rickshaw"
-                ],
-                correct: 0,
+                options: ["Scooter", "Goods train", "Auto-rickshaw", "Bicycle"],
+                correct: 1,
                 explanation: "Goods trains carry heavy loads efficiently over long distances."
             },
             {
                 text: "A family compares the cost, distance and time before choosing how to travel during a holiday. What skill are they demonstrating?",
-                options: [
-                    "Making informed decisions by comparing different options",
-                    "Guessing randomly",
-                    "Ignoring available information",
-                    "Choosing the most expensive option automatically"
-                ],
-                correct: 0,
+                options: ["Choosing the most expensive option automatically", "Ignoring available information", "Making informed decisions by comparing different options", "Guessing randomly"],
+                correct: 2,
                 explanation: "Good decisions involve comparing different factors before choosing."
             }
         ];
@@ -852,7 +757,7 @@
             document.getElementById('feedback-box').style.display = 'none';
             document.getElementById('timer-wrapper').classList.remove('timer-warning');
             
-            const progressPct = (currentIdx / questions.length) * 100;
+            const progressPct = ((currentIdx + 1) / questions.length) * 100;
             document.getElementById('game-progress').style.width = progressPct + '%';
 
             const qData = questions[currentIdx];
@@ -913,9 +818,11 @@
                 playSound('correct');
                 triggerFX('star');
                 
-                scoreCount += 1; 
                 if(tryCount === 0) {
+                    scoreCount += 1;
                     perfectRunAnswers++;
+                } else {
+                    scoreCount += 0.5;
                 }
                 document.getElementById('live-score').innerText = scoreCount;
 
@@ -950,6 +857,8 @@
                         if(i === qData.correct) b.classList.add('selected-correct');
                     });
 
+                    parentContainerColorUpdate();
+
                     feedbackTitle.innerText = "💡 Correct Answer Explanation";
                     feedbackDesc.innerText = qData.explanation;
                     feedbackBox.className = "feedback-panel explanation-alert";
@@ -959,6 +868,8 @@
                 }
             }
         }
+
+        function parentContainerColorUpdate() {}
 
         function handleTimeOut() {
             isOptionProcessing = true;
@@ -1000,7 +911,7 @@
             switchView('game-screen', 'result-screen');
             playSound('clapping');
 
-            const accuracy = Math.round((scoreCount / questions.length) * 100);
+            const accuracy = Math.round((perfectRunAnswers / questions.length) * 100);
             
             document.getElementById('stat-score').innerText = `${scoreCount} / ${questions.length}`;
             document.getElementById('stat-accuracy').innerText = `${accuracy}%`;
