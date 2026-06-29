@@ -68,7 +68,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 999;
+            z-index: 5;
             pointer-events: none;
         }
 
@@ -204,7 +204,7 @@
 
         .q-image {
             width: 100%;
-            max-height: 220px;
+            max-height: 200px;
             object-fit: contain;
             border-radius: 12px;
             margin-bottom: 15px;
@@ -246,6 +246,11 @@
         .option-btn:hover:not(:disabled) {
             border-color: var(--primary-color);
             background: #F0F7FF;
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
         }
 
         .option-btn.selected-wrong {
@@ -399,7 +404,7 @@
     <div id="intro-screen" class="app-container">
         <div class="hero-title">🌍 Earth and Its Neighbours Explorer!</div>
         <div class="hero-desc">
-            Welcome to the Grade 4 Chapter 13 Competency Challenge. Discover how the Sun, Earth and Moon move, and how these movements create day, night, seasons and more.
+            Welcome to the Grade 4 Chapter 13 Competency Challenge. Discover how Earth's movements, the Sun, and the Moon create day, night, seasons, and life-supporting conditions.
         </div>
         <div style="background:#F0F4F8; padding:15px; border-radius:12px; margin-bottom:25px; font-size:0.9rem; color:#546E7A;">
             <p style="margin-bottom:6px; font-weight:600;">🎮 Game Rules:</p>
@@ -444,11 +449,11 @@
 
         <div class="stats-summary">
             <div class="stat-row">
-                <span class="stat-label">Questions Solved</span>
+                <span class="stat-label">Questions Solved Successfully</span>
                 <span class="stat-val" id="stat-score">0/20</span>
             </div>
             <div class="stat-row">
-                <span class="stat-label">Accuracy Rate</span>
+                <span class="stat-label">First-Try Accuracy Rate</span>
                 <span class="stat-val" id="stat-accuracy">0%</span>
             </div>
             <div class="stat-row">
@@ -469,7 +474,7 @@
             audioAssets.clapping = new Audio('assets/clapping.mp3');
             
             Object.values(audioAssets).forEach(track => {
-                track.play().then(() => { track.pause(); track.currentTime = 0; }).catch(() => {});
+                track.load();
             });
 
             switchView('intro-screen', 'game-screen'); 
@@ -486,225 +491,126 @@
         const questions = [
             {
                 text: "Riya speaks to her cousin in another country. It is bright daylight where Riya lives, but it is night where her cousin lives. What is the best reason for this difference?",
-                options: [
-                    "Different parts of the Earth receive sunlight at different times because the Earth rotates.",
-                    "Clouds create night.",
-                    "The Moon blocks the sunlight every evening.",
-                    "The Sun rises at different speeds."
-                ],
-                correct: 0,
-                explanation: "The Earth's rotation causes day and night in different places."
+                options: ["Clouds create night.", "Different parts of the Earth receive sunlight at different times because the Earth rotates.", "The Moon blocks the sunlight every evening.", "The Sun rises at different speeds."],
+                correct: 1,
+                explanation: "As the Earth rotates on its axis, only the half facing the Sun receives light (day), while the other half is in shadow (night)."
             },
             {
                 text: "What can be inferred from the picture?",
-                options: [
-                    "The Moon revolves around the Earth while the Earth revolves around the Sun.",
-                    "The Sun revolves around the Earth.",
-                    "The Earth revolves around the Moon.",
-                    "The Moon stays fixed in one place."
-                ],
+                options: ["The Moon revolves around the Earth while the Earth revolves around the Sun.", "The Sun revolves around the Earth.", "The Earth revolves around the Moon.", "The Moon stays fixed in one place."],
                 correct: 0,
-                explanation: "The Earth and Moon have different paths of movement.",
+                explanation: "The Moon is a natural satellite of the Earth and orbits it, while the Earth simultaneously orbits the Sun.",
                 image: "assets/ch13_q2_4.png"
             },
             {
                 text: "A student in India wants to attend an online session with a friend living in another country. What should the student consider before joining?",
-                options: [
-                    "The time difference between the two places",
-                    "The season in India only",
-                    "The colour of the sky",
-                    "The direction of the wind"
-                ],
-                correct: 0,
-                explanation: "Different places experience different times because of the Earth's rotation."
+                options: ["The season in India only", "The colour of the sky", "The time difference between the two places", "The direction of the wind"],
+                correct: 2,
+                explanation: "Due to Earth's rotation, different countries have different time zones, making it necessary to consider time differences when communicating globally."
             },
             {
                 text: "Why do different seasons occur during the year?",
-                options: [
-                    "The Earth revolves around the Sun while its axis remains tilted.",
-                    "The Moon changes its shape.",
-                    "The Sun becomes hotter every summer.",
-                    "The Earth stops rotating."
-                ],
-                correct: 0,
-                explanation: "The Earth's revolution and tilted axis cause seasonal changes."
+                options: ["The Moon changes its shape.", "The Sun becomes hotter every summer.", "The Earth revolves around the Sun while its axis remains tilted.", "The Earth stops rotating."],
+                correct: 2,
+                explanation: "The combination of the Earth's revolution around the Sun and the constant tilt of its axis causes seasons."
             },
             {
                 text: "Which group contains only natural heavenly bodies?",
-                options: [
-                    "Sun, Moon, Earth",
-                    "Rocket, satellite, Earth",
-                    "Telescope, Earth, Moon",
-                    "Aeroplane, Moon, Sun"
-                ],
-                correct: 0,
-                explanation: "These are naturally occurring objects in space."
+                options: ["Rocket, satellite, Earth", "Sun, Moon, Earth", "Telescope, Earth, Moon", "Aeroplane, Moon, Sun"],
+                correct: 1,
+                explanation: "The Sun, Moon, and Earth exist naturally in space, unlike rockets, telescopes, airplanes, or artificial satellites."
             },
             {
                 text: "The weather forecast says heavy rain is expected tomorrow. What would be the best decision?",
-                options: [
-                    "Carry an umbrella or raincoat while going out.",
-                    "Ignore the forecast.",
-                    "Leave home without preparation.",
-                    "Wear only sunglasses."
-                ],
-                correct: 0,
-                explanation: "Weather information helps people make safe decisions."
+                options: ["Ignore the forecast.", "Leave home without preparation.", "Wear only sunglasses.", "Carry an umbrella or raincoat while going out."],
+                correct: 3,
+                explanation: "Weather forecasts help us plan ahead and make responsible decisions to protect ourselves."
             },
             {
                 text: "Why is the Earth called a unique planet?",
-                options: [
-                    "It provides suitable conditions to support life.",
-                    "It shines like the Sun.",
-                    "It has no atmosphere.",
-                    "It is the largest planet."
-                ],
-                correct: 0,
-                explanation: "Earth has air, water and suitable temperatures for life."
+                options: ["It shines like the Sun.", "It provides suitable conditions to support life.", "It has no atmosphere.", "It is the largest planet."],
+                correct: 1,
+                explanation: "Earth is unique because it contains water, air (oxygen), and suitable temperatures necessary to support living things."
             },
             {
                 text: "A student says, 'The Sun moves around the Earth every day.' Why is this incorrect?",
-                options: [
-                    "The Earth rotates on its axis, making the Sun appear to move across the sky.",
-                    "The Sun stops moving at night.",
-                    "Clouds move the Sun.",
-                    "The Moon pushes the Sun."
-                ],
-                correct: 0,
-                explanation: "The apparent movement of the Sun is due to the Earth's rotation."
+                options: ["The Sun stops moving at night.", "Clouds move the Sun.", "The Moon pushes the Sun.", "The Earth rotates on its axis, making the Sun appear to move across the sky."],
+                correct: 3,
+                explanation: "The Sun appears to rise and set because of the Earth's rotation from west to east, not because the Sun orbits the Earth."
             },
             {
                 text: "A child notices that the shadow of a tree changes its position during the day. What causes this change?",
-                options: [
-                    "The Earth's rotation changes the position of the Sun in the sky.",
-                    "Trees keep moving.",
-                    "The wind changes the shadow.",
-                    "Clouds move the tree."
-                ],
-                correct: 0,
-                explanation: "As the Earth rotates, the Sun appears to move, changing shadow positions."
+                options: ["Trees keep moving.", "Clouds move the tree.", "The Earth's rotation changes the position of the Sun in the sky.", "The wind changes the shadow."],
+                correct: 2,
+                explanation: "As the Earth spins, the angle of incoming sunlight changes, causing shadows to vary in length and position throughout the day."
             },
             {
                 text: "Which one does NOT belong?",
-                options: [
-                    "Mars",
-                    "Earth",
-                    "Jupiter",
-                    "Moon"
-                ],
-                correct: 3,
-                explanation: "The first three are planets, while the Moon is a natural satellite."
+                options: ["Moon", "Mars", "Earth", "Jupiter"],
+                correct: 0,
+                explanation: "Mars, Earth, and Jupiter are planets that revolve around the Sun, while the Moon is a natural satellite."
             },
             {
                 text: "A student observes the Moon over several nights and notices that its shape appears different. What is the best explanation?",
-                options: [
-                    "Different portions of the Moon are illuminated as it revolves around the Earth.",
-                    "The Moon changes its actual shape every week.",
-                    "The Moon grows and shrinks.",
-                    "Clouds cut the Moon into pieces."
-                ],
+                options: ["Different portions of the Moon are illuminated as it revolves around the Earth.", "The Moon changes its actual shape every week.", "The Moon grows and shrinks.", "Clouds cut the Moon into pieces."],
                 correct: 0,
-                explanation: "The phases of the Moon are caused by changing sunlight on its surface."
+                explanation: "The Moon does not produce its own light; we only see the part of the lit side that faces Earth as it moves in its orbit."
             },
             {
                 text: "What does this picture mainly explain?",
-                options: [
-                    "Rotation of the Earth causes day and night.",
-                    "Revolution causes rainfall.",
-                    "The Moon gives sunlight to Earth.",
-                    "Earth does not move."
-                ],
+                options: ["Rotation of the Earth causes day and night.", "Revolution causes rainfall.", "The Moon gives sunlight to Earth.", "Earth does not move."],
                 correct: 0,
-                explanation: "Rotation causes one side of the Earth to face the Sun while the other faces away.",
+                explanation: "The spinning motion of Earth on its axis brings different parts into and out of sunlight, creating day and night cycles.",
                 image: "assets/ch13_q12_4.png"
             },
             {
                 text: "Why is the Earth's atmosphere important?",
-                options: [
-                    "It provides air for living things and protects the Earth.",
-                    "It changes seasons.",
-                    "It creates rivers.",
-                    "It produces mountains."
-                ],
-                correct: 0,
-                explanation: "The atmosphere supports life and protects the planet."
+                options: ["It changes seasons.", "It creates rivers.", "It provides air for living things and protects the Earth.", "It produces mountains."],
+                correct: 2,
+                explanation: "The atmosphere provides vital gases like oxygen and acts as a shield against harmful solar radiation."
             },
             {
                 text: "Students want to observe the Sun during a science activity. What is the safest advice?",
-                options: [
-                    "Never look directly at the Sun; use safe viewing methods suggested by teachers.",
-                    "Observe it without any guidance.",
-                    "Look directly at the Sun for a long time.",
-                    "Use ordinary sunglasses to observe it."
-                ],
-                correct: 0,
-                explanation: "Looking directly at the Sun can seriously damage the eyes."
+                options: ["Observe it without any guidance.", "Never look directly at the Sun; use safe viewing methods suggested by teachers.", "Look directly at the Sun for a long time.", "Use ordinary sunglasses to observe it."],
+                correct: 1,
+                explanation: "Looking directly at the Sun can cause permanent eye damage; safety precautions must always be followed."
             },
             {
                 text: "How are the Sun, Earth and Moon connected?",
-                options: [
-                    "They move in a system where each has a specific role.",
-                    "They stay fixed in one place.",
-                    "They are all stars.",
-                    "They are all planets."
-                ],
-                correct: 0,
-                explanation: "The Earth revolves around the Sun, and the Moon revolves around the Earth."
+                options: ["They stay fixed in one place.", "They are all stars.", "They move in a system where each has a specific role.", "They are all planets."],
+                correct: 2,
+                explanation: "They function as an interactive solar system branch: the Sun provides light/heat, Earth supports life, and the Moon orbits Earth."
             },
             {
                 text: "Which object produces its own light?",
-                options: [
-                    "Sun",
-                    "Earth",
-                    "Mars",
-                    "Moon"
-                ],
-                correct: 0,
-                explanation: "The Sun is a star and gives out its own light."
+                options: ["Earth", "Mars", "Sun", "Moon"],
+                correct: 2,
+                explanation: "The Sun is a star and generates its own intense light and energy through nuclear reactions."
             },
             {
                 text: "Why is life possible on Earth but not known to exist on most other planets?",
-                options: [
-                    "Earth has suitable air, water and temperature for living things.",
-                    "Earth is the largest planet.",
-                    "Earth has more mountains.",
-                    "Earth is closest to the Moon."
-                ],
+                options: ["Earth has suitable air, water and temperature for living things.", "Earth is the largest planet.", "Earth has more mountains.", "Earth is closest to the Moon."],
                 correct: 0,
-                explanation: "These conditions make Earth suitable for life."
+                explanation: "Life thrives on Earth due to the ideal structural presence of a breathable atmosphere, liquid water, and temperate ranges."
             },
             {
                 text: "Earth is the only known planet that supports life. What should people do?",
-                options: [
-                    "Use natural resources wisely and protect the environment.",
-                    "Pollute rivers and forests.",
-                    "Cut down all trees.",
-                    "Waste water and electricity."
-                ],
-                correct: 0,
-                explanation: "Caring for Earth helps protect life and natural resources."
+                options: ["Pollute rivers and forests.", "Cut down all trees.", "Use natural resources wisely and protect the environment.", "Waste water and electricity."],
+                correct: 3,
+                correct: 2,
+                explanation: "Protecting ecosystems and using resources sustainably helps preserve life on our unique planet."
             },
             {
                 text: "A family plans a holiday to a hill station during summer because they expect cooler weather. What are they using to make this decision?",
-                options: [
-                    "Knowledge about seasonal weather conditions",
-                    "Position of stars",
-                    "Direction of rivers",
-                    "Moon phases only"
-                ],
-                correct: 0,
-                explanation: "Seasonal changes help people plan many activities."
+                options: ["Position of stars.", "Direction of rivers.", "Knowledge about seasonal weather conditions.", "Moon phases only."],
+                correct: 2,
+                explanation: "Understanding seasonal cycles allows people to adapt, plan travel, and make smart lifestyle choices."
             },
             {
                 text: "A student learns that the Earth rotates, revolves around the Sun, has an atmosphere and supports life. What does this best show?",
-                options: [
-                    "Different features and movements of the Earth work together to make life possible.",
-                    "Earth's movement has no effect on life.",
-                    "The Moon controls all life on Earth.",
-                    "Only the Sun is important."
-                ],
-                correct: 0,
-                explanation: "Earth's movements and natural features together create suitable conditions for life."
+                options: ["Earth's movement has no effect on life.", "Different features and movements of the Earth work together to make life possible.", "The Moon controls all life on Earth.", "Only the Sun is important."],
+                correct: 1,
+                explanation: "Earth works as an integrated system where cycles, location, and atmospheric layers cooperate uniquely to support life."
             }
         ];
 
@@ -852,7 +758,7 @@
             document.getElementById('feedback-box').style.display = 'none';
             document.getElementById('timer-wrapper').classList.remove('timer-warning');
             
-            const progressPct = (currentIdx / questions.length) * 100;
+            const progressPct = ((currentIdx + 1) / questions.length) * 100;
             document.getElementById('game-progress').style.width = progressPct + '%';
 
             const qData = questions[currentIdx];
@@ -913,9 +819,11 @@
                 playSound('correct');
                 triggerFX('star');
                 
-                scoreCount += 1; 
                 if(tryCount === 0) {
+                    scoreCount += 1;
                     perfectRunAnswers++;
+                } else {
+                    scoreCount += 0.5;
                 }
                 document.getElementById('live-score').innerText = scoreCount;
 
@@ -1000,7 +908,7 @@
             switchView('game-screen', 'result-screen');
             playSound('clapping');
 
-            const accuracy = Math.round((scoreCount / questions.length) * 100);
+            const accuracy = Math.round((perfectRunAnswers / questions.length) * 100);
             
             document.getElementById('stat-score').innerText = `${scoreCount} / ${questions.length}`;
             document.getElementById('stat-accuracy').innerText = `${accuracy}%`;
