@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Grade 4 EVS: Travel and Currency Challenge</title>
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #5C6BC0;
+            --success-color: #2ECC71;
+            --error-color: #E74C3C;
+            --warning-color: #F1C40F;
+            --bg-color: #EEF2F7;
+            --card-bg: #FFFFFF;
+            --text-main: #2C3E50;
+            --text-muted: #7F8C8D;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .bg-star {
+            position: absolute;
+            background: rgba(241, 196, 15, 0.3);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: float-around 15s linear infinite;
+        }
+
+        @keyframes float-around {
+            0% { transform: translateY(105vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+
+        #fxCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        .app-container {
+            width: 92%;
+            max-width: 550px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 25px;
+            z-index: 10;
+            position: relative;
+            display: none;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .active-view {
+            display: block;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        #brand-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: #ffffff;
+            border-radius: 20px;
+            width: 92%;
+            max-width: 550px;
+            padding: 40px;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .brand-logo {
+            max-width: 220px;
+            height: auto;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+
+        .loader-bar {
+            width: 140px;
+            height: 5px;
+            background: #E0E0E0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .loader-progress {
+            width: 0%;
+            height: 100%;
+            background: var(--primary-color);
+            animation: load 5s linear forwards;
+        }
+
+        @keyframes load {
+            to { width: 100%; }
+        }
+
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #F0F3F7;
+            padding-bottom: 12px;
+        }
+
+        .score-box {
+            background: #E8F4FD;
+            color: var(--primary-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .timer-box {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
+        .timer-circle {
+            width: 12px;
+            height: 12px;
+            background: var(--success-color);
+            border-radius: 50%;
+            margin-right: 8px;
+            transition: background 0.3s;
+        }
+
+        .timer-warning .timer-circle {
+            background: var(--error-color);
+            animation: blink 0.5s infinite alternate;
+        }
+
+        @keyframes blink {
+            to { opacity: 0.3; }
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #EBF0F6;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .q-image {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            background: #F8FAFC;
+            padding: 5px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            line-height: 1.5;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background: #F8FAFC;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 14px 18px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-main);
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary-color);
+            background: #F0F7FF;
+        }
+
+        .option-btn.selected-wrong {
+            background: #FDEDEC;
+            border-color: var(--error-color);
+            color: var(--error-color);
+        }
+
+        .option-btn.selected-correct {
+            background: #EAFAF1;
+            border-color: var(--success-color);
+            color: var(--success-color);
+        }
+
+        .feedback-panel {
+            background: #FFF9E6;
+            border-left: 4px solid var(--warning-color);
+            padding: 15px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .feedback-panel.wrong-alert {
+            background: #FDEDEC;
+            border-left-color: var(--error-color);
+        }
+
+        .feedback-panel.explanation-alert {
+            background: #EAFAF1;
+            border-left-color: var(--success-color);
+        }
+
+        .feedback-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .feedback-desc {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .action-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        .action-btn:active {
+            transform: scale(0.98);
+        }
+
+        .hero-title {
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .hero-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .final-badge {
+            width: 110px;
+            height: 110px;
+            background: #FFF9E6;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            border: 4px solid var(--warning-color);
+            animation: bounce 2s infinite alternate;
+        }
+
+        @keyframes bounce {
+            to { transform: translateY(-10px); }
+        }
+
+        .stats-summary {
+            background: #F8FAFC;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .stat-row:not(:last-child) {
+            border-bottom: 1px dashed #E2E8F0;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+        }
+
+        .stat-val {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 10px; }
+            .app-container { padding: 18px; }
+            .question-text { font-size: 1.05rem; }
+            .option-btn { padding: 12px 14px; font-size: 0.95rem; }
+            .hero-title { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation" id="bg-layer"></div>
+    <canvas id="fxCanvas"></canvas>
+
+    <div id="brand-screen">
+        <img src="assets/innovine-logo.png" alt="Innovine Logo" class="brand-logo" onerror="this.style.display='none';">
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+    </div>
+
+    <div id="intro-screen" class="app-container">
+        <div class="hero-title">🚆 Travel and Currency Explorer!</div>
+        <div class="hero-desc">
+            Welcome to the Grade 4 Chapter 12 Competency Challenge. Learn how transport and money help people move, trade and make smart everyday decisions.
+        </div>
+        <div style="background:#F0F4F8; padding:15px; border-radius:12px; margin-bottom:25px; font-size:0.9rem; color:#546E7A;">
+            <p style="margin-bottom:6px; font-weight:600;">🎮 Game Rules:</p>
+            <p>⏱️ You have <strong>60 seconds</strong> per question.</p>
+            <p>🔄 Missed a question? You get <strong>one retry</strong> right away!</p>
+        </div>
+        <button class="action-btn" onclick="initAudioAndStart()">Start Adventure</button>
+    </div>
+
+    <div id="game-screen" class="app-container">
+        <div class="header-bar">
+            <div class="score-box">Score: <span id="live-score">0</span></div>
+            <div class="timer-box" id="timer-wrapper">
+                <div class="timer-circle"></div>
+                <span id="time-left">60</span>s
+            </div>
+        </div>
+        <div class="progress-container">
+            <div class="progress-fill" id="game-progress"></div>
+        </div>
+
+        <div id="media-slot"></div>
+
+        <div class="question-text" id="q-text">Loading question data...</div>
+
+        <div class="options-grid" id="options-box"></div>
+
+        <div class="feedback-panel" id="feedback-box">
+            <div class="feedback-title" id="feedback-title">Alert</div>
+            <div class="feedback-desc" id="feedback-desc">Notice description text.</div>
+        </div>
+
+        <button class="action-btn" id="next-btn" onclick="handleNextAction()" style="display:none;">Continue</button>
+    </div>
+
+    <div id="result-screen" class="app-container">
+        <div class="hero-title" id="res-title">Excellent Journey!</div>
+        <div class="badge-container">
+            <div class="final-badge" id="res-badge">🏆</div>
+        </div>
+        <div class="hero-desc" id="res-desc">You completed the competency track.</div>
+
+        <div class="stats-summary">
+            <div class="stat-row">
+                <span class="stat-label">Questions Solved</span>
+                <span class="stat-val" id="stat-score">0/20</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Accuracy Rate</span>
+                <span class="stat-val" id="stat-accuracy">0%</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Perfect First-Try Answers</span>
+                <span class="stat-val" id="stat-perfect">0</span>
+            </div>
+        </div>
+
+        <button class="action-btn" onclick="restartGame()">Try Again</button>
+    </div>
+
+    <script>
+        let audioAssets = {};
+
+        function initAudioAndStart() {
+            audioAssets.correct = new Audio('assets/correct.mp3');
+            audioAssets.wrong = new Audio('assets/wrong.mp3');
+            audioAssets.clapping = new Audio('assets/clapping.mp3');
+            
+            Object.values(audioAssets).forEach(track => {
+                track.play().then(() => { track.pause(); track.currentTime = 0; }).catch(() => {});
+            });
+
+            switchView('intro-screen', 'game-screen'); 
+            startGame();
+        }
+
+        function playSound(type) {
+            if (audioAssets[type]) {
+                audioAssets[type].currentTime = 0;
+                audioAssets[type].play().catch(e => console.log("Audio play blocked:", e));
+            }
+        }
+
+        const questions = [
+            {
+                text: "A family plans to travel from Mumbai to Delhi for an important event and wants to reach quickly. Which mode of transport would be the most suitable?",
+                options: [
+                    "Aeroplane",
+                    "Bicycle",
+                    "Bullock cart",
+                    "Walking"
+                ],
+                correct: 0,
+                explanation: "Air transport is the fastest option for long-distance travel."
+            },
+            {
+                text: "What is the main purpose of the objects shown in the picture?",
+                options: [
+                    "They are used to buy and sell goods and services",
+                    "They are used for communication",
+                    "They are used for measuring length",
+                    "They are used to grow crops"
+                ],
+                correct: 0,
+                explanation: "Currency is the medium of exchange used in daily transactions.",
+                image: "assets/ch12_q2_4.png"
+            },
+            {
+                text: "A farmer needs to send fresh vegetables to a nearby town every morning. Which transport would be most suitable?",
+                options: [
+                    "Truck or mini goods vehicle",
+                    "Ship",
+                    "Helicopter",
+                    "Bicycle"
+                ],
+                correct: 0,
+                explanation: "Road transport is practical for transporting goods over short distances."
+            },
+            {
+                text: "How has better transport helped people in India?",
+                options: [
+                    "It has made travel and movement of goods faster and easier",
+                    "It has reduced communication completely",
+                    "It has stopped trade",
+                    "It has made travel more difficult"
+                ],
+                correct: 0,
+                explanation: "Efficient transport supports trade, tourism and daily life."
+            },
+            {
+                text: "Which group contains only public transport?",
+                options: [
+                    "Bus, metro, train",
+                    "Bicycle, scooter, skateboard",
+                    "Car, motorcycle, bicycle",
+                    "Truck, tractor, crane"
+                ],
+                correct: 0,
+                explanation: "Public transport carries many passengers together."
+            },
+            {
+                text: "A student receives ₹500 as a birthday gift and wants to buy many expensive toys immediately. What would be the wisest decision?",
+                options: [
+                    "Spend carefully and save some money for future needs",
+                    "Spend all the money at once",
+                    "Give the money away without thinking",
+                    "Throw the money away"
+                ],
+                correct: 0,
+                explanation: "Good financial habits include saving and thoughtful spending."
+            },
+            {
+                text: "Why do we use money instead of exchanging goods directly?",
+                options: [
+                    "Money makes buying and selling easier and more convenient",
+                    "Goods cannot be exchanged",
+                    "Money replaces transport",
+                    "Currency is used only in banks"
+                ],
+                correct: 0,
+                explanation: "Currency is a common medium of exchange."
+            },
+            {
+                text: "A student says, 'Only paper notes are considered money.' Why is this incorrect?",
+                options: [
+                    "Coins are also valid currency in India",
+                    "Coins are toys",
+                    "Only digital payments are money",
+                    "Notes are used only in banks"
+                ],
+                correct: 0,
+                explanation: "Indian currency includes both notes and coins."
+            },
+            {
+                text: "A shopkeeper accepts payment using a QR code. What advantage does this provide?",
+                options: [
+                    "It allows quick and cashless payment",
+                    "It replaces transport",
+                    "It increases the price of goods",
+                    "It reduces the value of money"
+                ],
+                correct: 0,
+                explanation: "Digital payments make transactions faster and more convenient."
+            },
+            {
+                text: "Which one does NOT belong?",
+                options: [
+                    "Bus",
+                    "Train",
+                    "Ship",
+                    "Wallet"
+                ],
+                correct: 3,
+                explanation: "The first three are modes of transport, while a wallet is used to keep money."
+            },
+            {
+                text: "A group of students is going on a school picnic within the city. Which transport would usually be the most practical?",
+                options: [
+                    "School bus",
+                    "Aeroplane",
+                    "Ship",
+                    "Helicopter"
+                ],
+                correct: 0,
+                explanation: "A school bus is suitable for group travel over short distances."
+            },
+            {
+                text: "What problem is this transport system helping to solve?",
+                options: [
+                    "It helps many people travel efficiently and reduces traffic congestion",
+                    "It increases road traffic",
+                    "It replaces schools",
+                    "It reduces rainfall"
+                ],
+                correct: 0,
+                explanation: "Metro systems provide efficient urban transport.",
+                image: "assets/ch12_q12_4.png"
+            },
+            {
+                text: "Why is saving money considered a good habit?",
+                options: [
+                    "It helps meet future needs and emergencies",
+                    "It reduces the value of money",
+                    "It prevents shopping forever",
+                    "It stops people from earning"
+                ],
+                correct: 0,
+                explanation: "Savings provide financial security."
+            },
+            {
+                text: "While travelling by bus, you notice an elderly passenger standing. What is the most responsible action?",
+                options: [
+                    "Offer your seat politely",
+                    "Ignore the passenger",
+                    "Block the aisle",
+                    "Occupy more seats"
+                ],
+                correct: 0,
+                explanation: "Respect and kindness are important while using public transport."
+            },
+            {
+                text: "How are transport and currency connected?",
+                options: [
+                    "Both help people meet their daily needs and support the economy",
+                    "They are completely unrelated",
+                    "Currency replaces transport",
+                    "Transport replaces money"
+                ],
+                correct: 0,
+                explanation: "Transport moves people and goods, while currency helps buy and sell them."
+            },
+            {
+                text: "Which transport would be best for travelling across a river?",
+                options: [
+                    "Boat",
+                    "Bicycle",
+                    "Train",
+                    "Scooter"
+                ],
+                correct: 0,
+                explanation: "Boats are designed for water transport."
+            },
+            {
+                text: "Why does good transport encourage tourism?",
+                options: [
+                    "It helps people reach different places safely and conveniently",
+                    "It reduces the number of visitors",
+                    "It closes tourist places",
+                    "It stops travel"
+                ],
+                correct: 0,
+                explanation: "Better connectivity makes travel easier."
+            },
+            {
+                text: "Why should children learn the value of money?",
+                options: [
+                    "It helps them become responsible spenders and savers",
+                    "Money should be spent immediately",
+                    "Saving is unnecessary",
+                    "Money has no value"
+                ],
+                correct: 0,
+                explanation: "Good financial habits develop from an early age."
+            },
+            {
+                text: "A factory needs to transport heavy goods to another state. Which transport is generally the most suitable?",
+                options: [
+                    "Goods train",
+                    "Bicycle",
+                    "Scooter",
+                    "Auto-rickshaw"
+                ],
+                correct: 0,
+                explanation: "Goods trains carry heavy loads efficiently over long distances."
+            },
+            {
+                text: "A family compares the cost, distance and time before choosing how to travel during a holiday. What skill are they demonstrating?",
+                options: [
+                    "Making informed decisions by comparing different options",
+                    "Guessing randomly",
+                    "Ignoring available information",
+                    "Choosing the most expensive option automatically"
+                ],
+                correct: 0,
+                explanation: "Good decisions involve comparing different factors before choosing."
+            }
+        ];
+
+        let currentIdx = 0;
+        let scoreCount = 0; 
+        let timerVal = 60;
+        let gameCountdown = null;
+        let tryCount = 0; 
+        let perfectRunAnswers = 0;
+        let isOptionProcessing = false;
+
+        const canvas = document.getElementById('fxCanvas');
+        const ctx = canvas.getContext('2d');
+        let activeFX = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class StarParticle {
+            constructor(x, y) {
+                this.x = x; this.y = y;
+                this.size = Math.random() * 12 + 8;
+                this.speedX = (Math.random() - 0.5) * 6;
+                this.speedY = (Math.random() - 0.7) * 7 - 2;
+                this.gravity = 0.2;
+                this.rotation = Math.random() * 360;
+                this.rotSpeed = (Math.random() - 0.5) * 10;
+                this.alpha = 1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.speedY += this.gravity;
+                this.rotation += this.rotSpeed;
+                this.alpha -= 0.02;
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.fillStyle = `rgba(241, 196, 15, ${this.alpha})`;
+                ctx.beginPath();
+                for (let i = 0; i < 5; i++) {
+                    ctx.lineTo(0, -this.size / 2);
+                    ctx.rotate(72 * Math.PI / 180);
+                    ctx.lineTo(0, -this.size / 4);
+                    ctx.rotate(72 * Math.PI / 180);
+                }
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        class CrossIndicator {
+            constructor(x, y) {
+                this.x = x; this.y = y;
+                this.size = 35;
+                this.alpha = 1;
+                this.scale = 0.5;
+            }
+            update() {
+                if(this.scale < 1) this.scale += 0.1;
+                this.alpha -= 0.02;
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.scale(this.scale, this.scale);
+                ctx.strokeStyle = `rgba(231, 76, 60, ${this.alpha})`;
+                ctx.lineWidth = 6;
+                ctx.lineCap = 'round';
+                ctx.beginPath();
+                ctx.moveTo(-this.size/2, -this.size/2);
+                ctx.lineTo(this.size/2, this.size/2);
+                ctx.moveTo(this.size/2, -this.size/2);
+                ctx.lineTo(-this.size/2, this.size/2);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        function triggerFX(type) {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight * 0.4;
+            if(type === 'star') {
+                for(let i=0; i<25; i++) activeFX.push(new StarParticle(centerX, centerY));
+            } else if(type === 'cross') {
+                activeFX.push(new CrossIndicator(centerX, centerY));
+            }
+        }
+
+        function engineLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            activeFX = activeFX.filter(p => p.alpha > 0);
+            activeFX.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(engineLoop);
+        }
+        requestAnimationFrame(engineLoop);
+
+        function generateBgDecorations() {
+            const layer = document.getElementById('bg-layer');
+            for (let i = 0; i < 8; i++) {
+                let star = document.createElement('div');
+                star.className = 'bg-star';
+                star.style.left = Math.random() * 90 + '%';
+                star.style.width = star.style.height = (Math.random() * 20 + 15) + 'px';
+                star.style.animationDelay = (Math.random() * 10) + 's';
+                star.style.animationDuration = (Math.random() * 8 + 12) + 's';
+                layer.appendChild(star);
+            }
+        }
+        generateBgDecorations();
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('brand-screen').style.display = 'none';
+                switchView(null, 'intro-screen');
+            }, 5000);
+        });
+
+        function switchView(fromId, toId) {
+            if(fromId) document.getElementById(fromId).classList.remove('active-view');
+            document.getElementById(toId).classList.add('active-view');
+        }
+
+        function startGame() {
+            currentIdx = 0;
+            scoreCount = 0;
+            perfectRunAnswers = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            isOptionProcessing = false;
+            tryCount = 0;
+            timerVal = 60;
+            
+            document.getElementById('live-score').innerText = scoreCount;
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('feedback-box').style.display = 'none';
+            document.getElementById('timer-wrapper').classList.remove('timer-warning');
+            
+            const progressPct = (currentIdx / questions.length) * 100;
+            document.getElementById('game-progress').style.width = progressPct + '%';
+
+            const qData = questions[currentIdx];
+            const mediaSlot = document.getElementById('media-slot');
+            if (qData.image) {
+                mediaSlot.innerHTML = `<img src="${qData.image}" class="q-image" alt="Question Graphic">`;
+            } else {
+                mediaSlot.innerHTML = '';
+            }
+
+            document.getElementById('q-text').innerText = `${currentIdx + 1}. ${qData.text}`;
+            
+            const optionsBox = document.getElementById('options-box');
+            optionsBox.innerHTML = '';
+            
+            qData.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => selectOption(idx, btn);
+                optionsBox.appendChild(btn);
+            });
+
+            startCountdown();
+        }
+
+        function startCountdown() {
+            clearInterval(gameCountdown);
+            document.getElementById('time-left').innerText = timerVal;
+            gameCountdown = setInterval(() => {
+                timerVal--;
+                document.getElementById('time-left').innerText = timerVal;
+                
+                if(timerVal <= 10) {
+                    document.getElementById('timer-wrapper').classList.add('timer-warning');
+                }
+                
+                if(timerVal <= 0) {
+                    clearInterval(gameCountdown);
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+
+        function selectOption(chosenIdx, clickedBtn) {
+            if(isOptionProcessing) return;
+            
+            const qData = questions[currentIdx];
+            const optionsBox = document.getElementById('options-box');
+            const feedbackBox = document.getElementById('feedback-box');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackDesc = document.getElementById('feedback-desc');
+
+            if(chosenIdx === qData.correct) {
+                clearInterval(gameCountdown);
+                isOptionProcessing = true;
+                clickedBtn.classList.add('selected-correct');
+                playSound('correct');
+                triggerFX('star');
+                
+                scoreCount += 1; 
+                if(tryCount === 0) {
+                    perfectRunAnswers++;
+                }
+                document.getElementById('live-score').innerText = scoreCount;
+
+                Array.from(optionsBox.children).forEach(b => b.disabled = true);
+
+                feedbackTitle.innerText = "✨ Correct!";
+                feedbackDesc.innerText = qData.explanation;
+                feedbackBox.className = "feedback-panel explanation-alert";
+                feedbackBox.style.display = "block";
+                
+                setupNextActionButton();
+            } else {
+                tryCount++;
+                playSound('wrong');
+                triggerFX('cross');
+                
+                if(tryCount === 1) {
+                    clickedBtn.classList.add('selected-wrong');
+                    clickedBtn.disabled = true;
+                    
+                    feedbackTitle.innerText = "❌ Try Again";
+                    feedbackDesc.innerText = "That choice was incorrect. Don't worry, you have 1 retry left!";
+                    feedbackBox.className = "feedback-panel wrong-alert";
+                    feedbackBox.style.display = "block";
+                } else {
+                    clearInterval(gameCountdown);
+                    isOptionProcessing = true;
+                    clickedBtn.classList.add('selected-wrong');
+                    
+                    Array.from(optionsBox.children).forEach((b, i) => {
+                        b.disabled = true;
+                        if(i === qData.correct) b.classList.add('selected-correct');
+                    });
+
+                    feedbackTitle.innerText = "💡 Correct Answer Explanation";
+                    feedbackDesc.innerText = qData.explanation;
+                    feedbackBox.className = "feedback-panel explanation-alert";
+                    feedbackBox.style.display = "block";
+                    
+                    setupNextActionButton();
+                }
+            }
+        }
+
+        function handleTimeOut() {
+            isOptionProcessing = true;
+            const qData = questions[currentIdx];
+            const optionsBox = document.getElementById('options-box');
+            const feedbackBox = document.getElementById('feedback-box');
+            
+            Array.from(optionsBox.children).forEach((b, i) => {
+                b.disabled = true;
+                if(i === qData.correct) b.classList.add('selected-correct');
+            });
+
+            document.getElementById('feedback-title').innerText = "⏱️ Time's Up!";
+            document.getElementById('feedback-desc').innerText = qData.explanation;
+            feedbackBox.className = "feedback-panel wrong-alert";
+            feedbackBox.style.display = "block";
+            
+            playSound('wrong');
+            setupNextActionButton();
+        }
+
+        function setupNextActionButton() {
+            const nBtn = document.getElementById('next-btn');
+            nBtn.innerText = (currentIdx === questions.length - 1) ? "Finish Challenge" : "Next Question";
+            nBtn.style.display = 'block';
+        }
+
+        function handleNextAction() {
+            currentIdx++;
+            if(currentIdx < questions.length) {
+                loadQuestion();
+            } else {
+                showFinalResults();
+            }
+        }
+
+        function showFinalResults() {
+            clearInterval(gameCountdown);
+            switchView('game-screen', 'result-screen');
+            playSound('clapping');
+
+            const accuracy = Math.round((scoreCount / questions.length) * 100);
+            
+            document.getElementById('stat-score').innerText = `${scoreCount} / ${questions.length}`;
+            document.getElementById('stat-accuracy').innerText = `${accuracy}%`;
+            document.getElementById('stat-perfect').innerText = perfectRunAnswers;
+
+            const resTitle = document.getElementById('res-title');
+            const resDesc = document.getElementById('res-desc');
+            const resBadge = document.getElementById('res-badge');
+
+            if(accuracy >= 80) {
+                resTitle.innerText = "🏆 Smart Traveller & Saver!";
+                resDesc.innerText = "Excellent understanding of transport choices and wise use of money.";
+                resBadge.innerText = "🚆";
+            } else if(accuracy >= 50) {
+                resTitle.innerText = "🚍 Everyday Decisions Explorer!";
+                resDesc.innerText = "Great job learning how travel and currency support daily life. Keep practising smarter choices.";
+                resBadge.innerText = "⭐";
+            } else {
+                resTitle.innerText = "📚 Travel & Money Learner!";
+                resDesc.innerText = "Good effort! Review Chapter 12 again and retry the challenge to grow confidence with transport and money decisions.";
+                resBadge.innerText = "📖";
+            }
+        }
+
+        function restartGame() {
+            switchView('result-screen', 'game-screen');
+            startGame();
+        }
+    </script>
+</body>
+</html>
