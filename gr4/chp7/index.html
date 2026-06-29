@@ -204,7 +204,7 @@
 
         .q-image {
             width: 100%;
-            max-height: 180px;
+            max-height: 220px;
             object-fit: contain;
             border-radius: 12px;
             margin-bottom: 15px;
@@ -250,14 +250,14 @@
 
         .option-btn.selected-wrong {
             background: #FDEDEC;
-            border-color: var(--error-color);
-            color: var(--error-color);
+            border-color: #E74C3C;
+            color: #E74C3C;
         }
 
         .option-btn.selected-correct {
             background: #EAFAF1;
-            border-color: var(--success-color);
-            color: var(--success-color);
+            border-color: #2ECC71;
+            color: #2ECC71;
         }
 
         .feedback-panel {
@@ -271,12 +271,12 @@
 
         .feedback-panel.wrong-alert {
             background: #FDEDEC;
-            border-left-color: var(--error-color);
+            border-left-color: #E74C3C;
         }
 
         .feedback-panel.explanation-alert {
             background: #EAFAF1;
-            border-left-color: var(--success-color);
+            border-left-color: #2ECC71;
         }
 
         .feedback-title {
@@ -397,9 +397,9 @@
     </div>
 
     <div id="intro-screen" class="app-container">
-        <div class="hero-title">⚙️ Force, Work and Energy Explorer!</div>
+        <div class="hero-title">💪 Force, Work & Energy Explorer!</div>
         <div class="hero-desc">
-            Welcome to the Grade 4 Chapter 7 Competency Challenge. Discover how pushes, pulls, work and energy show up in everyday life.
+            Welcome to the Grade 4 Chapter 7 Competency Challenge. See how force, work and energy show up in everyday actions and simple machines.
         </div>
         <div style="background:#F0F4F8; padding:15px; border-radius:12px; margin-bottom:25px; font-size:0.9rem; color:#546E7A;">
             <p style="margin-bottom:6px; font-weight:600;">🎮 Game Rules:</p>
@@ -487,13 +487,13 @@
             {
                 text: "A child pushes a stationary toy car, and it starts moving. What does this show?",
                 options: [
+                    "Force changes weather",
                     "A force can make an object move",
                     "Force can only stop objects",
-                    "Force changes weather",
                     "Force produces light"
                 ],
-                correct: 0,
-                explanation: "A push or pull can change the motion of an object."
+                correct: 1,
+                explanation: "Pushing the toy car is a force that makes the car start moving."
             },
             {
                 text: "Which statement best explains what is happening?",
@@ -504,107 +504,107 @@
                     "The suitcase is moving because of sunlight"
                 ],
                 correct: 0,
-                explanation: "Pulling is a type of force that can move objects.",
+                explanation: "The girl pulls the suitcase, applying a force so it moves.",
                 image: "assets/ch7_q2_4.png"
             },
             {
                 text: "Which action involves a pull?",
                 options: [
+                    "Closing a door away from you",
                     "Opening a drawer towards yourself",
                     "Kicking a football",
-                    "Pushing a shopping trolley",
-                    "Closing a door away from you"
+                    "Pushing a shopping trolley"
                 ],
-                correct: 0,
-                explanation: "Pulling brings an object closer to you."
+                correct: 1,
+                explanation: "Pulling means bringing something towards yourself, like opening a drawer."
             },
             {
                 text: "A football rolling across the ground eventually stops. Why?",
                 options: [
-                    "Forces can slow down and stop moving objects",
-                    "The ball becomes lighter",
                     "The air disappears",
+                    "The ball becomes lighter",
+                    "Forces can slow down and stop moving objects",
                     "The ball loses its colour"
                 ],
-                correct: 0,
-                explanation: "Forces can change the speed of moving objects."
+                correct: 2,
+                explanation: "Friction and other forces act on the ball and slow it down until it stops."
             },
             {
                 text: "Which group contains actions that mainly involve pushing?",
                 options: [
-                    "Closing a drawer, pushing a cart, kicking a ball",
                     "Pulling a rope, opening a drawer, tugging a toy",
-                    "Lifting a bag, pulling a curtain, dragging a chair",
-                    "Pulling a bucket, opening a gate, tugging a rope"
+                    "Pulling a bucket, opening a gate, tugging a rope",
+                    "Closing a drawer, pushing a cart, kicking a ball",
+                    "Lifting a bag, pulling a curtain, dragging a chair"
                 ],
-                correct: 0,
-                explanation: "Each action involves moving an object away using force."
+                correct: 2,
+                explanation: "Closing, pushing and kicking are examples of push actions."
             },
             {
                 text: "A student needs to move a heavy box across the classroom floor. Which option would make the task easier?",
                 options: [
-                    "Use a trolley with wheels",
-                    "Lift it repeatedly",
                     "Push it on rough ground",
-                    "Drag it without help"
+                    "Use a trolley with wheels",
+                    "Drag it without help",
+                    "Lift it repeatedly"
                 ],
-                correct: 0,
-                explanation: "Wheels reduce the effort needed to move objects."
+                correct: 1,
+                explanation: "Using wheels reduces friction and effort needed to move the box."
             },
             {
                 text: "Why is force important in everyday life?",
                 options: [
+                    "It controls weather",
                     "It helps us move, lift, stop and change objects around us",
-                    "It creates food",
                     "It replaces energy",
-                    "It controls weather"
+                    "It creates food"
                 ],
-                correct: 0,
-                explanation: "Most activities involve applying force."
+                correct: 1,
+                explanation: "We use force all the time to move and change things."
             },
             {
                 text: "A student says, 'Force can only move objects.' Why is this incorrect?",
                 options: [
-                    "Force can also stop, slow down or change the direction of objects",
                     "Force only increases speed",
+                    "Force works only on vehicles",
                     "Force changes colour only",
-                    "Force works only on vehicles"
+                    "Force can also stop, slow down or change the direction of objects"
                 ],
-                correct: 0,
-                explanation: "Force can produce many different effects."
+                correct: 3,
+                explanation: "Force can start, stop, speed up, slow down and change direction of objects."
             },
             {
                 text: "Riya lifts a school bag from the floor and places it on a table. Why is this considered work?",
                 options: [
+                    "Energy is not needed",
                     "A force is used to move an object through a distance",
                     "The bag changes colour",
-                    "The table becomes heavier",
-                    "Energy is not needed"
+                    "The table becomes heavier"
                 ],
-                correct: 0,
-                explanation: "Work is done when force causes movement."
+                correct: 1,
+                explanation: "Work is done when a force moves an object over a distance."
             },
             {
                 text: "Which one does NOT belong?",
                 options: [
-                    "Pushing a trolley",
-                    "Pulling a suitcase",
                     "Lifting a bucket",
-                    "Sleeping on a bed"
+                    "Sleeping on a bed",
+                    "Pulling a suitcase",
+                    "Pushing a trolley"
                 ],
-                correct: 3,
-                explanation: "The first three involve applying force to do work."
+                correct: 1,
+                explanation: "Sleeping does not involve applying force to move objects, so no work is done."
             },
             {
                 text: "A child uses a ramp to move a heavy box into a truck. Why is the ramp helpful?",
                 options: [
-                    "It reduces the effort needed to lift the box",
-                    "It increases the weight of the box",
                     "It removes gravity",
-                    "It changes the shape of the box"
+                    "It increases the weight of the box",
+                    "It changes the shape of the box",
+                    "It reduces the effort needed to lift the box"
                 ],
-                correct: 0,
-                explanation: "A ramp is a simple machine that makes work easier."
+                correct: 3,
+                explanation: "A ramp is a simple machine that makes lifting easier by spreading the effort."
             },
             {
                 text: "Why is this important?",
@@ -615,96 +615,96 @@
                     "Food stops movement"
                 ],
                 correct: 0,
-                explanation: "Food is an important source of energy.",
+                explanation: "Breakfast gives the body energy for sports and daily work.",
                 image: "assets/ch7_q12_4.png"
             },
             {
                 text: "A child skips breakfast and feels tired during sports practice. What is the most likely reason?",
                 options: [
-                    "The body did not receive enough energy from food",
                     "The muscles disappeared",
-                    "The playground is too large",
-                    "The child ran too slowly"
+                    "The body did not receive enough energy from food",
+                    "The child ran too slowly",
+                    "The playground is too large"
                 ],
-                correct: 0,
-                explanation: "Food gives the body energy to perform activities."
+                correct: 1,
+                explanation: "Without food, the body has less energy for activities."
             },
             {
                 text: "Which habit helps save electrical energy at home?",
                 options: [
-                    "Switching off lights and fans when not in use",
                     "Keeping all appliances on",
                     "Leaving lights on during the day",
-                    "Charging devices continuously"
+                    "Charging devices continuously",
+                    "Switching off lights and fans when not in use"
                 ],
-                correct: 0,
-                explanation: "Responsible use of electricity helps conserve energy."
+                correct: 3,
+                explanation: "Turning off devices when not needed saves electricity."
             },
             {
                 text: "How are force, work and energy connected?",
                 options: [
-                    "Energy helps us apply force, and force helps us do work",
+                    "Force replaces energy",
                     "They are completely unrelated",
-                    "Work creates force only",
-                    "Force replaces energy"
+                    "Energy helps us apply force, and force helps us do work",
+                    "Work creates force only"
                 ],
-                correct: 0,
-                explanation: "Energy is needed to perform work using force."
+                correct: 2,
+                explanation: "We use energy to apply force, and when force moves objects, work is done."
             },
             {
                 text: "Which group contains common sources of energy?",
                 options: [
-                    "Food, sunlight, electricity",
-                    "Pencil, book, chair",
                     "Table, bag, ruler",
-                    "Stone, brick, sand"
+                    "Stone, brick, sand",
+                    "Food, sunlight, electricity",
+                    "Pencil, book, chair"
                 ],
-                correct: 0,
-                explanation: "These sources provide energy for different activities."
+                correct: 2,
+                explanation: "Food, sunlight and electricity are sources that give energy."
             },
             {
                 text: "Why do people use simple machines such as ramps and pulleys?",
                 options: [
-                    "They make work easier and require less effort",
-                    "They increase the weight of objects",
                     "They create energy from nothing",
-                    "They remove all forces"
+                    "They remove all forces",
+                    "They make work easier and require less effort",
+                    "They increase the weight of objects"
                 ],
-                correct: 0,
-                explanation: "Simple machines help reduce effort."
+                correct: 2,
+                explanation: "Simple machines reduce the effort needed to do work."
             },
             {
                 text: "Why should we avoid wasting electricity?",
                 options: [
-                    "Energy resources should be used wisely and responsibly",
+                    "Appliances work better when left on",
                     "Electricity is unlimited",
                     "Wasting energy has no effect",
-                    "Appliances work better when left on"
+                    "Energy resources should be used wisely and responsibly"
                 ],
-                correct: 0,
-                explanation: "Conserving energy benefits both people and the environment."
+                correct: 3,
+                explanation: "Saving electricity protects resources and the environment."
             },
             {
                 text: "A goalkeeper catches a moving football during a match. What effect of force is shown?",
                 options: [
-                    "Force can stop a moving object",
+                    "Force produces electricity",
                     "Force can create food",
-                    "Force changes seasons",
-                    "Force produces electricity"
+                    "Force can stop a moving object",
+                    "Force changes seasons"
                 ],
-                correct: 0,
-                explanation: "Force can change the motion of objects."
+                correct: 2,
+                explanation: "The force from the goalkeeper’s hands stops the moving ball."
             },
             {
                 text: "A cyclist pedals uphill and feels tired after reaching the top. What does this situation show?",
                 options: [
-                    "Doing work requires energy",
                     "Energy is not needed for movement",
-                    "Force works without effort",
-                    "Cycling does not involve work"
+                    "Cycling does not involve work",
+                    "Doing work requires energy",
+                    "Force works without effort"
                 ],
-                correct: 0,
-                explanation: "Energy is needed whenever work is done."
+                correct: 2,
+                explanation: "Pedalling uphill needs energy, and the cyclist gets tired after doing work."
             }
         ];
 
@@ -1011,16 +1011,16 @@
             const resBadge = document.getElementById('res-badge');
 
             if(accuracy >= 80) {
-                resTitle.innerText = "🏆 Energy Smart Champion!";
-                resDesc.innerText = "Fantastic understanding of how force, work and energy connect in daily life.";
-                resBadge.innerText = "⚙️";
+                resTitle.innerText = "🏆 Force & Energy Star!";
+                resDesc.innerText = "Excellent grasp of how force, work and energy connect in everyday life.";
+                resBadge.innerText = "💡";
             } else if(accuracy >= 50) {
-                resTitle.innerText = "🔋 Force & Work Explorer!";
-                resDesc.innerText = "Great job spotting pushes, pulls and energy use. Keep practising to become a science pro.";
+                resTitle.innerText = "⚙️ Everyday Science Explorer!";
+                resDesc.innerText = "Good work applying the ideas of push, pull, work and energy. Keep practising.";
                 resBadge.innerText = "⭐";
             } else {
-                resTitle.innerText = "💡 Everyday Science Learner!";
-                resDesc.innerText = "Good effort! Review Chapter 7 again and retry the challenge to strengthen your ideas about force, work and energy.";
+                resTitle.innerText = "📚 Force, Work & Energy Learner!";
+                resDesc.innerText = "Nice effort! Review Chapter 7 again and retry the challenge to strengthen your understanding.";
                 resBadge.innerText = "📖";
             }
         }
